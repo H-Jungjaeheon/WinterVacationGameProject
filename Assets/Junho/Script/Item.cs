@@ -24,7 +24,6 @@ public class Item : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Ãæµ¹");
-            Interaction.transform.position = new Vector2(transform.position.x,transform.position.y+3);
             Interaction.SetActive(true);
         }
 
