@@ -23,4 +23,11 @@ public class Player : MonoBehaviour
        
         transform.Translate(new Vector2(x, y) * Time.deltaTime * speed);
     }
+    void InputManager()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            //¿¿æ÷
+        }
+    }
 }
