@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private float maxHp = 100;
     private float curHp = 100;
 
-
+    
     [SerializeField]
     private Slider surviveBar;
     private float maxSurvive = 100;

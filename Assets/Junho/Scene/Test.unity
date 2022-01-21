@@ -1676,8 +1676,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0, a: 1}
-        key1: {r: 1, g: 0.60447556, b: 0, a: 0.21568628}
+        key0: {r: 0.32451043, g: 0.89211863, b: 0.9716981, a: 1}
+        key1: {r: 0.336917, g: 0.9811321, b: 0.80131114, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1685,7 +1685,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 39941
+        ctime1: 65535
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -5489,6 +5489,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4992702799491286247, guid: 4c57ac197710d1a40bb8c2173d677e93, type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 616771420}
     - target: {fileID: 4992702799491286247, guid: 4c57ac197710d1a40bb8c2173d677e93, type: 3}
       propertyPath: Interaction
       value: 
