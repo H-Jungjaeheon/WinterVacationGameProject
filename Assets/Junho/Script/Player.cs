@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-   
+    
     [SerializeField]
     private Slider hpBar;
     private float maxHp = 100;
@@ -17,15 +17,17 @@ public class Player : MonoBehaviour
     private float maxSurvive = 100;
     private float curSurvive = 100;
 
+    
+
     Obj obj;
     // Start is called before the first frame update
-
-     void Start()
+    
+    void Start()
     {
-        obj = GetComponent<Obj>();
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
-
+        
+        
     }
     // Update is called once per frame
     void Update()
@@ -46,12 +48,18 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("Obj"))
         {
-            if (Input.GetKey(KeyCode.F))
+            if (Obj.Instance.isIt == true)
             {
-                Debug.Log("f키 누름");
-                //Interaction.gameObject.SetActive(false);
+                if (Input.GetKey(KeyCode.F))
+                {
+                    Debug.Log("f키 누름");
+                    //Interaction.gameObject.SetActive(false);
+                    
+                    Obj.Instance.isIt = false;
+                }
 
             }
 
