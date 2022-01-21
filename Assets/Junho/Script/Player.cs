@@ -1,26 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : PlayerControl
 {
-    public float speed;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   
+    [SerializeField]
+    private State health;
+    [SerializeField]
+    private State survive;
 
+    private float initHealth = 100;
+    private float initSurvive = 100;
+
+    
+    // Start is called before the first frame update
+   
+    protected override void Start()
+    {
+        health.Initialize(initHealth, initHealth);
+        survive.Initialize(initSurvive, initSurvive);
+
+        base.Start();
+    }
     // Update is called once per frame
     void Update()
     {
-        Move();
+        health.MyCurrentValue -=1;
     }
-    void Move()
+    
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Jump");
-       
-        transform.Translate(new Vector2(x, y) * Time.deltaTime * speed);
+        //if (collision.CompareTag("Item"))
+        //{
+
+        //} 
     }
 }
