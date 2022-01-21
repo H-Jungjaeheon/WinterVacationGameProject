@@ -23,4 +23,11 @@ public class PlayerControl : MonoBehaviour
 
         transform.Translate(new Vector2(x, y) * Time.deltaTime * speed);
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            speed = 0;
+        }
+    }
 }
