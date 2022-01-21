@@ -32,9 +32,6 @@ public class Player : PlayerControl
     
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.CompareTag("Item"))
-        //{
-
-        //} 
+      
     }
 }

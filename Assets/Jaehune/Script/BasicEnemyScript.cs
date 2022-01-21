@@ -7,7 +7,7 @@ public class BasicEnemyScript : MonoBehaviour
 {
     [SerializeField] float Speed, MoveCount, MaxMoveCount, SeeCrossroad;
     [SerializeField] bool IsFind = false, IsMove = true;
-    [SerializeField] GameObject Player, Warning;
+    [SerializeField] GameObject Player, WarningObj;
     [SerializeField] RaycastHit2D hit;
 
     // Start is called before the first frame update
@@ -59,10 +59,12 @@ public class BasicEnemyScript : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("Player")) 
             {
+                WarningObj.SetActive(true);
                 IsFind = true;
             }
             else
             {
+                WarningObj.SetActive(false);
                 IsFind = false;
             }
         }
@@ -71,5 +73,12 @@ public class BasicEnemyScript : MonoBehaviour
     {
         MoveCount = 0;
         transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * 1.3f * Time.deltaTime);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Speed = 0;
+        }
     }
 }
