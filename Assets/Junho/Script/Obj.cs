@@ -9,20 +9,21 @@ public class Obj : MonoBehaviour
     public bool isIt = true;
 
     [SerializeField]
-    public GameObject particle;
+    public GameObject[] particle;
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
-        particle.SetActive(true);
+        particle[0].SetActive(false);
+        particle[1].SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         isParticle();
-        
 
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -47,10 +48,15 @@ public class Obj : MonoBehaviour
     }
     void isParticle()
     {
-        if (isIt==true)
+        if (isIt == true)
         {
-            particle.SetActive(true);
-        }else particle.SetActive(false);
+            particle[0].SetActive(true);
+        }
+        else
+        {
+            particle[0].SetActive(false);
+
+        }
     }
     public void Drop()
     {
@@ -59,6 +65,9 @@ public class Obj : MonoBehaviour
         {
             Debug.Log("²Î");
             
+            particle[1].SetActive(true);
+            Invoke("Nothing", 4.5f);
+
         }
 
         else if (ran < 9)
@@ -70,5 +79,9 @@ public class Obj : MonoBehaviour
             Instantiate(Items[1], transform.position, Items[1].transform.rotation);
         }
     }
+    void Nothing()
+    {
+        particle[1].SetActive(false);
 
+    }
 }
