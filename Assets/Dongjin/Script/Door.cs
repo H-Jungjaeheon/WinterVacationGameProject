@@ -6,10 +6,13 @@ public class Door : MonoBehaviour
 {
     private GameObject text;
     private bool opendoor = false;
+    public GameObject door;
+
     private void Start()
     {
         text = transform.GetChild(0).gameObject;
     }
+   
     private void Update()
     {
         if (opendoor == true && Input.GetKeyDown(KeyCode.F))
