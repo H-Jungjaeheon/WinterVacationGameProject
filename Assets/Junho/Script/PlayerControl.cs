@@ -19,9 +19,8 @@ public class PlayerControl : MonoBehaviour
     void Move()
     {
         float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Jump");
 
-        transform.Translate(new Vector2(x, y) * Time.deltaTime * speed);
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
