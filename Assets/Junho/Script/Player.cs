@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
         HandleSlider();
         curSurvive -= 0.001f;
         Move();
+        Hide();
 
     }
     private void HandleSlider()
@@ -49,28 +50,14 @@ public class Player : MonoBehaviour
 
     }
     private void OnTriggerStay2D(Collider2D collision)
-    {
-        
-        if (collision.CompareTag("Obj"))
-        {
-            if (Obj.Instance.isIt == true)
-            {
-                if (Input.GetKey(KeyCode.F))
-                {
-                    if (Obj.Instance.isIt == true)
-                    {
-                        Debug.Log("f키 누름");
-                        Obj.Instance.Drop();               
-                        Obj.Instance.Interaction.SetActive(false);
-                        Obj.Instance.isIt = false;
-
-                    }
-                }
-
-            }
-
+    {   
+        if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
+        {                  
+             Debug.Log("f키 누름");
+             Obj.Instance.Drop();               
+             Obj.Instance.Interaction.SetActive(false);
+             Obj.Instance.isIt = false;
         }
-
     }
     void Move()
     {
@@ -83,6 +70,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             speed = 0;
+            GameManager.Instance.IsBattleStart = true;
+        }
+    }
+    void Hide()
+    {
+        if(GameManager.Instance.IsBattleStart == true)
+        {
+            //this.gameObject.SetActive(false);
         }
     }
     //public void HpRecovery()
