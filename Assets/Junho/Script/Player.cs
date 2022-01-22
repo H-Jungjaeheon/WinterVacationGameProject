@@ -18,10 +18,10 @@ public class Player : MonoBehaviour
     private float maxSurvive = 100;
     public float curSurvive = 100;
 
-    
+    public float speed;
 
     // Start is called before the first frame update
-    
+
     void Start()
     {
         P_Instance = this;
@@ -39,7 +39,8 @@ public class Player : MonoBehaviour
         }
         HandleSlider();
         curSurvive -= 0.001f;
-        
+        Move();
+
     }
     private void HandleSlider()
     {
@@ -70,6 +71,19 @@ public class Player : MonoBehaviour
 
         }
 
+    }
+    void Move()
+    {
+        float x = Input.GetAxis("Horizontal");
+
+        transform.Translate(new Vector2(x, 0) * Time.deltaTime * speed);
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            speed = 0;
+        }
     }
     //public void HpRecovery()
     //{

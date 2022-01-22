@@ -858,6 +858,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1337572739}
     - target: {fileID: 5122259336181682904, guid: b81a7ed59a7c26b48bbf881de1ec756e, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122259336181682904, guid: b81a7ed59a7c26b48bbf881de1ec756e, type: 3}
+      propertyPath: slotPrefab
+      value: 
+      objectReference: {fileID: 6906705609819891293, guid: ffe88147e02b9f34fb456eb9ff66b922, type: 3}
+    - target: {fileID: 5122259336181682904, guid: b81a7ed59a7c26b48bbf881de1ec756e, type: 3}
       propertyPath: surviveBar
       value: 
       objectReference: {fileID: 1462093423}
@@ -909,5 +917,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
+    - {fileID: 5122259336181682909, guid: b81a7ed59a7c26b48bbf881de1ec756e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b81a7ed59a7c26b48bbf881de1ec756e, type: 3}
