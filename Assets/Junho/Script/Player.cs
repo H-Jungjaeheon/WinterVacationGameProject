@@ -5,25 +5,26 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    
+    public static Player P_Instance { get; private set; }
+
     [SerializeField]
     private Slider hpBar;
     private float maxHp = 100;
-    private float curHp = 100;
+    public float curHp = 100;
 
     
     [SerializeField]
     private Slider surviveBar;
     private float maxSurvive = 100;
-    private float curSurvive = 100;
+    public float curSurvive = 100;
 
     
 
-    Obj obj;
     // Start is called before the first frame update
     
     void Start()
     {
+        P_Instance = this;
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
         
@@ -55,10 +56,14 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.F))
                 {
-                    Debug.Log("f키 누름");
-                    //Interaction.gameObject.SetActive(false);
-                    
-                    Obj.Instance.isIt = false;
+                    if (Obj.Instance.isIt == true)
+                    {
+                        Debug.Log("f키 누름");
+                        Obj.Instance.Drop();               
+                        Obj.Instance.Interaction.SetActive(false);
+                        Obj.Instance.isIt = false;
+
+                    }
                 }
 
             }
@@ -66,6 +71,14 @@ public class Player : MonoBehaviour
         }
 
     }
-    
+    //public void HpRecovery()
+    //{
+    //    curHp += 10;
+    //}
+    //public void SurviveRecovery()
+    //{
+    //    curSurvive += 10;
+    //}
+
 
 }

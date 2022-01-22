@@ -20,7 +20,7 @@ public class Obj : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        isParticle();
         
 
     }
@@ -29,7 +29,11 @@ public class Obj : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Ãæµ¹");
-            Interaction.SetActive(true);
+            if (isIt == true)
+            {
+                Interaction.SetActive(true);
+
+            }
         }
 
     }
@@ -48,6 +52,23 @@ public class Obj : MonoBehaviour
             particle.SetActive(true);
         }else particle.SetActive(false);
     }
-    
+    public void Drop()
+    {
+        int ran = Random.Range(0, 10);
+        if (ran < 8)
+        {
+            Debug.Log("²Î");
+            
+        }
+
+        else if (ran < 9)
+        {
+            Instantiate(Items[1], transform.position, Items[1].transform.rotation);
+        }
+        else if (ran < 10)
+        {
+            Instantiate(Items[1], transform.position, Items[1].transform.rotation);
+        }
+    }
 
 }
