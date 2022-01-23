@@ -9,7 +9,7 @@ public class SurviveItem : MonoBehaviour
         if (Input.inputString == (transform.parent.GetComponent<Slot>().num + 1).ToString())
         {
             Debug.Log("Survive UP , slotNumbe : " + (transform.parent.GetComponent<Slot>().num + 1));
-            Player.P_Instance.curSurvive += 10; 
+            GameManager.Instance.curSurvive += 10; 
             Destroy(this.gameObject);
         }
     }

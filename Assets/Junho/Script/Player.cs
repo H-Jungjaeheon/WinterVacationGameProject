@@ -7,16 +7,16 @@ public class Player : MonoBehaviour
 {
     public static Player P_Instance { get; private set; }
 
-    [SerializeField]
-    private Slider hpBar;
-    private float maxHp = 100;
-    public float curHp = 100;
+    //[SerializeField]
+    //private Slider hpBar;
+    //private float maxHp = 100;
+    //public float curHp = 100;
 
     
-    [SerializeField]
-    private Slider surviveBar;
-    private float maxSurvive = 100;
-    public float curSurvive = 100;
+    //[SerializeField]
+    //private Slider surviveBar;
+    //private float maxSurvive = 100;
+    //public float curSurvive = 100;
 
     public float speed;
 
@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         P_Instance = this;
-        hpBar.value = (float)curHp / (float)maxHp;
-        surviveBar.value = (float)curSurvive / (float)maxSurvive;
+        //hpBar.value = (float)curHp / (float)maxHp;
+        //surviveBar.value = (float)curSurvive / (float)maxSurvive;
         
         
     }
@@ -35,20 +35,20 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            curHp -= 10; 
+           GameManager.Instance.curHp -= 10;
         }
-        HandleSlider();
-        curSurvive -= 0.001f;
+        //HandleSlider();
+        //curSurvive -= 0.001f;
         Move();
         Hide();
 
     }
-    private void HandleSlider()
-    {
-        hpBar.value = (float)curHp / (float)maxHp;
-        surviveBar.value = (float)curSurvive / (float)maxSurvive;
+    //private void HandleSlider()
+    //{
+    //    hpBar.value = (float)curHp / (float)maxHp;
+    //    surviveBar.value = (float)curSurvive / (float)maxSurvive;
 
-    }
+    //}
     private void OnTriggerStay2D(Collider2D collision)
     {   
         if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))

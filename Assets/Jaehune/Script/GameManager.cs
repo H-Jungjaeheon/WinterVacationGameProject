@@ -9,6 +9,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image FadIn;
     public bool IsBattleStart = false, IsStart = false;
 
+    [SerializeField]
+    private Slider hpBar;
+    private float maxHp = 100;
+    public float curHp = 100;
+
+
+    [SerializeField]
+    private Slider surviveBar;
+    private float maxSurvive = 100;
+    public float curSurvive = 100;
     private void Awake()
     {
         Instance = this;
@@ -17,7 +27,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        hpBar.value = (float)curHp / (float)maxHp;
+        surviveBar.value = (float)curSurvive / (float)maxSurvive;
     }
 
     // Update is called once per frame
@@ -28,6 +39,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine("BattleStart");
             IsStart = true;
         }
+        HandleSlider();
     }
     IEnumerator BattleStart()
     {
@@ -57,5 +69,13 @@ public class GameManager : MonoBehaviour
             if (color.a <= 0f) color.a = 0f;
             yield return null;
         }
+    }
+    private void HandleSlider()
+    {
+        curSurvive -= 0.001f;
+
+        hpBar.value = (float)curHp / (float)maxHp;
+        surviveBar.value = (float)curSurvive / (float)maxSurvive;
+
     }
 }
