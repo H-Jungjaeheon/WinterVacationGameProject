@@ -7,9 +7,10 @@ public class Door : MonoBehaviour
     private GameObject text;
     private bool opendoor = false;
     public GameObject door;
-
+    private GameObject player;
     private void Start()
     {
+        player = GameObject.Find("Player");
         text = transform.GetChild(0).gameObject;
     }
    
@@ -17,6 +18,7 @@ public class Door : MonoBehaviour
     {
         if (opendoor == true && Input.GetKeyDown(KeyCode.F))
         {
+            player.transform.position = door.transform.position;
                 Debug.Log("¾À ³Ñ¾î°¨¿ä");
             
         }

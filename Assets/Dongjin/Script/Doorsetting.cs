@@ -14,15 +14,16 @@ public class Doorsetting : MonoBehaviour
     {
         Adddoor(door, doorgroup);
         Adddoor(door2, doorgroup2);
-        dooridx = doorgroup.Count;
         for (int a = doorgroup2.Count-1; 0 <= a; a--)
         {
+            dooridx = doorgroup.Count;
             Randomdooridx = Random.RandomRange(0, dooridx);
-            dooridx--;
-            doorgroup[Randomdooridx].GetComponent<Door>().door = doorgroup2[a];
-            doorgroup2[a].GetComponent<Door>().door = doorgroup[Randomdooridx];
+            //dooridx--;
+
+            doorgroup[Randomdooridx].GetComponent<Door>().door = doorgroup2[0];
+            doorgroup2[0].GetComponent<Door>().door = doorgroup[Randomdooridx];
             doorgroup.RemoveAt(Randomdooridx);
-            doorgroup2.RemoveAt(a);
+            doorgroup2.RemoveAt(0);
         }
     }
     private void Update()
@@ -33,7 +34,7 @@ public class Doorsetting : MonoBehaviour
     {
         foreach (Transform door in group)
         {
-            door.gameObject.SetActive(false);
+            //door.gameObject.SetActive(true);
             doorList.Add(door.gameObject);
         }
     }
