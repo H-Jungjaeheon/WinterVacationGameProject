@@ -9,6 +9,7 @@ public class BasicEnemyScript : MonoBehaviour
     [SerializeField] bool IsFind = false, IsMove = true;
     [SerializeField] GameObject Player, WarningObj;
     [SerializeField] RaycastHit2D hit;
+    [SerializeField] int SpawnMonsterCount;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +80,12 @@ public class BasicEnemyScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Speed = 0;
+            Invoke("Delete", 2f);
+            Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, transform.rotation = Quaternion.Euler(0, 180, 0));    
         }
+    }
+    void Delete()
+    {
+        Destroy(this.gameObject);
     }
 }

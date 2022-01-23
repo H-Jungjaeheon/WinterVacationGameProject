@@ -12,7 +12,7 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.IsBattleStart == false)
+        if(GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
             transform.position = target.position + offset;
         }
@@ -25,9 +25,4 @@ public class Camera : MonoBehaviour
     {
         this.transform.position = Battletarget.position + offset;
     }
-    //IEnumerator BattleCameraMove()
-    //{
-
-    //    yield return null;
-    //}
 }

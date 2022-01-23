@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] Enemy;
-    [SerializeField] GameObject EnemySpawner;
+    public static BattleManager Instance { get; set; }
+    public GameObject[] Enemy;
+    public GameObject EnemySpawner;
+  
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instance = this;
     }
 
     // Update is called once per frame

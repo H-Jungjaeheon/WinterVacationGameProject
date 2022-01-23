@@ -6,19 +6,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set;}
-    [SerializeField] Image FadIn;
-    public bool IsBattleStart = false, IsStart = false;
+    [SerializeField] Image FadIn, BattleStartImage;
+    public bool IsBattleStart = false, IsStart = false, IsCamMove = false; //IsMove = true
+    [SerializeField] private Slider hpBar, surviveBar;
+    private float maxHp = 100, maxSurvive = 100;
+    public float curHp = 100, curSurvive = 100;
 
-    [SerializeField]
-    private Slider hpBar;
-    private float maxHp = 100;
-    public float curHp = 100;
-
-
-    [SerializeField]
-    private Slider surviveBar;
-    private float maxSurvive = 100;
-    public float curSurvive = 100;
     private void Awake()
     {
         Instance = this;
@@ -38,6 +31,12 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine("BattleStart");
             IsStart = true;
+            IsCamMove = true;
+        }
+        if(IsBattleStart == false && IsStart == true)
+        {
+            StartCoroutine("BattleEnd");
+            IsStart = false;
         }
         HandleSlider();
     }
@@ -48,34 +47,58 @@ public class GameManager : MonoBehaviour
         StartCoroutine("BattleStartFaidIn", 0.8f);
         yield return null;
     }
+    IEnumerator BattleEnd()
+    {
+        StartCoroutine("BattleStartFaidOut", 0.8f);
+        yield return new WaitForSeconds(1f);
+        IsCamMove = false;
+        yield return new WaitForSeconds(2f);
+        StartCoroutine("BattleStartFaidIn", 0.8f);
+        yield return null;
+    }
     IEnumerator BattleStartFaidOut(float FaidTime)
     {
         Color color = FadIn.color;
-        while (color.a < 1.0f)
+        Color color2 = BattleStartImage.color;
+        while (color.a < 1f && color2.a < 1f)
         {
             color.a += Time.deltaTime / FaidTime;
+            color2.a += Time.deltaTime / FaidTime;
             FadIn.color = color;
-            if (color.a >= 1f) color.a = 1f;
+            BattleStartImage.color = color2;
+            if (color.a >= 1f && color2.a >= 1f)
+            {
+                color.a = 1f;
+                color2.a = 1f;
+            }
             yield return null;
         }
     }
     IEnumerator BattleStartFaidIn(float FaidTime)
     {
         Color color = FadIn.color;
-        while (color.a > 0f)
+        Color color2 = BattleStartImage.color;
+        while (color.a > 0f && color2.a > 0f)
         {
             color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
             FadIn.color = color;
-            if (color.a <= 0f) color.a = 0f;
+            BattleStartImage.color = color2;
+            if (color.a <= 0f && color2.a <= 0f)
+            {
+                color.a = 0f;
+                color2.a = 0f;
+            }
             yield return null;
         }
     }
     private void HandleSlider()
     {
-        curSurvive -= 0.001f;
-
+        if(IsBattleStart == false)
+        {
+            curSurvive -= Time.deltaTime;
+        }
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
-
     }
 }
