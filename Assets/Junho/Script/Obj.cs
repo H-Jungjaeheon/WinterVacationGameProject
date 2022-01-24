@@ -61,18 +61,24 @@ public class Obj : MonoBehaviour
     public void Drop()
     {
         int ran = Random.Range(0, 10);
-        if (ran < 8)
+        if (ran < 7)
         {
             Debug.Log("²Î");
-            
+
+            //Instantiate(Items[2], transform.position, Items[1].transform.rotation);
+
             particle[1].SetActive(true);
             Invoke("Nothing", 4.5f);
 
         }
+        else if (ran < 8)
+        {
+            Instantiate(Items[2], transform.position, Items[2].transform.rotation);
+        }
 
         else if (ran < 9)
         {
-            Instantiate(Items[1], transform.position, Items[1].transform.rotation);
+            Instantiate(Items[0], transform.position, Items[1].transform.rotation);
         }
         else if (ran < 10)
         {

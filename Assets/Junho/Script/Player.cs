@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] float speed;
-
+    public bool isDamage = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
             Move();
         }
         Hide();
+        SurviveDamage();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -46,6 +47,29 @@ public class Player : MonoBehaviour
             //GameManager.Instance.IsMove = false;
             GameManager.Instance.IsBattleStart = true;
         }
+        if (collision.CompareTag("Gas"))
+        {
+            Debug.Log("가스에닿음");
+            isDamage = true;
+        }
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Gas"))
+        {
+            Debug.Log("가스에 안 닿음");
+            isDamage = false;
+        }
+    }
+    void SurviveDamage()
+    {
+        if (isDamage == true)
+        {
+            GameManager.Instance.curSurvive += Time.deltaTime*2f;
+
+        }
+
     }
     void Hide()
     {
