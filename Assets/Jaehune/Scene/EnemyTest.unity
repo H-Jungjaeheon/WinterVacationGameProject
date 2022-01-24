@@ -1379,7 +1379,7 @@ MonoBehaviour:
   hpBar: {fileID: 6973734048078860264}
   surviveBar: {fileID: 6973734047937065988}
   curHp: 100
-  curSurvive: 100
+  curSurvive: 0
 --- !u!4 &1831683695
 Transform:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public bool IsBattleStart = false, IsStart = false, IsCamMove = false; //IsMove = true
     [SerializeField] private Slider hpBar, surviveBar;
     private float maxHp = 100, maxSurvive = 100;
-    public float curHp = 100, curSurvive = 100;
+    public float curHp = 100, curSurvive = 0;
 
     private void Awake()
     {
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
     {
         if(IsBattleStart == false)
         {
-            curSurvive -= Time.deltaTime;
+            curSurvive += Time.deltaTime;
         }
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;

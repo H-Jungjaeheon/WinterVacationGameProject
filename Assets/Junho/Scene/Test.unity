@@ -153,12 +153,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FadIn: {fileID: 0}
+  BattleStartImage: {fileID: 0}
   IsBattleStart: 0
   IsStart: 0
+  IsCamMove: 0
   hpBar: {fileID: 1337572739}
-  curHp: 100
   surviveBar: {fileID: 1462093423}
-  curSurvive: 100
+  curHp: 100
+  curSurvive: 0
 --- !u!4 &446725384
 Transform:
   m_ObjectHideFlags: 0
@@ -502,6 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1761817288}
+  Battletarget: {fileID: 0}
   offset: {x: 0, y: 3, z: -10}
 --- !u!114 &1337572739 stripped
 MonoBehaviour:
