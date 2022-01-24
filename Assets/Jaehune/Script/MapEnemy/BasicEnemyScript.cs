@@ -81,7 +81,7 @@ public class BasicEnemyScript : MonoBehaviour
         {
             Speed = 0;
             Invoke("Delete", 2f);
-            Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, transform.rotation = Quaternion.Euler(0, 180, 0));    
+            Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, transform.rotation);    
         }
     }
     void Delete()
