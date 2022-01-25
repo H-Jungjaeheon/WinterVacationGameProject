@@ -27,10 +27,18 @@ public class Player : MonoBehaviour
             Move();
             Jump();
             if (isLadder)
-            {   
-                float ver = Input.GetAxis("Vertical");
+            {
+                bool isF;
+                if (Input.GetKey(KeyCode.F))
+                {
+                    isF = true;
+                } else isF = false;
+                if (isF)
+                {
                 rigid.gravityScale = 0;
-                rigid.velocity = new Vector2(rigid.velocity.x, ver*speed);
+                rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime*speed*50);
+
+                }
             }
             else
             {
