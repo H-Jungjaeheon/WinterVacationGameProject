@@ -77,7 +77,7 @@ public class BasicEnemyScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false)
         {
             Speed = 0;
             Invoke("Delete", 2f);

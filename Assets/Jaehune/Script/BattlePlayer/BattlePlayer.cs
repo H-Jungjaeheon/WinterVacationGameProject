@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class BattlePlayer : MonoBehaviour
 {
-    public int Hp;
-    [SerializeField] int Damage;
-    [SerializeField] RaycastHit2D hit;
-    [SerializeField] GameObject Enemy;
-    [SerializeField] bool GoToEnemy = false;
-    public GameObject PlayerSpawner;
+    [SerializeField] int Damage; //적에게 줄 데미지
+    [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
+    [SerializeField] GameObject Enemy, PlayerSpawner; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] bool GoToEnemy = false; //적의 위치(근접 공격시)로 갈지 판단
 
     // Start is called before the first frame update
     void Start()
@@ -56,12 +54,15 @@ public class BattlePlayer : MonoBehaviour
     }
     public IEnumerator PlayerAttack()
     {
+        GameManager.Instance.BattleSkillBackGround.SetActive(true);
+        GameManager.Instance.BattleSkillText.text = "주인공 박치기";
         BattleManager.Instance.IsPlayerTurn = false;
         GoToEnemy = true;
         yield return new WaitForSeconds(1.5f);
         //공격 애니 재생
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= Damage;
         yield return new WaitForSeconds(1);
+        GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
         yield return new WaitForSeconds(4);
         BattleManager.Instance.IsEnemyTurn = true;
