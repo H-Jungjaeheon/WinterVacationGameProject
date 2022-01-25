@@ -20,29 +20,35 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
+                
     private void FixedUpdate()
     {
         if(GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             Move();
-            Jump();
             if (isLadder)
             {
-                bool isF;
                 if (Input.GetKey(KeyCode.F))
                 {
-                    isF = true;
-                } else isF = false;
-                if (isF)
-                {
-                rigid.gravityScale = 0;
-                rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime*speed*50);
+                    rigid.gravityScale = 0;
+                    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime*speed*50);
+                    //if (Input.GetKey(KeyCode.F))
+                    //{
+                    //    rigid.gravityScale = 0;
+                    //    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * -50);
+                    //}
+                } 
+                
 
-                }
+                
             }
             else
             {
+                Jump();
+ 
                 rigid.gravityScale = 3f;
+                    
+                
             }
         }
         
