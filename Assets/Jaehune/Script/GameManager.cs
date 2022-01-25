@@ -7,10 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set;}
     [SerializeField] Image FadIn, BattleStartImage;
-    public bool IsBattleStart = false, IsStart = false, IsCamMove = false; //IsMove = true
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false; //IsMove = true
+    [SerializeField] bool IsStart = false;
     [SerializeField] private Slider hpBar, surviveBar;
     private float maxHp = 100, maxSurvive = 100;
-    public float curHp = 100, curSurvive = 100;
+    public float curHp = 100, curSurvive = 0;
 
     private void Awake()
     {
@@ -20,8 +21,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hpBar.value = (float)curHp / (float)maxHp;
-        surviveBar.value = (float)curSurvive / (float)maxSurvive;
+        
     }
 
     // Update is called once per frame
@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
             StartCoroutine("BattleEnd");
             IsStart = false;
         }
+        hpBar.value = (float)curHp / (float)maxHp;
+        surviveBar.value = (float)curSurvive / (float)maxSurvive;
         HandleSlider();
     }
     IEnumerator BattleStart()
@@ -45,10 +47,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine("BattleStartFaidOut", 0.8f);
         yield return new WaitForSeconds(3f);
         StartCoroutine("BattleStartFaidIn", 0.8f);
+        AttackOk = true;
         yield return null;
     }
     IEnumerator BattleEnd()
     {
+        AttackOk = false;
         StartCoroutine("BattleStartFaidOut", 0.8f);
         yield return new WaitForSeconds(1f);
         IsCamMove = false;
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
     {
         if(IsBattleStart == false)
         {
-            curSurvive -= Time.deltaTime;
+            curSurvive += Time.deltaTime;
         }
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
