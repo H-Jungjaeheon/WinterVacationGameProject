@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class BattleBasicEnemy : MonoBehaviour
 {
-    public int Hp;
-    [SerializeField] int MaxHp, Damage;
+    public int Hp; //현재 체력
+    [SerializeField] int MaxHp, Damage; //최대 체력, 공격력
     [SerializeField] RaycastHit2D hit;
-    [SerializeField] GameObject Player, EnemySpawner;
-    [SerializeField] Image HpBar; 
+    [SerializeField] GameObject Player, EnemySpawner; //플레이어, 전투 적 스폰 위치
+    [SerializeField] Image HpBar; //전투 시작 시 나타나는 체력바(더미데이터)
     [SerializeField] bool GoToPlayer = false; //플레이어의 위치(근접 공격시)로 갈지 판단
 
     // Start is called before the first frame update

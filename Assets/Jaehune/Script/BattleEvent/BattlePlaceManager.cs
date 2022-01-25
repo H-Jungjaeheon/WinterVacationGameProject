@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BattlePlaceManager : MonoBehaviour
 {
     [SerializeField] Image[] BattlePlaceImage; //전투 시작시 띄우는 장소 연출 이미지
-    [SerializeField] Text[] BattlePlaceText;
+    [SerializeField] Text[] BattlePlaceText; //전투 시작시 띄우는 장소 연출 텍스트
     // Start is called before the first frame update
     void Start()
     {

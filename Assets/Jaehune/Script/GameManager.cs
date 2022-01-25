@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; set;}
-    public int Stage = 1;
+    public int Stage = 1; //현재 챕터(스테이지)
     [SerializeField] Image FadIn, BattleStartImage; //전투 시작시 띄우는 페이드인, 빨간 칼 연출 이미지
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
     [SerializeField] bool IsStart = false; //전투 시작 여부 판단2
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject BattleButtonUi, BattleSkillBackGround; //전투용 버튼, 전투용 버튼 배경 오브젝트
     [SerializeField] float maxHp = 100, maxSurvive = 100; //최대 체력, 최대 감염수치
     public float curHp = 100, curSurvive = 0; //체력, 감염수치
-    [SerializeField] GameObject Player;
+    [SerializeField] GameObject Player; //플레이어
 
     private void Awake()
     {
