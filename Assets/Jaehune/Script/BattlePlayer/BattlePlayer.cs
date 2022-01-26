@@ -23,7 +23,7 @@ public class BattlePlayer : MonoBehaviour
         {
             Playerattack();
         }
-        if(GoToEnemy == true)
+        if(GoToEnemy == true && GameManager.Instance.IsBattleStart == true)
         {
             transform.position = Vector3.MoveTowards(this.transform.position, Enemy.transform.position - new Vector3(2, 0, 0), 10 * Time.deltaTime);
         }
@@ -64,7 +64,7 @@ public class BattlePlayer : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         BattleManager.Instance.IsEnemyTurn = true;
         yield return null;
     }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; set;}
+    public Transform TPlayer; //씬에 있는 이동 플레이어 넣어주기
     public int Stage = 1; //현재 챕터(스테이지)
     [SerializeField] Image FadIn, BattleStartImage; //전투 시작시 띄우는 페이드인, 빨간 칼 연출 이미지
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator BattleStart()
     {
+        Debug.Log("작동");
         StartCoroutine("BattleStartFaidOut", 0.8f);
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
