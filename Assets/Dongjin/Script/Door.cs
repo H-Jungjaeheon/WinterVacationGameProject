@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
         if (opendoor == true && Input.GetKeyDown(KeyCode.F))
         {
             player.transform.position = door.transform.position;
-                Debug.Log("¾À ³Ñ¾î°¨¿ä");
+            Debug.Log("¾À ³Ñ¾î°¨¿ä");
             
         }
     }
