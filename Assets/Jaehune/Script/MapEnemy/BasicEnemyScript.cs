@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class BasicEnemyScript : MonoBehaviour
 {
-    [SerializeField] float Speed, MoveCount, MaxMoveCount, SeeCrossroad;
-    [SerializeField] bool IsFind = false, IsMove = true;
-    [SerializeField] GameObject Player, WarningObj;
-    [SerializeField] RaycastHit2D hit;
-    [SerializeField] int SpawnMonsterCount;
+    [SerializeField] float Speed, MoveCount, MaxMoveCount, SeeCrossroad; //배회 속도, 배회 시간, 최대 배회 시간, 인식 사거리
+    [SerializeField] bool IsFind = false, IsMove = true; //플레이어 발견, 자신의 움직임 판별
+    [SerializeField] GameObject Player, WarningObj; //플레이어 오브젝트, 발견시 느낌표 오브젝트
+    [SerializeField] RaycastHit2D hit; 
+    [SerializeField] int SpawnMonsterCount; //전투 시작 시 전투 필드에 소환할 몬스터 (0 ~ ... & 자기 스프라이트에 맞는 몬스터 전투 필드에 소환)
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +77,7 @@ public class BasicEnemyScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false)
         {
             Speed = 0;
             Invoke("Delete", 2f);

@@ -6,60 +6,42 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rigid;
-    [SerializeField] float speed;
-    [SerializeField] float jumpPower;
+    [SerializeField] float speed, jumpPower;
+    [SerializeField] bool isGound, isLadder, isDamage = false;
 
-    public bool isGound;
-
-    public bool isDamage = false;
-
-    public bool isLadder;
-    // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
     }
-
-                
     private void FixedUpdate()
     {
         if(GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             Move();
+            Jump();
             if (isLadder)
             {
+                bool isF;
                 if (Input.GetKey(KeyCode.F))
                 {
-                    rigid.gravityScale = 0;
-                    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime*speed*50);
-                    //if (Input.GetKey(KeyCode.F))
-                    //{
-                    //    rigid.gravityScale = 0;
-                    //    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * -50);
-                    //}
-                } 
-                
-
-                
+                    isF = true;
+                } else isF = false;
+                if (isF)
+                {
+                rigid.gravityScale = 0;
+                rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime*speed*50);
+                }
             }
             else
             {
-                Jump();
- 
                 rigid.gravityScale = 3f;
-                    
-                
             }
         }
-        
     }
     void Update()
     {
-        Hide();
         SurviveDamage();
-
     }
-
     private void OnTriggerStay2D(Collider2D collision)
     {   
         if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
@@ -74,15 +56,12 @@ public class Player : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         rigid.velocity = new Vector2 (x*speed, rigid.velocity.y);
-        
     }
     void Jump()
     {
         if (isGound == true && Input.GetKeyDown(KeyCode.Space))
-        {
-
+        { 
             rigid.velocity = Vector2.up * jumpPower;
-
         }
         else return;
     }
@@ -90,24 +69,22 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //GameManager.Instance.IsMove = false;
             GameManager.Instance.IsBattleStart = true;
         }
-        if (collision.CompareTag("Gas"))
+        else if (collision.CompareTag("Gas"))
         {
             Debug.Log("가스에닿음");
             isDamage = true;
         }
-        if (collision.CompareTag("Ladder"))
+        else if (collision.CompareTag("Ladder"))
         {
             Debug.Log("사다리에 닿음");
             isLadder = true;
         }
-        if (collision.CompareTag("Plan"))
+        else if (collision.CompareTag("Plan"))
         {
             isGound = true;
         }
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -116,13 +93,13 @@ public class Player : MonoBehaviour
             Debug.Log("가스에 안 닿음");
             isDamage = false;
         }
-        if (collision.CompareTag("Ladder"))
+        else if (collision.CompareTag("Ladder"))
         {
             Debug.Log("사다리에 안 닿음");
 
             isLadder = false;
         }
-        if (collision.CompareTag("Plan"))
+        else if (collision.CompareTag("Plan"))
         {
             isGound = false;
         }
@@ -132,16 +109,6 @@ public class Player : MonoBehaviour
         if (isDamage == true)
         {
             GameManager.Instance.curSurvive += Time.deltaTime*2f;
-
-        }
-
-    }
-    void Hide()
-    {
-        if(GameManager.Instance.IsBattleStart == true)
-        {
-            //this.gameObject.SetActive(false);
         }
     }
-
 }

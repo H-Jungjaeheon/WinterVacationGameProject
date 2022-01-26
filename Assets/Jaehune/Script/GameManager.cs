@@ -16,15 +16,30 @@ public class GameManager : MonoBehaviour
     private Color PanelAlpha;
     private Image PanelImage;
     public bool isPause;
+    public static GameManager Instance {get; set;}
+    public int Stage = 1; //���� é��(��������)
+    [SerializeField] Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�
+    [SerializeField] bool IsStart = false; //���� ���� ���� �Ǵ�2
+    [SerializeField] private Slider hpBar, surviveBar; //�÷��̾� hp, ������ġ ��
+    public Text BattleSkillText; //���� �� ���� or ��ų �̸� ǥ�� �ؽ�Ʈ
+    public GameObject BattleButtonUi, BattleSkillBackGround; //������ ��ư, ������ ��ư ��� ������Ʈ
+    [SerializeField] float maxHp = 100, maxSurvive = 100; //�ִ� ü��, �ִ� ������ġ
+    public float curHp = 100, curSurvive = 0; //ü��, ������ġ
+    [SerializeField] GameObject Player; //�÷��̾�
+
     private void Awake()
     {
+        BattleButtonUi.SetActive(false);
         Instance = this;
+        BattleSkillText.text = "";
+        BattleSkillBackGround.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -48,18 +63,30 @@ public class GameManager : MonoBehaviour
     IEnumerator BattleStart()
     {
         StartCoroutine("BattleStartFaidOut", 0.8f);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.8f);
+        Player.SetActive(false);
+        yield return new WaitForSeconds(2.2f);
+        BattleButtonUi.SetActive(true);
         StartCoroutine("BattleStartFaidIn", 0.8f);
+        yield return new WaitForSeconds(1f);
+        IsBattlePlace = true;
+        yield return new WaitForSeconds(2f);
+        IsBattlePlace = false;
+        yield return new WaitForSeconds(1.2f);
         AttackOk = true;
         yield return null;
     }
     IEnumerator BattleEnd()
     {
         AttackOk = false;
-        StartCoroutine("BattleStartFaidOut", 0.8f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
+        StartCoroutine("BattleStartFaidOut", 1f);
+        yield return new WaitForSeconds(0.5f);
+        BattleButtonUi.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
         IsCamMove = false;
         yield return new WaitForSeconds(2f);
+        Player.SetActive(true);
         StartCoroutine("BattleStartFaidIn", 0.8f);
         yield return null;
     }
