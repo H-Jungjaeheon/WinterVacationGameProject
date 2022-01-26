@@ -12,7 +12,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider hpBar, surviveBar;
     private float maxHp = 100, maxSurvive = 100;
     public float curHp = 100, curSurvive = 0;
-
+    [SerializeField] GameObject menuPanel;
+    private Color PanelAlpha;
+    private Image PanelImage;
+    public bool isPause;
     private void Awake()
     {
         Instance = this;
@@ -104,5 +107,23 @@ public class GameManager : MonoBehaviour
         }
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
+    }
+    public void StopButton()
+    {
+        PanelImage = menuPanel.GetComponent<Image>();
+        if (isPause)
+        {
+            PanelAlpha.a = 0f;
+            PanelImage.color = PanelAlpha;
+            isPause = false;
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            PanelAlpha.a = 0.7f;
+            PanelImage.color = PanelAlpha;
+            isPause = true;
+            Time.timeScale = 0f;
+        }
     }
 }
