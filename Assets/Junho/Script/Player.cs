@@ -9,8 +9,10 @@ public class Player : MonoBehaviour
     [SerializeField] float speed, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
 
+    Obj obj;
     void Start()
     {
+        obj = GetComponent<Obj>();
         rigid = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
@@ -20,8 +22,8 @@ public class Player : MonoBehaviour
             if(GameManager.Instance.IsBattleStart == false)
             {
                 Move();
+                Jump();
             }
-            Jump();
             if (isLadder)
             {
                 bool isF;
@@ -46,14 +48,31 @@ public class Player : MonoBehaviour
         SurviveDamage();
     }
     private void OnTriggerStay2D(Collider2D collision)
-    {   
+    {
         if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
         {                  
              Debug.Log("f키 누름");
-             Obj.Instance.Drop();               
-             Obj.Instance.Interaction.SetActive(false);
-             Obj.Instance.isIt = false;
+            GameObject.Find("Obj").GetComponent<Obj>().Drop();
+        
         }
+        if (collision.CompareTag("Obj_2") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
+        {
+            Debug.Log("f키 누름");
+
+            Cnt();
+            if (cnt > 1)
+            {
+            GameObject.Find("Obj_2").GetComponent<Obj>().Drop();
+                cnt = 0;
+            }
+
+        }
+
+    }
+    float cnt;
+    void Cnt()
+    {
+        cnt += Time.deltaTime;
     }
     void Move()
     {

@@ -6,13 +6,14 @@ public class Obj : MonoBehaviour
     public static Obj Instance { get; private set; }
     public GameObject Interaction;
     public GameObject[] Items;
-    public bool isIt = true;
+    public bool isIt;
 
     [SerializeField]
     public GameObject[] particle;
     // Start is called before the first frame update
     void Start()
     {
+        isIt = true;
         Instance = this;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
@@ -23,7 +24,7 @@ public class Obj : MonoBehaviour
     {
         isParticle();
 
-        
+       
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -60,6 +61,8 @@ public class Obj : MonoBehaviour
     }
     public void Drop()
     {
+        isIt = false;
+        Interaction.SetActive(false);
         int ran = Random.Range(0, 10);
         if (ran < 7)
         {
@@ -84,6 +87,7 @@ public class Obj : MonoBehaviour
         {
             Instantiate(Items[1], transform.position, Items[1].transform.rotation);
         }
+        gameObject.tag = "Untagged";
     }
     void Nothing()
     {
