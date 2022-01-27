@@ -17,10 +17,7 @@ public class Player : MonoBehaviour
     {
         if(GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            if(GameManager.Instance.IsBattleStart == false)
-            {
-                Move();
-            }
+            Move();   
             Jump();
             if (isLadder)
             {
@@ -70,7 +67,7 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && GameManager.Instance.BattleEndCount == 0)
         {
             GameManager.Instance.IsBattleStart = true;
         }

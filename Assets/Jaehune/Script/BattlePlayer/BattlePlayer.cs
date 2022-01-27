@@ -65,7 +65,14 @@ public class BattlePlayer : MonoBehaviour
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
         yield return new WaitForSeconds(3);
-        BattleManager.Instance.IsEnemyTurn = true;
+        if(GameManager.Instance.IsCamMove == true)
+        {
+            BattleManager.Instance.IsEnemyTurn = true;
+        }
+        else
+        {
+            BattleManager.Instance.IsPlayerTurn = true;
+        }
         yield return null;
     }
 }

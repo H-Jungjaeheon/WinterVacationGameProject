@@ -65,6 +65,7 @@ public class BattleBasicEnemy : MonoBehaviour
     void Dead()
     {
         GameManager.Instance.IsBattleStart = false;
+        BattleManager.Instance.IsEnemyTurn = false;
         Destroy(this.gameObject);
     }
     IEnumerator EnemyAttack()
