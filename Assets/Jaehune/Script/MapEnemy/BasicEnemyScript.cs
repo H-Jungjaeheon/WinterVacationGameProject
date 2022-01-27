@@ -56,7 +56,7 @@ public class BasicEnemyScript : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
         var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
-        foreach(var hit in rayHit)
+        foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player")) 
             {
@@ -74,13 +74,19 @@ public class BasicEnemyScript : MonoBehaviour
     void FindPlayer()
     {
         MoveCount = 0;
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * 1.3f * Time.deltaTime);
+        if(Speed > 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * 1.3f * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * -1.3f * Time.deltaTime);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false)
+        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0)
         {
-            Debug.Log("¥Í¿Ω");
             Speed = 0;
             Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, transform.rotation);
             Invoke("Delete", 2f);

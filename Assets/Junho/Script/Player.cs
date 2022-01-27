@@ -9,21 +9,16 @@ public class Player : MonoBehaviour
     [SerializeField] float speed, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
 
-    Obj obj;
     void Start()
     {
-        obj = GetComponent<Obj>();
         rigid = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
     {
         if(GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            if(GameManager.Instance.IsBattleStart == false)
-            {
-                Move();
-                Jump();
-            }
+            Move();   
+            Jump();
             if (isLadder)
             {
                 bool isF;
@@ -48,31 +43,14 @@ public class Player : MonoBehaviour
         SurviveDamage();
     }
     private void OnTriggerStay2D(Collider2D collision)
-    {
+    {   
         if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
         {                  
              Debug.Log("f키 누름");
-            GameObject.Find("Obj").GetComponent<Obj>().Drop();
-        
+             Obj.Instance.Drop();               
+             Obj.Instance.Interaction.SetActive(false);
+             Obj.Instance.isIt = false;
         }
-        if (collision.CompareTag("Obj_2") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
-        {
-            Debug.Log("f키 누름");
-
-            Cnt();
-            if (cnt > 1)
-            {
-            GameObject.Find("Obj_2").GetComponent<Obj>().Drop();
-                cnt = 0;
-            }
-
-        }
-
-    }
-    float cnt;
-    void Cnt()
-    {
-        cnt += Time.deltaTime;
     }
     void Move()
     {
@@ -89,7 +67,7 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && GameManager.Instance.BattleEndCount == 0)
         {
             GameManager.Instance.IsBattleStart = true;
         }

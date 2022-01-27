@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public Text BattleSkillText; //전투 중 공격 or 스킬 이름 표시 텍스트
     public GameObject BattleButtonUi, BattleSkillBackGround; //전투용 버튼, 전투용 버튼 배경 오브젝트
     [SerializeField] float maxHp = 100, maxSurvive = 100; //최대 체력, 최대 감염수치
-    public float curHp = 100, curSurvive = 0; //체력, 감염수치
+    public float curHp = 100, curSurvive = 0, BattleEndCount = 0; //체력, 감염수치
     [SerializeField] GameObject Player, menuPanel; //플레이어
     private Color PanelAlpha;
     private Image PanelImage;
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsBattleStart == true && IsStart == false)
+        if(IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
             StartCoroutine("BattleStart");
             IsStart = true;
@@ -51,10 +51,17 @@ public class GameManager : MonoBehaviour
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
         HandleSlider();
+        if(BattleEndCount <= 0)
+        {
+            BattleEndCount = 0;
+        }
+        else
+        {
+            BattleEndCount -= Time.deltaTime;
+        }
     }
     IEnumerator BattleStart()
     {
-        Debug.Log("작동");
         StartCoroutine("BattleStartFaidOut", 0.8f);
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
@@ -80,7 +87,11 @@ public class GameManager : MonoBehaviour
         IsCamMove = false;
         yield return new WaitForSeconds(2f);
         Player.SetActive(true);
+        BattleEndCount = 1f;
         StartCoroutine("BattleStartFaidIn", 0.8f);
+        yield return new WaitForSeconds(1f);
+        Player.SetActive(false);
+        Player.SetActive(true);
         yield return null;
     }
     IEnumerator BattleStartFaidOut(float FaidTime)
