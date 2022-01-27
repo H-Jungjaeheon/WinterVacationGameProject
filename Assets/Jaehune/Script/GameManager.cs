@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
             PanelAlpha.a = 0f;
             PanelImage.color = PanelAlpha;
             isPause = false;
+            menuPanel.transform.GetChild(1).gameObject.SetActive(false);
             Time.timeScale = 1f;
         }
         else
@@ -143,6 +144,7 @@ public class GameManager : MonoBehaviour
             PanelAlpha.a = 0.7f;
             PanelImage.color = PanelAlpha;
             isPause = true;
+            menuPanel.transform.GetChild(1).gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
     }
