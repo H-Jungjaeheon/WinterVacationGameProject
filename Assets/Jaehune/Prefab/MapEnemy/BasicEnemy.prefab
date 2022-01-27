@@ -233,6 +233,6 @@ MonoBehaviour:
   SeeCrossroad: -2
   IsFind: 0
   IsMove: 1
-  Player: {fileID: 1344772221701120505, guid: b81a7ed59a7c26b48bbf881de1ec756e, type: 3}
+  Player: {fileID: 0}
   WarningObj: {fileID: 5813755824235341709}
   SpawnMonsterCount: 0

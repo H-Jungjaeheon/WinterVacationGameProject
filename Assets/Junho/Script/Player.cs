@@ -17,7 +17,10 @@ public class Player : MonoBehaviour
     {
         if(GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            Move();
+            if(GameManager.Instance.IsBattleStart == false)
+            {
+                Move();
+            }
             Jump();
             if (isLadder)
             {
