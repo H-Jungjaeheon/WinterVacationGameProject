@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    private int[] stats = {1,1};
+    public int[] stats = {1,1};
+    private float exp;
     public int stateup;
+    private void Update()
+    {
+        if(exp >= 100)
+        {
+            exp -= 100;
+            stateup += 1;
+        }
+    }
     public void HpUpgrade()
     {
         if(stateup != 0)
        {
             stats[0] += 1;
+            stateup--;
         }
     }
     public void DmgUpgrade()
@@ -18,6 +28,11 @@ public class PlayerStats : MonoBehaviour
         if (stateup != 0)
         {
             stats[1] += 1;
+            stateup--;
         }
+    }
+    public void ExpUp(float expidx)
+    {
+        exp += expidx;
     }
 }
