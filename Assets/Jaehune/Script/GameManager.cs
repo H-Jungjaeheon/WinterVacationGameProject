@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
         BattleEndCount = 1f;
         StartCoroutine("BattleStartFaidIn", 0.8f);
         yield return new WaitForSeconds(1f);
+        BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);
         Player.SetActive(true);
         yield return null;

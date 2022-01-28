@@ -250,6 +250,7 @@ MonoBehaviour:
   MaxHp: 7
   BarUp: 1.7
   Hp: 7
+  AttackRand: 0
   Damage: 2
   Player: {fileID: 0}
   EnemySpawner: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}
@@ -257,6 +258,7 @@ MonoBehaviour:
   HpBarNull: {fileID: 6343168093188019300}
   EnemyPicture: {fileID: 6367613823366425914}
   GoToPlayer: 0
+  SR: {fileID: 0}
 --- !u!1 &5585895785710942868
 GameObject:
   m_ObjectHideFlags: 0

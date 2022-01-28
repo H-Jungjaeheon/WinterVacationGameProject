@@ -23,7 +23,7 @@ public class BattlePlayer : MonoBehaviour
         {
             Playerattack();
         }
-        if(GoToEnemy == true && GameManager.Instance.IsBattleStart == true)
+        if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true)
         {
             transform.position = Vector3.MoveTowards(this.transform.position, Enemy.transform.position - new Vector3(2, 0, 0), 10 * Time.deltaTime);
         }
@@ -41,7 +41,7 @@ public class BattlePlayer : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("Enemy"))
             {
-                Enemy = hit.collider.gameObject; 
+                Enemy = hit.collider.gameObject;
             }
         }
     }
@@ -52,7 +52,28 @@ public class BattlePlayer : MonoBehaviour
             StartCoroutine("PlayerAttack", 1f);
         }
     }
-    public IEnumerator PlayerAttack()
+    public void Playerskill()
+    {
+        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
+        {
+            StartCoroutine("PlayerSkill", 1f);
+        }
+    }
+    public void PlayerItem()
+    {
+        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
+        {
+            StartCoroutine("PlayerAttack", 1f);
+        }
+    }
+    public void PlayerDeffence()
+    {
+        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
+        {
+            StartCoroutine("PlayerAttack", 1f);
+        }
+    }
+    IEnumerator PlayerAttack()
     {
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         GameManager.Instance.BattleSkillText.text = "주인공 박치기";
@@ -66,6 +87,29 @@ public class BattlePlayer : MonoBehaviour
         GoToEnemy = false;
         yield return new WaitForSeconds(3);
         if(GameManager.Instance.IsCamMove == true)
+        {
+            BattleManager.Instance.IsEnemyTurn = true;
+        }
+        else
+        {
+            BattleManager.Instance.IsPlayerTurn = true;
+        }
+        yield return null;
+    }
+    IEnumerator PlayerSkill()
+    {
+        GameManager.Instance.BattleSkillBackGround.SetActive(true);
+        GameManager.Instance.BattleSkillText.text = "주인공 스킬";
+        BattleManager.Instance.IsPlayerTurn = false;
+        GoToEnemy = true;
+        yield return new WaitForSeconds(1.5f);
+        //공격 애니 재생
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= Damage * 2;
+        yield return new WaitForSeconds(1);
+        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GoToEnemy = false;
+        yield return new WaitForSeconds(3);
+        if (GameManager.Instance.IsCamMove == true)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }

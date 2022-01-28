@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int[] stats = {1,1};
-    private float exp;
+    public int[] stats = {1,1}; //체력 / 공격력
+    private float exp, MaxExp;
     public int stateup;
     private void Update()
     {

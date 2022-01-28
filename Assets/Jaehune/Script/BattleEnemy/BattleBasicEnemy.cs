@@ -13,10 +13,12 @@ public class BattleBasicEnemy : MonoBehaviour
     [SerializeField] GameObject Player, EnemySpawner; //플레이어, 전투 적 스폰 위치
     [SerializeField] Image HpBar, HpBarNull, EnemyPicture; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화
     [SerializeField] bool GoToPlayer = false; //플레이어의 위치(근접 공격시)로 갈지 판단
+    SpriteRenderer SR;
 
     // Start is called before the first frame update
     void Start()
     {
+        SR = this.GetComponent<SpriteRenderer>();
         GoToPlayer = false;
         this.transform.position = EnemySpawner.transform.position;
         AttackRand = Random.Range(1, 3);
@@ -28,9 +30,9 @@ public class BattleBasicEnemy : MonoBehaviour
         Hpbar();
         if (Hp <= 0)
         {
-            Dead();
+            Dead1();
         }
-        if (BattleManager.Instance.IsEnemyTurn == true)
+        if (BattleManager.Instance.IsEnemyTurn == true && BattleManager.Instance.IsEnemyDead == false)
         {
             StartCoroutine("EnemyAttack");
         }
@@ -62,11 +64,43 @@ public class BattleBasicEnemy : MonoBehaviour
             }
         }
     }
-    void Dead()
+    void Dead1()
     {
+        StartCoroutine("Dead2", 0.5f);
+    }
+    IEnumerator Dead2(float FaidTime)
+    {
+        BattleManager.Instance.IsEnemyDead = true;
         GameManager.Instance.IsBattleStart = false;
         BattleManager.Instance.IsEnemyTurn = false;
-        Destroy(this.gameObject);
+        Color color = SR.color;
+        Color color2 = HpBar.color;
+        Color color3 = HpBarNull.color;
+        Color color4 = EnemyPicture.color;
+        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
+            color3.a -= Time.deltaTime / FaidTime;
+            color4.a -= Time.deltaTime / FaidTime;
+            SR.color = color;
+            HpBar.color = color;
+            HpBarNull.color = color;
+            EnemyPicture.color = color;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+                color2.a = 0f;
+                color3.a = 0f;
+                color4.a = 0f;
+            }
+            else
+            {
+                yield return null;
+                yield return new WaitForSeconds(2);
+                Destroy(this.gameObject);
+            }
+        }        
     }
     IEnumerator EnemyAttack()
     {
