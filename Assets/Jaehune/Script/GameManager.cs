@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine("BattleStart");
             IsStart = true;
-            IsCamMove = true;
         }
         if(IsBattleStart == false && IsStart == true)
         {
@@ -65,6 +64,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine("BattleStartFaidOut", 0.8f);
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
+        IsCamMove = true;
         yield return new WaitForSeconds(2.2f);
         BattleButtonUi.SetActive(true);
         StartCoroutine("BattleStartFaidIn", 0.8f);

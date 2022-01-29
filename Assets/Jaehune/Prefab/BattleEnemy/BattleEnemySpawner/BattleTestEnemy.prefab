@@ -204,7 +204,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 94b30e7194681784591c52376ec0058f, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6509434, g: 0.48206657, b: 0.48206657, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -254,11 +254,11 @@ MonoBehaviour:
   Damage: 2
   Player: {fileID: 0}
   EnemySpawner: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}
+  DmgText: {fileID: 3589068186739345167, guid: 01066948735dbfe4895ff97ae2e6102e, type: 3}
   HpBar: {fileID: 7988257906937688803}
   HpBarNull: {fileID: 6343168093188019300}
   EnemyPicture: {fileID: 6367613823366425914}
   GoToPlayer: 0
-  SR: {fileID: 0}
 --- !u!1 &5585895785710942868
 GameObject:
   m_ObjectHideFlags: 0
