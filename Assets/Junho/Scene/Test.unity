@@ -752,6 +752,7 @@ MonoBehaviour:
   EnemySpawner: {fileID: 410432730}
   IsPlayerTurn: 1
   IsEnemyTurn: 0
+  IsEnemyDead: 0
 --- !u!4 &396054371
 Transform:
   m_ObjectHideFlags: 0
@@ -883,9 +884,11 @@ MonoBehaviour:
   maxSurvive: 100
   curHp: 100
   curSurvive: 0
+  BattleEndCount: 0
   Player: {fileID: 1344772219785259545}
   menuPanel: {fileID: 0}
   isPause: 0
+  isRoom: 0
 --- !u!4 &446725384
 Transform:
   m_ObjectHideFlags: 0
@@ -2434,6 +2437,14 @@ MonoBehaviour:
   target: {fileID: 1761817288}
   Battletarget: {fileID: 396054371}
   offset: {x: 0, y: 3, z: -10}
+  isright: 0
+  speed: 3
+  Left_center: {x: -12.21, y: 0}
+  Left_size: {x: 5, y: 5}
+  Right_center: {x: 12.18, y: 0}
+  Right_size: {x: 5, y: 5}
+  center: {x: 0, y: 0}
+  size: {x: 20.04, y: 9.64}
 --- !u!114 &1337572739
 MonoBehaviour:
   m_ObjectHideFlags: 0

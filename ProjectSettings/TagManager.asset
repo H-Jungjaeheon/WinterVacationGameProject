@@ -12,6 +12,8 @@ TagManager:
   - Ladder
   - Plan
   - Obj_2
+  - Corridor
+  - Barrier
   layers:
   - Default
   - TransparentFX
