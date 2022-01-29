@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance {get; set;}
+    public static GameManager Instance { get; set; }
     public int Stage = 1; //현재 챕터(스테이지)
     [SerializeField] Image FadIn, BattleStartImage; //전투 시작시 띄우는 페이드인, 빨간 칼 연출 이미지
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private Color PanelAlpha;
     private Image PanelImage;
     public bool isPause;
+    public bool isRoom;//플레이어가 방에 들어 갔는지
 
     private void Awake()
     {
@@ -37,13 +38,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsBattleStart == true && IsStart == false && BattleEndCount == 0)
+        if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
             StartCoroutine("BattleStart");
             IsStart = true;
             IsCamMove = true;
         }
-        if(IsBattleStart == false && IsStart == true)
+        if (IsBattleStart == false && IsStart == true)
         {
             StartCoroutine("BattleEnd");
             IsStart = false;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
         hpBar.value = (float)curHp / (float)maxHp;
         surviveBar.value = (float)curSurvive / (float)maxSurvive;
         HandleSlider();
-        if(BattleEndCount <= 0)
+        if (BattleEndCount <= 0)
         {
             BattleEndCount = 0;
         }
@@ -133,7 +134,7 @@ public class GameManager : MonoBehaviour
     }
     private void HandleSlider()
     {
-        if(IsBattleStart == false)
+        if (IsBattleStart == false)
         {
             curSurvive += Time.deltaTime;
         }
