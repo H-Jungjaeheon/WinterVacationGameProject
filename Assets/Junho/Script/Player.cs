@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
                 Debug.Log("n초 동안 누르면 드롭");
 
                 Cnt();
-                if (cnt > 1)
+                if (cnt > 2)
                 {
                     GameObject.Find("Obj_2").GetComponent<Obj>().Drop();
                     cnt = 0;
