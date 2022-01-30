@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rigid;
-    [SerializeField] float speed, jumpPower;
+    [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
 
     void Start()
@@ -112,6 +112,11 @@ public class Player : MonoBehaviour
             Debug.Log("d");
             GameManager.Instance.isRoom = false;
         }
+        if (collision.CompareTag("Lime"))
+        {
+            speed *= 0.2f;
+        }
+       
 
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -130,6 +135,10 @@ public class Player : MonoBehaviour
         else if (collision.CompareTag("Plan"))
         {
             isGound = false;
+        }
+        else if (collision.CompareTag("Lime"))
+        {
+            speed = 5f;
         }
     }
     void SurviveDamage()

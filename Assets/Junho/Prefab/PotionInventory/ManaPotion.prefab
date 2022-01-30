@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3526008968914863083}
   - component: {fileID: 3526008968914863082}
   m_Layer: 0
-  m_Name: SurvivePotion
+  m_Name: ManaPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 0c1a6ec5443195e4c83ced782b260008, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a638240a21f4bd74caa95fff93bf459d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
