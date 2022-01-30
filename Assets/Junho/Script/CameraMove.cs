@@ -8,6 +8,8 @@ public class CameraMove : MonoBehaviour
     public Transform Battletarget;
     public Vector3 offset;
     public bool isright;
+    [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
+    [SerializeField] UnityEngine.Camera MCamera;
 
     public float speed;
 
@@ -18,7 +20,7 @@ public class CameraMove : MonoBehaviour
     float width;
     private void Start()
     {
-        height = Camera.main.orthographicSize;
+        height = UnityEngine.Camera.main.orthographicSize;
         width = height*Screen.width/Screen.height;
     }
     private void OnDrawGizmos()
@@ -42,6 +44,8 @@ public class CameraMove : MonoBehaviour
         }
         if (GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
+            transform.position = target.position + offset;
+            MCamera.orthographicSize = 5;
             if (GameManager.Instance.isRoom)
             {
                 if (isright)
@@ -79,13 +83,24 @@ public class CameraMove : MonoBehaviour
                 transform.position = new Vector3(clampX, clampY, -10f);
             }
         }
-        else
+        else if (GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true && BattleManager.Instance.CamE == false && BattleManager.Instance.CamP == false)
         {
-            Invoke("BattleCameraMove", 2f);
+            BattleCameraMove();
+        }
+        else if (BattleManager.Instance.CamE == true)
+        {
+            transform.position = BPlayer.transform.position + offset + new Vector3(2, -3, 0);
+            MCamera.orthographicSize = 3f;
+        }
+        else if (BattleManager.Instance.CamP == true)
+        {
+            transform.position = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
+            MCamera.orthographicSize = 3f;
         }
     }
     void BattleCameraMove()
     {
         this.transform.position = Battletarget.position + offset;
+        MCamera.orthographicSize = 5;
     }
 }
