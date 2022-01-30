@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
             StartCoroutine("BattleEnd");
             IsStart = false;
         }
-        hpBar.value = (float)curHp / (float)maxHp;
-        surviveBar.value = (float)curSurvive / (float)maxSurvive;
+        hpBar.value = curHp / maxHp;
+        surviveBar.value = curSurvive / maxSurvive;
         HandleSlider();
         if (BattleEndCount <= 0)
         {
@@ -138,8 +138,8 @@ public class GameManager : MonoBehaviour
         {
             curSurvive += Time.deltaTime;
         }
-        hpBar.value = (float)curHp / (float)maxHp;
-        surviveBar.value = (float)curSurvive / (float)maxSurvive;
+        hpBar.value = curHp / maxHp;
+        surviveBar.value = curSurvive / maxSurvive;
     }
     public void StopButton()
     {

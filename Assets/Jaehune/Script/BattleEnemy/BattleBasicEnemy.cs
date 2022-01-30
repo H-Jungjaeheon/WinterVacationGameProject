@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class BattleBasicEnemy : MonoBehaviour
 {
-    [SerializeField] float MaxHp, BarUp; //최대 체력, 체력바 높이
+    [SerializeField] float MaxHp, BarUp, GExp; //최대 체력, 체력바 높이, 주는 경험치
     public float Hp; //현재 체력
     public int AttackRand; //다음 공격 랜덤으로 정하기
     [SerializeField] int Damage; //공격력
     [SerializeField] GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
     [SerializeField] Image HpBar, HpBarNull, EnemyPicture; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화
-    [SerializeField] bool GoToPlayer = false; //플레이어의 위치(근접 공격시)로 갈지 판단
+    [SerializeField] bool GoToPlayer = false, Dead = false; //플레이어의 위치(근접 공격시)로 갈지 판단
     SpriteRenderer SR; //죽을 때 점점 사라지게
 
     void Start()
@@ -71,6 +71,11 @@ public class BattleBasicEnemy : MonoBehaviour
     }
     IEnumerator Dead2(float FaidTime)
     {
+        if (Dead == false)
+        {
+            Dead = true;
+            GameObject.Find("GameManager").GetComponent<PlayerStats>().ExpUp(GExp);
+        }
         BattleManager.Instance.IsEnemyDead = true;
         BattleManager.Instance.IsEnemyTurn = false;
         Color color = SR.color;

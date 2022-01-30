@@ -894,8 +894,8 @@ MonoBehaviour:
   Left_size: {x: 0, y: 0}
   Right_center: {x: 0, y: 0}
   Right_size: {x: 0, y: 0}
-  center: {x: 0, y: 0}
-  size: {x: 17.7, y: 10}
+  center: {x: 0, y: 0.41}
+  size: {x: 18.1, y: 11.2}
 --- !u!1 &608739386 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}
@@ -2535,6 +2535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831683695}
   - component: {fileID: 1831683694}
+  - component: {fileID: 1831683696}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2590,6 +2591,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1831683696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831683693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee4350c7778f4a46a50c843782e987d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: 0100000001000000
+  Exp: 0
+  MaxExp: 0
+  LV: 0
+  Stateup: 0
 --- !u!1 &1948778166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2795,6 +2813,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattlePlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1228663898022276868, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: GM
+      value: 
+      objectReference: {fileID: 1831683693}
     - target: {fileID: 1228663898022276868, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: DmgText
       value: 

@@ -4,35 +4,42 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int[] stats = {1,1}; //체력 / 공격력
-    private float exp, MaxExp;
-    public int stateup;
+    public int[] stats = { 1, 1, 1}; //체력 / 공격력 / 마나
+    [SerializeField] float Exp, MaxExp, LV;
+    public bool Stateup = false;
+    private void Start()
+    {
+        LV = 1;
+        Exp = 0;
+        MaxExp = 100;
+    }
     private void Update()
     {
-        if(exp >= 100)
+        if(Exp >= MaxExp)
         {
-            exp -= 100;
-            stateup += 1;
+            Exp = 0;
+            MaxExp += 20;
+            Stateup = true;
         }
     }
     public void HpUpgrade()
     {
-        if(stateup != 0)
-       {
+        if(Stateup == true)
+        {
             stats[0] += 1;
-            stateup--;
+            Stateup = false;
         }
     }
     public void DmgUpgrade()
     {
-        if (stateup != 0)
+        if (Stateup == true)
         {
-            stats[1] += 1;
-            stateup--;
+            stats[1] += 2;
+            Stateup = false;
         }
     }
     public void ExpUp(float expidx)
     {
-        exp += expidx;
+        Exp += expidx;
     }
 }
