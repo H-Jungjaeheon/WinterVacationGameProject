@@ -33,13 +33,14 @@ public class PlayerStats : MonoBehaviour
             Stateup = false;
             GameManager.Instance.StatUp.SetActive(false);
             GameManager.Instance.LevelUp = false;
+            GameManager.Instance.maxHp += stats[0] * 10;
         }
     }
     public void DmgUpgrade()
     {
         if (Stateup == true)
         {
-            stats[1] += 2;
+            stats[1] += 1;
             Stateup = false;
             GameManager.Instance.StatUp.SetActive(false);
             GameManager.Instance.LevelUp = false;
@@ -49,10 +50,11 @@ public class PlayerStats : MonoBehaviour
     {
         if (Stateup == true)
         {
-            stats[2] += 10;
+            stats[2] += 1;
             Stateup = false;
             GameManager.Instance.StatUp.SetActive(false);
             GameManager.Instance.LevelUp = false;
+            GameManager.Instance.maxMana += stats[2] * 10;
         }
     }
     public void ExpUp(float expidx)

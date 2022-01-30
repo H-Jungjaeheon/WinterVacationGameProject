@@ -6,16 +6,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
+    
     public int Stage = 1; //현재 챕터(스테이지)
     [SerializeField] Image FadIn, BattleStartImage; //전투 시작시 띄우는 페이드인, 빨간 칼 연출 이미지
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
     [SerializeField] bool IsStart = false; //전투 시작 여부 판단2
-    [SerializeField] private Slider hpBar, surviveBar; //플레이어 hp, 감염수치 바
     public Text BattleSkillText; //전투 중 공격 or 스킬 이름 표시 텍스트
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //전투용 버튼, 전투용 버튼 배경 오브젝트, 스탯 업그레이드 창
-    [SerializeField] float maxHp = 100, maxSurvive = 100; //최대 체력, 최대 감염수치
-    public float curHp = 100, curSurvive = 0, BattleEndCount = 0; //체력, 감염수치
-    [SerializeField] GameObject Player, menuPanel; //플레이어
+    
+    [SerializeField] private Slider hpBar, manaBar; //플레이어 hp, 감염수치 바
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //체력, 감염수치,최대 체력, 최대 감염수치
+    
+    [SerializeField] GameObject Player, menuPanel; //플레이어, 메뉴
+   
     private Color PanelAlpha;
     private Image PanelImage;
 
@@ -37,6 +40,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (curHp>=maxHp)
+        {
+            curHp = maxHp;
+        }
+        if (curMana >= maxMana)
+        {
+            curMana = maxMana;
+        }
+
+        curHp = maxHp - stackDamage;
+
         if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
             StartCoroutine("BattleStart");
@@ -48,7 +62,7 @@ public class GameManager : MonoBehaviour
             IsStart = false;
         }
         hpBar.value = curHp / maxHp;
-        surviveBar.value = curSurvive / maxSurvive;
+        manaBar.value = curMana / maxMana;
         HandleSlider();
         if (BattleEndCount <= 0)
         {
@@ -135,10 +149,10 @@ public class GameManager : MonoBehaviour
     {
         if (IsBattleStart == false && LevelUp == false)
         {
-            curSurvive += Time.deltaTime;
+            curMana -= Time.deltaTime*0.25f;
         }
         hpBar.value = curHp / maxHp;
-        surviveBar.value = curSurvive / maxSurvive;
+        manaBar.value = curMana / maxMana;
     }
     public void StopButton()
     {

@@ -126,7 +126,7 @@ public class BattleBasicEnemy : MonoBehaviour
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage;
-            GameManager.Instance.curHp -= Damage;
+            GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
             BattleManager.Instance.CamE = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
