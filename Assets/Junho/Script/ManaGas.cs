@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurviveGas : MonoBehaviour
+public class ManaGas : MonoBehaviour
 {
     public bool isDamage = false;
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class SurviveGas : MonoBehaviour
     {
         if (isDamage == true)
         {
-            GameManager.Instance.curSurvive += 10;
+            GameManager.Instance.curMana -= 10;
 
         }
         
