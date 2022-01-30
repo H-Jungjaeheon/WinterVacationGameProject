@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             Move();
-            Jump();
+            //Jump();
             if (isLadder)
             {
                 bool isF;
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
                 Debug.Log("n초 동안 누르면 드롭");
 
                 Cnt();
-                if (cnt > 1)
+                if (cnt > 2)
                 {
                     GameObject.Find("Obj_2").GetComponent<Obj>().Drop();
                     cnt = 0;
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     }
     void Jump()
     {
-        if (isGound == true && Input.GetKeyDown(KeyCode.Space))
+        if (isGound == true && Input.GetKey(KeyCode.Space))
         {
             rigid.velocity = Vector2.up * jumpPower;
         }
@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
     {
         if (isDamage == true)
         {
-            GameManager.Instance.curSurvive += Time.deltaTime * 2f;
+            GameManager.Instance.curMana -= Time.deltaTime * 2f;
         }
     }
 }

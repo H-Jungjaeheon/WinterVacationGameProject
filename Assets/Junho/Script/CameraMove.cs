@@ -8,18 +8,20 @@ public class CameraMove : MonoBehaviour
     public Transform Battletarget;
     public Vector3 offset;
     public bool isright;
+    [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
+    [SerializeField] UnityEngine.Camera MCamera;
 
     public float speed;
 
     public Vector2 Left_center, Left_size, Right_center, Right_size, center, size;
-    
+
 
     float height;
     float width;
     private void Start()
     {
         height = UnityEngine.Camera.main.orthographicSize;
-        width = height*Screen.width/Screen.height;
+        width = height * Screen.width / Screen.height;
     }
     private void OnDrawGizmos()
     {
@@ -53,10 +55,12 @@ public class CameraMove : MonoBehaviour
 
                     float Iy = Right_size.y * 0.5f - height;
                     float clampY = Mathf.Clamp(transform.position.y, -Iy + Right_center.y, Iy + Right_center.y);
-                    transform.position = new Vector3(clampX, clampY,-10f);
+                    transform.position = new Vector3(clampX, clampY, -10f);
                 }
                 else
                 {
+                    MCamera.orthographicSize = 5;
+
                     transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 
                     float Ix = Left_size.x * 0.5f - width;
@@ -79,13 +83,24 @@ public class CameraMove : MonoBehaviour
                 transform.position = new Vector3(clampX, clampY, -10f);
             }
         }
-        else
+        else if (GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true && BattleManager.Instance.CamE == false && BattleManager.Instance.CamP == false)
         {
-            Invoke("BattleCameraMove", 2f);
+            BattleCameraMove();
+        }
+        else if (BattleManager.Instance.CamE == true)
+        {
+            transform.position = BPlayer.transform.position + offset + new Vector3(2, -3, 0);
+            MCamera.orthographicSize = 3f;
+        }
+        else if (BattleManager.Instance.CamP == true)
+        {
+            transform.position = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
+            MCamera.orthographicSize = 3f;
         }
     }
     void BattleCameraMove()
     {
         this.transform.position = Battletarget.position + offset;
+        MCamera.orthographicSize = 5;
     }
 }

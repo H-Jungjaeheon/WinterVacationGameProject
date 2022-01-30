@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class BattlePlayer : MonoBehaviour
 {
-    [SerializeField] int Damage; //적에게 줄 데미지
     [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
-    [SerializeField] GameObject Enemy, PlayerSpawner, DmgText; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] GameObject Enemy, PlayerSpawner, DmgText, GM; //전투시 인식한 적 오브젝트 담는 그릇
     [SerializeField] bool GoToEnemy = false; //적의 위치(근접 공격시)로 갈지 판단
 
     // Start is called before the first frame update
@@ -86,8 +85,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject DT = Instantiate(DmgText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
-        DT.GetComponent<BattleDamageText>().damage = Damage;
-        Enemy.GetComponent<BattleBasicEnemy>().Hp -= Damage;
+        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -115,8 +114,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject DT = Instantiate(DmgText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
-        DT.GetComponent<BattleDamageText>().damage = Damage * 2;
-        Enemy.GetComponent<BattleBasicEnemy>().Hp -= Damage * 2;
+        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 2;
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 2;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);

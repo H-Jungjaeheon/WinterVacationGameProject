@@ -796,8 +796,8 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
+  - component: {fileID: 519420033}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -813,24 +813,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1269ed29cc4d37940a4932a126b26d9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1190694773}
-  Battletarget: {fileID: 2097894812}
-  offset: {x: 0, y: 3.6, z: -10}
-  BEnemy: {fileID: 608739386}
-  BPlayer: {fileID: 1975136695}
-  MCamera: {fileID: 519420031}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -888,6 +870,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1269ed29cc4d37940a4932a126b26d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1190694773}
+  Battletarget: {fileID: 2097894812}
+  offset: {x: 0, y: 3.6, z: -10}
+  isright: 0
+  BEnemy: {fileID: 608739386}
+  BPlayer: {fileID: 1975136695}
+  MCamera: {fileID: 519420031}
+  speed: 3
+  Left_center: {x: 0, y: 0}
+  Left_size: {x: 0, y: 0}
+  Right_center: {x: 0, y: 0}
+  Right_size: {x: 0, y: 0}
+  center: {x: 0, y: 0.41}
+  size: {x: 18.1, y: 11.2}
 --- !u!1 &608739386 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}
@@ -1069,7 +1077,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -29
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0, g: 1, b: 0.19350243, a: 1}
   m_FlipX: 0
@@ -2527,6 +2535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831683695}
   - component: {fileID: 1831683694}
+  - component: {fileID: 1831683696}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2567,6 +2576,7 @@ MonoBehaviour:
   Player: {fileID: 1190694767}
   menuPanel: {fileID: 0}
   isPause: 0
+  isRoom: 0
 --- !u!4 &1831683695
 Transform:
   m_ObjectHideFlags: 0
@@ -2581,6 +2591,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1831683696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831683693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee4350c7778f4a46a50c843782e987d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: 0100000001000000
+  Exp: 0
+  MaxExp: 0
+  LV: 0
+  Stateup: 0
 --- !u!1 &1948778166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,6 +2813,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattlePlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1228663898022276868, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: GM
+      value: 
+      objectReference: {fileID: 1831683693}
     - target: {fileID: 1228663898022276868, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: DmgText
       value: 

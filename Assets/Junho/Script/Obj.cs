@@ -8,6 +8,8 @@ public class Obj : MonoBehaviour
     public GameObject[] Items;
     public bool isIt;
 
+    public Sprite Open;
+
     [SerializeField]
     public GameObject[] particle;
     // Start is called before the first frame update
@@ -62,6 +64,7 @@ public class Obj : MonoBehaviour
     public void Drop()
     {
         isIt = false;
+        GetComponent<SpriteRenderer>().sprite = Open;
         Interaction.SetActive(false);
         int ran = Random.Range(0, 10);
         if (ran < 7)
