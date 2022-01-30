@@ -247,4 +247,5 @@ MonoBehaviour:
   Damage: 3
   Enemy: {fileID: 0}
   PlayerSpawner: {fileID: 7225351665252857370, guid: 381de060e4bc4d74db0de367c940a64f, type: 3}
+  DmgText: {fileID: 3589068186739345167, guid: 01066948735dbfe4895ff97ae2e6102e, type: 3}
   GoToEnemy: 0

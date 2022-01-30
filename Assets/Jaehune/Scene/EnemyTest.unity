@@ -828,6 +828,9 @@ MonoBehaviour:
   target: {fileID: 1190694773}
   Battletarget: {fileID: 2097894812}
   offset: {x: 0, y: 3.6, z: -10}
+  BEnemy: {fileID: 608739386}
+  BPlayer: {fileID: 1975136695}
+  MCamera: {fileID: 519420031}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1000,7 +1003,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734696208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -0.01, z: 117.5436}
+  m_LocalPosition: {x: -0.05, y: -0.01, z: 0}
   m_LocalScale: {x: 18, y: 4.5, z: 1}
   m_Children: []
   m_Father: {fileID: 2097894812}
@@ -1354,7 +1357,7 @@ Canvas:
   m_GameObject: {fileID: 1047243140}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1951,6 +1954,10 @@ PrefabInstance:
     - target: {fileID: 5813755825550126812, guid: 0c62a878834a42e4db43b602d3638310, type: 3}
       propertyPath: m_Name
       value: BasicEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5813755825550126812, guid: 0c62a878834a42e4db43b602d3638310, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c62a878834a42e4db43b602d3638310, type: 3}
@@ -2718,6 +2725,8 @@ MonoBehaviour:
   IsPlayerTurn: 1
   IsEnemyTurn: 0
   IsEnemyDead: 0
+  CamE: 0
+  CamP: 0
 --- !u!1001 &1228663897214122538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2777,6 +2786,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattlePlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1228663898022276868, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: DmgText
+      value: 
+      objectReference: {fileID: 3589068186739345167, guid: 01066948735dbfe4895ff97ae2e6102e, type: 3}
     - target: {fileID: 1228663898022276868, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: PlayerSpawner
       value: 

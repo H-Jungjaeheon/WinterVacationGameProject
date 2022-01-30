@@ -15,9 +15,9 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
+        if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            Move();   
+            Move();
             Jump();
             if (isLadder)
             {
@@ -25,11 +25,12 @@ public class Player : MonoBehaviour
                 if (Input.GetKey(KeyCode.F))
                 {
                     isF = true;
-                } else isF = false;
+                }
+                else isF = false;
                 if (isF)
                 {
-                rigid.gravityScale = 0;
-                rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime*speed*50);
+                    rigid.gravityScale = 0;
+                    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * 50);
                 }
             }
             else
@@ -41,26 +42,47 @@ public class Player : MonoBehaviour
     void Update()
     {
         SurviveDamage();
+
     }
     private void OnTriggerStay2D(Collider2D collision)
-    {   
-        if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
-        {                  
-             Debug.Log("f키 누름");
-             Obj.Instance.Drop();               
-             Obj.Instance.Interaction.SetActive(false);
-             Obj.Instance.isIt = false;
+    {
+        {
+            if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
+            {
+                Debug.Log("기본 드롭");
+                GameObject.Find("Obj").GetComponent<Obj>().Drop();
+
+            }
+            if (collision.CompareTag("Obj_2") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
+            {
+                Debug.Log("n초 동안 누르면 드롭");
+
+                Cnt();
+                if (cnt > 1)
+                {
+                    GameObject.Find("Obj_2").GetComponent<Obj>().Drop();
+                    cnt = 0;
+                }
+
+            }
+
         }
     }
+    float cnt;
+    void Cnt()
+    {
+        cnt += Time.deltaTime;
+    }
+
     void Move()
     {
         float x = Input.GetAxis("Horizontal");
-        rigid.velocity = new Vector2 (x*speed, rigid.velocity.y);
+        rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
     }
     void Jump()
     {
         if (isGound == true && Input.GetKeyDown(KeyCode.Space))
-        { 
+        {
             rigid.velocity = Vector2.up * jumpPower;
         }
         else return;
@@ -71,20 +93,26 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.IsBattleStart = true;
         }
-        else if (collision.CompareTag("Gas"))
+        if (collision.CompareTag("Gas"))
         {
             Debug.Log("가스에닿음");
             isDamage = true;
         }
-        else if (collision.CompareTag("Ladder"))
+        if (collision.CompareTag("Ladder"))
         {
             Debug.Log("사다리에 닿음");
             isLadder = true;
         }
-        else if (collision.CompareTag("Plan"))
+        if (collision.CompareTag("Plan") || collision.CompareTag("Corridor"))
         {
             isGound = true;
         }
+        if (collision.CompareTag("Corridor"))
+        {
+            Debug.Log("d");
+            GameManager.Instance.isRoom = false;
+        }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -108,7 +136,7 @@ public class Player : MonoBehaviour
     {
         if (isDamage == true)
         {
-            GameManager.Instance.curSurvive += Time.deltaTime*2f;
+            GameManager.Instance.curSurvive += Time.deltaTime * 2f;
         }
     }
 }
