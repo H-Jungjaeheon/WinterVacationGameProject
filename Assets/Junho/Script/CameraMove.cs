@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
     float width;
     private void Start()
     {
-        height = Camera.main.orthographicSize;
+        height = UnityEngine.Camera.main.orthographicSize;
         width = height*Screen.width/Screen.height;
     }
     private void OnDrawGizmos()
