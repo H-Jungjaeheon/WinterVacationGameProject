@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             Move();
-            Jump();
+            //Jump();
             if (isLadder)
             {
                 bool isF;
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     }
     void Jump()
     {
-        if (isGound == true && Input.GetKeyDown(KeyCode.Space))
+        if (isGound == true && Input.GetKey(KeyCode.Space))
         {
             rigid.velocity = Vector2.up * jumpPower;
         }
