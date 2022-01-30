@@ -16,6 +16,8 @@ public class BattleBasicEnemy : MonoBehaviour
 
     void Start()
     {
+        MaxHp *= GameManager.Instance.Stage;
+        Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position;
         AttackRand = Random.Range(1, 3);

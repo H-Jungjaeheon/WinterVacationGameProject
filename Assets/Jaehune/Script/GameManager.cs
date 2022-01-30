@@ -8,18 +8,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     public int Stage = 1; //현재 챕터(스테이지)
     [SerializeField] Image FadIn, BattleStartImage; //전투 시작시 띄우는 페이드인, 빨간 칼 연출 이미지
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
     [SerializeField] bool IsStart = false; //전투 시작 여부 판단2
     [SerializeField] private Slider hpBar, surviveBar; //플레이어 hp, 감염수치 바
     public Text BattleSkillText; //전투 중 공격 or 스킬 이름 표시 텍스트
-    public GameObject BattleButtonUi, BattleSkillBackGround; //전투용 버튼, 전투용 버튼 배경 오브젝트
+    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //전투용 버튼, 전투용 버튼 배경 오브젝트, 스탯 업그레이드 창
     [SerializeField] float maxHp = 100, maxSurvive = 100; //최대 체력, 최대 감염수치
     public float curHp = 100, curSurvive = 0, BattleEndCount = 0; //체력, 감염수치
     [SerializeField] GameObject Player, menuPanel; //플레이어
     private Color PanelAlpha;
     private Image PanelImage;
-    public bool isPause;
-    public bool isRoom;//플레이어가 방에 들어 갔는지
 
     private void Awake()
     {
@@ -27,6 +25,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         BattleSkillText.text = "";
         BattleSkillBackGround.SetActive(false);
+        StatUp.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -43,7 +42,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine("BattleStart");
             IsStart = true;
         }
-        if (IsBattleStart == false && IsStart == true)
+        if (IsBattleStart == false && IsStart == true && LevelUp == false)
         {
             StartCoroutine("BattleEnd");
             IsStart = false;
@@ -134,7 +133,7 @@ public class GameManager : MonoBehaviour
     }
     private void HandleSlider()
     {
-        if (IsBattleStart == false)
+        if (IsBattleStart == false && LevelUp == false)
         {
             curSurvive += Time.deltaTime;
         }

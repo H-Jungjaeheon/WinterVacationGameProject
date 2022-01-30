@@ -17,9 +17,12 @@ public class PlayerStats : MonoBehaviour
     {
         if(Exp >= MaxExp)
         {
+            GameManager.Instance.LevelUp = true;
+            LV += 1;
             Exp = 0;
             MaxExp += 20;
             Stateup = true;
+            Invoke("StatUp", 3f);
         }
     }
     public void HpUpgrade()
@@ -28,6 +31,8 @@ public class PlayerStats : MonoBehaviour
         {
             stats[0] += 1;
             Stateup = false;
+            GameManager.Instance.StatUp.SetActive(false);
+            GameManager.Instance.LevelUp = false;
         }
     }
     public void DmgUpgrade()
@@ -36,10 +41,26 @@ public class PlayerStats : MonoBehaviour
         {
             stats[1] += 2;
             Stateup = false;
+            GameManager.Instance.StatUp.SetActive(false);
+            GameManager.Instance.LevelUp = false;
+        }
+    }
+    public void ManaUpgrade()
+    {
+        if (Stateup == true)
+        {
+            stats[2] += 10;
+            Stateup = false;
+            GameManager.Instance.StatUp.SetActive(false);
+            GameManager.Instance.LevelUp = false;
         }
     }
     public void ExpUp(float expidx)
     {
         Exp += expidx;
+    }
+    void StatUp()
+    {
+        GameManager.Instance.StatUp.SetActive(true);
     }
 }
