@@ -9,16 +9,18 @@ public class BasicEnemyScript : MonoBehaviour
     [SerializeField] bool IsFind = false, IsMove = true; //플레이어 발견, 자신의 움직임 판별
     [SerializeField] GameObject Player, WarningObj; //플레이어 오브젝트(프리펩), 발견시 느낌표 오브젝트
     [SerializeField] RaycastHit2D hit; 
-    [SerializeField] int SpawnMonsterCount; //전투 시작 시 전투 필드에 소환할 몬스터 (0 ~ ... & 자기 스프라이트에 맞는 몬스터 전투 필드에 소환)
+    [SerializeField] int SpawnMonsterCount, TurnCount; //전투 시작 시 전투 필드에 소환할 몬스터 (0 ~ ... & 자기 스프라이트에 맞는 몬스터 전투 필드에 소환)
+    Animator animator;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
-
+        animator = GetComponent<Animator>();
+        TurnCount = 1;
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         RayCasting();
         if(IsMove == true)
@@ -35,24 +37,39 @@ public class BasicEnemyScript : MonoBehaviour
         }
     }
 
-    void Moving()
+    public virtual void Moving()
     {
         MoveCount += Time.deltaTime;
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if(MoveCount >= MaxMoveCount)
         {
+            animator.SetBool("IsIdle", true);
             MoveCount = 0;
             IsMove = false;
             Invoke("Trun", 4f);
         }
     }
-    void Trun()
+    public virtual void Trun()
     {
         Speed *= -1;
         SeeCrossroad *= -1;
         IsMove = true;
+        if (TurnCount % 2 == 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        TurnCount++;
+        if(TurnCount >= 3)
+        {
+            TurnCount = 1;
+        }
+        animator.SetBool("IsIdle", false);
     }
-    void RayCasting()
+    public virtual void RayCasting()
     {
         Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
         var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
@@ -71,7 +88,7 @@ public class BasicEnemyScript : MonoBehaviour
             }
         }
     }
-    void FindPlayer()
+    public virtual void FindPlayer()
     {
         MoveCount = 0;
         if(Speed > 0)
@@ -83,16 +100,16 @@ public class BasicEnemyScript : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * -1.3f * Time.deltaTime);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0)
         {
             Speed = 0;
-            Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, transform.rotation);
+            Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, Quaternion.Euler(0,0,0));
             Invoke("Delete", 2f);
         }
     }
-    void Delete()
+    public virtual void Delete()
     {
         Destroy(this.gameObject);
     }

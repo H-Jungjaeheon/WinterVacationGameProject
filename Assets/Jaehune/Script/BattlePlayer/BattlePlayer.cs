@@ -87,6 +87,7 @@ public class BattlePlayer : MonoBehaviour
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
+        Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -116,6 +117,7 @@ public class BattlePlayer : MonoBehaviour
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 2;
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 2;
+        Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
