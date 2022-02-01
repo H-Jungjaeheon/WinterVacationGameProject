@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public Transform target;
-    public Transform Battletarget;
-    public Vector3 offset;
+    public Transform target, Battletarget;
+    public Vector3 offset, initialPosition;
     public bool isright;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
     [SerializeField] UnityEngine.Camera MCamera;
-
+    [SerializeField] float ShakeAmount;
+    private float ShakeTime;
     public float speed;
-
     public Vector2 Left_center, Left_size, Right_center, Right_size, center, size;
+    float height, width;
 
-
-    float height;
-    float width;
     private void Start()
     {
         height = UnityEngine.Camera.main.orthographicSize;
@@ -31,7 +28,6 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(Right_center, Right_size);
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(center, size);
-
     }
 
     void Update()
@@ -97,10 +93,46 @@ public class CameraMove : MonoBehaviour
             transform.position = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
             MCamera.orthographicSize = 3f;
         }
+        if(GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true)
+        {
+            if (BattleManager.Instance.CamE == true)
+            {
+                initialPosition = BPlayer.transform.position + offset + new Vector3(2, -3, 0);
+                if (ShakeTime > 0)
+                {
+                    transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
+                    ShakeTime -= Time.deltaTime;
+                }
+                else
+                {
+                    ShakeTime = 0.0f;
+                    transform.position = initialPosition;
+                }
+            }
+            else if (BattleManager.Instance.CamP == true)
+            {
+                initialPosition = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
+                if (ShakeTime > 0)
+                {
+                    transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
+                    ShakeTime -= Time.deltaTime;
+                }
+                else
+                {
+                    ShakeTime = 0.0f;
+                    transform.position = initialPosition;
+                }
+            }
+        }
     }
     void BattleCameraMove()
     {
         this.transform.position = Battletarget.position + offset;
         MCamera.orthographicSize = 5;
     }
+    public void VibrateForTime(float time)
+    {
+        ShakeTime = time;
+    }
+
 }

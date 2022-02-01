@@ -158,6 +158,7 @@ public class BattleBasicEnemy : MonoBehaviour
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage;
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.6f, -0.3f, 0);
@@ -184,10 +185,12 @@ public class BattleBasicEnemy : MonoBehaviour
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
+            transform.position = this.transform.position + new Vector3(-0.6f, 0.3f, 0);
             GameObject DT = Instantiate(DmgText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage * 2;
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             GameManager.Instance.curHp -= Damage * 2;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.6f, -0.3f, 0);
