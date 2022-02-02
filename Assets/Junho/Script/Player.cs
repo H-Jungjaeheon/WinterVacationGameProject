@@ -56,19 +56,12 @@ public class Player : MonoBehaviour
             if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
             {
                 Debug.Log("기본 드롭");
-                GameObject.Find("Obj").GetComponent<Obj>().Drop();
+                collision.GetComponent<Obj>().Drop();
 
             }
             if (collision.CompareTag("Obj_2") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
             {
-                Debug.Log("n초 동안 누르면 드롭");
-
-                Cnt();
-                if (cnt > 2)
-                {
-                    GameObject.Find("Obj_2").GetComponent<Obj>().Drop();
-                    cnt = 0;
-                }
+                
 
             }
 
