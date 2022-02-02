@@ -6,11 +6,9 @@ public class testItem : MonoBehaviour
 {
     public GameObject slotItem;
     public GameObject Interaction;
-
-    // Start is called before the first frame update
+    // Start is called before the first framse update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
