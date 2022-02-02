@@ -8,10 +8,11 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
-
+    Animator anim;
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
@@ -37,6 +38,11 @@ public class Player : MonoBehaviour
             {
                 rigid.gravityScale = 3f;
             }
+            if (rigid.velocity.normalized.x==0)
+            {
+                anim.SetBool("IsWalk",false);
+            }
+            else anim.SetBool("IsWalk", true);
         }
     }
     void Update()
@@ -77,6 +83,11 @@ public class Player : MonoBehaviour
     void Move()
     {
         float x = Input.GetAxis("Horizontal");
+        if (x < 0)
+        {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        }else if(x > 0)transform.rotation = Quaternion.Euler(0, 180, 0);
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
     }
     void Jump()
