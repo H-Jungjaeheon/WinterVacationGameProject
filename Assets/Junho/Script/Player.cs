@@ -50,28 +50,8 @@ public class Player : MonoBehaviour
         SurviveDamage();
 
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        {
-            if (collision.CompareTag("Obj") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
-            {
-                Debug.Log("기본 드롭");
-                collision.GetComponent<Obj>().Drop();
-
-            }
-            if (collision.CompareTag("Obj_2") && Obj.Instance.isIt == true && Input.GetKey(KeyCode.F))
-            {
-                
-
-            }
-
-        }
-    }
-    float cnt;
-    void Cnt()
-    {
-        cnt += Time.deltaTime;
-    }
+   
+    
 
     void Move()
     {
@@ -91,36 +71,41 @@ public class Player : MonoBehaviour
         }
         else return;
     }
+  
+    void ObjManager()
+    {
+        
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy") && GameManager.Instance.BattleEndCount == 0)
         {
             GameManager.Instance.IsBattleStart = true;
         }
-        if (collision.CompareTag("Gas"))
+        else if (collision.CompareTag("Gas"))
         {
             Debug.Log("가스에닿음");
             isDamage = true;
         }
-        if (collision.CompareTag("Ladder"))
+        else if (collision.CompareTag("Ladder"))
         {
             Debug.Log("사다리에 닿음");
             isLadder = true;
         }
-        if (collision.CompareTag("Plan") || collision.CompareTag("Corridor"))
+        else if (collision.CompareTag("Plan") || collision.CompareTag("Corridor"))
         {
             isGound = true;
         }
-        if (collision.CompareTag("Corridor"))
+        else if (collision.CompareTag("Corridor"))
         {
             Debug.Log("d");
             GameManager.Instance.isRoom = false;
         }
-        if (collision.CompareTag("Lime"))
+        else if (collision.CompareTag("Lime"))
         {
             speed *= 0.2f;
-        }
-       
+        }       
+        
 
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -144,6 +129,7 @@ public class Player : MonoBehaviour
         {
             speed = 5f;
         }
+       
     }
     void SurviveDamage()
     {

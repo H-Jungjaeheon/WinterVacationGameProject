@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Obj : MonoBehaviour
+using UnityEngine.UI;
+
+public class Obj_3 : MonoBehaviour
 {
     public GameObject Interaction;
     public GameObject[] Items;
     public bool isIt;
     bool iscollison;
+    public Slider slider;
 
     public Sprite Open;
 
@@ -19,15 +22,35 @@ public class Obj : MonoBehaviour
         isIt = true;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
+
+
     }
 
     // Update is called once per frame
+    int cnt;
     void Update()
     {
+        slider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
         isParticle();
-
-        if (isIt==true&&iscollison&&Input.GetKey(KeyCode.F))
+        slider.value = cnt / 100;
+        if (isIt && iscollison)
         {
+            slider.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                cnt += 5;
+                Debug.Log(cnt);
+            }
+           
+        }
+        else
+        {
+            slider.gameObject.SetActive(false);
+            cnt = 0;
+        }
+        if (cnt >= 100)
+        {
+            cnt = 0;
             Drop();
         }
     }
@@ -50,6 +73,7 @@ public class Obj : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("³ª°¨");
+            iscollison = false;
             Interaction.gameObject.SetActive(false);
         }
     }

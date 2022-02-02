@@ -15,6 +15,7 @@ TagManager:
   - Corridor
   - Barrier
   - Lime
+  - Obj_3
   layers:
   - Default
   - TransparentFX
