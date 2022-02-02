@@ -27,7 +27,7 @@ public class Obj_3 : MonoBehaviour
     }
 
     // Update is called once per frame
-    int cnt;
+    float cnt;
     void Update()
     {
         slider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
@@ -52,6 +52,10 @@ public class Obj_3 : MonoBehaviour
         {
             cnt = 0;
             Drop();
+        }
+        if (cnt > 0)
+        { 
+            cnt -= Time.deltaTime*10;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
