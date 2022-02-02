@@ -16,6 +16,7 @@ TagManager:
   - Barrier
   - Lime
   - Obj_3
+  - Key
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     
     public int Stage = 1; //현재 챕터(스테이지)
     [SerializeField] Image FadIn, BattleStartImage; //전투 시작시 띄우는 페이드인, 빨간 칼 연출 이미지
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false; //전투 시작, 전투 카메라 이동, 공격 가능, 전투 장소 띄우기 여부 판단, 플레이어 열쇠 여부
     [SerializeField] bool IsStart = false; //전투 시작 여부 판단2
     public Text BattleSkillText; //전투 중 공격 or 스킬 이름 표시 텍스트
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //전투용 버튼, 전투용 버튼 배경 오브젝트, 스탯 업그레이드 창

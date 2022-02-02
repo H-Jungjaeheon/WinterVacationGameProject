@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         SurviveDamage();
-
+        
     }
    
     
@@ -104,8 +104,9 @@ public class Player : MonoBehaviour
         else if (collision.CompareTag("Lime"))
         {
             speed *= 0.2f;
-        }       
+        }
         
+
 
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -129,7 +130,8 @@ public class Player : MonoBehaviour
         {
             speed = 5f;
         }
-       
+        
+
     }
     void SurviveDamage()
     {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Btn : MonoBehaviour
 {
+    bool isCollider;
     public bool isOn;
     private void Awake()
     {
@@ -12,19 +13,32 @@ public class Btn : MonoBehaviour
     
     private void Update()
     {
-
+        if (isCollider==true&&Input.GetKey(KeyCode.F))
+        {
+            isOn = true;
+        }
         if (isOn)
         {
             GetComponent<SpriteRenderer>().color = Color.green;
         }
         else GetComponent<SpriteRenderer>().color = Color.red;
 
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && Input.GetKey(KeyCode.F))
+        if (collision.CompareTag("Player"))
         {
-            isOn = true;
+            isCollider = true;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            isCollider = false;
+        }
+        
+    }
+    
 }
