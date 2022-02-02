@@ -173,6 +173,7 @@ public class BattleBasicEnemy : MonoBehaviour
             GoToReturn = false;
             yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
+            GameManager.Instance.BattleButtonUi.SetActive(true);
             //AttackRand = Random.Range(1, 3);
         }
         else if (Anger >= MaxAnger) //AttackRand == 2
@@ -204,6 +205,7 @@ public class BattleBasicEnemy : MonoBehaviour
             GoToReturn = false;
             yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
+            GameManager.Instance.BattleButtonUi.SetActive(true);
             //AttackRand = Random.Range(1, 3);
         }
         yield return null;

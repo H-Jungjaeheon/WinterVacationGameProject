@@ -52,7 +52,6 @@ public class PlayerStats : MonoBehaviour
     private void HandleSlider()
     {
         ExpBar.value = Exp / MaxExp;
-
     }
     public void ManaUpgrade()
     {

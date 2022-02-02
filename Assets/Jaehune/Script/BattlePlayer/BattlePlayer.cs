@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BattlePlayer : MonoBehaviour
 {
     [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
-    [SerializeField] GameObject Enemy, PlayerSpawner, DmgText, GM; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] GameObject Enemy, PlayerSpawner, DmgText, GM, SkillButton, ManaText; //전투시 인식한 적 오브젝트 담는 그릇
     [SerializeField] bool GoToEnemy = false; //적의 위치(근접 공격시)로 갈지 판단
 
     // Start is called before the first frame update
@@ -53,11 +53,9 @@ public class BattlePlayer : MonoBehaviour
         }
     }
     public void Playerskill()
-    {
-        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
-        {
-            StartCoroutine("PlayerSkill", 1f);
-        }
+    {     
+        SkillButton.SetActive(true);
+        GameManager.Instance.BattleButtonUi.SetActive(false);   
     }
     public void PlayerItem()
     {
@@ -73,8 +71,35 @@ public class BattlePlayer : MonoBehaviour
             StartCoroutine("PlayerAttack", 1f);
         }
     }
+    public void Return()
+    {
+        SkillButton.SetActive(false);
+        GameManager.Instance.BattleButtonUi.SetActive(true);
+    }
+    public void UseSkill()
+    {
+        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
+        {
+            if (GameManager.Instance.curMana >= 20)
+            {
+                GameManager.Instance.curMana -= 20;
+                StartCoroutine("PlayerSkill", 1f);
+            }
+            else
+            {
+                ManaText.SetActive(true);
+                Invoke("ManatextOff", 2f);
+            }
+        }
+    }
+    void ManatextOff()
+    {
+        ManaText.SetActive(false);
+    }
     IEnumerator PlayerAttack()
     {
+        SkillButton.SetActive(false);
+        GameManager.Instance.BattleButtonUi.SetActive(false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         GameManager.Instance.BattleSkillText.text = "주인공 박치기";
         BattleManager.Instance.IsPlayerTurn = false;
@@ -106,6 +131,8 @@ public class BattlePlayer : MonoBehaviour
     }
     IEnumerator PlayerSkill()
     {
+        SkillButton.SetActive(false);
+        GameManager.Instance.BattleButtonUi.SetActive(false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         GameManager.Instance.BattleSkillText.text = "주인공 스킬";
         BattleManager.Instance.IsPlayerTurn = false;
