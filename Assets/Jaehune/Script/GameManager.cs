@@ -61,8 +61,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine("BattleEnd");
             IsStart = false;
         }
-        hpBar.value = curHp / maxHp;
-        manaBar.value = curMana / maxMana;
         HandleSlider();
         if (BattleEndCount <= 0)
         {

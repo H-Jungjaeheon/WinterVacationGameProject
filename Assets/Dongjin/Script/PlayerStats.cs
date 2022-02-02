@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
     public int[] stats = { 1, 1, 1}; //체력 / 공격력 / 마나
+    [SerializeField] private Slider ExpBar;
     [SerializeField] float Exp, MaxExp, LV;
     public bool Stateup = false;
     private void Start()
@@ -15,7 +17,8 @@ public class PlayerStats : MonoBehaviour
     }
     private void Update()
     {
-        if(Exp >= MaxExp)
+        HandleSlider();
+        if (Exp >= MaxExp)
         {
             GameManager.Instance.LevelUp = true;
             LV += 1;
@@ -45,6 +48,11 @@ public class PlayerStats : MonoBehaviour
             GameManager.Instance.StatUp.SetActive(false);
             GameManager.Instance.LevelUp = false;
         }
+    }
+    private void HandleSlider()
+    {
+        ExpBar.value = Exp / MaxExp;
+
     }
     public void ManaUpgrade()
     {
