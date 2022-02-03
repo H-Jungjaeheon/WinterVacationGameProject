@@ -3,21 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Player : MonoBehaviour
 {
+    
+   
+    SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
     [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
     Animator anim;
+    bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false ;
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
+        SurviveDamage();
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
+            if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine(speedPotion());
+                isSpeedPotion = false;
+            }
+            else if (isEunsinPotion == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine(Eunsincnt());
+                isEunsinPotion = false;
+            }
+            else if (isManaBarrier == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine(ManaBarrier());
+                isManaBarrier = false;
+            }
             Move();
             //Jump();
             if (isLadder)
@@ -38,30 +60,52 @@ public class Player : MonoBehaviour
             {
                 rigid.gravityScale = 3f;
             }
-            if (rigid.velocity.normalized.x==0)
+            if (rigid.velocity.normalized.x == 0)
             {
-                anim.SetBool("IsWalk",false);
+                anim.SetBool("IsWalk", false);
             }
-            else anim.SetBool("IsWalk", true);
+            else
+            {
+                anim.SetBool("IsWalk", true);
+            }
         }
+
+    }
+    IEnumerator ManaBarrier()
+    {
+        GameManager.Instance.isManaBarrier = true;
+        yield return new WaitForSeconds(10f);
+        GameManager.Instance.isManaBarrier = false;
     }
     void Update()
     {
-        SurviveDamage();
-        
     }
    
-    
+    IEnumerator speedPotion()
+    {
+        speed = 10;
+        yield return new WaitForSeconds(5.0f);
+        speed = 5;
+    }
 
     void Move()
     {
         float x = Input.GetAxis("Horizontal");
         if (x < 0)
         {
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        }else if(x > 0)transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (x > 0) transform.rotation = Quaternion.Euler(0, 180, 0);
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
+    }
+    IEnumerator Eunsincnt()
+    {
+        GameManager.Instance.isEunsin = true;
+        this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
+        yield return new WaitForSeconds(5f);
+        GameManager.Instance.isEunsin = false;
+        this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
     }
     void Jump()
     {
@@ -71,66 +115,97 @@ public class Player : MonoBehaviour
         }
         else return;
     }
-  
-    void ObjManager()
-    {
-        
-    }
+
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && GameManager.Instance.BattleEndCount == 0)
+        switch (collision.tag)
         {
-            GameManager.Instance.IsBattleStart = true;
-        }
-        else if (collision.CompareTag("Gas"))
-        {
-            Debug.Log("가스에닿음");
-            isDamage = true;
-        }
-        else if (collision.CompareTag("Ladder"))
-        {
-            Debug.Log("사다리에 닿음");
-            isLadder = true;
-        }
-        else if (collision.CompareTag("Plan") || collision.CompareTag("Corridor"))
-        {
-            isGound = true;
-        }
-        else if (collision.CompareTag("Corridor"))
-        {
-            Debug.Log("d");
-            GameManager.Instance.isRoom = false;
-        }
-        else if (collision.CompareTag("Lime"))
-        {
-            speed *= 0.2f;
+            case "Enemy":
+                if (GameManager.Instance.BattleEndCount==0)
+                {
+                    GameManager.Instance.IsBattleStart = true;
+
+                }
+                break;
+
+            case "Gas":
+
+                Debug.Log("가스에닿음");
+                if (GameManager.Instance.isTrapBarrier == false)
+                {
+                    isDamage = true;
+
+                }
+                break;
+            case "Ladder":
+                Debug.Log("사다리에 닿음");
+                isLadder = true;
+                break;
+            case "Plan":
+                isGound = true;
+                break;
+            case "Lime":
+                if (speed ==10)
+                {
+                    speed = 5;
+                }
+                speed *= 0.2f;
+                break;
+            case "SpeedPotion":
+                isSpeedPotion = true;
+                break;
+            case "Corridor":
+                Debug.Log("d");
+                GameManager.Instance.isRoom = false;
+                break;
+            case "Eunsin":
+                isEunsinPotion = true;
+                Debug.Log("권준호 개새");
+                break;
+            case "ManaBarrier":
+                isManaBarrier = true;
+                break;
         }
         
-
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Gas"))
+        switch (collision.tag)
         {
-            Debug.Log("가스에 안 닿음");
-            isDamage = false;
-        }
-        else if (collision.CompareTag("Ladder"))
-        {
-            Debug.Log("사다리에 안 닿음");
+            case "Gas":
+            
+                Debug.Log("가스에 안 닿음");
+                if (GameManager.Instance.isTrapBarrier==false)
+                {
+                    isDamage = false;
 
-            isLadder = false;
+                }
+                break;
+            case "Ladder":
+                Debug.Log("사다리에 안 닿음");
+                isLadder = false;
+                break;
+            case "Plan":
+                isGound = false;
+                break;
+            case "Lime":
+                if (speed == 5)
+                {
+                    speed = 10;
+                }
+                speed = 5f;
+                break;
+            case "SpeedPotion":
+                isSpeedPotion = false;
+                break;
+            case "Eunsin":
+                isEunsinPotion = false;
+                break;
+            case "ManaBarrier":
+                isManaBarrier = false;
+                break;
         }
-        else if (collision.CompareTag("Plan"))
-        {
-            isGound = false;
-        }
-        else if (collision.CompareTag("Lime"))
-        {
-            speed = 5f;
-        }
-        
 
     }
     void SurviveDamage()
