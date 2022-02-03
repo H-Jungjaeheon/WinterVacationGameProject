@@ -18,7 +18,20 @@ public class BattleCloseEnemy : BattleBasicEnemy
     }
     public override void AttackGone()
     {
-        base.AttackGone();
+        if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
+        {
+            animator.SetBool("IsWalk", true);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2.5f, -0.8f, 0), 10 * Time.deltaTime);
+        }
+        else if (GoToReturn == true)
+        {
+            animator.SetBool("IsWalk", true);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position, 10 * Time.deltaTime);
+        }
+        else if (GoToReturn == false)
+        {
+            animator.SetBool("IsWalk", false);
+        }
     }
     public override void Hpbar()
     {

@@ -10,11 +10,11 @@ public class BattleBasicEnemy : MonoBehaviour
     public bool IsHit = false;
     //public int AttackRand; //다음 공격 랜덤으로 정하기
     [SerializeField] int Damage; //공격력
-    [SerializeField] GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
+    public GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
     [SerializeField] Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
-    [SerializeField] bool GoToPlayer = false, Dead = false, GoToReturn = false, StopGone = false; //플레이어의 위치(근접 공격시)로 갈지 판단
+    public bool GoToPlayer = false, Dead = false, GoToReturn = false, StopGone = false; //플레이어의 위치(근접 공격시)로 갈지 판단
     SpriteRenderer SR; //죽을 때 점점 사라지게
-    Animator animator;
+    public Animator animator;
 
     public virtual void Start()
     {
@@ -153,7 +153,7 @@ public class BattleBasicEnemy : MonoBehaviour
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.6f, 0.3f, 0);
+            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
@@ -161,7 +161,7 @@ public class BattleBasicEnemy : MonoBehaviour
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.6f, -0.3f, 0);
+            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -186,7 +186,7 @@ public class BattleBasicEnemy : MonoBehaviour
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.6f, 0.3f, 0);
+            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
@@ -194,7 +194,7 @@ public class BattleBasicEnemy : MonoBehaviour
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             GameManager.Instance.curHp -= Damage * 2;
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.6f, -0.3f, 0);
+            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
