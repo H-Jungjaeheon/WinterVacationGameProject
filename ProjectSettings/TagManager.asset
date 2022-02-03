@@ -17,6 +17,9 @@ TagManager:
   - Lime
   - Obj_3
   - Key
+  - SpeedPotion
+  - Eunsin
+  - ManaBarrier
   layers:
   - Default
   - TransparentFX
