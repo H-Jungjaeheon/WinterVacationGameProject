@@ -997,6 +997,7 @@ MonoBehaviour:
   isGetKey: 0
   isManaBarrier: 0
   isEunsin: 0
+  isTrapBarrier: 0
   IsStart: 0
   BattleSkillText: {fileID: 975338757}
   BattleButtonUi: {fileID: 1719129524}
