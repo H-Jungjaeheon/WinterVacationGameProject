@@ -9,10 +9,11 @@ public class ItemButtonScript : MonoBehaviour
     public void ImageUpdate(SpriteRenderer itemimage)
     {
         transform.GetChild(0).GetComponent<Image>().sprite = itemimage.sprite;
+        transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
     public void idxup()
     {
         idx++;
-        Debug.Log(idx);
+        this.transform.GetChild(1).GetComponent<Text>().text = "X" + idx.ToString();
     }
 }

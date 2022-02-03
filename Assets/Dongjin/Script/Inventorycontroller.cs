@@ -33,12 +33,14 @@ public class Inventorycontroller : MonoBehaviour
             GameObject testsave = items[i];
             if (item == testsave)
             {
-                inventorys.transform.GetChild(i).gameObject.GetComponent<ItemButtonScript>().idxup();
+                inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).GetComponent<ItemButtonScript>().idxup();
                 return;
             }
         }
         items.Add(item);
-        itembutton = inventorys.transform.GetChild(itemidx).gameObject;
+        itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(itemidx).gameObject;
+        itembutton.GetComponent<ItemButtonScript>().ImageUpdate(item.GetComponent<SpriteRenderer>());
+        itembutton.GetComponent<ItemButtonScript>().idxup();
         itemidx++;
     }
 }

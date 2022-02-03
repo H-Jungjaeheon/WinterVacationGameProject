@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
         {
             PanelAlpha.a = 0f;
             PanelImage.color = PanelAlpha;
+            PanelImage.raycastTarget = false;
             isPause = false;
             Time.timeScale = 1f;
         }
@@ -166,6 +167,7 @@ public class GameManager : MonoBehaviour
         {
             PanelAlpha.a = 0.7f;
             PanelImage.color = PanelAlpha;
+            PanelImage.raycastTarget = true;
             isPause = true;
             Time.timeScale = 0f;
         }
