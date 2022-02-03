@@ -7,11 +7,13 @@ public class BattlePlayer : MonoBehaviour
 {
     [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
     [SerializeField] GameObject Enemy, PlayerSpawner, DmgText, GM, SkillButton, ManaText; //전투시 인식한 적 오브젝트 담는 그릇
-    [SerializeField] bool GoToEnemy = false; //적의 위치(근접 공격시)로 갈지 판단
+    [SerializeField] bool GoToEnemy = false, GoToReturn = false; //적의 위치(근접 공격시)로 갈지 판단
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         this.transform.position = PlayerSpawner.transform.position;
     }
 
@@ -25,11 +27,17 @@ public class BattlePlayer : MonoBehaviour
         }
         if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true)
         {
-            transform.position = Vector3.MoveTowards(this.transform.position, Enemy.transform.position - new Vector3(2, 0, 0), 10 * Time.deltaTime);
+            animator.SetBool("IsWalk", true);
+            transform.position = Vector3.MoveTowards(this.transform.position, Enemy.transform.position + new Vector3(-2, 0.77f, 0), 10 * Time.deltaTime);
         }
-        else
+        else if(GoToReturn == true)
         {
+            animator.SetBool("IsWalk", true);
             transform.position = Vector3.MoveTowards(this.transform.position, PlayerSpawner.transform.position, 10 * Time.deltaTime);
+        }
+        else if(GoToReturn == false)
+        {
+            animator.SetBool("IsWalk", false);
         }
     }
 
@@ -118,8 +126,11 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
-        yield return new WaitForSeconds(3);
-        if(GameManager.Instance.IsCamMove == true)
+        GoToReturn = true;
+        yield return new WaitForSeconds(1);
+        GoToReturn = false;
+        yield return new WaitForSeconds(2);
+        if (GameManager.Instance.IsCamMove == true)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }
@@ -151,7 +162,10 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
-        yield return new WaitForSeconds(3);
+        GoToReturn = true;
+        yield return new WaitForSeconds(1);
+        GoToReturn = false;
+        yield return new WaitForSeconds(2);
         if (GameManager.Instance.IsCamMove == true)
         {
             BattleManager.Instance.IsEnemyTurn = true;

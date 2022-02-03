@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 5.9, y: 0}
-  m_SizeDelta: {x: 970, y: 840}
+  m_SizeDelta: {x: 970, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7650883798760119578
 CanvasRenderer:
@@ -110,7 +110,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3900, y: 400}
+  m_SizeDelta: {x: 3900, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &969945673397928584
 CanvasRenderer:
@@ -185,7 +185,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3900, y: 200}
+  m_SizeDelta: {x: 3900, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5182551289475886490
 CanvasRenderer:
@@ -260,7 +260,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3900, y: 400}
+  m_SizeDelta: {x: 3900, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7594048195319224050
 CanvasRenderer:
@@ -329,8 +329,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4593794140282154931}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 4.33, y: 60.19, z: 0}
-  m_LocalScale: {x: 0.23, y: 0.33, z: 1}
+  m_LocalPosition: {x: 4.4366, y: 60.3989, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.3, z: 1}
   m_Children:
   - {fileID: 851563869121823142}
   m_Father: {fileID: 0}
@@ -349,7 +349,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.6970608, y: -0.590003}
+  m_Offset: {x: -3.5283499, y: -0.007380724}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -360,7 +360,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.571447, y: 7.108927}
+  m_Size: {x: 3.056264, y: 7.933121}
   m_EdgeRadius: 0
 --- !u!212 &1844640531651940012
 SpriteRenderer:
@@ -465,6 +465,7 @@ MonoBehaviour:
   Dead: 0
   GoToReturn: 0
   StopGone: 0
+  animator: {fileID: 0}
 --- !u!95 &6465336499959638816
 Animator:
   serializedVersion: 3
