@@ -144,6 +144,7 @@ public class Player : MonoBehaviour
                 break;
             case "Plan":
                 isGound = true;
+
                 break;
             case "Lime":
                 if (speed ==10)
