@@ -2269,6 +2269,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FarAwayEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4938394050600052063, guid: f26bb3dd90af08d4eb56b01c8f1f243b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f26bb3dd90af08d4eb56b01c8f1f243b, type: 3}
 --- !u!1 &689341123
@@ -5967,6 +5971,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1831683693}
     - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: Enemy
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: ManaText
       value: 
       objectReference: {fileID: 1382030677}
@@ -5975,12 +5983,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 523412762}
     - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: EnemySpawner
+      value: 
+      objectReference: {fileID: 608739386}
+    - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: PlayerSpawner
       value: 
       objectReference: {fileID: 1975136695}
     - target: {fileID: 474764994996472325, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: m_Name
       value: BattlePlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 474764994996472325, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 474764994996473339, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: m_SortingOrder

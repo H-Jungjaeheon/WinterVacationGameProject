@@ -5,14 +5,12 @@ using UnityEngine.UI;
 
 public class BattleBasicEnemy : MonoBehaviour
 {
-    [SerializeField] float MaxHp, BarUp, GExp, Anger, MaxAnger; //최대 체력, 체력바 높이, 주는 경험치, 분노 게이지, 최대 분노 게이지
-    public float Hp; //현재 체력
-    public bool IsHit = false;
+    public float MaxHp, BarUp, GExp, Hp, Anger, MaxAnger; //최대 체력, 체력바 높이, 주는 경험치, 분노 게이지, 최대 분노 게이지
     //public int AttackRand; //다음 공격 랜덤으로 정하기
-    [SerializeField] int Damage; //공격력
+    public int Damage; //공격력
     public GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
-    [SerializeField] Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
-    public bool GoToPlayer = false, Dead = false, GoToReturn = false, StopGone = false; //플레이어의 위치(근접 공격시)로 갈지 판단
+    public Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
+    public bool GoToPlayer = false, Dead = false, GoToReturn = false, StopGone = false, IsHit = false; //플레이어의 위치(근접 공격시)로 갈지 판단
     SpriteRenderer SR; //죽을 때 점점 사라지게
     public Animator animator;
 
