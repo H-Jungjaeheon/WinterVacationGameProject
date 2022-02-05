@@ -8,6 +8,7 @@ public class Inventorycontroller : MonoBehaviour
     public GameObject inventorys;
     private int itemidx=0;
     private GameObject itembutton;
+    private int sibaltest = 0;
     public List<GameObject> items = new List<GameObject>();
 
     private void Start()
@@ -25,6 +26,7 @@ public class Inventorycontroller : MonoBehaviour
             InventoryOn = false;
             inventorys.gameObject.SetActive(false);
         }
+        settingitem();
     }
     public void Additem(GameObject item)
     {
@@ -33,14 +35,42 @@ public class Inventorycontroller : MonoBehaviour
             GameObject testsave = items[i];
             if (item == testsave)
             {
-                inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).GetComponent<ItemButtonScript>().idxup();
+                itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
+                itembutton.GetComponent<ItemButtonScript>().idx++;
+                itembutton.GetComponent<ItemButtonScript>().idxup();
                 return;
             }
         }
         items.Add(item);
-        itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(itemidx).gameObject;
+        itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(items.Count -1).gameObject;
+        itembutton.GetComponent<ItemButtonScript>().idx++;
+        settingitem();
+        /*itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(itemidx).gameObject;
         itembutton.GetComponent<ItemButtonScript>().ImageUpdate(item.GetComponent<SpriteRenderer>());
-        itembutton.GetComponent<ItemButtonScript>().idxup();
-        itemidx++;
+        itembutton.GetComponent<ItemButtonScript>().idxup();*/
+    }
+    public void settingitem()
+    {
+        for (int i = 0; i <6; i++)
+        {
+            itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
+            if (itembutton.GetComponent<ItemButtonScript>().idx == 0 && i < items.Count)
+            {
+                itembutton.GetComponent<ItemButtonScript>().idx = inventorys.transform.GetChild(0).gameObject.transform.GetChild(i + 1).gameObject.GetComponent<ItemButtonScript>().idx;
+                items.RemoveAt(i);
+            }
+            itembutton.transform.GetChild(0).GetComponent<Image>().sprite = null;
+            itembutton.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            itembutton.GetComponent<ItemButtonScript>().idxup();
+        }
+        for(int i= 5;i>=items.Count;i--)
+        {
+            inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject.GetComponent<ItemButtonScript>().idx = 0;
+        }
+        for (int i = 0; i < items.Count; i++)
+        {
+            itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
+            itembutton.GetComponent<ItemButtonScript>().ImageUpdate(items[i].GetComponent<SpriteRenderer>());
+        }
     }
 }

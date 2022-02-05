@@ -5,7 +5,11 @@ using UnityEngine.UI;
 
 public class ItemButtonScript : MonoBehaviour
 {
-    private int idx;
+    public int idx = 0;
+    private void Update()
+    {
+        
+    }
     public void ImageUpdate(SpriteRenderer itemimage)
     {
         transform.GetChild(0).GetComponent<Image>().sprite = itemimage.sprite;
@@ -13,7 +17,14 @@ public class ItemButtonScript : MonoBehaviour
     }
     public void idxup()
     {
-        idx++;
-        this.transform.GetChild(1).GetComponent<Text>().text = "X" + idx.ToString();
+        if (idx == 0)
+        {
+            this.transform.GetChild(1).GetComponent<Text>().text = "";
+        }
+        else
+        {
+            this.transform.GetChild(1).GetComponent<Text>().text = "X" + idx.ToString();
+
+        }
     }
 }
