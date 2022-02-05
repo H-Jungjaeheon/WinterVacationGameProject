@@ -6,11 +6,13 @@ public class Spear : MonoBehaviour
     private Vector3 savevector;
     public bool spearon;
     private bool trapped;
+    public bool damageOn = false;
     private void Update()
     {
-        if(trapped == true)
+        if(trapped == true && damageOn==true)
         {
-            Debug.Log("√¢ø° ¥Í¿Ω");
+            GameManager.Instance.stackDamage += 10;
+            damageOn = false;
         }    
     }
     IEnumerator spearmove()
@@ -19,8 +21,10 @@ public class Spear : MonoBehaviour
         savevector = this.transform.position;
         transform.position += new Vector3(0, 0.1f, 0);
         yield return new WaitForSeconds(1.5f);
+        damageOn = true;
         transform.position += new Vector3(0, 0.2f, 0);
         yield return new WaitForSeconds(1);
+        damageOn = false;
         transform.position = savevector;
         spearon = false;
         yield return null;
