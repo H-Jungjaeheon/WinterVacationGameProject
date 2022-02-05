@@ -34,14 +34,17 @@ public class CameraMove : MonoBehaviour
     {
 
         float X = target.position.x;
-        if (GameManager.Instance.isRoom == true)
-        {
-            if (GameObject.Find("X-Axis").transform.position.x < target.position.x) isright = true;
-        }
+
         if (GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
+            if (GameManager.Instance.isRoom == true)
+            {
+                if (GameObject.Find("X-Axis").transform.position.x < target.position.x) isright = true;
+                else isright = false;
+            }
             if (GameManager.Instance.isRoom)
             {
+
                 if (isright)
                 {
                     transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
@@ -49,22 +52,20 @@ public class CameraMove : MonoBehaviour
                     float Ix = Right_size.x * 0.5f - width;
                     float clampX = Mathf.Clamp(transform.position.x, -Ix + Right_center.x, Ix + Right_center.x);
 
-                    float Iy = Right_size.y * 0.5f - height;
-                    float clampY = Mathf.Clamp(transform.position.y, -Iy + Right_center.y, Iy + Right_center.y);
-                    transform.position = new Vector3(clampX, clampY, -10f);
+
+                    transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
                 }
                 else
                 {
-                    MCamera.orthographicSize = 5;
+                    //MCamera.orthographicSize = 5;
 
                     transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 
                     float Ix = Left_size.x * 0.5f - width;
                     float clampX = Mathf.Clamp(transform.position.x, -Ix + Left_center.x, Ix + Left_center.x);
 
-                    float Iy = Left_size.y * 0.5f - height;
-                    float clampY = Mathf.Clamp(transform.position.y, -Iy + Left_center.y, Iy + Left_center.y);
-                    transform.position = new Vector3(clampX, clampY, -10f);
+
+                    transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
                 }
             }
             else
@@ -93,7 +94,7 @@ public class CameraMove : MonoBehaviour
             transform.position = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
             MCamera.orthographicSize = 3f;
         }
-        if(GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true)
+        if (GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true)
         {
             if (BattleManager.Instance.CamE == true)
             {

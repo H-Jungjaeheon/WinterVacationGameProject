@@ -8,6 +8,7 @@ public class HpItem : MonoBehaviour
     {
         if (Input.inputString == (transform.parent.GetComponent<Slot>().num+1).ToString())
         {
+
             Debug.Log("Hp UP , slotNumbe : "+ (transform.parent.GetComponent<Slot>().num + 1));
             GameManager.Instance.curHp += 10;
 

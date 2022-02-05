@@ -19,6 +19,7 @@ public class Door : MonoBehaviour
         if (opendoor == true && Input.GetKeyDown(KeyCode.F))
         {
             player.transform.position = door.transform.position;
+            GameManager.Instance.isRoom = true;
             Debug.Log("¾À ³Ñ¾î°¨¿ä");
             
         }
