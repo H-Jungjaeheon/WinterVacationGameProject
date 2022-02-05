@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    
-   
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
     [SerializeField] float speed = 5, jumpPower;

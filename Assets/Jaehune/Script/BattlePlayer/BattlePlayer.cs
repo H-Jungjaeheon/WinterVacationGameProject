@@ -120,6 +120,14 @@ public class BattlePlayer : MonoBehaviour
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
+        if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1)
+        {
+            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
+        }
+        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1)
+        {
+            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
+        }
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
