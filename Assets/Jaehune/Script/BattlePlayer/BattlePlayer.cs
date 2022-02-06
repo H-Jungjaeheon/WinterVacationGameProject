@@ -135,10 +135,18 @@ public class BattlePlayer : MonoBehaviour
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1)
         {
+            GameObject DTT = Instantiate(DmgText);
+            DTT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DTT.transform.position = this.transform.position;
+            DTT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
             GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1)
         {
+            GameObject DTT = Instantiate(DmgText);
+            DTT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DTT.transform.position = this.transform.position;
+            DTT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
             GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
         }
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);

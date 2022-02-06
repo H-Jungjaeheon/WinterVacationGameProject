@@ -5,9 +5,11 @@ using UnityEngine;
 public class BattleReflectEnemy : BattleBasicEnemy
 {
     [SerializeField] int ReflectingTurn, MaxReflctingTurn;
+    [SerializeField] GameObject ReflectImage;
     // Start is called before the first frame update
     public override void Start()
     {
+        ReflectImage.SetActive(false);
         base.Start();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.7f, 0);
     }
@@ -20,6 +22,10 @@ public class BattleReflectEnemy : BattleBasicEnemy
         {
             IsReflect = false;
             ReflectingTurn = 0;
+        }
+        if(IsReflect == true)
+        {
+            ReflectImage.SetActive(true);
         }
     }
     public override void AttackGone()
@@ -42,6 +48,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
     public override void Hpbar()
     {
         base.Hpbar();
+        ReflectImage.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
     }
     public override void RayCasting()
     {

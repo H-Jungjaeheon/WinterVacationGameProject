@@ -1602,7 +1602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 520082750}
   Battletarget: {fileID: 2097894812}
-  offset: {x: 0, y: 3.6, z: -10}
+  offset: {x: 0, y: 3.3, z: -10}
   initialPosition: {x: 0, y: 0, z: 0}
   isright: 0
   BEnemy: {fileID: 608739386}
@@ -3259,7 +3259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1487425484039611777, guid: 6c3214d1ba9d06e4fbba0b037c089d90, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1487425484039611787, guid: 6c3214d1ba9d06e4fbba0b037c089d90, type: 3}
       propertyPath: m_RootOrder
@@ -3267,7 +3267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1487425484039611787, guid: 6c3214d1ba9d06e4fbba0b037c089d90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.63
+      value: -21.6
       objectReference: {fileID: 0}
     - target: {fileID: 1487425484039611787, guid: 6c3214d1ba9d06e4fbba0b037c089d90, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4920,7 +4920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118887717977446428, guid: 008768afa15398647934c40cee399906, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.45
+      value: -17.9
       objectReference: {fileID: 0}
     - target: {fileID: 4118887717977446428, guid: 008768afa15398647934c40cee399906, type: 3}
       propertyPath: m_LocalPosition.y

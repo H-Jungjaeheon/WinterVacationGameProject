@@ -10,7 +10,7 @@ public class BasicEnemyScript : MonoBehaviour
     public GameObject Player, WarningObj, CrossRoadObj; //플레이어 오브젝트(프리펩), 발견시 느낌표 오브젝트, 시야 범위 표시 오브젝트
     public RaycastHit2D hit;
     public int SpawnMonsterCount, TurnCount; //전투 시작 시 전투 필드에 소환할 몬스터 (0 ~ ... & 자기 스프라이트에 맞는 몬스터 전투 필드에 소환)
-    Animator animator;
+    public Animator animator;
 
     // Start is called before the first frame update
     public virtual void Start()

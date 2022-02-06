@@ -5,6 +5,7 @@ using UnityEngine;
 public class BattleSelfDestructEnemy : BattleBasicEnemy
 {
     [SerializeField] bool IsBoom = false;
+    [SerializeField] GameObject NullAngerBar;
     // Start is called before the first frame update
     public override void Start()
     {
@@ -29,10 +30,11 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
     {
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
-        HpBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
-        AngerBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp - 0.1f, 0);
-        HpBarNull.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
-        EnemyPicture.transform.position = this.transform.position + new Vector3(-1f, BarUp, 0);
+        HpBar.transform.position = this.transform.position + new Vector3(0.1f, BarUp + 0.43f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(0.1f, BarUp - 0.1f, 0);
+        NullAngerBar.transform.position = this.transform.position + new Vector3(0.1f, BarUp - 0.1f, 0);
+        HpBarNull.transform.position = this.transform.position + new Vector3(0.1f, BarUp + 0.43f, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(0.1f, BarUp + 0.9f, 0);
     }
     public override void RayCasting()
     {

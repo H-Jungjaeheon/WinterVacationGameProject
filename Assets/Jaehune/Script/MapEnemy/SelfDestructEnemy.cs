@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class SelfDestructEnemy : BasicEnemyScript
 {
+    [SerializeField] GameObject Warning;
+    [SerializeField] bool IsSpawn = false;
     // Start is called before the first frame update
     public override void Start()
     {
+        Warning.SetActive(false);
         base.Start();
     }
 
@@ -17,11 +20,36 @@ public class SelfDestructEnemy : BasicEnemyScript
     }
     public override void Moving()
     {
-        base.Moving();
+        MoveCount += Time.deltaTime;
+        transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
+        if (MoveCount >= MaxMoveCount)
+        {
+            animator.SetBool("IsIdle", true);
+            MoveCount = 0;
+            IsMove = false;
+            Invoke("Trun", 4f);
+            Warning.SetActive(true);
+        }
     }
     public override void Trun()
     {
-        base.Trun();
+        Warning.SetActive(false);
+        SeeCrossroad *= -1;
+        IsMove = true;
+        if (TurnCount % 2 == 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        TurnCount++;
+        if (TurnCount >= 3)
+        {
+            TurnCount = 1;
+        }
+        animator.SetBool("IsIdle", false);
     }
     public override void RayCasting()
     {
@@ -29,8 +57,9 @@ public class SelfDestructEnemy : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        if (Player.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0)
+        if (Player.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && IsSpawn == true)
         {
+            IsSpawn = true;
             Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, Quaternion.Euler(0, 0, 0));
             Invoke("Delete", 2f);
         }
