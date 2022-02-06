@@ -33,7 +33,7 @@ public class Inventorycontroller : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             GameObject testsave = items[i];
-            if (item == testsave)
+            if (item.tag == testsave.tag)
             {
                 itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
                 itembutton.GetComponent<ItemButtonScript>().idx++;
