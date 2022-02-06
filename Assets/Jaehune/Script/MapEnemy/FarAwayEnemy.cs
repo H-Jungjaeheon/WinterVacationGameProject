@@ -20,23 +20,7 @@ public class FarAwayEnemy : BasicEnemyScript
     }
     public override void Trun()
     {
-        Speed *= -1;
-        SeeCrossroad *= -1;
-        IsMove = true;
-        if (TurnCount % 2 == 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        TurnCount++;
-        if (TurnCount >= 3)
-        {
-            TurnCount = 1;
-        }
-        //animator.SetBool("IsIdle", false);
+        base.Trun();
     }
     public override void RayCasting()
     {
@@ -47,11 +31,11 @@ public class FarAwayEnemy : BasicEnemyScript
         MoveCount = 0;
         if (Speed > 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.2f, 0), Speed * 1.3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * 1.3f * Time.deltaTime);
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.2f, 0), Speed * -1.3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * -1.3f * Time.deltaTime);
         }
     }
     public override void Delete()

@@ -8,7 +8,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
     public override void Start()
     {
         base.Start();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.8f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.9f, 0);
     }
 
     // Update is called once per frame
@@ -34,13 +34,13 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
         }
     }
     public override void Hpbar()
-    {
+    { //오른쪽으로 밀고 위로 더
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
-        HpBar.transform.position = this.transform.position + new Vector3(0f, BarUp + 0.65f, 0);
-        AngerBar.transform.position = this.transform.position + new Vector3(0f, BarUp + 0.5f, 0);
-        HpBarNull.transform.position = this.transform.position + new Vector3(0f, BarUp + 0.65f, 0);
-        EnemyPicture.transform.position = this.transform.position + new Vector3(-1.15f, BarUp + 0.6f, 0);
+        HpBar.transform.position = this.transform.position + new Vector3(1f, BarUp + 1.25f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(1f, BarUp + 1.09f, 0);
+        HpBarNull.transform.position = this.transform.position + new Vector3(1f, BarUp + 1.25f, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(-0.15f, BarUp + 1.2f, 0);
     }
     public override void RayCasting()
     {
@@ -71,7 +71,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            //transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position + new Vector3(-2.5f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
@@ -79,7 +79,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
-            //transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(2.5f, 0, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -102,9 +102,9 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsAttack", true);
+            animator.SetBool("IsSkill", true);
             StopGone = true;
-            //transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position + new Vector3(-2.5f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = Player.transform.position;
@@ -112,9 +112,9 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             GameManager.Instance.curHp -= Damage + 1;
             yield return new WaitForSeconds(1);
-            //transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(2.5f, -0.5f, 0);
             StopGone = false;
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;
             GoToReturn = true;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
