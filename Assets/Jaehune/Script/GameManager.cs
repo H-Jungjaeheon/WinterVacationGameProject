@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
     private Color PanelAlpha;
     private Image PanelImage;
 
+    [SerializeField] public Text manaText, hpText;
     private void Awake()
     {
         BattleButtonUi.SetActive(false);
@@ -88,6 +91,7 @@ public class GameManager : MonoBehaviour
         AttackOk = true;
         yield return null;
     }
+    
     IEnumerator BattleEnd()
     {
         AttackOk = false;
@@ -150,7 +154,10 @@ public class GameManager : MonoBehaviour
             curMana -= Time.deltaTime*0.25f;
         }
         hpBar.value = curHp / maxHp;
+        hpText.text = curHp + "/" + maxHp;
         manaBar.value = curMana / maxMana;
+        float mana = (float)(Math.Truncate(curMana)/1);
+        manaText.text = mana + "/" + maxMana;
     }
     public void StopButton()
     {
