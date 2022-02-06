@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour
     public int[] stats = { 1, 1, 1}; //체력 / 공격력 / 마나
     [SerializeField] private Slider ExpBar;
     [SerializeField] float Exp, MaxExp, LV;
+    [SerializeField] Text expText;
     public bool Stateup = false;
     private void Start()
     {
@@ -52,6 +53,7 @@ public class PlayerStats : MonoBehaviour
     private void HandleSlider()
     {
         ExpBar.value = Exp / MaxExp;
+        expText.text = Exp + "/" + MaxExp;
     }
     public void ManaUpgrade()
     {
