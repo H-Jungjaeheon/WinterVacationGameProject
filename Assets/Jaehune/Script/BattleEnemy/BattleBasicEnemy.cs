@@ -134,6 +134,8 @@ public class BattleBasicEnemy : MonoBehaviour
                 yield return null;
                 yield return new WaitForSeconds(1);
                 GameManager.Instance.IsBattleStart = false;
+                BattleManager.Instance.IsEnemyTurn = true;
+                BattleManager.Instance.IsPlayerTurn = true;
                 yield return new WaitForSeconds(1);
                 Destroy(this.gameObject);
             }
@@ -183,7 +185,7 @@ public class BattleBasicEnemy : MonoBehaviour
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsAttack", true);
+            animator.SetBool("IsSkill", true);
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
@@ -191,11 +193,11 @@ public class BattleBasicEnemy : MonoBehaviour
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage * 2;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-            GameManager.Instance.curHp -= Damage * 2;
+            GameManager.Instance.stackDamage += Damage * 2;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;
             GoToReturn = true;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
