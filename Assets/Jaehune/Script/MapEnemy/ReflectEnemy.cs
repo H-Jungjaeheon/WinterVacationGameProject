@@ -29,7 +29,22 @@ public class ReflectEnemy : BasicEnemyScript
     }
     public override void RayCasting()
     {
-        base.RayCasting();
+        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
+        foreach (var hit in rayHit)
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                WarningObj.SetActive(true);
+                IsFind = true;
+                Player = hit.collider.gameObject;
+            }
+            else if(hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                WarningObj.SetActive(false);
+                IsFind = false;
+            }
+        }
     }
     public override void FindPlayer()
     {

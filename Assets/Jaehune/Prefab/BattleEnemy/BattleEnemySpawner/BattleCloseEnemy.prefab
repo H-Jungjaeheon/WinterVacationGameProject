@@ -418,6 +418,8 @@ MonoBehaviour:
   GoToReturn: 0
   StopGone: 0
   IsHit: 0
+  IsReflect: 0
+  SR: {fileID: 0}
   animator: {fileID: 0}
 --- !u!95 &3424406992493038928
 Animator:

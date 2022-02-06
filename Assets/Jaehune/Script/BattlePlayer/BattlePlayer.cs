@@ -8,6 +8,7 @@ public class BattlePlayer : MonoBehaviour
     [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
     [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, GM, SkillButton, ManaText; //전투시 인식한 적 오브젝트 담는 그릇
     [SerializeField] bool GoToEnemy = false, GoToReturn = false; //적의 위치(근접 공격시)로 갈지 판단
+    public bool IsHit = false;
     Animator animator;
 
     // Start is called before the first frame update
@@ -38,6 +39,10 @@ public class BattlePlayer : MonoBehaviour
         else if(GoToReturn == false)
         {
             animator.SetBool("IsWalk", false);
+        }
+        if (IsHit == true)
+        {
+            StartCoroutine("PlayerHit");
         }
     }
 
@@ -100,6 +105,14 @@ public class BattlePlayer : MonoBehaviour
             }
         }
     }
+    public IEnumerator PlayerHit()
+    {
+        IsHit = false;
+        animator.SetBool("IsHit", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("IsHit", false);
+        yield return null;
+    }
     void ManatextOff()
     {
         ManaText.SetActive(false);
@@ -114,7 +127,7 @@ public class BattlePlayer : MonoBehaviour
         GoToEnemy = true;
         yield return new WaitForSeconds(1.5f);
         BattleManager.Instance.CamP = true;
-        //공격 애니 재생
+        animator.SetBool("IsAttack", true);
         GameObject DT = Instantiate(DmgText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
@@ -131,6 +144,7 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
+        animator.SetBool("IsAttack", false);
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
@@ -158,7 +172,7 @@ public class BattlePlayer : MonoBehaviour
         GoToEnemy = true;
         yield return new WaitForSeconds(1.5f);
         BattleManager.Instance.CamP = true;
-        //공격 애니 재생
+        animator.SetBool("IsAttack", true);
         GameObject DT = Instantiate(DmgText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
@@ -168,6 +182,7 @@ public class BattlePlayer : MonoBehaviour
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamP = false;
+        animator.SetBool("IsAttack", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
         GoToReturn = true;

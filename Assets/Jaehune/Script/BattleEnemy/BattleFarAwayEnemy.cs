@@ -77,6 +77,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+            Player.GetComponent<BattlePlayer>().IsHit = true;
             GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(2.5f, 0, 0);
@@ -110,6 +111,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage + 1;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+            Player.GetComponent<BattlePlayer>().IsHit = true;
             GameManager.Instance.curHp -= Damage + 1;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(2.5f, -0.5f, 0);

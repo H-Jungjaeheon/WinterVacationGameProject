@@ -86,7 +86,7 @@ public class BasicEnemyScript : MonoBehaviour
                 WarningObj.SetActive(true);
                 IsFind = true;
             }
-            else
+            else if (hit.collider.gameObject.CompareTag("Enemy"))
             {
                 WarningObj.SetActive(false);
                 IsFind = false;

@@ -30,7 +30,7 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
 
-    void Update()
+    void FixedUpdate()
     {
 
         float X = target.position.x;
@@ -87,19 +87,19 @@ public class CameraMove : MonoBehaviour
         }
         else if (BattleManager.Instance.CamE == true)
         {
-            transform.position = BPlayer.transform.position + offset + new Vector3(2, -3, 0);
+            transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
             MCamera.orthographicSize = 3f;
         }
         else if (BattleManager.Instance.CamP == true)
         {
-            transform.position = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
+            transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
             MCamera.orthographicSize = 3f;
         }
         if (GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true)
         {
             if (BattleManager.Instance.CamE == true)
             {
-                initialPosition = BPlayer.transform.position + offset + new Vector3(2, -3, 0);
+                initialPosition = BPlayer.transform.position + offset + new Vector3(2, -1.7f, 0);
                 if (ShakeTime > 0)
                 {
                     transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
@@ -113,7 +113,7 @@ public class CameraMove : MonoBehaviour
             }
             else if (BattleManager.Instance.CamP == true)
             {
-                initialPosition = BEnemy.transform.position + offset + new Vector3(-2, -3, 0);
+                initialPosition = BEnemy.transform.position + offset + new Vector3(-2, -1.7f, 0);
                 if (ShakeTime > 0)
                 {
                     transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
@@ -129,8 +129,8 @@ public class CameraMove : MonoBehaviour
     }
     void BattleCameraMove()
     {
-        this.transform.position = Battletarget.position + offset;
-        MCamera.orthographicSize = 5;
+        this.transform.position = Battletarget.position + offset + new Vector3(0, 0.4f, 0);
+        MCamera.orthographicSize = 4.5f;
     }
     public void VibrateForTime(float time)
     {

@@ -136,6 +136,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+            Player.GetComponent<BattlePlayer>().IsHit = true;
             GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);

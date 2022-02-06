@@ -78,6 +78,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
             DT.transform.position = Player.transform.position;
             DT.GetComponent<BattleDamageText>().damage = Damage;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+            Player.GetComponent<BattlePlayer>().IsHit = true;
             GameManager.Instance.stackDamage += Damage;
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.7f, 0);
@@ -108,6 +109,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
             BattleManager.Instance.CamP = true;
             animator.SetBool("IsAttack", true);
             IsReflect = true;
+            Player.GetComponent<BattlePlayer>().IsHit = true;
             yield return new WaitForSeconds(1);
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamP = false;
