@@ -37,6 +37,7 @@ public class CameraMove : MonoBehaviour
 
         if (GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
+            MCamera.orthographicSize = 4.5f;
             if (GameManager.Instance.isRoom == true)
             {
                 if (GameObject.Find("X-Axis").transform.position.x < target.position.x) isright = true;
