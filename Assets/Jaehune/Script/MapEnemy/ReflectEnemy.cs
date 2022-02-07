@@ -74,25 +74,22 @@ public class ReflectEnemy : BasicEnemyScript
     }
     IEnumerator Dashs()
     {
-        if(Speed > 0)
+        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
+        foreach (var hit in rayHit)
         {
-            Speed += 2;
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                Player = hit.collider.gameObject;
+                WarningObj.SetActive(true);
+                IsFind = true;
+            }
+            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                WarningObj.SetActive(false);
+                IsFind = false;
+            }
         }
-        else
-        {
-            Speed -= 2;
-        }
-        yield return new WaitForSeconds(2.5f);
-        if (Speed > 0)
-        {
-            Speed -= 2;
-        }
-        else
-        {
-            Speed += 2;
-        }
-        Dash = 0;
-        IsDash = true;
         yield return null;
     }
 }

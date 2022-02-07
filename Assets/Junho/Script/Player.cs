@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
     Animator anim;
-    bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false ;
+    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -38,7 +38,10 @@ public class Player : MonoBehaviour
                 StartCoroutine(ManaBarrier());
                 isManaBarrier = false;
             }
-            Move();
+            if(IsGrab == false)
+            {
+                Move();
+            }
             //Jump();
             if (isLadder)
             {

@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 19
+  m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: b98e12f06d5217541af51d7002cf3094, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 16
   m_Sprite: {fileID: 21300000, guid: ec368f381b6e2cf4ba9cdf6482030691, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -325,6 +325,7 @@ MonoBehaviour:
   TurnCount: 0
   animator: {fileID: 0}
   Warning: {fileID: 3210298623834584193}
+  IsSpawn: 0
 --- !u!95 &4118887717977446431
 Animator:
   serializedVersion: 3
