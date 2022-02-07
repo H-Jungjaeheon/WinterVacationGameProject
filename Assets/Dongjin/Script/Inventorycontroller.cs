@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 public class Inventorycontroller : MonoBehaviour
 {
     private bool InventoryOn= false;
@@ -10,7 +11,7 @@ public class Inventorycontroller : MonoBehaviour
     private GameObject itembutton;
     private int sibaltest = 0;
     public List<GameObject> items = new List<GameObject>();
-
+    private GameObject buttonsave;
     private void Start()
     {
     }
@@ -45,9 +46,6 @@ public class Inventorycontroller : MonoBehaviour
         itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(items.Count -1).gameObject;
         itembutton.GetComponent<ItemButtonScript>().idx++;
         settingitem();
-        /*itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(itemidx).gameObject;
-        itembutton.GetComponent<ItemButtonScript>().ImageUpdate(item.GetComponent<SpriteRenderer>());
-        itembutton.GetComponent<ItemButtonScript>().idxup();*/
     }
     public void settingitem()
     {
@@ -70,7 +68,15 @@ public class Inventorycontroller : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             itembutton = inventorys.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
-            itembutton.GetComponent<ItemButtonScript>().ImageUpdate(items[i].GetComponent<SpriteRenderer>());
+            itembutton.GetComponent<ItemButtonScript>().ImageUpdate(items[i]);
         }
+    }
+    public void usebutton()
+    {
+        /*int buttonidx;
+        buttonsave = GameObject.Find("invenUi").GetComponent<invenUi>().buttonsave;
+        int.TryParse(buttonsave.name, out buttonidx);*/
+
+        buttonsave.GetComponent<ItemButtonScript>().idx--;
     }
 }

@@ -20,6 +20,8 @@ TagManager:
   - SpeedPotion
   - Eunsin
   - ManaBarrier
+  - HPpotion
+  - ManaPotion
   layers:
   - Default
   - TransparentFX
