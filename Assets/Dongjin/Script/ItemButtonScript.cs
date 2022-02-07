@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class ItemButtonScript : MonoBehaviour
 {
     public int idx = 0;
+    private GameObject itemsave;
     private void Update()
     {
         
     }
-    public void ImageUpdate(SpriteRenderer itemimage)
+    public void ImageUpdate(GameObject item)
     {
-        transform.GetChild(0).GetComponent<Image>().sprite = itemimage.sprite;
+        transform.GetChild(0).GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
         transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        itemsave = item;
     }
     public void idxup()
     {
