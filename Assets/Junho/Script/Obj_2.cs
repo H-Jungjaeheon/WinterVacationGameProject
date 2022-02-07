@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Obj_2 : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Obj_2 : MonoBehaviour
 
     [SerializeField]
     public GameObject[] particle;
+
+    [SerializeField] public GameObject DoPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +26,7 @@ public class Obj_2 : MonoBehaviour
         isIt = true;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
-        
+        slider.gameObject.SetActive(false);
 
     }
 
@@ -39,7 +43,6 @@ public class Obj_2 : MonoBehaviour
             if (Input.GetKey(KeyCode.F))
             {
                 cnt += Time.deltaTime;
-                Debug.Log(cnt);
             }
             else cnt = 0;
         }
@@ -63,6 +66,7 @@ public class Obj_2 : MonoBehaviour
             {
                 iscollison = true;
                 Interaction.SetActive(true);
+                slider.gameObject.SetActive(true);
 
             }
         }
@@ -75,6 +79,8 @@ public class Obj_2 : MonoBehaviour
             Debug.Log("³ª°¨");
             iscollison = false;
             Interaction.gameObject.SetActive(false);
+            slider.gameObject.SetActive(false);
+
         }
     }
     void isParticle()
@@ -97,26 +103,29 @@ public class Obj_2 : MonoBehaviour
         int ran = Random.Range(0, 10);
         if (ran < 7)
         {
+            //transform.DOMove(transform.position, 1f).SetEase(Ease.OutBack).OnComplete(() =>
+            //{
+            //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
+            //});
             Debug.Log("²Î");
-
-            //Instantiate(Items[2], transform.position, Items[1].transform.rotation);
-
             particle[1].SetActive(true);
             Invoke("Nothing", 4.5f);
 
         }
         else if (ran < 8)
         {
-            Instantiate(Items[2], transform.position, Items[2].transform.rotation);
+
+            Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
         }
 
         else if (ran < 9)
         {
-            Instantiate(Items[0], transform.position, Items[1].transform.rotation);
+            Instantiate(Items[0], transform.position, Items[0].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
         }
         else if (ran < 10)
         {
-            Instantiate(Items[1], transform.position, Items[1].transform.rotation);
+            Instantiate(Items[1], transform.position, Items[1].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
         }
         gameObject.tag = "Untagged";
     }

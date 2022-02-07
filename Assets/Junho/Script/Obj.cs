@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 public class Obj : MonoBehaviour
 {
     public GameObject Interaction;
@@ -12,6 +13,8 @@ public class Obj : MonoBehaviour
 
     [SerializeField]
     public GameObject[] particle;
+
+    [SerializeField] public GameObject DoPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +70,11 @@ public class Obj : MonoBehaviour
     }
     public void Drop()
     {
+            //transform.DOMove(transform.position, 1f).SetEase(Ease.OutBack).OnComplete(() =>
+            //{
+            //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
+            //});
+        
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
         Interaction.SetActive(false);
@@ -74,25 +82,24 @@ public class Obj : MonoBehaviour
         if (ran < 7)
         {
             Debug.Log("²Î");
-
-            //Instantiate(Items[2], transform.position, Items[1].transform.rotation);
-
             particle[1].SetActive(true);
             Invoke("Nothing", 4.5f);
 
         }
         else if (ran < 8)
         {
-            Instantiate(Items[2], transform.position, Items[2].transform.rotation);
+            
+            Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
         }
 
         else if (ran < 9)
         {
-            Instantiate(Items[0], transform.position, Items[1].transform.rotation);
+            Instantiate(Items[0], transform.position, Items[0].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
         }
         else if (ran < 10)
         {
-            Instantiate(Items[1], transform.position, Items[1].transform.rotation);
+            Instantiate(Items[1], transform.position, Items[1].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
         }
         gameObject.tag = "Untagged";
     }

@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3526008968914863085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.9, y: -3.45, z: 0}
+  m_LocalPosition: {x: 6.7722645, y: -4.1471796, z: 0}
   m_LocalScale: {x: 0.52929, y: 0.52929, z: 0.52929}
   m_Children:
   - {fileID: 6798983694980346717}
@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1887dd69ee4568d458b131fc96211a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotItem: {fileID: 6432746439067910734, guid: bc350b00dc2823c40a5df6bd0f2beb93, type: 3}
   Interaction: {fileID: 6798983694980346691}
 --- !u!1001 &3526008968261257338
 PrefabInstance:
