@@ -26,6 +26,7 @@ public class Obj_3 : MonoBehaviour
         isIt = true;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
+        slider.gameObject.SetActive(false);
 
 
     }
@@ -43,7 +44,6 @@ public class Obj_3 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 cnt += 5;
-                Debug.Log(cnt);
             }
            
         }
@@ -71,6 +71,7 @@ public class Obj_3 : MonoBehaviour
             {
                 iscollison = true;
                 Interaction.SetActive(true);
+                slider.gameObject.SetActive(true);
 
             }
         }
@@ -83,6 +84,8 @@ public class Obj_3 : MonoBehaviour
             Debug.Log("³ª°¨");
             iscollison = false;
             Interaction.gameObject.SetActive(false);
+            slider.gameObject.SetActive(false);
+
         }
     }
     void isParticle()
@@ -110,7 +113,8 @@ public class Obj_3 : MonoBehaviour
             //{
             //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
             //});
-            Instantiate(Items[2], transform.position, Items[1].transform.rotation);
+            Debug.Log("²Î");
+            particle[1].SetActive(true);
             Invoke("Nothing", 4.5f);
 
         }

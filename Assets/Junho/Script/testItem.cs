@@ -11,8 +11,16 @@ public class testItem : MonoBehaviour
     void Start()
     {
         managertest = GameObject.Find("GameManager");
+        StartCoroutine(cnt());
     }
-
+    IEnumerator cnt()
+    {
+        GetComponent<CapsuleCollider2D>().enabled=false;
+        yield return new WaitForSeconds(3f);
+        GetComponent<CapsuleCollider2D>().enabled = true;
+        GetComponent<CapsuleCollider2D>().isTrigger = true;
+        
+    }
     // Update is called once per frame
     void Update()
     {

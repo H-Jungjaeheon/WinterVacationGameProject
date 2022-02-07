@@ -70,25 +70,25 @@ public class Obj : MonoBehaviour
     }
     public void Drop()
     {
+            //transform.DOMove(transform.position, 1f).SetEase(Ease.OutBack).OnComplete(() =>
+            //{
+            //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
+            //});
         
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
         Interaction.SetActive(false);
         int ran = Random.Range(0, 10);
-        int a = Random.Range(0, 2);
         if (ran < 7)
         {
-            //transform.DOMove(transform.position, 1f).SetEase(Ease.OutBack).OnComplete(() =>
-            //{
-            //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
-            //});
-            Instantiate(Items[2], transform.position, Items[1].transform.rotation);
+            Debug.Log("²Î");
+            particle[1].SetActive(true);
             Invoke("Nothing", 4.5f);
 
         }
         else if (ran < 8)
         {
-
+            
             Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
 
         }
