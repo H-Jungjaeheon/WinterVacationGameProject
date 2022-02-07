@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool isGound, isLadder, isDamage = false;
     Animator anim;
     public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false;
+    public float GrapCount, MaxGrapCount;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -72,14 +73,30 @@ public class Player : MonoBehaviour
         }
 
     }
+    void Update()
+    {
+        if (IsGrab == true)
+        {
+            Grabbing();
+        }
+    }
+    void Grabbing()
+    {
+        GrapCount -= Time.deltaTime * 20;
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            GrapCount += 8; //MaxGrapCount
+        }
+        if(GrapCount <= 0)
+        {
+            GrapCount = 0;
+        }
+    }
     IEnumerator ManaBarrier()
     {
         GameManager.Instance.isManaBarrier = true;
         yield return new WaitForSeconds(10f);
         GameManager.Instance.isManaBarrier = false;
-    }
-    void Update()
-    {
     }
    
     IEnumerator speedPotion()

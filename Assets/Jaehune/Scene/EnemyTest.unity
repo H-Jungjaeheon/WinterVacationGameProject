@@ -1979,6 +1979,8 @@ MonoBehaviour:
   isEunsinPotion: 0
   isManaBarrier: 0
   IsGrab: 0
+  GrapCount: 0
+  MaxGrapCount: 100
 --- !u!212 &520082749
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2493,7 +2495,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_Sprite: {fileID: 21300000, guid: 9e0b7333dc5743f40bf492b20392a73a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3014,6 +3016,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5831256063597326406, guid: ab1871618634fe84f805d0cc09955590, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831256063917656287, guid: ab1871618634fe84f805d0cc09955590, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5831256063917656287, guid: ab1871618634fe84f805d0cc09955590, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7301,6 +7311,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
+      propertyPath: SkillTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: IsSkillUse
       value: 0
       objectReference: {fileID: 0}
@@ -7310,7 +7324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SeeCrossroad
-      value: -100
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SkillCrossroad
@@ -7320,5 +7334,9 @@ PrefabInstance:
       propertyPath: SkillHitPlayer
       value: 
       objectReference: {fileID: 520082743}
+    - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
+      propertyPath: SpawnMonsterCount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
