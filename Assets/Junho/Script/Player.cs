@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
     }
     void Grabbing()
     {
-        GrapCount -= Time.deltaTime * 20;
+        GrapCount -= Time.deltaTime * 15;
         if (Input.GetKeyDown(KeyCode.F))
         {
             GrapCount += 8; //MaxGrapCount

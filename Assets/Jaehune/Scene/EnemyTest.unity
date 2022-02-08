@@ -1510,7 +1510,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100000, y: 100000}
+  m_SizeDelta: {x: 10000, y: 10000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &452096074
 MonoBehaviour:
@@ -2242,6 +2242,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4708553627406997956, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
+      propertyPath: m_Size.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708553627406997956, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
+      propertyPath: m_Size.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708553627406997956, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a15427c609e8d7418ea42459434faaa, type: 3}
+    - target: {fileID: 4708553627406997956, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4708553627406997957, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -3075,6 +3091,10 @@ PrefabInstance:
     - target: {fileID: 5831256064813428247, guid: ab1871618634fe84f805d0cc09955590, type: 3}
       propertyPath: m_Name
       value: Obj_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831256064813428247, guid: ab1871618634fe84f805d0cc09955590, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab1871618634fe84f805d0cc09955590, type: 3}
@@ -6500,6 +6520,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016779373}
   m_CullTransparentMesh: 1
+--- !u!1 &2026178430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026178431}
+  m_Layer: 0
+  m_Name: "\uC120 \uC787\uAE30 \uD50C\uB808\uC774\uC5B4 \uC2A4\uD0AC \uBC0F \uCF64\uBCF4
+    \uAD6C\uD604"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2026178431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026178430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.04578, y: -2.595789, z: -275.63065}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2048266280
 GameObject:
   m_ObjectHideFlags: 0
@@ -6715,7 +6766,7 @@ MonoBehaviour:
   - {fileID: 4593794140282154931, guid: 9ff03bd047d437e4f8b4203a6c590d0b, type: 3}
   - {fileID: 32915100159354065, guid: 7bba25ca55e5b214d972e1916b387598, type: 3}
   - {fileID: 2278861209527971366, guid: 0e86715b711f0ac468686901f9a7cc2c, type: 3}
-  - {fileID: 0}
+  - {fileID: 4595127360262648672, guid: fca4cff6a5d47e441bdef6916b24dad2, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -7047,7 +7098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5255179299071213957, guid: f26bb3dd90af08d4eb56b01c8f1f243b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5255179299071213959, guid: f26bb3dd90af08d4eb56b01c8f1f243b, type: 3}
       propertyPath: IsFind
@@ -7306,6 +7357,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChargerEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2588354795454970251, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: MoveCount
       value: 0
@@ -7324,7 +7379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SeeCrossroad
-      value: -7
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SkillCrossroad
@@ -7336,7 +7391,7 @@ PrefabInstance:
       objectReference: {fileID: 520082743}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SpawnMonsterCount
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}

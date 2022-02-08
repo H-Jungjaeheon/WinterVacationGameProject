@@ -152,7 +152,7 @@ MonoBehaviour:
   Speed: 0.8
   MoveCount: 0
   MaxMoveCount: 20
-  SeeCrossroad: -7
+  SeeCrossroad: -5.5
   IsFind: 0
   IsMove: 1
   Player: {fileID: 0}
@@ -164,6 +164,7 @@ MonoBehaviour:
   MaxSkillTime: 8
   SkillHand: {fileID: 8586151921540004552}
   GrapBar: {fileID: 5805293002120762975}
+  GrabCountStop: 0
   SkillTime: 0
   IsSkill: 0
 --- !u!95 &2588354795454970248
@@ -210,8 +211,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2588354795549990892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1, y: 11.24, z: 0}
-  m_LocalScale: {x: 0.5292, y: 0.62, z: 1}
+  m_LocalPosition: {x: -0.03, y: 6.187, z: 0}
+  m_LocalScale: {x: 0.40879855, y: 0.4226456, z: 1}
   m_Children: []
   m_Father: {fileID: 2588354795454970245}
   m_RootOrder: 0
