@@ -6,7 +6,7 @@ public class CameraMove : MonoBehaviour
 {
     public Transform target, Battletarget;
     public Vector3 offset, initialPosition;
-    public bool isright;
+    public bool isright, IsFarAway = false, IsGrab = false;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
     [SerializeField] UnityEngine.Camera MCamera;
     [SerializeField] float ShakeAmount;
@@ -17,6 +17,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
+        IsFarAway = false;
         height = UnityEngine.Camera.main.orthographicSize;
         width = height * Screen.width / Screen.height;
     }
@@ -71,11 +72,13 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
+                if (IsGrab == true)
+                {
+                    transform.position = Random.insideUnitSphere * (ShakeAmount - 0.4f) + target.position;
+                }
                 transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
-
                 float Ix = size.x * 0.5f - width;
                 float clampX = Mathf.Clamp(transform.position.x, -Ix + center.x, Ix + center.x);
-
                 float Iy = size.y * 0.5f - height;
                 float clampY = Mathf.Clamp(transform.position.y, -Iy + center.y, Iy + center.y);
                 transform.position = new Vector3(clampX, clampY, -10f);
@@ -87,13 +90,29 @@ public class CameraMove : MonoBehaviour
         }
         else if (BattleManager.Instance.CamE == true)
         {
-            transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
-            MCamera.orthographicSize = 3f;
+            if(IsFarAway == false)
+            {
+                transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
+                MCamera.orthographicSize = 3f;
+            }
+            else
+            {
+                transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
+                MCamera.orthographicSize = 3.7f;
+            }
         }
         else if (BattleManager.Instance.CamP == true)
         {
-            transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
-            MCamera.orthographicSize = 3f;
+            if (IsFarAway == false)
+            {
+                transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
+                MCamera.orthographicSize = 3f;
+            }
+            else
+            {
+                transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
+                MCamera.orthographicSize = 3.7f;
+            }
         }
         if (GameManager.Instance.IsBattleStart == true && GameManager.Instance.IsCamMove == true)
         {

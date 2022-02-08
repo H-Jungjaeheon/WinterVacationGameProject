@@ -7,8 +7,9 @@ public class ChargerEnemy : BasicEnemyScript
 {
     [SerializeField] float MaxSkillTime;
     [SerializeField] GameObject SkillHand;
-    [SerializeField] Image GrapBar;
+    [SerializeField] Image GrapBar, NullBar;
     [SerializeField] bool GrabCountStop = false;
+    public LineRenderer SkillLine;
     public float SkillTime;
     public bool IsSkill = false;
     //스킬 사거리 5.5
@@ -16,11 +17,13 @@ public class ChargerEnemy : BasicEnemyScript
     public override void Start()
     {
         base.Start();
+        SkillLine = GetComponentInChildren<LineRenderer>();
+        SkillLine.widthMultiplier = 1;
     }
 
     // Update is called once per frame
     public override void Update()
-    {
+    {   
         RayCasting();
         Moving();
         Skill();
@@ -57,21 +60,32 @@ public class ChargerEnemy : BasicEnemyScript
         if (Player != null && GameManager.Instance.IsBattleStart == false)
         {
             Color color = GrapBar.color;
+            Color color2 = NullBar.color;
             GrapBar.transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + new Vector3(-0.1f, 1.5f, 0));
+            NullBar.transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + new Vector3(-0.1f, 1.5f, 0));
             GrapBar.fillAmount = GameObject.Find("Player").GetComponent<Player>().GrapCount / GameObject.Find("Player").GetComponent<Player>().MaxGrapCount;
             if (SkillTime >= MaxSkillTime)
             {
                 color.a = 1;
+                color2.a = 1;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = true;
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = true;
                 IsSkill = true;
                 IsMove = false;
                 Player.transform.position = Vector3.MoveTowards(Player.transform.position, this.transform.position, 1f * Time.deltaTime);
+                Debug.Assert(SkillLine != null);
+                SkillLine.SetPosition(0, this.transform.position);
+                SkillLine.SetPosition(1, Player.transform.position);
                 SkillHand.SetActive(true);
                 SkillHand.transform.position = Player.transform.position;
             }
             else
             {
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = false;
+                SkillLine.SetPosition(0, this.transform.position);
+                SkillLine.SetPosition(1, this.transform.position);
                 color.a = 0;
+                color2.a = 0;
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = false;
                 GameObject.Find("Player").GetComponent<Player>().GrapCount = 0;
                 IsSkill = false;
