@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
                 if (GameManager.Instance.BattleEndCount==0 && GameManager.Instance.isEunsin == false)
                 {
                     GameManager.Instance.IsBattleStart = true;
-
+                    BattleManager.Instance.IsPlayerTurn = true;
                 }
                 break;
 
