@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
             {
                 isHide = true;
                 GameManager.Instance.isEunsin = true;
-                this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
+                this.spriteRenderer.enabled = false;
                 Debug.Log("¼ûÀ½");
                 
             }
@@ -96,7 +96,8 @@ public class Player : MonoBehaviour
 
                 isHide = false;
                 GameManager.Instance.isEunsin = false;
-                this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
+                this.spriteRenderer.enabled = true;
+
             }
         }
 
