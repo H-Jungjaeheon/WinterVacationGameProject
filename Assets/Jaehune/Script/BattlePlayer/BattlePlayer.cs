@@ -7,7 +7,7 @@ public class BattlePlayer : MonoBehaviour
 {
     [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
     [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, GM, SkillButton, ManaText; //전투시 인식한 적 오브젝트 담는 그릇
-    [SerializeField] bool GoToEnemy = false, GoToReturn = false; //적의 위치(근접 공격시)로 갈지 판단
+    [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false; //적의 위치(근접 공격시)로 갈지 판단
     public bool IsHit = false;
     Animator animator;
 
@@ -26,10 +26,15 @@ public class BattlePlayer : MonoBehaviour
         {
             Playerattack();
         }
-        if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true)
+        if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == false)
         {
             animator.SetBool("IsWalk", true);
             transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-2, 0.77f, 0), 10 * Time.deltaTime);
+        }
+        else if(GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == true)
+        {
+            animator.SetBool("IsWalk", true);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-6, 0.77f, 0), 10 * Time.deltaTime);
         }
         else if(GoToReturn == true)
         {
@@ -42,7 +47,7 @@ public class BattlePlayer : MonoBehaviour
         }
         if (IsHit == true)
         {
-            StartCoroutine("PlayerHit");
+            StartCoroutine(PlayerHit());
         }
     }
 
@@ -93,9 +98,44 @@ public class BattlePlayer : MonoBehaviour
     {
         if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
         {
-            if (GameManager.Instance.curMana >= 20)
+            if (GameManager.Instance.curMana >= 25)
             {
-                GameManager.Instance.curMana -= 20;
+                GameManager.Instance.curMana -= 25;
+                IsAttackSkill = true;
+                StartCoroutine("PlayerSkill", 1f);
+            }
+            else
+            {
+                ManaText.SetActive(true);
+                Invoke("ManatextOff", 2f);
+            }
+        }
+    }
+    public void UseSkill2()
+    {
+        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
+        {
+            if (GameManager.Instance.curMana >= 40)
+            {
+                GameManager.Instance.curMana -= 40;
+                IsAttackSkill = true;
+                StartCoroutine("PlayerSkill", 1f);
+            }
+            else
+            {
+                ManaText.SetActive(true);
+                Invoke("ManatextOff", 2f);
+            }
+        }
+    }
+    public void UseSkill3()
+    {
+        if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
+        {
+            if (GameManager.Instance.curMana >= 55)
+            {
+                GameManager.Instance.curMana -= 55;
+                IsAttackSkill = true;
                 StartCoroutine("PlayerSkill", 1f);
             }
             else
@@ -122,7 +162,7 @@ public class BattlePlayer : MonoBehaviour
         SkillButton.SetActive(false);
         GameManager.Instance.BattleButtonUi.SetActive(false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "주인공 박치기";
+        GameManager.Instance.BattleSkillText.text = "실험 : 불꽃 점화";
         BattleManager.Instance.IsPlayerTurn = false;
         GoToEnemy = true;
         yield return new WaitForSeconds(1.5f);
@@ -172,10 +212,11 @@ public class BattlePlayer : MonoBehaviour
     }
     IEnumerator PlayerSkill()
     {
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
         SkillButton.SetActive(false);
         GameManager.Instance.BattleButtonUi.SetActive(false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "주인공 스킬";
+        GameManager.Instance.BattleSkillText.text = "실험 : 불꽃 발사";
         BattleManager.Instance.IsPlayerTurn = false;
         GoToEnemy = true;
         yield return new WaitForSeconds(1.5f);
@@ -197,6 +238,85 @@ public class BattlePlayer : MonoBehaviour
         yield return new WaitForSeconds(1);
         GoToReturn = false;
         yield return new WaitForSeconds(2);
+        IsAttackSkill = false;
+        if (GameManager.Instance.IsCamMove == true)
+        {
+            BattleManager.Instance.IsEnemyTurn = true;
+        }
+        else
+        {
+            BattleManager.Instance.IsPlayerTurn = true;
+        }
+        yield return null;
+    }
+    IEnumerator PlayerSkill2()
+    {
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
+        SkillButton.SetActive(false);
+        GameManager.Instance.BattleButtonUi.SetActive(false);
+        GameManager.Instance.BattleSkillBackGround.SetActive(true);
+        GameManager.Instance.BattleSkillText.text = "실험 : 상처 재생";
+        BattleManager.Instance.IsPlayerTurn = false;
+        GoToEnemy = true;
+        yield return new WaitForSeconds(1.5f);
+        BattleManager.Instance.CamP = true;
+        animator.SetBool("IsAttack", true);
+        GameObject DT = Instantiate(DmgText);
+        DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+        DT.transform.position = Enemy.transform.position;
+        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 2;
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 2;
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+        Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
+        yield return new WaitForSeconds(1);
+        BattleManager.Instance.CamP = false;
+        animator.SetBool("IsAttack", false);
+        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GoToEnemy = false;
+        GoToReturn = true;
+        yield return new WaitForSeconds(1);
+        GoToReturn = false;
+        yield return new WaitForSeconds(2);
+        IsAttackSkill = false;
+        if (GameManager.Instance.IsCamMove == true)
+        {
+            BattleManager.Instance.IsEnemyTurn = true;
+        }
+        else
+        {
+            BattleManager.Instance.IsPlayerTurn = true;
+        }
+        yield return null;
+    }
+    IEnumerator PlayerSkill3()
+    {
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
+        SkillButton.SetActive(false);
+        GameManager.Instance.BattleButtonUi.SetActive(false);
+        GameManager.Instance.BattleSkillBackGround.SetActive(true);
+        GameManager.Instance.BattleSkillText.text = "실험 : 피해 무효";
+        BattleManager.Instance.IsPlayerTurn = false;
+        GoToEnemy = true;
+        yield return new WaitForSeconds(1.5f);
+        BattleManager.Instance.CamP = true;
+        animator.SetBool("IsAttack", true);
+        GameObject DT = Instantiate(DmgText);
+        DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+        DT.transform.position = Enemy.transform.position;
+        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 2;
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 2;
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+        Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
+        yield return new WaitForSeconds(1);
+        BattleManager.Instance.CamP = false;
+        animator.SetBool("IsAttack", false);
+        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GoToEnemy = false;
+        GoToReturn = true;
+        yield return new WaitForSeconds(1);
+        GoToReturn = false;
+        yield return new WaitForSeconds(2);
+        IsAttackSkill = false;
         if (GameManager.Instance.IsCamMove == true)
         {
             BattleManager.Instance.IsEnemyTurn = true;

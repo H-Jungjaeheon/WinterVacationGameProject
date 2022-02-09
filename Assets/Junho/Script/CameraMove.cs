@@ -47,6 +47,10 @@ public class CameraMove : MonoBehaviour
             vognette.color.value = new Color(0, 0, 0, 1);
             vognette.intensity.value = 0.2f;
         }
+        if(GameManager.Instance.IsBattleStart == true)
+        {
+            IsGrab = false;
+        }
     }
     void FixedUpdate()
     {
