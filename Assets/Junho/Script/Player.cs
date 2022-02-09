@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
         }
     void Grabbing()
     {
-        GrapCount -= Time.deltaTime * 15;
+        GrapCount -= Time.deltaTime * 18;
         if (Input.GetKeyDown(KeyCode.F))
         {
             GrapCount += 8; //MaxGrapCount
@@ -168,8 +168,6 @@ public class Player : MonoBehaviour
                 break;
 
             case "Gas":
-
-                Debug.Log("가스에닿음");
                 if (GameManager.Instance.isTrapBarrier == false)
                 {
                     isDamage = true;
@@ -177,7 +175,6 @@ public class Player : MonoBehaviour
                 }
                 break;
             case "Ladder":
-                Debug.Log("사다리에 닿음");
                 isLadder = true;
                 break;
             case "Plan":
@@ -195,19 +192,16 @@ public class Player : MonoBehaviour
                 isSpeedPotion = true;
                 break;
             case "Corridor":
-                Debug.Log("d");
                 GameManager.Instance.isRoom = false;
                 break;
             case "Eunsin":
                 isEunsinPotion = true;
-                Debug.Log("권준호 개새");
                 break;
             case "ManaBarrier":
                 isManaBarrier = true;
                 break;
             case "hideObj":
                 isHidecollision = true;
-                Debug.Log("hide에 닿음");
                 break;
         }
         
@@ -217,8 +211,6 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Gas":
-            
-                Debug.Log("가스에 안 닿음");
                 if (GameManager.Instance.isTrapBarrier==false)
                 {
                     isDamage = false;
@@ -226,7 +218,6 @@ public class Player : MonoBehaviour
                 }
                 break;
             case "Ladder":
-                Debug.Log("사다리에 안 닿음");
                 isLadder = false;
                 break;
             case "Plan":
@@ -250,7 +241,6 @@ public class Player : MonoBehaviour
                 break;
             case "hideObj":
                 isHidecollision = false;
-                Debug.Log("ㄴ");
                 break;
         }
 

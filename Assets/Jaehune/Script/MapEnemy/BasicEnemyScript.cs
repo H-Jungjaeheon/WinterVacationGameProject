@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BasicEnemyScript : MonoBehaviour
 {
-    public float Speed, MoveCount, MaxMoveCount, SeeCrossroad; //배회 속도, 배회 시간, 최대 배회 시간, 인식 사거리
+    public float Speed, MoveCount, MaxMoveCount, SeeCrossroad, IsPlus = 1; //배회 속도, 배회 시간, 최대 배회 시간, 인식 사거리
     public bool IsFind = false, IsMove = true; //플레이어 발견, 자신의 움직임 판별
     public GameObject Player, WarningObj, CrossRoadObj; //플레이어 오브젝트(프리펩), 발견시 느낌표 오브젝트, 시야 범위 표시 오브젝트
     public RaycastHit2D hit;
@@ -34,11 +34,13 @@ public class BasicEnemyScript : MonoBehaviour
         if (IsFind == true)
         {
             FindPlayer();
+            CrossroadPlus();
             CrossRoadObj.SetActive(false);
         }
         else
         {
             CrossRoadObj.SetActive(true);
+            IsPlus = 1;           
         }
     }
 
@@ -76,8 +78,8 @@ public class BasicEnemyScript : MonoBehaviour
     }
     public virtual void RayCasting()
     {
-        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
+        Debug.DrawRay(transform.position, Vector3.left * (SeeCrossroad * IsPlus), Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus);
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false) 
@@ -117,5 +119,9 @@ public class BasicEnemyScript : MonoBehaviour
     public virtual void Delete()
     {
         Destroy(this.gameObject);
+    }
+    public virtual void CrossroadPlus()
+    {
+        IsPlus = 5;
     }
 }

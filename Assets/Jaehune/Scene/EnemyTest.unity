@@ -2124,7 +2124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520082743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.66, y: -3.46, z: 0}
+  m_LocalPosition: {x: -3.56, y: -3.46, z: 0}
   m_LocalScale: {x: 0.75, y: 0.73, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2392,7 +2392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4708553627406998008, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
@@ -3686,7 +3686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1487425484039611787, guid: 6c3214d1ba9d06e4fbba0b037c089d90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.6
+      value: -15.78
       objectReference: {fileID: 0}
     - target: {fileID: 1487425484039611787, guid: 6c3214d1ba9d06e4fbba0b037c089d90, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5418,7 +5418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2588354795454970251, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7121602689434790744, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_FillAmount
@@ -5427,6 +5427,10 @@ PrefabInstance:
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SkillTime
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
+      propertyPath: MaxSkillTime
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: SeeCrossroad
@@ -6809,7 +6813,8 @@ GameObject:
   - component: {fileID: 2026178431}
   m_Layer: 0
   m_Name: "\uD50C\uB808\uC774\uC5B4 \uC2A4\uD0AC \uBC0F \uCF64\uBCF4 \uAD6C\uD604
-    & \uCD94\uACA9 \uAE38\uAC8C & \uCC28\uC800 \uC804\uD22C \uAE30\uC808 \uD6A8\uACFC"
+    & \uCC28\uC800 \uC804\uD22C \uAE30\uC808 \uD6A8\uACFC & \uC790\uCCB4 \uD790\uB7EC,
+    \uBC84\uC11C\uCEE4 \uC81C\uC791 "
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

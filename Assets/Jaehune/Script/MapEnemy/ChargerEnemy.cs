@@ -34,11 +34,13 @@ public class ChargerEnemy : BasicEnemyScript
         if (IsFind == true)
         {
             FindPlayer();
+            CrossroadPlus();
             CrossRoadObj.SetActive(false);
         }
         else
         {
             CrossRoadObj.SetActive(true);
+            IsPlus = 1;
         }
     }
     private void FixedUpdate()
@@ -72,7 +74,7 @@ public class ChargerEnemy : BasicEnemyScript
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = true;
                 IsSkill = true;
                 IsMove = false;
-                Player.transform.position = Vector3.MoveTowards(Player.transform.position, this.transform.position, 1f * Time.deltaTime);
+                Player.transform.position = Vector3.MoveTowards(Player.transform.position, this.transform.position, 2f * Time.deltaTime);
                 Debug.Assert(SkillLine != null);
                 SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
                 SkillLine.SetPosition(1, Player.transform.position);
@@ -120,8 +122,8 @@ public class ChargerEnemy : BasicEnemyScript
     }
     public override void RayCasting()
     {
-        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
+        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad * IsPlus, Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus);
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
@@ -160,5 +162,9 @@ public class ChargerEnemy : BasicEnemyScript
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
+    }
+    public override void CrossroadPlus()
+    {
+        base.CrossroadPlus();
     }
 }

@@ -46,4 +46,8 @@ public class FarAwayEnemy : BasicEnemyScript
     {
         base.OnTriggerEnter2D(collision);
     }
+    public override void CrossroadPlus()
+    {
+        base.CrossroadPlus();
+    }
 }

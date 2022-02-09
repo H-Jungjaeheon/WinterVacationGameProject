@@ -9,9 +9,9 @@ public class ReflectEnemy : BasicEnemyScript
     // Start is called before the first frame update
     public override void Start()
     {
+        base.Start();
         Dash = 0;
         IsDash = false;
-        base.Start();
     }
 
     // Update is called once per frame
@@ -33,8 +33,8 @@ public class ReflectEnemy : BasicEnemyScript
     }
     public override void RayCasting()
     {
-        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
+        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad * IsPlus, Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus);
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
@@ -101,5 +101,9 @@ public class ReflectEnemy : BasicEnemyScript
             Dash = 0;
         }
 
+    }
+    public override void CrossroadPlus()
+    {
+        base.CrossroadPlus();
     }
 }

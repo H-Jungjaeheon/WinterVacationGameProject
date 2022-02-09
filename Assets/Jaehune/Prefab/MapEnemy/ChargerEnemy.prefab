@@ -154,6 +154,7 @@ MonoBehaviour:
   MoveCount: 0
   MaxMoveCount: 20
   SeeCrossroad: -5.5
+  IsPlus: 1
   IsFind: 0
   IsMove: 1
   Player: {fileID: 0}
@@ -162,7 +163,7 @@ MonoBehaviour:
   SpawnMonsterCount: 5
   TurnCount: 0
   animator: {fileID: 0}
-  MaxSkillTime: 8
+  MaxSkillTime: 6
   SkillHand: {fileID: 8586151921540004552}
   GrapBar: {fileID: 5805293002120762975}
   NullBar: {fileID: 7121602689434790744}
