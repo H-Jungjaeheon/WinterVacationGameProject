@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
     Animator anim;
-    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false;
+    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false , isHidecollision = false,isHide=false;
     public float GrapCount, MaxGrapCount;
     void Start()
     {
@@ -24,22 +24,8 @@ public class Player : MonoBehaviour
         SurviveDamage();
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
-            {
-                StartCoroutine(speedPotion());
-                isSpeedPotion = false;
-            }
-            else if (isEunsinPotion == true && Input.GetKey(KeyCode.F))
-            {
-                StartCoroutine(Eunsincnt());
-                isEunsinPotion = false;
-            }
-            else if (isManaBarrier == true && Input.GetKey(KeyCode.F))
-            {
-                StartCoroutine(ManaBarrier());
-                isManaBarrier = false;
-            }
-            if(IsGrab == false)
+            
+            if(IsGrab == false&&isHide==false)
             {
                 Move();
             }
@@ -79,7 +65,42 @@ public class Player : MonoBehaviour
         {
             Grabbing();
         }
-    }
+        if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
+        {
+            if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("speedPotion");
+                isSpeedPotion = false;
+            }
+            else if (isEunsinPotion == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("Eunsincnt");
+                isEunsinPotion = false;
+            }
+            else if (isManaBarrier == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("ManaBarrier");
+                isManaBarrier = false;
+            }
+            else if (isHidecollision == true && isHide == false && Input.GetKeyDown(KeyCode.F))
+            {
+                isHide = true;
+                GameManager.Instance.isEunsin = true;
+                this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
+                Debug.Log("¼ûÀ½");
+                
+            }
+            else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F))
+            {
+                Debug.Log("¾È¼ûÀ½");
+
+                isHide = false;
+                GameManager.Instance.isEunsin = false;
+                this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
+            }
+        }
+
+        }
     void Grabbing()
     {
         GrapCount -= Time.deltaTime * 15;
@@ -185,6 +206,10 @@ public class Player : MonoBehaviour
             case "ManaBarrier":
                 isManaBarrier = true;
                 break;
+            case "hideObj":
+                isHidecollision = true;
+                Debug.Log("hide¿¡ ´êÀ½");
+                break;
         }
         
     }
@@ -223,6 +248,10 @@ public class Player : MonoBehaviour
                 break;
             case "ManaBarrier":
                 isManaBarrier = false;
+                break;
+            case "hideObj":
+                isHidecollision = false;
+                Debug.Log("¤¤");
                 break;
         }
 

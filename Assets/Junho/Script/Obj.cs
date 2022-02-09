@@ -52,6 +52,7 @@ public class Obj : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            iscollison = false;
             Debug.Log("³ª°¨");
             Interaction.gameObject.SetActive(false);
         }

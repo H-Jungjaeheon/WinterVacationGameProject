@@ -22,6 +22,7 @@ TagManager:
   - ManaBarrier
   - HPpotion
   - ManaPotion
+  - hideObj
   layers:
   - Default
   - TransparentFX
