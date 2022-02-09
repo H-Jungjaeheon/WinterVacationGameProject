@@ -74,16 +74,16 @@ public class ChargerEnemy : BasicEnemyScript
                 IsMove = false;
                 Player.transform.position = Vector3.MoveTowards(Player.transform.position, this.transform.position, 1f * Time.deltaTime);
                 Debug.Assert(SkillLine != null);
-                SkillLine.SetPosition(0, this.transform.position);
+                SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
                 SkillLine.SetPosition(1, Player.transform.position);
                 SkillHand.SetActive(true);
-                SkillHand.transform.position = Player.transform.position;
+                SkillHand.transform.position = Player.transform.position + new Vector3(0, 0.1f, 0);
             }
             else
             {
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = false;
-                SkillLine.SetPosition(0, this.transform.position);
-                SkillLine.SetPosition(1, this.transform.position);
+                SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
+                SkillLine.SetPosition(1, this.transform.position - new Vector3(0, 0.6f, 0));
                 color.a = 0;
                 color2.a = 0;
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = false;

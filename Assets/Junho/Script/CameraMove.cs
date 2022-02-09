@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraMove : MonoBehaviour
 {
@@ -14,9 +15,13 @@ public class CameraMove : MonoBehaviour
     public float speed;
     public Vector2 Left_center, Left_size, Right_center, Right_size, center, size;
     float height, width;
+    public PostProcessVolume volume;
+    private Vignette vognette;
 
     private void Start()
     {
+        volume.profile.TryGetSettings(out vognette);
+        vognette.intensity.value = 0;
         IsFarAway = false;
         height = UnityEngine.Camera.main.orthographicSize;
         width = height * Screen.width / Screen.height;
@@ -30,7 +35,19 @@ public class CameraMove : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(center, size);
     }
-
+    private void Update()
+    {
+        if (IsGrab == true)
+        {
+            vognette.color.value = new Color(1, 0, 0, 1);
+            vognette.intensity.value = 0.3f; 
+        }
+        else
+        {
+            vognette.color.value = new Color(0, 0, 0, 1);
+            vognette.intensity.value = 0.2f;
+        }
+    }
     void FixedUpdate()
     {
 
