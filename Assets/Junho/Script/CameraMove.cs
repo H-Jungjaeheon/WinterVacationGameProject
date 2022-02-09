@@ -56,13 +56,11 @@ public class CameraMove : MonoBehaviour
         if (GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
             MCamera.orthographicSize = 4.6f;
-            if (GameManager.Instance.isRoom == true)
+           
+            if (GameManager.Instance.isRoom)
             {
                 if (GameObject.Find("X-Axis").transform.position.x < target.position.x) isright = true;
                 else isright = false;
-            }
-            if (GameManager.Instance.isRoom)
-            {
 
                 if (isright)
                 {
@@ -89,15 +87,19 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
+                Debug.Log("º¹µµ");
                 if (IsGrab == true)
                 {
                     transform.position = Random.insideUnitSphere * (ShakeAmount - 0.4f) + target.position;
                 }
                 transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
+
                 float Ix = size.x * 0.5f - width;
                 float clampX = Mathf.Clamp(transform.position.x, -Ix + center.x, Ix + center.x);
+
                 float Iy = size.y * 0.5f - height;
                 float clampY = Mathf.Clamp(transform.position.y, -Iy + center.y, Iy + center.y);
+
                 transform.position = new Vector3(clampX, clampY, -10f);
             }
         }
