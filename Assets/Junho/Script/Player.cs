@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
                 StartCoroutine("ManaBarrier");
                 isManaBarrier = false;
             }
-            else if (isHidecollision == true && isHide == false && Input.GetKeyDown(KeyCode.F))
+            else if (isHidecollision == true && isHide == false && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
             {
                 isHide = true;
                 GameManager.Instance.isEunsin = true;
@@ -90,14 +90,12 @@ public class Player : MonoBehaviour
                 Debug.Log("¼ûÀ½");
                 
             }
-            else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F))
+            else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
             {
                 Debug.Log("¾È¼ûÀ½");
-
                 isHide = false;
                 GameManager.Instance.isEunsin = false;
                 this.spriteRenderer.enabled = true;
-
             }
         }
 
@@ -162,7 +160,7 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Enemy":
-                if (GameManager.Instance.BattleEndCount==0)
+                if (GameManager.Instance.BattleEndCount==0 && GameManager.Instance.isEunsin == false)
                 {
                     GameManager.Instance.IsBattleStart = true;
 

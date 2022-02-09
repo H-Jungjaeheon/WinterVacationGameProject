@@ -324,7 +324,9 @@ MonoBehaviour:
   TurnCount: 0
   animator: {fileID: 0}
   Dash: 0
-  MaxDashTime: 3
+  MaxDashTime: 5
+  Dashing: 0
+  MaxDashingTime: 2.5
   IsDash: 0
 --- !u!95 &1487425484039611790
 Animator:

@@ -57,7 +57,7 @@ public class ChargerEnemy : BasicEnemyScript
     }
     void Skill() //스킬 풀면 SkillTime = 0
     {
-        if (Player != null && GameManager.Instance.IsBattleStart == false)
+        if (Player != null && GameManager.Instance.IsBattleStart == false && GameManager.Instance.isEunsin == false)
         {
             Color color = GrapBar.color;
             Color color2 = NullBar.color;
@@ -124,7 +124,7 @@ public class ChargerEnemy : BasicEnemyScript
         var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
         foreach (var hit in rayHit)
         {
-            if (hit.collider.gameObject.CompareTag("Player"))
+            if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
             {
                 WarningObj.SetActive(true);
                 IsFind = true;
@@ -140,15 +140,15 @@ public class ChargerEnemy : BasicEnemyScript
     public override void FindPlayer()
     {
         MoveCount = 0;
-        if (Speed > 0 && IsMove == true)
+        if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.6f, 0), Speed * 1.3f * Time.deltaTime);
         }
-        else if (Speed < 0 && IsMove == true)
+        else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.6f, 0), Speed * -1.3f * Time.deltaTime);
         }
-        if(GrabCountStop == false)
+        if(GrabCountStop == false && GameManager.Instance.isEunsin == false)
         {
             SkillTime += Time.deltaTime;
         }

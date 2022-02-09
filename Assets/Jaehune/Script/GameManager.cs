@@ -76,13 +76,13 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator BattleStart()
     {
-        StartCoroutine("BattleStartFaidOut", 0.8f);
+        StartCoroutine(BattleStartFaidOut(0.8f));
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
         IsCamMove = true;
         yield return new WaitForSeconds(2.2f);
         BattleButtonUi.SetActive(true);
-        StartCoroutine("BattleStartFaidIn", 0.8f);
+        StartCoroutine(BattleStartFaidIn(0.8f));
         yield return new WaitForSeconds(1f);
         IsBattlePlace = true;
         yield return new WaitForSeconds(2f);
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
     {
         AttackOk = false;
         yield return new WaitForSeconds(2.5f);
-        StartCoroutine("BattleStartFaidOut", 1f);
+        StartCoroutine(BattleStartFaidOut(1));
         yield return new WaitForSeconds(0.5f);
         BattleButtonUi.SetActive(false);
         yield return new WaitForSeconds(0.5f);
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Player.SetActive(true);
         BattleEndCount = 1f;
-        StartCoroutine("BattleStartFaidIn", 0.8f);
+        StartCoroutine(BattleStartFaidIn(0.8f));
         yield return new WaitForSeconds(1f);
         BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);

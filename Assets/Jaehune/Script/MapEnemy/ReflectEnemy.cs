@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ReflectEnemy : BasicEnemyScript
 {
-    [SerializeField] float Dash, MaxDashTime;
+    [SerializeField] float Dash, MaxDashTime, Dashing, MaxDashingTime;
     [SerializeField] bool IsDash;
     // Start is called before the first frame update
     public override void Start()
     {
         Dash = 0;
-        IsDash = true;
+        IsDash = false;
         base.Start();
     }
 
@@ -18,6 +18,10 @@ public class ReflectEnemy : BasicEnemyScript
     public override void Update()
     {
         base.Update();
+        if(IsDash == true)
+        {
+            Dashs();
+        }
     }
     public override void Moving()
     {
@@ -33,7 +37,7 @@ public class ReflectEnemy : BasicEnemyScript
         var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
         foreach (var hit in rayHit)
         {
-            if (hit.collider.gameObject.CompareTag("Player"))
+            if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
             {
                 WarningObj.SetActive(true);
                 IsFind = true;
@@ -50,18 +54,25 @@ public class ReflectEnemy : BasicEnemyScript
     {
         Dash += Time.deltaTime;
         MoveCount = 0;
-        if (Speed > 0)
+        if (Speed > 0 && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * 1.3f * Time.deltaTime);
         }
-        else if(Speed < 0)
+        else if(Speed < 0 && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * -1.3f * Time.deltaTime);
         }
-        if(Dash >= MaxDashTime && IsDash == true)
+        if(Dash >= MaxDashTime && IsDash == false && GameManager.Instance.isEunsin == false) // && GameManager.Instance.isEunsin == false 
         {
-            IsDash = false;
-            StartCoroutine("Dashs");
+            if (Speed > 0)
+            {
+                Speed += 2;
+            }
+            else
+            {
+                Speed -= 2;
+            }
+            IsDash = true;
         }
     }
     public override void Delete()
@@ -72,24 +83,23 @@ public class ReflectEnemy : BasicEnemyScript
     {
         base.OnTriggerEnter2D(collision);
     }
-    IEnumerator Dashs()
+    void Dashs()
     {
-        Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad, Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
-        foreach (var hit in rayHit)
+        Dashing += Time.deltaTime;
+        if(Dashing >= MaxDashingTime)
         {
-            if (hit.collider.gameObject.CompareTag("Player"))
+            if(Speed > 0)
             {
-                Player = hit.collider.gameObject;
-                WarningObj.SetActive(true);
-                IsFind = true;
+                Speed -= 2;
             }
-            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            else
             {
-                WarningObj.SetActive(false);
-                IsFind = false;
+                Speed += 2;
             }
+            IsDash = false;
+            Dashing = 0;
+            Dash = 0;
         }
-        yield return null;
+
     }
 }

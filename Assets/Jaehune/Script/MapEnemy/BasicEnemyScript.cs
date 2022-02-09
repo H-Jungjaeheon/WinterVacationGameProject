@@ -80,7 +80,7 @@ public class BasicEnemyScript : MonoBehaviour
         var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad);
         foreach (var hit in rayHit)
         {
-            if (hit.collider.gameObject.CompareTag("Player")) 
+            if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false) 
             {
                 Player = hit.collider.gameObject;
                 WarningObj.SetActive(true);
@@ -96,18 +96,18 @@ public class BasicEnemyScript : MonoBehaviour
     public virtual void FindPlayer()
     {
         MoveCount = 0;
-        if(Speed > 0)
+        if(Speed > 0 && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * 1.3f * Time.deltaTime);
         }
-        else
+        else if(Speed < 0 && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * -1.3f * Time.deltaTime);
         }
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0)
+        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false)
         {
             Speed = 0;
             Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, Quaternion.Euler(0,0,0));

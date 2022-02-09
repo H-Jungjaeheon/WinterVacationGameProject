@@ -57,7 +57,7 @@ public class SelfDestructEnemy : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        if (Player.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && IsSpawn == true)
+        if (Player.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && IsSpawn == true && GameManager.Instance.isEunsin == false)
         {
             IsSpawn = true;
             Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, Quaternion.Euler(0, 0, 0));

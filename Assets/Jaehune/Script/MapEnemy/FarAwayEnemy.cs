@@ -29,7 +29,7 @@ public class FarAwayEnemy : BasicEnemyScript
     public override void FindPlayer()
     {
         MoveCount = 0;
-        if (Speed > 0)
+        if (Speed > 0 && GameManager.Instance.isEunsin == false)
         {
             transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * 1.3f * Time.deltaTime);
         }
