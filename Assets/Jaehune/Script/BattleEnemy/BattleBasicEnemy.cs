@@ -90,19 +90,19 @@ public class BattleBasicEnemy : MonoBehaviour
     {
         if (Hp <= 0)
         {
+            BattleManager.Instance.IsEnemyDead = true;
             animator.SetBool("IsDead", true);
             StartCoroutine("Dead2", 0.5f);
         }
     }
     public virtual IEnumerator Dead2(float FaidTime)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
         if (Dead == false)
         {
             Dead = true;
             GameObject.Find("GameManager").GetComponent<PlayerStats>().ExpUp(GExp);
         }
-        BattleManager.Instance.IsEnemyDead = true;
         BattleManager.Instance.IsEnemyTurn = false;
         Color color = SR.color;
         Color color2 = HpBar.color;

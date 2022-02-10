@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class BattlePlayer : MonoBehaviour
 {
-    [SerializeField] RaycastHit2D hit; //적 인식 레이캐스트
+    [SerializeField] RaycastHit2D hit; 
     [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, BarrierImage; //전투시 인식한 적 오브젝트 담는 그릇
-    [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false, IsAttackOk = true; //적의 위치(근접 공격시)로 갈지 판단
+    [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false, IsAttackOk = true, IsContinuity, IsComBo, IsEnd, IsFaild; 
     public bool IsHit = false, IsBarrier = false;
     [SerializeField] int BarrierCount = 0, MaxBarrierCount, BasicAttackCount = 0;
     [SerializeField] float AttackCounting = 0;
@@ -18,6 +18,9 @@ public class BattlePlayer : MonoBehaviour
     {
         BarrierCount = 0;
         AttackCounting = 0;
+        IsEnd = true;
+        IsFaild = false;
+        IsComBo = false;
         BasicAttackCount = 1;
         animator = GetComponent<Animator>();
         this.transform.position = PlayerSpawner.transform.position;
@@ -28,17 +31,17 @@ public class BattlePlayer : MonoBehaviour
     {
         RayCasting();
         Barrier();
-        AttackCounting();
+        Attackcounting();
         if (Input.GetKeyDown(KeyCode.Space) && BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
         {
             Playerattack();
         }
-        if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == false)
+        if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == false && BasicAttackCount == 1)
         {
             animator.SetBool("IsWalk", true);
             transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-2, 0.77f, 0), 10 * Time.deltaTime);
         }
-        else if(GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == true)
+        else if(GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == true && BasicAttackCount == 1)
         {
             animator.SetBool("IsWalk", true);
             transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-6, 0.77f, 0), 10 * Time.deltaTime);
@@ -55,6 +58,23 @@ public class BattlePlayer : MonoBehaviour
         if (IsHit == true)
         {
             StartCoroutine(PlayerHit());
+        }
+        if(IsComBo == true && IsFaild == false)
+        {
+            if (Input.GetKeyDown(KeyCode.F)){
+                IsContinuity = true;
+            }
+        }
+        else if(IsComBo == false)
+        {
+            IsContinuity = false;
+        }
+        if(IsEnd == false)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                IsFaild = true;
+            }
         }
     }
 
@@ -203,7 +223,7 @@ public class BattlePlayer : MonoBehaviour
     }
     IEnumerator PlayerAttack()
     {
-        yield return new WaitForSeconds(1);
+        IsContinuity = false;
         SkillButton.SetActive(false);
         GameManager.Instance.BattleButtonUi.SetActive(false);
         IsAttackOk = true;
@@ -211,56 +231,189 @@ public class BattlePlayer : MonoBehaviour
         GameManager.Instance.BattleSkillText.text = "실험 : 불꽃 점화";
         BattleManager.Instance.IsPlayerTurn = false;
         GoToEnemy = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
+        BasicAttackCount++;
         BattleManager.Instance.CamP = true;
         animator.SetBool("IsAttack", true);
         GameObject DT = Instantiate(DmgText);
+        GameObject DT2 = Instantiate(DmgText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
-        GameObject DTT = Instantiate(DmgText);
+        Debug.Log("첫번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {
-            DTT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DTT.transform.position = this.transform.position;
-            DTT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
+            DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT2.transform.position = this.transform.position;
+            DT2.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
             GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
         {
-            DTT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DTT.transform.position = this.transform.position;
-            DTT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
+            DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT2.transform.position = this.transform.position;
+            DT2.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
             GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
         }
         else if(Enemy.GetComponent<BattleBasicEnemy>().IsReflect && IsBarrier == true)
         {
-            DTT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DTT.transform.position = this.transform.position;
-            DTT.GetComponent<BattleDamageText>().damage = 0;
+            DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT2.transform.position = this.transform.position;
+            DT2.GetComponent<BattleDamageText>().damage = 0;
         }
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
-        yield return new WaitForSeconds(0.5f); //원래 전체 1초, BasicAttackCount(n번째 공격), AttackCounting(제한시간)
-        BasicAttackCount++;
-        if (Input.GetKeyDown(KeyCode.Space) && AttackCounting < 2)
-        {
-            BattleManager.Instance.CamP = true;
-            animator.SetBool("IsAttack", true);
-            DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT.transform.position = Enemy.transform.position;
-            DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
-            Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
-            BasicAttackCount++;
-        }
-        yield return new WaitForSeconds(2);
+        IsEnd = false;
+        yield return new WaitForSeconds(1f);
+        IsEnd = true;
         animator.SetBool("IsAttack", false);
+        AttackCounting = 0;
+        IsComBo = true;
+        yield return new WaitForSeconds(0.5f); 
+        IsComBo = false;
+        if (IsContinuity == false || IsFaild == true)
+        {
+            IsFaild = false;
+            Debug.Log("마지막 실행");
+            BasicAttackCount = 1;
+            BattleManager.Instance.CamP = false;
+            GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            GoToEnemy = false;
+            GoToReturn = true;
+            yield return new WaitForSeconds(1);
+            GoToReturn = false;
+            yield return new WaitForSeconds(2);
+            if (GameManager.Instance.IsCamMove == true)
+            {
+                BattleManager.Instance.IsEnemyTurn = true;
+            }
+            else
+            {
+                BattleManager.Instance.IsPlayerTurn = true;
+            }
+            yield return null;
+        }
+        else if(IsContinuity == true && IsFaild == false && BattleManager.Instance.IsEnemyDead == false)
+        {
+            StartCoroutine(PlayerAttack2());
+            yield return null;
+        }
+    }
+    IEnumerator PlayerAttack2()
+    {
+        IsContinuity = false;
+        BattleManager.Instance.CamP = true;
+        BasicAttackCount++;
+        animator.SetBool("IsAttack", true);
+        GameObject DT3 = Instantiate(DmgText);
+        DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+        DT3.transform.position = Enemy.transform.position;
+        DT3.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
+        Debug.Log("두번째 공격");
+        if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
+        {
+            DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT3.transform.position = this.transform.position;
+            DT3.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
+            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
+        }
+        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
+        {
+            DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT3.transform.position = this.transform.position;
+            DT3.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
+            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
+        }
+        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && IsBarrier == true)
+        {
+            DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT3.transform.position = this.transform.position;
+            DT3.GetComponent<BattleDamageText>().damage = 0;
+        }
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+        Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
+        IsEnd = false;
+        yield return new WaitForSeconds(1f);
+        IsEnd = true;
+        animator.SetBool("IsAttack", false);
+        AttackCounting = 0;
+        IsComBo = true;
+        yield return new WaitForSeconds(0.5f);
+        IsComBo = false;
+        if (IsContinuity == false || IsFaild == true)
+        {
+            IsFaild = false;
+            Debug.Log("마지막 실행");
+            BasicAttackCount = 1;
+            BattleManager.Instance.CamP = false;
+            GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            GoToEnemy = false;
+            GoToReturn = true;
+            yield return new WaitForSeconds(1);
+            GoToReturn = false;
+            yield return new WaitForSeconds(2);
+            if (GameManager.Instance.IsCamMove == true)
+            {
+                BattleManager.Instance.IsEnemyTurn = true;
+            }
+            else
+            {
+                BattleManager.Instance.IsPlayerTurn = true;
+            }
+            yield return null;
+        }
+        else if(IsContinuity == true && IsFaild == false && BattleManager.Instance.IsEnemyDead == false)
+        {
+            StartCoroutine(PlayerAttack3());
+            yield return null;
+        }
+    }
+    IEnumerator PlayerAttack3()
+    {
+        IsContinuity = false;
+        BattleManager.Instance.CamP = true;
+        BasicAttackCount++;
+        animator.SetBool("IsAttack", true);
+        GameObject DT4 = Instantiate(DmgText);
+        DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+        DT4.transform.position = Enemy.transform.position;
+        DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] + GM.GetComponent<PlayerStats>().stats[1] / 2;
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] + GM.GetComponent<PlayerStats>().stats[1] / 2;
+        Debug.Log("세번째 공격");
+        if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
+        {
+            DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT4.transform.position = this.transform.position;
+            DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
+            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
+        }
+        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
+        {
+            DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT4.transform.position = this.transform.position;
+            DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
+            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
+        }
+        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && IsBarrier == true)
+        {
+            DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT4.transform.position = this.transform.position;
+            DT4.GetComponent<BattleDamageText>().damage = 0;
+        }
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(1.4f);
+        Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("IsAttack", false);
+        AttackCounting = 0;
+        Debug.Log("마지막 실행");
+        BasicAttackCount = 1;
         BattleManager.Instance.CamP = false;
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
         GoToReturn = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         GoToReturn = false;
         yield return new WaitForSeconds(2);
         if (GameManager.Instance.IsCamMove == true)
@@ -275,8 +428,9 @@ public class BattlePlayer : MonoBehaviour
     }
     void Attackcounting()
     {
-        if(BasicAttackCount == 2)
+        if(IsAttackOk == true && BasicAttackCount >= 2 && IsContinuity == false && IsComBo == true)
         {
+            animator.SetBool("IsWalk", false);
             AttackCounting += Time.deltaTime;
         }
     }
@@ -297,8 +451,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject DT = Instantiate(DmgText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
-        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 2;
-        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 2;
+        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 4;
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 4;
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);

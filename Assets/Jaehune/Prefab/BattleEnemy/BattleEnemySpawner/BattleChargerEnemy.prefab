@@ -449,7 +449,7 @@ MonoBehaviour:
   MaxHp: 30
   BarUp: 1.7
   GExp: 33
-  Hp: 25
+  Hp: 30
   Anger: 100
   MaxAnger: 100
   Damage: 8

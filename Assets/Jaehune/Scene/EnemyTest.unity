@@ -2392,7 +2392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4708553627406998008, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
@@ -6817,8 +6817,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2026178431}
   m_Layer: 0
-  m_Name: "\uD50C\uB808\uC774\uC5B4 \uCF64\uBCF4 \uAD6C\uD604 & \uCC28\uC800 \uC804\uD22C
-    \uAE30\uC808 \uD6A8\uACFC & \uC790\uCCB4 \uD790\uB7EC, \uBC84\uC11C\uCEE4 \uC81C\uC791 "
+  m_Name: "\uCC28\uC800 \uC804\uD22C \uAE30\uC808 \uD6A8\uACFC & \uC790\uCCB4 \uD790\uB7EC,
+    \uBC84\uC11C\uCEE4 \uC81C\uC791 "
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
