@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //전투용 버튼, 전투용 버튼 배경 오브젝트, 스탯 업그레이드 창
     
     [SerializeField] private Slider hpBar, manaBar; //플레이어 hp, 감염수치 바
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //체력, 감염수치,최대 체력, 최대 감염수치
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //체력
     
     [SerializeField] GameObject Player, menuPanel; //플레이어, 메뉴
    

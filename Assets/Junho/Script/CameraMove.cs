@@ -91,7 +91,6 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("º¹µµ");
                 if (IsGrab == true)
                 {
                     transform.position = Random.insideUnitSphere * (ShakeAmount - 0.4f) + target.position;

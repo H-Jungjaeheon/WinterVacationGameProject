@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class BattleDamageText : MonoBehaviour
 {
-    public float moveSpeed;
+    public float moveSpeed, damage;
     public Text text;
-    public int damage;
     [SerializeField] bool IsUp = false;
 
     // Start is called before the first frame update

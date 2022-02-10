@@ -72,12 +72,23 @@ public class BattleChargerEnemy : BattleBasicEnemy
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT.transform.position = Player.transform.position;
-            DT.GetComponent<BattleDamageText>().damage = Damage;
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-            Player.GetComponent<BattlePlayer>().IsHit = true;
-            GameManager.Instance.stackDamage += Damage;
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = Damage;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+                GameManager.Instance.stackDamage += Damage;
+            }
+            else
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = 0;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
@@ -106,12 +117,23 @@ public class BattleChargerEnemy : BattleBasicEnemy
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT.transform.position = Player.transform.position;
-            DT.GetComponent<BattleDamageText>().damage = Damage * 2;
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-            Player.GetComponent<BattlePlayer>().IsHit = true;
-            GameManager.Instance.stackDamage += Damage * 2;
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = Damage * 2;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+                GameManager.Instance.stackDamage += Damage * 2;
+            }
+            else
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = 0;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;

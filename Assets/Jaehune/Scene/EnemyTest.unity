@@ -2392,7 +2392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4708553627406998008, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b7491cc27e07b44aa1d6369f905b5e5, type: 3}
@@ -2491,7 +2491,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 809342254}
         m_TargetAssemblyTypeName: BattlePlayer, Assembly-CSharp
-        m_MethodName: UseSkill
+        m_MethodName: UseSkill3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3247,7 +3247,7 @@ GameObject:
   - component: {fileID: 880374576}
   - component: {fileID: 880374575}
   m_Layer: 5
-  m_Name: SkillButton4
+  m_Name: SkillReturnButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3970,7 +3970,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 809342254}
         m_TargetAssemblyTypeName: BattlePlayer, Assembly-CSharp
-        m_MethodName: UseSkill
+        m_MethodName: UseSkill2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5374,7 +5374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2588354795454970245, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.6
+      value: -18.27
       objectReference: {fileID: 0}
     - target: {fileID: 2588354795454970245, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5418,7 +5418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2588354795454970251, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7121602689434790744, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_FillAmount
@@ -6450,6 +6450,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1791317132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5700787897324041880, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+  m_PrefabInstance: {fileID: 474764993588472314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1831683693
 GameObject:
   m_ObjectHideFlags: 0
@@ -6812,9 +6817,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2026178431}
   m_Layer: 0
-  m_Name: "\uD50C\uB808\uC774\uC5B4 \uC2A4\uD0AC \uBC0F \uCF64\uBCF4 \uAD6C\uD604
-    & \uCC28\uC800 \uC804\uD22C \uAE30\uC808 \uD6A8\uACFC & \uC790\uCCB4 \uD790\uB7EC,
-    \uBC84\uC11C\uCEE4 \uC81C\uC791 "
+  m_Name: "\uD50C\uB808\uC774\uC5B4 \uCF64\uBCF4 \uAD6C\uD604 & \uCC28\uC800 \uC804\uD22C
+    \uAE30\uC808 \uD6A8\uACFC & \uC790\uCCB4 \uD790\uB7EC, \uBC84\uC11C\uCEE4 \uC81C\uC791 "
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7282,6 +7286,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: HealText
+      value: 
+      objectReference: {fileID: 485790573650117246, guid: 1d009b7025ee8524f83e05cb5fd9e95f, type: 3}
+    - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: ManaText
       value: 
       objectReference: {fileID: 1382030677}
@@ -7290,6 +7298,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 523412762}
     - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: BarrierImage
+      value: 
+      objectReference: {fileID: 1791317132}
+    - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: EnemySpawner
       value: 
       objectReference: {fileID: 608739386}
@@ -7297,6 +7309,10 @@ PrefabInstance:
       propertyPath: PlayerSpawner
       value: 
       objectReference: {fileID: 1975136695}
+    - target: {fileID: 474764994393423060, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: MaxBarrierCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 474764994996472325, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: m_Name
       value: BattlePlayer
@@ -7308,6 +7324,14 @@ PrefabInstance:
     - target: {fileID: 474764994996473339, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
       propertyPath: m_SortingOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444226155394526347, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444226155394526347, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daa1987681c82f442bfb1dafb37b1482, type: 3}
