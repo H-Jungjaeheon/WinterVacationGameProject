@@ -29,7 +29,7 @@ public class Obj : MonoBehaviour
     {
         isParticle();
 
-        if (isIt==true&&iscollison&&Input.GetKey(KeyCode.F))
+        if (isIt==true&&iscollison&&Input.GetKey(KeyCode.F) && GetComponent<Player>().IsGrab == false)
         {
             Drop();
         }
@@ -52,6 +52,7 @@ public class Obj : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            iscollison = false;
             Debug.Log("³ª°¨");
             Interaction.gameObject.SetActive(false);
         }

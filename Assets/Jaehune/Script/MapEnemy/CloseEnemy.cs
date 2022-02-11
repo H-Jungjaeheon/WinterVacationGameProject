@@ -39,4 +39,8 @@ public class CloseEnemy : BasicEnemyScript
     {
         base.OnTriggerEnter2D(collision);
     }
+    public override void CrossroadPlus()
+    {
+        base.CrossroadPlus();
+    }
 }

@@ -22,6 +22,8 @@ TagManager:
   - ManaBarrier
   - HPpotion
   - ManaPotion
+  - hideObj
+  - Electricity
   layers:
   - Default
   - TransparentFX
@@ -53,7 +55,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - postprocessing
   - 
   m_SortingLayers:
   - name: Default

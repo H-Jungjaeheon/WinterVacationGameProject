@@ -10,9 +10,12 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
+    [SerializeField] GameObject[] Burns;
     Animator anim;
-    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false;
+    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false , isHidecollision = false, isHide=false, isParalysis = false, GetOutElectricity =false;
     public float GrapCount, MaxGrapCount;
+    public float cnt = 0;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -21,25 +24,34 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (GetOutElectricity)
+        {
+            cnt += Time.deltaTime;
+            if (cnt >= 5f)
+            {
+                Debug.Log("끝");
+                GetOutElectricity = false;
+                isParalysis = false;
+                cnt = 0;
+            }
+        }
         SurviveDamage();
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
+            if (GameManager.Instance.isBurns)
             {
-                StartCoroutine(speedPotion());
-                isSpeedPotion = false;
+                Burns[0].SetActive(true);
+                Burns[1].SetActive(true);
+
             }
-            else if (isEunsinPotion == true && Input.GetKey(KeyCode.F))
+            else 
             {
-                StartCoroutine(Eunsincnt());
-                isEunsinPotion = false;
-            }
-            else if (isManaBarrier == true && Input.GetKey(KeyCode.F))
-            {
-                StartCoroutine(ManaBarrier());
-                isManaBarrier = false;
-            }
-            if(IsGrab == false)
+                Burns[0].SetActive(false);
+                Burns[1].SetActive(false);
+            } 
+                
+
+            if (IsGrab == false && isHide==false && isParalysis==false)
             {
                 Move();
             }
@@ -47,8 +59,8 @@ public class Player : MonoBehaviour
             if (isLadder)
             {
                 bool isF;
-                if (Input.GetKey(KeyCode.F))
-                {
+                if (Input.GetKey(KeyCode.F) && IsGrab == false)
+                {          
                     isF = true;
                 }
                 else isF = false;
@@ -79,10 +91,46 @@ public class Player : MonoBehaviour
         {
             Grabbing();
         }
-    }
+        if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
+        {
+            
+
+            if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("speedPotion");
+                isSpeedPotion = false;
+            }
+            else if (isEunsinPotion == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("Eunsincnt");
+                isEunsinPotion = false;
+            }
+            else if (isManaBarrier == true && Input.GetKey(KeyCode.F))
+            {
+                StartCoroutine("ManaBarrier");
+                isManaBarrier = false;
+            }
+            else if (isHidecollision == true && isHide == false && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
+            {
+                isHide = true;
+                GameManager.Instance.isEunsin = true;
+                this.spriteRenderer.enabled = false;
+                Debug.Log("숨음");
+                
+            }
+            else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
+            {
+                Debug.Log("안숨음");
+                isHide = false;
+                GameManager.Instance.isEunsin = false;
+                this.spriteRenderer.enabled = true;
+            }
+        }
+
+        }
     void Grabbing()
     {
-        GrapCount -= Time.deltaTime * 20;
+        GrapCount -= Time.deltaTime * 18;
         if (Input.GetKeyDown(KeyCode.F))
         {
             GrapCount += 8; //MaxGrapCount
@@ -125,6 +173,17 @@ public class Player : MonoBehaviour
         GameManager.Instance.isEunsin = false;
         this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
     }
+    IEnumerator Paralysis()
+    {
+        isParalysis = true;
+        yield return new WaitForSeconds(1f);
+        isParalysis = false;
+        if (GetOutElectricity)
+        {
+            StartCoroutine(Paralysis());
+
+        }
+    }
     void Jump()
     {
         if (isGound == true && Input.GetKey(KeyCode.Space))
@@ -140,16 +199,15 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Enemy":
-                if (GameManager.Instance.BattleEndCount==0)
+                if (GameManager.Instance.BattleEndCount==0 && GameManager.Instance.isEunsin == false)
                 {
+                    IsGrab = false;
                     GameManager.Instance.IsBattleStart = true;
-
+                    BattleManager.Instance.IsPlayerTurn = true;
                 }
                 break;
 
             case "Gas":
-
-                Debug.Log("가스에닿음");
                 if (GameManager.Instance.isTrapBarrier == false)
                 {
                     isDamage = true;
@@ -157,7 +215,6 @@ public class Player : MonoBehaviour
                 }
                 break;
             case "Ladder":
-                Debug.Log("사다리에 닿음");
                 isLadder = true;
                 break;
             case "Plan":
@@ -175,15 +232,19 @@ public class Player : MonoBehaviour
                 isSpeedPotion = true;
                 break;
             case "Corridor":
-                Debug.Log("d");
                 GameManager.Instance.isRoom = false;
                 break;
             case "Eunsin":
                 isEunsinPotion = true;
-                Debug.Log("권준호 개새");
                 break;
             case "ManaBarrier":
                 isManaBarrier = true;
+                break;
+            case "hideObj":
+                isHidecollision = true;
+                break;
+            case "Electricity":
+                GameManager.Instance.stackDamage += 10;
                 break;
         }
         
@@ -193,8 +254,6 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Gas":
-            
-                Debug.Log("가스에 안 닿음");
                 if (GameManager.Instance.isTrapBarrier==false)
                 {
                     isDamage = false;
@@ -202,7 +261,6 @@ public class Player : MonoBehaviour
                 }
                 break;
             case "Ladder":
-                Debug.Log("사다리에 안 닿음");
                 isLadder = false;
                 break;
             case "Plan":
@@ -223,6 +281,14 @@ public class Player : MonoBehaviour
                 break;
             case "ManaBarrier":
                 isManaBarrier = false;
+                break;
+            case "hideObj":
+                isHidecollision = false;
+                break;
+            case "Electricity":
+                GetOutElectricity = true;
+                cnt = 0;
+                StartCoroutine(Paralysis());
                 break;
         }
 

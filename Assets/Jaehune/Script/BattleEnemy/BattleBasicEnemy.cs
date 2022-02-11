@@ -11,7 +11,7 @@ public class BattleBasicEnemy : MonoBehaviour
     public GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
     public Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
     public bool GoToPlayer = false, Dead = false, GoToReturn = false, StopGone = false, IsHit = false, //플레이어의 위치(근접 공격시)로 갈지 판단, 사망 판단, 공격 후 제자리, 이동 멈춤, 맞았는가?
-    IsReflect = false; //특수 능력 모음
+    IsReflect = false, IsStun; //특수 능력 모음
     public SpriteRenderer SR; //죽을 때 점점 사라지게
     public Animator animator;
 
@@ -90,19 +90,19 @@ public class BattleBasicEnemy : MonoBehaviour
     {
         if (Hp <= 0)
         {
+            BattleManager.Instance.IsEnemyDead = true;
             animator.SetBool("IsDead", true);
             StartCoroutine("Dead2", 0.5f);
         }
     }
     public virtual IEnumerator Dead2(float FaidTime)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
         if (Dead == false)
         {
             Dead = true;
             GameObject.Find("GameManager").GetComponent<PlayerStats>().ExpUp(GExp);
         }
-        BattleManager.Instance.IsEnemyDead = true;
         BattleManager.Instance.IsEnemyTurn = false;
         Color color = SR.color;
         Color color2 = HpBar.color;
@@ -156,12 +156,23 @@ public class BattleBasicEnemy : MonoBehaviour
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT.transform.position = Player.transform.position;
-            DT.GetComponent<BattleDamageText>().damage = Damage;
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-            Player.GetComponent<BattlePlayer>().IsHit = true;
-            GameManager.Instance.stackDamage += Damage;
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = Damage;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+                GameManager.Instance.stackDamage += Damage;
+            }
+            else
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = 0;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
@@ -190,12 +201,23 @@ public class BattleBasicEnemy : MonoBehaviour
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT.transform.position = Player.transform.position;
-            DT.GetComponent<BattleDamageText>().damage = Damage * 2;
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-            Player.GetComponent<BattlePlayer>().IsHit = true;
-            GameManager.Instance.stackDamage += Damage * 2;
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = Damage * 2;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+                GameManager.Instance.stackDamage += Damage * 2;
+            }
+            else
+            {
+                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT.transform.position = Player.transform.position;
+                DT.GetComponent<BattleDamageText>().damage = 0;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                Player.GetComponent<BattlePlayer>().IsHit = true;
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;

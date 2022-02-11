@@ -9,17 +9,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
     
-    public int Stage = 1; //ÇöÀç Ã©ÅÍ(½ºÅ×ÀÌÁö)
-    [SerializeField] Image FadIn, BattleStartImage; //ÀüÅõ ½ÃÀÛ½Ã ¶ç¿ì´Â ÆäÀÌµåÀÎ, »¡°£ Ä® ¿¬Ãâ ÀÌ¹ÌÁö
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier,isEunsin = false, isTrapBarrier=false; //ÀüÅõ ½ÃÀÛ, ÀüÅõ Ä«¸Þ¶ó ÀÌµ¿, °ø°Ý °¡´É, ÀüÅõ Àå¼Ò ¶ç¿ì±â ¿©ºÎ ÆÇ´Ü, ÇÃ·¹ÀÌ¾î ¿­¼è ¿©ºÎ
-    [SerializeField] bool IsStart = false; //ÀüÅõ ½ÃÀÛ ¿©ºÎ ÆÇ´Ü2
-    public Text BattleSkillText; //ÀüÅõ Áß °ø°Ý or ½ºÅ³ ÀÌ¸§ Ç¥½Ã ÅØ½ºÆ®
-    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //ÀüÅõ¿ë ¹öÆ°, ÀüÅõ¿ë ¹öÆ° ¹è°æ ¿ÀºêÁ§Æ®, ½ºÅÈ ¾÷±×·¹ÀÌµå Ã¢
+    public int Stage = 1; //ï¿½ï¿½ï¿½ï¿½ Ã©ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+    [SerializeField] Image FadIn, BattleStartImage; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ Ä® ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier,isEunsin = false, isTrapBarrier=false , isBurns=false; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½, ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] bool IsStart = false; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½2
+    public Text BattleSkillText; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ or ï¿½ï¿½Å³ ï¿½Ì¸ï¿½ Ç¥ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
+    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ Ã¢
     
-    [SerializeField] private Slider hpBar, manaBar; //ÇÃ·¹ÀÌ¾î hp, °¨¿°¼öÄ¡ ¹Ù
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //Ã¼·Â, °¨¿°¼öÄ¡,ÃÖ´ë Ã¼·Â, ÃÖ´ë °¨¿°¼öÄ¡,µ¥¹ÌÁöÈí¼ö,¹æ¾î·Â
+    [SerializeField] private Slider hpBar, manaBar; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ hp, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //Ã¼ï¿½ï¿½
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //Ã¼ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡,ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½, ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½
     
-    [SerializeField] GameObject Player, menuPanel; //ÇÃ·¹ÀÌ¾î, ¸Þ´º
+    [SerializeField] GameObject Player, menuPanel; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½, ï¿½Þ´ï¿½
    
     private Color PanelAlpha;
     private Image PanelImage;
@@ -73,16 +74,17 @@ public class GameManager : MonoBehaviour
         {
             BattleEndCount -= Time.deltaTime;
         }
+        
     }
     IEnumerator BattleStart()
     {
-        StartCoroutine("BattleStartFaidOut", 0.8f);
+        StartCoroutine(BattleStartFaidOut(0.8f));
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
         IsCamMove = true;
         yield return new WaitForSeconds(2.2f);
         BattleButtonUi.SetActive(true);
-        StartCoroutine("BattleStartFaidIn", 0.8f);
+        StartCoroutine(BattleStartFaidIn(0.8f));
         yield return new WaitForSeconds(1f);
         IsBattlePlace = true;
         yield return new WaitForSeconds(2f);
@@ -96,7 +98,7 @@ public class GameManager : MonoBehaviour
     {
         AttackOk = false;
         yield return new WaitForSeconds(2.5f);
-        StartCoroutine("BattleStartFaidOut", 1f);
+        StartCoroutine(BattleStartFaidOut(1));
         yield return new WaitForSeconds(0.5f);
         BattleButtonUi.SetActive(false);
         yield return new WaitForSeconds(0.5f);
@@ -104,7 +106,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Player.SetActive(true);
         BattleEndCount = 1f;
-        StartCoroutine("BattleStartFaidIn", 0.8f);
+        StartCoroutine(BattleStartFaidIn(0.8f));
         yield return new WaitForSeconds(1f);
         BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);
@@ -179,58 +181,60 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
         }
     }
+
+    
     public void useitem(int itemidx)
     {
         GameObject playerstats = GameObject.Find("GameManager");
-        if (itemidx == 0)//Ã¼·Â Ã¤¿ì´Â ¹°¾à
+        if (itemidx == 0)//Ã¼ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
-        if (itemidx == 1)//¸¶³ª Ã¤¿ì´Â ¹°¾à
+        if (itemidx == 1)//ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
-        if (itemidx == 2)//ÀÏ½ÃÀû ¸¶³ª °¨¼Ò ¹æÁö
+        if (itemidx == 2)//ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
-        if (itemidx == 3)//ÀÏ½ÃÀû ÇÊµå ¼Óµµ Áõ°¡
+        if (itemidx == 3)//ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
-        if (itemidx == 4)//Àº½Å
+        if (itemidx == 4)//ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
-        if (itemidx == 5)//Àå¾Ö¹° Æ¯¼ö µ¥¹ÌÁö ÀúÇ×
+        if (itemidx == 5)//ï¿½ï¿½Ö¹ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             return;
         }
-        //½ºÅÃ
-        if (itemidx == 6)//Ã¼·Â Áõ°¡
+        //ï¿½ï¿½ï¿½ï¿½
+        if (itemidx == 6)//Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             playerstats.GetComponent<PlayerStats>().stats[0] += 1;
             maxHp += playerstats.GetComponent<PlayerStats>().stats[0] * 10;
             return;
         }
-        if (itemidx == 7)//µ¥¹ÌÁö Áõ°¡
+        if (itemidx == 7)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             playerstats.GetComponent<PlayerStats>().stats[1] += 1;
             return;
         }
-        if (itemidx == 8)//¸¶³ª Áö¼ÓÀû ¼öÄ¡ Áõ°¡ + ÃÑ ¸¶³ª·® Áõ°¡
+        if (itemidx == 8)//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
 
             playerstats.GetComponent<PlayerStats>().stats[2] += 1;
             maxHp += playerstats.GetComponent<PlayerStats>().stats[2] * 10;
             return;
         }
-        if (itemidx == 9)// ¼Ò·® µ¥¹ÌÁö Èí¼ö 
+        if (itemidx == 9)// ï¿½Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
         {
             damageabsorption += 1;
             return;
         }
-        if (itemidx == 10)//¹Þ´Â µ¥¹ÌÁö °¨¼Ò
+        if (itemidx == 10)//ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             defense += 1;
             return;
