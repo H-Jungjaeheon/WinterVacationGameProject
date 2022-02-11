@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //전투용 버튼, 전투용 버튼 배경 오브젝트, 스탯 업그레이드 창
     
     [SerializeField] private Slider hpBar, manaBar; //플레이어 hp, 감염수치 바
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //체력, 감염수치,최대 체력, 최대 감염수치
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //체력, 감염수치,최대 체력, 최대 감염수치,데미지흡수,방어력
     
     [SerializeField] GameObject Player, menuPanel; //플레이어, 메뉴
    
@@ -177,6 +177,63 @@ public class GameManager : MonoBehaviour
             PanelImage.raycastTarget = true;
             isPause = true;
             Time.timeScale = 0f;
+        }
+    }
+    public void useitem(int itemidx)
+    {
+        GameObject playerstats = GameObject.Find("GameManager");
+        if (itemidx == 0)//체력 채우는 물약
+        {
+            return;
+        }
+        if (itemidx == 1)//마나 채우는 물약
+        {
+            return;
+        }
+        if (itemidx == 2)//일시적 마나 감소 방지
+        {
+            return;
+        }
+        if (itemidx == 3)//일시적 필드 속도 증가
+        {
+            return;
+        }
+        if (itemidx == 4)//은신
+        {
+            return;
+        }
+        if (itemidx == 5)//장애물 특수 데미지 저항
+        {
+            return;
+        }
+        //스택
+        if (itemidx == 6)//체력 증가
+        {
+            playerstats.GetComponent<PlayerStats>().stats[0] += 1;
+            maxHp += playerstats.GetComponent<PlayerStats>().stats[0] * 10;
+            return;
+        }
+        if (itemidx == 7)//데미지 증가
+        {
+            playerstats.GetComponent<PlayerStats>().stats[1] += 1;
+            return;
+        }
+        if (itemidx == 8)//마나 지속적 수치 증가 + 총 마나량 증가
+        {
+
+            playerstats.GetComponent<PlayerStats>().stats[2] += 1;
+            maxHp += playerstats.GetComponent<PlayerStats>().stats[2] * 10;
+            return;
+        }
+        if (itemidx == 9)// 소량 데미지 흡수 
+        {
+            damageabsorption += 1;
+            return;
+        }
+        if (itemidx == 10)//받는 데미지 감소
+        {
+            defense += 1;
+            return;
         }
     }
 }

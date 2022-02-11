@@ -19,6 +19,7 @@ public class PlayerStats : MonoBehaviour
     private void Update()
     {
         HandleSlider();
+        StatsSetting();
         if (Exp >= MaxExp)
         {
             GameManager.Instance.LevelUp = true;
@@ -27,6 +28,13 @@ public class PlayerStats : MonoBehaviour
             MaxExp += 20;
             Stateup = true;
             Invoke("StatUp", 3f);
+        }
+    }
+    private void StatsSetting()
+    {
+        for(int i =0;i<stats.Length;i++)
+        {
+            GameObject.Find("stats").transform.GetChild(i).transform.GetChild(0).GetComponent<Text>().text = "" + stats[i];
         }
     }
     public void HpUpgrade()

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class ItemButtonScript : MonoBehaviour
 {
     public int idx = 0;
-    private GameObject itemsave;
+    public int itemsave;
+    private bool Saveitem;
     private void Update()
     {
         
@@ -15,9 +16,9 @@ public class ItemButtonScript : MonoBehaviour
     {
         transform.GetChild(0).GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
         transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        itemsave = item;
+        itemsave = item.GetComponent<testItem>().itemidx;
     }
-    public void idxup()
+    public void idxset()
     {
         if (idx == 0)
         {
@@ -26,7 +27,6 @@ public class ItemButtonScript : MonoBehaviour
         else
         {
             this.transform.GetChild(1).GetComponent<Text>().text = "X" + idx.ToString();
-
         }
     }
 }
