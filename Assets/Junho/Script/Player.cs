@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     Animator anim;
     public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false , isHidecollision = false, isHide=false, isParalysis = false, GetOutElectricity =false;
     public float GrapCount, MaxGrapCount;
-    float cnt = 0;
+    public float cnt = 0;
 
     void Start()
     {
@@ -24,6 +24,17 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (GetOutElectricity)
+        {
+            cnt += Time.deltaTime;
+            if (cnt >= 5f)
+            {
+                Debug.Log("³¡");
+                GetOutElectricity = false;
+                isParalysis = false;
+                cnt = 0;
+            }
+        }
         SurviveDamage();
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
@@ -48,8 +59,8 @@ public class Player : MonoBehaviour
             if (isLadder)
             {
                 bool isF;
-                if (Input.GetKey(KeyCode.F))
-                {
+                if (Input.GetKey(KeyCode.F) && IsGrab == false)
+                {          
                     isF = true;
                 }
                 else isF = false;
@@ -82,17 +93,7 @@ public class Player : MonoBehaviour
         }
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            if (GetOutElectricity)
-            {
-                cnt+=Time.deltaTime;
-                if (cnt >= 5f)
-                {
-                    Debug.Log("³¡");
-                    GetOutElectricity = false;
-                    isParalysis = false;
-                    cnt = 0;
-                }
-            }
+            
 
             if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
             {

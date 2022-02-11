@@ -16,7 +16,7 @@ public class Door : MonoBehaviour
    
     private void Update()
     {
-        if (opendoor == true && Input.GetKeyDown(KeyCode.F))
+        if (opendoor == true && Input.GetKeyDown(KeyCode.F) && GetComponent<Player>().IsGrab == false)
         {
             player.transform.position = door.transform.position;
             GameManager.Instance.isRoom = true;
