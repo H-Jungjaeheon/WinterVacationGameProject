@@ -199,10 +199,7 @@ public class GameManager : MonoBehaviour
         switch (itemidx)
         {
             case 0:
-                Debug.Log("체력 물약");
                 curHp += 10;
-                Debug.Log(stackDamage);
-                Debug.Log(curHp);
                 break;
             case 1:
                 curMana += 10;
