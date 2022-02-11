@@ -200,6 +200,7 @@ public class Player : MonoBehaviour
             case "Enemy":
                 if (GameManager.Instance.BattleEndCount==0 && GameManager.Instance.isEunsin == false)
                 {
+                    IsGrab = false;
                     GameManager.Instance.IsBattleStart = true;
                     BattleManager.Instance.IsPlayerTurn = true;
                 }
