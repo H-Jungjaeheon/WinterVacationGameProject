@@ -23,6 +23,7 @@ TagManager:
   - HPpotion
   - ManaPotion
   - hideObj
+  - Electricity
   layers:
   - Default
   - TransparentFX

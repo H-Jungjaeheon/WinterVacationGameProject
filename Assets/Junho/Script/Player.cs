@@ -10,9 +10,12 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     [SerializeField] float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
+    [SerializeField] GameObject[] Burns;
     Animator anim;
-    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false , isHidecollision = false,isHide=false;
+    public bool isSpeedPotion = false, isEunsinPotion = false,isManaBarrier = false, IsGrab = false , isHidecollision = false, isHide=false, isParalysis = false, GetOutElectricity =false;
     public float GrapCount, MaxGrapCount;
+    float cnt = 0;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,8 +27,20 @@ public class Player : MonoBehaviour
         SurviveDamage();
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            
-            if(IsGrab == false&&isHide==false)
+            if (GameManager.Instance.isBurns)
+            {
+                Burns[0].SetActive(true);
+                Burns[1].SetActive(true);
+
+            }
+            else 
+            {
+                Burns[0].SetActive(false);
+                Burns[1].SetActive(false);
+            } 
+                
+
+            if (IsGrab == false && isHide==false && isParalysis==false)
             {
                 Move();
             }
@@ -67,6 +82,18 @@ public class Player : MonoBehaviour
         }
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
+            if (GetOutElectricity)
+            {
+                cnt+=Time.deltaTime;
+                if (cnt >= 5f)
+                {
+                    Debug.Log("³¡");
+                    GetOutElectricity = false;
+                    isParalysis = false;
+                    cnt = 0;
+                }
+            }
+
             if (isSpeedPotion == true && Input.GetKey(KeyCode.F))
             {
                 StartCoroutine("speedPotion");
@@ -145,6 +172,17 @@ public class Player : MonoBehaviour
         GameManager.Instance.isEunsin = false;
         this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
     }
+    IEnumerator Paralysis()
+    {
+        isParalysis = true;
+        yield return new WaitForSeconds(1f);
+        isParalysis = false;
+        if (GetOutElectricity)
+        {
+            StartCoroutine(Paralysis());
+
+        }
+    }
     void Jump()
     {
         if (isGound == true && Input.GetKey(KeyCode.Space))
@@ -203,6 +241,9 @@ public class Player : MonoBehaviour
             case "hideObj":
                 isHidecollision = true;
                 break;
+            case "Electricity":
+                GameManager.Instance.stackDamage += 10;
+                break;
         }
         
     }
@@ -241,6 +282,11 @@ public class Player : MonoBehaviour
                 break;
             case "hideObj":
                 isHidecollision = false;
+                break;
+            case "Electricity":
+                GetOutElectricity = true;
+                cnt = 0;
+                StartCoroutine(Paralysis());
                 break;
         }
 
