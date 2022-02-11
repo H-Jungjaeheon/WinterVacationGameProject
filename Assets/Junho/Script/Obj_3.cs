@@ -41,7 +41,7 @@ public class Obj_3 : MonoBehaviour
         if (isIt && iscollison)
         {
             slider.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F) && GetComponent<Player>().IsGrab == false)
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 cnt += 5;
             }

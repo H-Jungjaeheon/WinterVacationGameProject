@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //������ ��ư, ������ ��ư ��� ������Ʈ, ���� ���׷��̵� â
     
     [SerializeField] private Slider hpBar, manaBar; //�÷��̾� hp, ������ġ ��
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //ü��
     public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //ü��, ������ġ,�ִ� ü��, �ִ� ������ġ,���������,����
     
     [SerializeField] GameObject Player, menuPanel; //�÷��̾�, �޴�
@@ -149,6 +148,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
+    
     private void HandleSlider()
     {
         if (IsBattleStart == false && LevelUp == false&& isManaBarrier==false)
@@ -181,63 +181,62 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
         }
     }
-
+    IEnumerator ManaBarrier()
+    {
+        isManaBarrier = true;
+        yield return new WaitForSeconds(10f);
+        isManaBarrier = false;
+    }
+    IEnumerator TrapBarrier()
+    {
+        isTrapBarrier = true;
+        yield return new WaitForSeconds(10f);
+        isTrapBarrier = false;
+    }
     
     public void useitem(int itemidx)
     {
-        GameObject playerstats = GameObject.Find("GameManager");
-        if (itemidx == 0)//ü�� ä��� ����
+        switch (itemidx)
         {
-            return;
+            case 0:
+                Debug.Log("체력 물약");
+                curHp += 10;
+                Debug.Log(stackDamage);
+                Debug.Log(curHp);
+                break;
+            case 1:
+                curMana += 10;
+                break;
+            case 2:
+                GetComponent<Player>().speedPotion();
+                break;
+            case 3:
+                StartCoroutine(ManaBarrier());
+                break;
+            case 4:
+                GetComponent<Player>().Eunsincnt();
+                break;
+            case 5:
+                StartCoroutine(TrapBarrier());
+                break;
+            case 6:
+                gameObject.GetComponent<PlayerStats>().stats[0] += 1;
+                maxHp += gameObject.GetComponent<PlayerStats>().stats[0] * 10;
+                break;
+            case 7:
+                gameObject.GetComponent<PlayerStats>().stats[1] += 1;
+                break;
+            case 8:
+                gameObject.GetComponent<PlayerStats>().stats[2] += 1;
+                maxHp += gameObject.GetComponent<PlayerStats>().stats[2] * 10;
+                break;
+            case 9:
+                damageabsorption += 1;
+                break;
+            case 10:
+                defense += 1;
+                break;
         }
-        if (itemidx == 1)//���� ä��� ����
-        {
-            return;
-        }
-        if (itemidx == 2)//�Ͻ��� ���� ���� ����
-        {
-            return;
-        }
-        if (itemidx == 3)//�Ͻ��� �ʵ� �ӵ� ����
-        {
-            return;
-        }
-        if (itemidx == 4)//����
-        {
-            return;
-        }
-        if (itemidx == 5)//��ֹ� Ư�� ������ ����
-        {
-            return;
-        }
-        //����
-        if (itemidx == 6)//ü�� ����
-        {
-            playerstats.GetComponent<PlayerStats>().stats[0] += 1;
-            maxHp += playerstats.GetComponent<PlayerStats>().stats[0] * 10;
-            return;
-        }
-        if (itemidx == 7)//������ ����
-        {
-            playerstats.GetComponent<PlayerStats>().stats[1] += 1;
-            return;
-        }
-        if (itemidx == 8)//���� ������ ��ġ ���� + �� ������ ����
-        {
-
-            playerstats.GetComponent<PlayerStats>().stats[2] += 1;
-            maxHp += playerstats.GetComponent<PlayerStats>().stats[2] * 10;
-            return;
-        }
-        if (itemidx == 9)// �ҷ� ������ ��� 
-        {
-            damageabsorption += 1;
-            return;
-        }
-        if (itemidx == 10)//�޴� ������ ����
-        {
-            defense += 1;
-            return;
-        }
+        
     }
 }

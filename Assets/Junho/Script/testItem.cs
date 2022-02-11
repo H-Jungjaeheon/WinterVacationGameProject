@@ -32,7 +32,7 @@ public class testItem : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Interaction.SetActive(true);
-            if (Input.GetKey(KeyCode.F) && GetComponent<Player>().IsGrab==false)
+            if (Input.GetKey(KeyCode.F))
             {
                 //PotionInventory inven = collision.GetComponent<PotionInventory>();
                 //for (int i = 0; i < inven.slots.Count; i++)

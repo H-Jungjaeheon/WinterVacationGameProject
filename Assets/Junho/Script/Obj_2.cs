@@ -40,7 +40,7 @@ public class Obj_2 : MonoBehaviour
         if (isIt && iscollison)
         {
             slider.gameObject.SetActive(true);
-            if (Input.GetKey(KeyCode.F) && GetComponent<Player>().IsGrab == false)
+            if (Input.GetKey(KeyCode.F))
             {
                 cnt += Time.deltaTime;
             }
