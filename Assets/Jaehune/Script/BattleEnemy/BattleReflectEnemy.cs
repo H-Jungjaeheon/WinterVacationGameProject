@@ -27,6 +27,10 @@ public class BattleReflectEnemy : BattleBasicEnemy
         {
             ReflectImage.SetActive(true);
         }
+        else
+        {
+            ReflectImage.SetActive(false);
+        }
     }
     public override void AttackGone()
     {
