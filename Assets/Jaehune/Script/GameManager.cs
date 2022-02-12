@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     
     public int Stage = 1; //���� é��(��������)
     [SerializeField] Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier,isEunsin = false, isTrapBarrier=false , isBurns=false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
     [SerializeField] bool IsStart = false; //���� ���� ���� �Ǵ�2
     public Text BattleSkillText; //���� �� ���� or ��ų �̸� ǥ�� �ؽ�Ʈ
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //������ ��ư, ������ ��ư ��� ������Ʈ, ���� ���׷��̵� â
@@ -43,16 +44,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (curHp>=maxHp)
-        {
-            curHp = maxHp;
-        }
-        if (curMana >= maxMana)
-        {
-            curMana = maxMana;
-        }
-
-        curHp = maxHp - stackDamage;
+        
+        HandleSlider();
 
         if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
@@ -64,7 +57,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine("BattleEnd");
             IsStart = false;
         }
-        HandleSlider();
         if (BattleEndCount <= 0)
         {
             BattleEndCount = 0;
@@ -158,6 +150,18 @@ public class GameManager : MonoBehaviour
     
     private void HandleSlider()
     {
+        if (curHp >= maxHp)
+        {
+            curHp = maxHp;
+        }
+        if (curMana >= maxMana)
+        {
+            curMana = maxMana;
+        }
+
+        curHp = maxHp - stackDamage;
+  
+
         if (IsBattleStart == false && LevelUp == false&& isManaBarrier==false)
         {
             curMana -= Time.deltaTime*0.25f;
@@ -167,6 +171,10 @@ public class GameManager : MonoBehaviour
         manaBar.value = curMana / maxMana;
         float mana = (float)(Math.Truncate(curMana)/1);
         manaText.text = mana + "/" + maxMana;
+        if (curHp<=0f)
+        {
+            GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();  
+        }
     }
     public void StopButton()
     {

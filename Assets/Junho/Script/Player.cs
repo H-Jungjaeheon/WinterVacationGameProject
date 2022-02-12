@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
                     isF = true;
                 }
                 else isF = false;
-                if (isF)
+                if (isF && IsGrab == false)
                 {
                     rigid.gravityScale = 0;
                     rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * 50);
