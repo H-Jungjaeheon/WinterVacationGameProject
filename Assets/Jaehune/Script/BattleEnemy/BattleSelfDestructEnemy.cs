@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleSelfDestructEnemy : BattleBasicEnemy
 {
-    [SerializeField] bool IsBoom = false;
-    [SerializeField] GameObject NullAngerBar;
+    [SerializeField] bool IsBoom = false, IsDead = false;
+    [SerializeField] Image NullAngerBar;
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.6f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.5f, 0);
     }
 
     // Update is called once per frame
@@ -23,18 +24,23 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2.5f, -0.2f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2.5f, -0.4f, 0), 10 * Time.deltaTime);
+        }
+        else if(IsDead == true)
+        {
+            IsDead = false;
+            this.transform.position = this.transform.position + new Vector3(1.5f, -0.3f, 0);
         }
     }
     public override void Hpbar()
     {
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
-        HpBar.transform.position = this.transform.position + new Vector3(0.1f, BarUp + 0.43f, 0);
-        AngerBar.transform.position = this.transform.position + new Vector3(0.1f, BarUp - 0.1f, 0);
-        NullAngerBar.transform.position = this.transform.position + new Vector3(0.1f, BarUp - 0.1f, 0);
-        HpBarNull.transform.position = this.transform.position + new Vector3(0.1f, BarUp + 0.43f, 0);
-        EnemyPicture.transform.position = this.transform.position + new Vector3(0.1f, BarUp + 0.9f, 0);
+        HpBar.transform.position = this.transform.position + new Vector3(-0.1f, BarUp + 0.43f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(-0.1f, BarUp - 0.1f, 0);
+        NullAngerBar.transform.position = this.transform.position + new Vector3(-0.1f, BarUp - 0.1f, 0);
+        HpBarNull.transform.position = this.transform.position + new Vector3(-0.1f, BarUp + 0.43f, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(-0.1f, BarUp + 0.9f, 0);
     }
     public override void RayCasting()
     {
@@ -46,14 +52,26 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
     }
     public override void Dead1()
     {
-        if (Hp <= 0 || IsBoom == true)
+        if (IsBoom == true)
         {
             animator.SetBool("IsDead", true);
-            StartCoroutine("Dead2", 0.5f);
+            StartCoroutine(Dead2(0.5f));
         }
+        else if(Hp <= 0)
+        {
+            animator.SetBool("IsSkill", true);
+            Invoke("NormalDead", 2f);
+        }
+    }
+    void NormalDead()
+    {
+        animator.SetBool("IsSkill", true);
+        StartCoroutine(Dead2(0.5f));
     }
     public override IEnumerator Dead2(float FaidTime)
     {
+        animator.SetBool("IsSkill", false);
+        animator.SetBool("IsDead", true);
         yield return new WaitForSeconds(2);
         if (Dead == false)
         {
@@ -70,6 +88,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
+        Color color6 = NullAngerBar.color;
         while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
         {
             color.a -= Time.deltaTime / FaidTime;
@@ -77,11 +96,13 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             color3.a -= Time.deltaTime / FaidTime;
             color4.a -= Time.deltaTime / FaidTime;
             color5.a -= Time.deltaTime / FaidTime;
+            color6.a -= Time.deltaTime / FaidTime;
             SR.color = color;
             HpBar.color = color;
             HpBarNull.color = color;
             EnemyPicture.color = color;
             AngerBar.color = color;
+            NullAngerBar.color = color;
             if (color.a <= 0f)
             {
                 color.a = 0f;
@@ -89,6 +110,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
                 color3.a = 0f;
                 color4.a = 0f;
                 color5.a = 0f;
+                color6.a = 0f;
             }
             else
             {
@@ -130,7 +152,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsAttack", true);
+            animator.SetBool("IsSkill", true);
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
@@ -151,11 +173,12 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            GoToPlayer = false;
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
             StopGone = false;
             IsBoom = true;
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill", false);
+            IsDead = true;
             BattleManager.Instance.CamE = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
         }

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleBerserkerEnemy : BattleBasicEnemy
 {
     [SerializeField] float SuperSkillCount, MaxSuperSkillCount, SkillAttackRand, IsMad;
     [SerializeField] GameObject HealText;
+    [SerializeField] bool End = false;
+    [SerializeField] Image MadBar;
     public bool IsSuperSkillng;
     // Start is called before the first frame update
     public override void Start()
@@ -25,14 +28,11 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     public override void Update()
     {
         base.Update();
-        if(IsMad == 3)
+        if(End == true)
         {
+            End = false;
             IsMad = 0;
             IsSuperSkillng = false;
-            if(Hp <= 0)
-            {
-                Dead1();
-            }
         }
         if(Hp <= 0)
         {
@@ -58,7 +58,14 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     }
     public override void Hpbar()
     {
-        base.Hpbar();
+        HpBar.fillAmount = Hp / MaxHp;
+        AngerBar.fillAmount = Anger / MaxAnger;
+        MadBar.fillAmount = SuperSkillCount / MaxSuperSkillCount;
+        HpBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp - 0.2f, 0);
+        MadBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.3f, 0);
+        HpBarNull.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(-1.3f, BarUp, 0);
     }
     public override void RayCasting()
     {
@@ -136,15 +143,22 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             Anger += 40;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
             if (IsSuperSkillng == true)
             {
                 IsMad += 1;
             }
-            if (IsSuperSkillng == false && Hp <= 0 && IsMad == 2)
+            if (IsMad == 3)
+            {
+                End = true;
+            }
+            yield return new WaitForSeconds(2);
+            if (IsSuperSkillng == false && Hp <= 0)
             {
                 Dead1();
+                End = true;
                 GameManager.Instance.BattleButtonUi.SetActive(false);
+                BattleManager.Instance.IsPlayerTurn = false;
+                Debug.Log("Á×À½ ½ÇÇà");
             }
             else
             {
@@ -173,25 +187,27 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT1.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                DT.transform.position = Player.transform.position;
-                DT1.transform.position = this.transform.position;
                 if (IsSuperSkillng == true)
                 {
+                    DT.transform.position = Player.transform.position;
+                    DT1.transform.position = this.transform.position;
                     DT.GetComponent<BattleDamageText>().damage = Damage * 4;
                     DT1.GetComponent<BattleDamageText>().damage = 5;
+                    Hp -= 5;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                     GameManager.Instance.stackDamage += Damage * 4;
-                    Hp -= 5;
                 }
                 else
                 {
+                    DT.transform.position = Player.transform.position;
+                    DT1.transform.position = this.transform.position;
                     DT.GetComponent<BattleDamageText>().damage = Damage * 3;
                     DT1.GetComponent<BattleDamageText>().damage = 5;
+                    Hp -= 5;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                     GameManager.Instance.stackDamage += Damage * 3;
-                    Hp -= 5;
                 }
             }
             else
@@ -202,9 +218,9 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 DT1.transform.position = this.transform.position;
                 DT.GetComponent<BattleDamageText>().damage = 0;
                 DT1.GetComponent<BattleDamageText>().damage = 5;
+                Hp -= 5;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
-                Hp -= 5;
             }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
@@ -216,14 +232,20 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
             if (IsSuperSkillng == true)
             {
                 IsMad += 1;
             }
-            if (IsSuperSkillng == false && Hp <= 0 && IsMad == 2)
+            if (IsMad == 3)
             {
+                End = true;
+            }
+            yield return new WaitForSeconds(2);
+            if (IsSuperSkillng == false && Hp <= 0)
+            {
+                Debug.Log("Á×À½ ½ÇÇà");
                 Dead1();
+                End = true;
                 GameManager.Instance.BattleButtonUi.SetActive(false);
             }
             else
@@ -296,14 +318,20 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
             if (IsSuperSkillng == true)
             {
                 IsMad += 1;
             }
-            if(IsSuperSkillng == false && Hp <= 0 && IsMad == 2)
+            if (IsMad == 3)
             {
+                End = true;
+            }
+            yield return new WaitForSeconds(2);
+            if(IsSuperSkillng == false && Hp <= 0)
+            {
+                Debug.Log("Á×À½ ½ÇÇà");
                 Dead1();
+                End = true;
                 GameManager.Instance.BattleButtonUi.SetActive(false);
             }
             else
