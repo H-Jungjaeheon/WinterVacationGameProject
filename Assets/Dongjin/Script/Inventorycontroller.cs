@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 public class Inventorycontroller : MonoBehaviour
 {
     private bool InventoryOn= false;
@@ -12,20 +13,22 @@ public class Inventorycontroller : MonoBehaviour
     private int sibaltest = 0;
     public List<GameObject> items = new List<GameObject>();
     private GameObject buttonsave;
+    [SerializeField] public GameObject startPos, endPos;
     private void Start()
     {
+        inventorys.transform.position = startPos.transform.position;
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E)&&InventoryOn == false)
         {
             InventoryOn = true;
-            inventorys.gameObject.SetActive(true);
+            inventorys.transform.DOMove(endPos.transform.position,1f).SetEase(Ease.OutQuad);
         }
         else if(Input.GetKeyDown(KeyCode.E) && InventoryOn == true)
         {
             InventoryOn = false;
-            inventorys.gameObject.SetActive(false);
+            inventorys.transform.DOMove(startPos.transform.position, 1f).SetEase(Ease.OutQuad);
         }
         settingitem();
     }

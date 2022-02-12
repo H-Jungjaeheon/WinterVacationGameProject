@@ -9,7 +9,7 @@ public class Spear : MonoBehaviour
     public bool damageOn = false;
     private void Update()
     {
-        if(trapped == true && damageOn==true)
+        if(trapped == true && damageOn== true && GameManager.Instance.isTrapBarrier == false)
         {
             GameManager.Instance.stackDamage += 10;
             damageOn = false;

@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
+    
     private void HandleSlider()
     {
         if (IsBattleStart == false && LevelUp == false&& isManaBarrier==false)
@@ -180,63 +181,77 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
         }
     }
-
-    
+    IEnumerator ManaBarrier()
+    {
+        isManaBarrier = true;
+        yield return new WaitForSeconds(10f);
+        isManaBarrier = false;
+    }
+    IEnumerator TrapBarrier()
+    {
+        isTrapBarrier = true;
+        yield return new WaitForSeconds(10f);
+        isTrapBarrier = false;
+    }
+    public IEnumerator speedPotion()
+    {
+        GameObject.Find("Player").GetComponent<Player>().speed = 10;
+        yield return new WaitForSeconds(5.0f);
+        GameObject.Find("Player").GetComponent<Player>().speed = 5;
+    }
+    public IEnumerator Eunsincnt()
+    {
+        isEunsin = true;
+        yield return new WaitForSeconds(10f);
+        isEunsin = false;
+    }
     public void useitem(int itemidx)
     {
-        GameObject playerstats = GameObject.Find("GameManager");
-        if (itemidx == 0)//ü�� ä��� ����
+        switch (itemidx)
         {
-            return;
-        }
-        if (itemidx == 1)//���� ä��� ����
-        {
-            return;
-        }
-        if (itemidx == 2)//�Ͻ��� ���� ���� ����
-        {
-            return;
-        }
-        if (itemidx == 3)//�Ͻ��� �ʵ� �ӵ� ����
-        {
-            return;
-        }
-        if (itemidx == 4)//����
-        {
-            return;
-        }
-        if (itemidx == 5)//��ֹ� Ư�� ������ ����
-        {
-            return;
-        }
-        //����
-        if (itemidx == 6)//ü�� ����
-        {
-            playerstats.GetComponent<PlayerStats>().stats[0] += 1;
-            maxHp += playerstats.GetComponent<PlayerStats>().stats[0] * 10;
-            return;
-        }
-        if (itemidx == 7)//������ ����
-        {
-            playerstats.GetComponent<PlayerStats>().stats[1] += 1;
-            return;
-        }
-        if (itemidx == 8)//���� ������ ��ġ ���� + �� ������ ����
-        {
+            case 0:
+                stackDamage -= 10;
+                Debug.Log(curHp);
+                break;
+            case 1:
+                curMana += 10;
+                break;
+            case 2:
+                Debug.Log("speed");
+                StartCoroutine(speedPotion());
+                break;
+            case 3:
+                Debug.Log("manaBarrier");
 
-            playerstats.GetComponent<PlayerStats>().stats[2] += 1;
-            maxHp += playerstats.GetComponent<PlayerStats>().stats[2] * 10;
-            return;
+                StartCoroutine(ManaBarrier());
+                break;
+            case 4:
+                Debug.Log("Eunsin");
+                StartCoroutine(Eunsincnt());
+                break;
+            case 5:
+                Debug.Log("TrapBarrier");
+
+                StartCoroutine(TrapBarrier());
+                break;
+            case 6:
+                gameObject.GetComponent<PlayerStats>().stats[0] += 1;
+                maxHp += gameObject.GetComponent<PlayerStats>().stats[0] * 10;
+                break;
+            case 7:
+                gameObject.GetComponent<PlayerStats>().stats[1] += 1;
+                break;
+            case 8:
+                gameObject.GetComponent<PlayerStats>().stats[2] += 1;
+                maxHp += gameObject.GetComponent<PlayerStats>().stats[2] * 10;
+                break;
+            case 9:
+                damageabsorption += 1;
+                break;
+            case 10:
+                defense += 1;
+                break;
         }
-        if (itemidx == 9)// �ҷ� ������ ��� 
-        {
-            damageabsorption += 1;
-            return;
-        }
-        if (itemidx == 10)//�޴� ������ ����
-        {
-            defense += 1;
-            return;
-        }
+        return;
     }
 }
