@@ -49,7 +49,6 @@ public class SelfDestructEnemy : BasicEnemyScript
         {
             TurnCount = 1;
         }
-        animator.SetBool("IsIdle", false);
     }
     public override void RayCasting()
     {
