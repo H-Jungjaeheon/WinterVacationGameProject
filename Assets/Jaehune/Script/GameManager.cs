@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //������ ��ư, ������ ��ư ��� ������Ʈ, ���� ���׷��̵� â
     
     [SerializeField] private Slider hpBar, manaBar; //�÷��̾� hp, ������ġ ��
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0; //ü��
     public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //ü��, ������ġ,�ִ� ü��, �ִ� ������ġ,���������,����
     
     [SerializeField] GameObject Player, menuPanel; //�÷��̾�, �޴�
