@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     public float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
-    [SerializeField] GameObject[] Burns;
     Animator anim;
     public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false;
     public float GrapCount, MaxGrapCount;
@@ -27,18 +26,18 @@ public class Player : MonoBehaviour
         SurviveDamage();
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            
+            /*
             if (GameManager.Instance.isBurns)
-            {
-                Burns[0].SetActive(true);
-                Burns[1].SetActive(true);
-
+            {*/
+                transform.GetChild(0).gameObject.SetActive(GameManager.Instance.isBurns);
+                transform.GetChild(1).gameObject.SetActive(GameManager.Instance.isBurns);
+/*
             }
             else
             {
                 Burns[0].SetActive(false);
                 Burns[1].SetActive(false);
-            }
+            }*/
 
 
             if (IsGrab == false && isHide == false && isParalysis == false)
