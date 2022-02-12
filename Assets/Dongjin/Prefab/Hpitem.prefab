@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Interaction: {fileID: 798879406701981732}
-  itemidx: 7
+  itemidx: 6
 --- !u!50 &7323417362676490118
 Rigidbody2D:
   serializedVersion: 4

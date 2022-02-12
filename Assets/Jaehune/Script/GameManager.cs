@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
         BattleSkillText.text = "";
         BattleSkillBackGround.SetActive(false);
         StatUp.SetActive(false);
+        maxHp = GetComponent<PlayerStats>().stats[0];
+        maxMana = GetComponent<PlayerStats>().stats[2];
     }
 
     // Start is called before the first frame update
@@ -150,9 +152,9 @@ public class GameManager : MonoBehaviour
     
     private void HandleSlider()
     {
-        if (curHp >= maxHp)
+        if (stackDamage < 0)
         {
-            curHp = maxHp;
+            stackDamage = 0;
         }
         if (curMana >= maxMana)
         {
@@ -251,14 +253,14 @@ public class GameManager : MonoBehaviour
                 break;
             case 6:
                 gameObject.GetComponent<PlayerStats>().stats[0] += 1;
-                maxHp += gameObject.GetComponent<PlayerStats>().stats[0] * 10;
+                maxHp += 10;
                 break;
             case 7:
                 gameObject.GetComponent<PlayerStats>().stats[1] += 1;
                 break;
             case 8:
                 gameObject.GetComponent<PlayerStats>().stats[2] += 1;
-                maxHp += gameObject.GetComponent<PlayerStats>().stats[2] * 10;
+                maxMana += 10;
                 break;
             case 9:
                 damageabsorption += 1;

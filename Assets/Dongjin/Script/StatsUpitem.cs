@@ -14,10 +14,10 @@ public class StatsUpitem : MonoBehaviour
     }
     IEnumerator cnt()
     {
-        GetComponent<CapsuleCollider2D>().enabled = false;
-        yield return new WaitForSeconds(3f);
-        GetComponent<CapsuleCollider2D>().enabled = true;
-        GetComponent<CapsuleCollider2D>().isTrigger = true;
+        GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        GetComponent<BoxCollider2D>().enabled = true;
+        GetComponent<BoxCollider2D>().isTrigger = true;
 
     }
     // Update is called once per frame

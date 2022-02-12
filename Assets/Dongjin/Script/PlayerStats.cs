@@ -36,6 +36,7 @@ public class PlayerStats : MonoBehaviour
         {
             GameObject.Find("stats").transform.GetChild(i).transform.GetChild(0).GetComponent<Text>().text = "" + stats[i];
         }
+        GameObject.Find("stats").transform.GetChild(3).transform.GetChild(0).GetComponent<Text>().text = "" + LV;
     }
     public void HpUpgrade()
     {
@@ -45,7 +46,7 @@ public class PlayerStats : MonoBehaviour
             Stateup = false;
             GameManager.Instance.StatUp.SetActive(false);
             GameManager.Instance.LevelUp = false;
-            GameManager.Instance.maxHp += stats[0] * 10;
+            GameManager.Instance.maxHp += 10;
         }
     }
     public void DmgUpgrade()
@@ -71,7 +72,7 @@ public class PlayerStats : MonoBehaviour
             Stateup = false;
             GameManager.Instance.StatUp.SetActive(false);
             GameManager.Instance.LevelUp = false;
-            GameManager.Instance.maxMana += stats[2] * 10;
+            GameManager.Instance.maxMana += 10;
         }
     }
     public void ExpUp(float expidx)

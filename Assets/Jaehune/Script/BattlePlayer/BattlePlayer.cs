@@ -238,6 +238,7 @@ public class BattlePlayer : MonoBehaviour
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
+        GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption;
         Debug.Log("첫번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {

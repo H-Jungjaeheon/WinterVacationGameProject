@@ -163,7 +163,7 @@ public class BattleBasicEnemy : MonoBehaviour
                 DT.GetComponent<BattleDamageText>().damage = Damage;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
-                GameManager.Instance.stackDamage += Damage;
+                GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
             }
             else
             {
