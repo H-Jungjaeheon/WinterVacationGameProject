@@ -133,18 +133,16 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
             animator.SetBool("IsAttack", true);
-            //자폭 전 애니메이션 활성화
             yield return new WaitForSeconds(2);
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamP = false;
-            //자폭 전 애니메이션 비활성화
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             Anger += 25;
             yield return new WaitForSeconds(3);
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
         }
-        else if (Anger >= MaxAnger) //AttackRand == 2
+        else if (Anger >= MaxAnger)
         {
             Anger = 0;
             GameManager.Instance.BattleSkillText.text = "화학 작용 ㅡ 자폭";
@@ -160,10 +158,10 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
-                DT.GetComponent<BattleDamageText>().damage = Damage;
+                DT.GetComponent<BattleDamageText>().damage = Damage - GameManager.Instance.defense;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
-                GameManager.Instance.stackDamage += Damage;
+                GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
             }
             else
             {

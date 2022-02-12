@@ -111,17 +111,17 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 DT.transform.position = Player.transform.position;
                 if (IsSuperSkillng == true)
                 {
-                    DT.GetComponent<BattleDamageText>().damage = Damage + 4;
+                    DT.GetComponent<BattleDamageText>().damage = (Damage + 4) - GameManager.Instance.defense;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage + 4;
+                    GameManager.Instance.stackDamage += (Damage + 4) - GameManager.Instance.defense;
                 }
                 else
                 {
-                    DT.GetComponent<BattleDamageText>().damage = Damage;
+                    DT.GetComponent<BattleDamageText>().damage = Damage - GameManager.Instance.defense;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage;
+                    GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
                 }
             }
             else
@@ -166,7 +166,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 GameManager.Instance.BattleButtonUi.SetActive(true);
             }
         }
-        else if (Anger >= MaxAnger && SkillAttackRand == 1 && SuperSkillCount < MaxSuperSkillCount) //자기 체력 깎고 큰 데미지 입힘
+        else if (Anger >= MaxAnger && SkillAttackRand == 1 && SuperSkillCount < MaxSuperSkillCount)
         {
             Anger = 0;
             if(IsSuperSkillng == false)
@@ -191,23 +191,23 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 {
                     DT.transform.position = Player.transform.position;
                     DT1.transform.position = this.transform.position;
-                    DT.GetComponent<BattleDamageText>().damage = Damage * 4;
+                    DT.GetComponent<BattleDamageText>().damage = (Damage * 4) - GameManager.Instance.defense;
                     DT1.GetComponent<BattleDamageText>().damage = 5;
-                    Hp -= 5;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage * 4;
+                    GameManager.Instance.stackDamage += (Damage * 4) - GameManager.Instance.defense;
+                    Hp -= 5;
                 }
                 else
                 {
                     DT.transform.position = Player.transform.position;
                     DT1.transform.position = this.transform.position;
-                    DT.GetComponent<BattleDamageText>().damage = Damage * 3;
+                    DT.GetComponent<BattleDamageText>().damage = (Damage * 3) - GameManager.Instance.defense;
                     DT1.GetComponent<BattleDamageText>().damage = 5;
-                    Hp -= 5;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage * 3;
+                    GameManager.Instance.stackDamage += (Damage * 3) - GameManager.Instance.defense;
+                    Hp -= 5;
                 }
             }
             else
@@ -280,20 +280,20 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 DT2.transform.position = this.transform.position;
                 if (IsSuperSkillng == true)
                 {
-                    DT.GetComponent<BattleDamageText>().damage = Damage * 3;
+                    DT.GetComponent<BattleDamageText>().damage = (Damage * 3) - GameManager.Instance.defense;
                     DT2.GetComponent<BattleDamageText>().damage = Damage + 6;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage * 3;
+                    GameManager.Instance.stackDamage += (Damage * 3) - GameManager.Instance.defense;
                     Hp += Damage + 6;
                 }
                 else
                 {
-                    DT.GetComponent<BattleDamageText>().damage = Damage * 2;
+                    DT.GetComponent<BattleDamageText>().damage = (Damage * 2) - GameManager.Instance.defense;
                     DT2.GetComponent<BattleDamageText>().damage = Damage + 3;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage * 2;
+                    GameManager.Instance.stackDamage += (Damage * 2) - GameManager.Instance.defense;
                     Hp += Damage + 3;
                 }
             }

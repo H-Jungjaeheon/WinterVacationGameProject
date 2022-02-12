@@ -78,10 +78,10 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
-                DT.GetComponent<BattleDamageText>().damage = Damage;
+                DT.GetComponent<BattleDamageText>().damage = Damage - GameManager.Instance.defense;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
-                GameManager.Instance.stackDamage += Damage;
+                GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
             }
             else
             {
@@ -124,10 +124,10 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
-                DT.GetComponent<BattleDamageText>().damage = Damage + 1;
+                DT.GetComponent<BattleDamageText>().damage = (Damage + 1) - GameManager.Instance.defense;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
-                GameManager.Instance.curHp -= Damage + 1;
+                GameManager.Instance.stackDamage += (Damage + 1) - GameManager.Instance.defense;
             }
             else
             {

@@ -234,31 +234,68 @@ public class BattlePlayer : MonoBehaviour
         animator.SetBool("IsAttack", true);
         GameObject DT = Instantiate(DmgText);
         GameObject DT2 = Instantiate(DmgText);
+        GameObject DT3 = Instantiate(HealText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1];
-        GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption;
         Debug.Log("첫번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {
-            DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT2.transform.position = this.transform.position;
-            DT2.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
-            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
+            if (GameManager.Instance.damageabsorption < 1)
+            {
+                DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT2.transform.position = this.transform.position;
+                DT2.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] - GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] - GameManager.Instance.damageabsorption;
+            }
+            else
+            {
+                DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT3.transform.position = this.transform.position;
+                DT3.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption - GM.GetComponent<PlayerStats>().stats[1];
+                GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption - GM.GetComponent<PlayerStats>().stats[1];
+            }
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
         {
-            DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT2.transform.position = this.transform.position;
-            DT2.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
-            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
+            if (GameManager.Instance.damageabsorption < GM.GetComponent<PlayerStats>().stats[1] / 2)
+            {
+                DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT2.transform.position = this.transform.position;
+                DT2.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2 - GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2 - GameManager.Instance.damageabsorption;
+            }
+            else
+            {
+                DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT3.transform.position = this.transform.position;
+                DT3.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption - (GM.GetComponent<PlayerStats>().stats[1] / 2);
+                GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption - (GM.GetComponent<PlayerStats>().stats[1] / 2);
+            }
         }
         else if(Enemy.GetComponent<BattleBasicEnemy>().IsReflect && IsBarrier == true)
         {
-            DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT2.transform.position = this.transform.position;
-            DT2.GetComponent<BattleDamageText>().damage = 0;
+            if(GameManager.Instance.damageabsorption <= 0)
+            {
+                DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT2.transform.position = this.transform.position;
+                DT2.GetComponent<BattleDamageText>().damage = 0;
+            }
+            else
+            {
+                DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT3.transform.position = this.transform.position;
+                DT3.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage -= GameManager.Instance.damageabsorption;
+            }
+        }
+        else
+        {
+            DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT3.transform.position = this.transform.position;
+            DT3.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+            GameManager.Instance.stackDamage -= GameManager.Instance.damageabsorption;
         }
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
@@ -307,6 +344,7 @@ public class BattlePlayer : MonoBehaviour
         animator.SetBool("IsAttack", true);
         GameObject DT3 = Instantiate(DmgText);
         GameObject DT4 = Instantiate(DmgText);
+        GameObject DT5 = Instantiate(HealText);
         DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT3.transform.position = Enemy.transform.position;
         DT3.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
@@ -314,23 +352,60 @@ public class BattlePlayer : MonoBehaviour
         Debug.Log("두번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {
-            DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT4.transform.position = this.transform.position;
-            DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
-            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
+            if (GameManager.Instance.damageabsorption < 1)
+            {
+                DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT4.transform.position = this.transform.position;
+                DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] - GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] - GameManager.Instance.damageabsorption;
+            }
+            else
+            {
+                DT5.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT5.transform.position = this.transform.position;
+                DT5.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption - GM.GetComponent<PlayerStats>().stats[1];
+                GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption - GM.GetComponent<PlayerStats>().stats[1];
+            }
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
         {
-            DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT4.transform.position = this.transform.position;
-            DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
-            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
+            if (GameManager.Instance.damageabsorption < GM.GetComponent<PlayerStats>().stats[1] / 2)
+            {
+                DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT4.transform.position = this.transform.position;
+                DT4.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2 - GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2 - GameManager.Instance.damageabsorption;
+            }
+            else
+            {
+                DT5.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT5.transform.position = this.transform.position;
+                DT5.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption - (GM.GetComponent<PlayerStats>().stats[1] / 2);
+                GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption - (GM.GetComponent<PlayerStats>().stats[1] / 2);
+            }
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && IsBarrier == true)
         {
-            DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT4.transform.position = this.transform.position;
-            DT4.GetComponent<BattleDamageText>().damage = 0;
+            if (GameManager.Instance.damageabsorption <= 0)
+            {
+                DT4.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT4.transform.position = this.transform.position;
+                DT4.GetComponent<BattleDamageText>().damage = 0;
+            }
+            else
+            {
+                DT5.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT5.transform.position = this.transform.position;
+                DT5.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage -= GameManager.Instance.damageabsorption;
+            }
+        }
+        else
+        {
+            DT5.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT5.transform.position = this.transform.position;
+            DT5.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+            GameManager.Instance.stackDamage -= GameManager.Instance.damageabsorption;
         }
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
@@ -378,30 +453,69 @@ public class BattlePlayer : MonoBehaviour
         animator.SetBool("IsAttack", true);
         GameObject DT5 = Instantiate(DmgText);
         GameObject DT6 = Instantiate(DmgText);
+        GameObject DT7 = Instantiate(HealText);
         DT5.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT5.transform.position = Enemy.transform.position;
         DT5.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] + GM.GetComponent<PlayerStats>().stats[1] / 2;
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] + GM.GetComponent<PlayerStats>().stats[1] / 2;
+        GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption;
         Debug.Log("세번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {
-            DT6.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT6.transform.position = this.transform.position;
-            DT6.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1];
-            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1];
+            if (GameManager.Instance.damageabsorption < 1)
+            {
+                DT6.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT6.transform.position = this.transform.position;
+                DT6.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] - GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] - GameManager.Instance.damageabsorption;
+            }
+            else
+            {
+                DT7.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT7.transform.position = this.transform.position;
+                DT7.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption - GM.GetComponent<PlayerStats>().stats[1];
+                GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption - GM.GetComponent<PlayerStats>().stats[1];
+            }
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
         {
-            DT6.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT6.transform.position = this.transform.position;
-            DT6.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2;
-            GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2;
+            if (GameManager.Instance.damageabsorption < GM.GetComponent<PlayerStats>().stats[1] / 2)
+            {
+                DT6.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT6.transform.position = this.transform.position;
+                DT6.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] / 2 - GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage += GM.GetComponent<PlayerStats>().stats[1] / 2 - GameManager.Instance.damageabsorption;
+            }
+            else
+            {
+                DT7.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT7.transform.position = this.transform.position;
+                DT7.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption - (GM.GetComponent<PlayerStats>().stats[1] / 2);
+                GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption - (GM.GetComponent<PlayerStats>().stats[1] / 2);
+            }
         }
         else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && IsBarrier == true)
         {
-            DT6.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-            DT6.transform.position = this.transform.position;
-            DT6.GetComponent<BattleDamageText>().damage = 0;
+            if (GameManager.Instance.damageabsorption <= 0)
+            {
+                DT6.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT6.transform.position = this.transform.position;
+                DT6.GetComponent<BattleDamageText>().damage = 0;
+            }
+            else
+            {
+                DT7.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                DT7.transform.position = this.transform.position;
+                DT7.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+                GameManager.Instance.stackDamage -= GameManager.Instance.damageabsorption;
+            }
+        }
+        else
+        {
+            DT7.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+            DT7.transform.position = this.transform.position;
+            DT7.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+            GameManager.Instance.stackDamage -= GameManager.Instance.damageabsorption;
         }
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(1.4f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
@@ -450,10 +564,15 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.CamP = true;
         animator.SetBool("IsAttack", true);
         GameObject DT = Instantiate(DmgText);
+        GameObject DT2 = Instantiate(HealText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
         DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 4;
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 4;
+        DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+        DT2.transform.position = Enemy.transform.position;
+        DT2.GetComponent<BattleDamageText>().damage = GameManager.Instance.damageabsorption;
+        GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption;
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
