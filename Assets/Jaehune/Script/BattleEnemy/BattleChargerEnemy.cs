@@ -65,6 +65,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
     public override void Dead1()
     {
         base.Dead1();
+        IsStun = false;
     }
     public override IEnumerator Dead2(float FaidTime)
     {
@@ -76,7 +77,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         if (Anger < MaxAnger) //AttackRand == 1
         {
-            GameManager.Instance.BattleSkillText.text = "손으로 이루어진 내장";
+            GameManager.Instance.BattleSkillText.text = "내장으로 이루어진 손";
             BattleManager.Instance.IsEnemyTurn = false;
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);

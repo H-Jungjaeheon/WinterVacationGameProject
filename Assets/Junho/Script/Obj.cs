@@ -29,7 +29,7 @@ public class Obj : MonoBehaviour
     {
         isParticle();
 
-        if (isIt==true&&iscollison&&Input.GetKey(KeyCode.F))
+        if (isIt==true&&iscollison&&Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false )
         {
             Drop();
         }

@@ -525,7 +525,7 @@ MonoBehaviour:
   BarUp: 1.7
   GExp: 33
   Hp: 30
-  Anger: 100
+  Anger: 0
   MaxAnger: 100
   Damage: 8
   Player: {fileID: 0}
