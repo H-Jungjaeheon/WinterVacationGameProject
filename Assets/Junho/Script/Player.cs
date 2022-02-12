@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
-    [SerializeField] float speed = 5, jumpPower;
+    public float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
     [SerializeField] GameObject[] Burns;
     Animator anim;
@@ -77,7 +77,13 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        
+        if (GameManager.Instance.isEunsin)
+        {
+            this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
+        }
+        else this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
+
+
         if (IsGrab == true)
         {
             Grabbing();
@@ -113,16 +119,7 @@ public class Player : MonoBehaviour
         {
             GrapCount = 0;
         }
-    }
-
-
-    public IEnumerator speedPotion()
-    {
-        speed = 10;
-        yield return new WaitForSeconds(5.0f);
-        speed = 5;
-    }
-
+    }   
     void Move()
     {
         float x = Input.GetAxis("Horizontal");
@@ -134,15 +131,7 @@ public class Player : MonoBehaviour
         else if (x > 0) transform.rotation = Quaternion.Euler(0, 180, 0);
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
     }
-    public IEnumerator Eunsincnt()
-    {
-        GameManager.Instance.isEunsin = true;
-        this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
-        yield return new WaitForSeconds(5f);
-        GameManager.Instance.isEunsin = false;
-        this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
-    }
-
+    
     void Jump()
     {
         if (isGound == true && Input.GetKey(KeyCode.Space))

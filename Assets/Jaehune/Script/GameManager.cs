@@ -193,27 +193,45 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10f);
         isTrapBarrier = false;
     }
-    
+    public IEnumerator speedPotion()
+    {
+        GameObject.Find("Player").GetComponent<Player>().speed = 10;
+        yield return new WaitForSeconds(5.0f);
+        GameObject.Find("Player").GetComponent<Player>().speed = 5;
+    }
+    public IEnumerator Eunsincnt()
+    {
+        isEunsin = true;
+        yield return new WaitForSeconds(10f);
+        isEunsin = false;
+    }
     public void useitem(int itemidx)
     {
         switch (itemidx)
         {
             case 0:
-                curHp += 10;
+                stackDamage -= 10;
+                Debug.Log(curHp);
                 break;
             case 1:
                 curMana += 10;
                 break;
             case 2:
-                GetComponent<Player>().speedPotion();
+                Debug.Log("speed");
+                StartCoroutine(speedPotion());
                 break;
             case 3:
+                Debug.Log("manaBarrier");
+
                 StartCoroutine(ManaBarrier());
                 break;
             case 4:
-                GetComponent<Player>().Eunsincnt();
+                Debug.Log("Eunsin");
+                StartCoroutine(Eunsincnt());
                 break;
             case 5:
+                Debug.Log("TrapBarrier");
+
                 StartCoroutine(TrapBarrier());
                 break;
             case 6:
@@ -234,6 +252,6 @@ public class GameManager : MonoBehaviour
                 defense += 1;
                 break;
         }
-        
+        return;
     }
 }
