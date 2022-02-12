@@ -31,11 +31,11 @@ public class BerserkerEnemy : BasicEnemyScript
         MoveCount = 0;
         if (Speed > 0 && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * 3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * 1.05f * Time.deltaTime);
         }
         else if (Speed < 0 && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * -3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * -1.05f * Time.deltaTime);
         }
     }
     public override void Delete()
