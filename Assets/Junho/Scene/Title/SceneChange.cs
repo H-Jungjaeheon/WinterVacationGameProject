@@ -15,6 +15,18 @@ public class SceneChange : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
+    public void SettingBtn()
+    {
+
+    }
+    public void ExBtn()
+    {
+
+    }
+    public void QuitBtn()
+    {
+        Application.Quit();
+    }
     // Update is called once per frame
     void Update()
     {
