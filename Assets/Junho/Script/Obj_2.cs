@@ -100,13 +100,9 @@ public class Obj_2 : MonoBehaviour
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
         Interaction.SetActive(false);
-        int ran = Random.Range(0, 10);
+        int ran = Random.Range(0, 13);
         if (ran < 7)
         {
-            //transform.DOMove(transform.position, 1f).SetEase(Ease.OutBack).OnComplete(() =>
-            //{
-            //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
-            //});
             Debug.Log("²Î");
             particle[1].SetActive(true);
             Invoke("Nothing", 4.5f);
@@ -115,19 +111,33 @@ public class Obj_2 : MonoBehaviour
         else if (ran < 8)
         {
 
-            Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-        }
-
-        else if (ran < 9)
-        {
             Instantiate(Items[0], transform.position, Items[0].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
         }
-        else if (ran < 10)
+        else if (ran < 9)
         {
             Instantiate(Items[1], transform.position, Items[1].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
         }
-        gameObject.tag = "Untagged";
+        else if (ran < 10)
+        {
+            Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+        }
+        else if (ran < 11)
+        {
+            Instantiate(Items[3], transform.position, Items[3].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+        }
+        else if (ran < 12)
+        {
+            Instantiate(Items[4], transform.position, Items[4].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+        }
+        else if (ran < 13)
+        {
+            Instantiate(Items[5], transform.position, Items[5].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+        }
+        else if (ran < 14)
+        {
+            Instantiate(Items[6], transform.position, Items[6].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+        }
     }
     void Nothing()
     {
