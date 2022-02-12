@@ -42,7 +42,7 @@ public class Fire : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")&&GameManager.Instance.isTrapBarrier==false)
         {
             isPlayer = true;
             GameManager.Instance.isBurns = true;
@@ -55,7 +55,7 @@ public class Fire : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && GameManager.Instance.isTrapBarrier == false)
         {
             cnt = 0; 
             isPlayer = false;

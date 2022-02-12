@@ -24,6 +24,9 @@ TagManager:
   - ManaPotion
   - hideObj
   - Electricity
+  - ManaBarrierPotion
+  - EunsinPotion
+  - TrapBarrierPotion
   layers:
   - Default
   - TransparentFX
