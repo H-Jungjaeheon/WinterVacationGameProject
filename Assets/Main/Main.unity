@@ -443,7 +443,7 @@ RectTransform:
   m_Children:
   - {fileID: 1129062815}
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 6
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1050,7 +1050,7 @@ RectTransform:
   - {fileID: 1672313551}
   - {fileID: 1516547612}
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 5
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9495,7 +9495,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9792,7 +9792,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11231,7 +11231,7 @@ RectTransform:
   m_Children:
   - {fileID: 406021942}
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21015,7 +21015,7 @@ RectTransform:
   m_Children:
   - {fileID: 233915516}
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -22789,13 +22789,13 @@ RectTransform:
   - {fileID: 479372786}
   - {fileID: 727414011}
   - {fileID: 465519144}
-  - {fileID: 732414564}
-  - {fileID: 187101256}
-  - {fileID: 40948132}
   - {fileID: 570384083}
   - {fileID: 1942872027}
   - {fileID: 601564308}
   - {fileID: 1462084590}
+  - {fileID: 732414564}
+  - {fileID: 187101256}
+  - {fileID: 40948132}
   - {fileID: 1789035311}
   - {fileID: 1865207421}
   - {fileID: 299995989}
@@ -24061,6 +24061,7 @@ MonoBehaviour:
   isEunsin: 0
   isTrapBarrier: 0
   isBurns: 0
+  isGameOver: 0
   IsStart: 0
   BattleSkillText: {fileID: 406021944}
   BattleButtonUi: {fileID: 1789035310}
@@ -24752,7 +24753,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1635066230}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

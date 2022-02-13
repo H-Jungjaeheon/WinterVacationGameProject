@@ -26,8 +26,12 @@ public class GameManager : MonoBehaviour
     private Image PanelImage;
 
     [SerializeField] public Text manaText, hpText;
+    private GameObject stop;
+
+
     private void Awake()
     {
+        stop = GameObject.Find("stop").gameObject;
         isGameOver = false;
         BattleButtonUi.SetActive(false);
         Instance = this;
@@ -114,10 +118,13 @@ public class GameManager : MonoBehaviour
         Player.SetActive(true);
         yield return null;
     }
+     
+
     IEnumerator BattleStartFaidOut(float FaidTime)
     {
         Color color = FadIn.color;
         Color color2 = BattleStartImage.color;
+        stop.SetActive(false);
         while (color.a < 1f && color2.a < 1f)
         {
             color.a += Time.deltaTime / FaidTime;
@@ -136,6 +143,7 @@ public class GameManager : MonoBehaviour
     {
         Color color = FadIn.color;
         Color color2 = BattleStartImage.color;
+        stop.SetActive(true);
         while (color.a > 0f && color2.a > 0f)
         {
             color.a -= Time.deltaTime / FaidTime;

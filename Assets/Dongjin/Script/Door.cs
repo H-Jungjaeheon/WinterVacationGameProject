@@ -6,26 +6,28 @@ using UnityEngine.UI;
 
 public class Door : MonoBehaviour
 {
-    private GameObject text;
     private bool opendoor = false;
     public GameObject door;
     private GameObject player;
+    public Text text;
+    private GameObject stop;
     Image FadIn;
     private void Start()
     {
         FadIn = GameObject.Find("GameManager").GetComponent<GameManager>().FadIn;
         player = GameObject.Find("Player");
-        text = transform.GetChild(0).gameObject;
+        text.gameObject.SetActive(false);
+        stop = GameObject.Find("stop").gameObject;
     }
    
     private void Update()
     {
+        text.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2.5f, 0));
         if (opendoor == true && Input.GetKeyDown(KeyCode.F) &&GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
         {
             player.transform.position = door.transform.position;
             GameManager.Instance.isRoom = true;
             Debug.Log("¾À ³Ñ¾î°¨¿ä");
-            //StartCoroutine(BattleStartFaidIn(1f));
             StartCoroutine(BattleStartFaidOut(0.01f));
 
 
@@ -34,17 +36,13 @@ public class Door : MonoBehaviour
     IEnumerator BattleStartFaidOut(float FaidTime)
     {
         Color color = FadIn.color;
-        //Color color2 = BattleStartImage.color;
-        while (color.a < 1f /*&& color2.a < 1f*/)
+        while (color.a < 1f )
         {
             color.a += Time.deltaTime / FaidTime;
-            //color2.a += Time.deltaTime / FaidTime;
             FadIn.color = color;
-            //BattleStartImage.color = color2;
-            if (color.a >= 1f /*&& color2.a >= 1f*/)
+            if (color.a >= 1f )
             {
                 color.a = 1f;
-                //color2.a = 1f;
             }
             yield return null;
         }
@@ -54,17 +52,13 @@ public class Door : MonoBehaviour
     IEnumerator BattleStartFaidIn(float FaidTime)
     {
         Color color = FadIn.color;
-        //Color color2 = BattleStartImage.color;
-        while (color.a > 0f /*&& color2.a > 0f*/)
+        while (color.a > 0f )
         {
             color.a -= Time.deltaTime / FaidTime;
-            //color2.a -= Time.deltaTime / FaidTime;
             FadIn.color = color;
-            //BattleStartImage.color = color2;
-            if (color.a <= 0f /*&& color2.a <= 0f*/)
+            if (color.a <= 0f)
             {
                 color.a = 0f;
-                //color2.a = 0f;
             }
             yield return null;
         }
@@ -74,7 +68,7 @@ public class Door : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            text.SetActive(true);
+            text.gameObject.SetActive(true);
             opendoor = true;
         }
     }
@@ -82,7 +76,7 @@ public class Door : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            text.SetActive(false);
+            text.gameObject.SetActive(false);
             opendoor = false;
         }
     }
