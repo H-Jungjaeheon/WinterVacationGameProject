@@ -57,7 +57,7 @@ public class ChargerEnemy : BasicEnemyScript
             }
         }
     }
-    void Skill() //스킬 풀면 SkillTime = 0
+    void Skill()
     {
         if (Player != null && GameManager.Instance.IsBattleStart == false && GameManager.Instance.isEunsin == false)
         {

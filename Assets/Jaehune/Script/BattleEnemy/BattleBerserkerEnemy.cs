@@ -38,6 +38,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         {
             Hp = 0;
         }
+        if(Hp >= MaxHp)
+        {
+            Hp = MaxHp;
+        }
     }
     public override void AttackGone()
     {

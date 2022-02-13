@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int[] stats = { 1, 1, 1}; //체력 / 공격력 / 마나
+    public int[] stats = {1, 1, 1}; //체력 / 공격력 / 마나
     [SerializeField] private Slider ExpBar;
     [SerializeField] float Exp, MaxExp, LV;
     [SerializeField] Text expText;
