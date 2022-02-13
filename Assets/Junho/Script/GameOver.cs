@@ -32,10 +32,12 @@ public class GameOver : MonoBehaviour
     }
     public void StartNewGame()
     {
+        GameManager.Instance.isGameOver = false;
         SceneManager.LoadScene("Main");
     }
     public void Title()
     {
+        GameManager.Instance.isGameOver = false;
         SceneManager.LoadScene("Title");
     }
 }

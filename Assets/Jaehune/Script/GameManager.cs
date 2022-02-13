@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     
     public int Stage = 1; //���� é��(��������)
-    [SerializeField] Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
+    [SerializeField] public Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
     [SerializeField] bool IsStart = false; //���� ���� ���� �Ǵ�2
     public Text BattleSkillText; //���� �� ���� or ��ų �̸� ǥ�� �ؽ�Ʈ
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //������ ��ư, ������ ��ư ��� ������Ʈ, ���� ���׷��̵� â
@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Text manaText, hpText;
     private void Awake()
     {
+        isGameOver = false;
         BattleButtonUi.SetActive(false);
         Instance = this;
         BattleSkillText.text = "";
@@ -175,7 +176,14 @@ public class GameManager : MonoBehaviour
         manaText.text = mana + "/" + maxMana;
         if (curHp<=0f)
         {
+            isGameOver = true;
             GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();  
+        }
+        else if (curMana <= 0f)
+        {
+            isGameOver = true;
+            GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+
         }
     }
     public void StopButton()
