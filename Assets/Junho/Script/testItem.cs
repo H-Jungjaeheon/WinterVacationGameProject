@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class testItem : MonoBehaviour
 {
@@ -8,9 +9,13 @@ public class testItem : MonoBehaviour
     public GameObject Interaction;
     private GameObject managertest;
     public int itemidx;
+    public Text text;
+    bool isCol;
     // Start is called before the first framse update
     void Start()
     {
+        text.gameObject.SetActive(false);
+        text.text = gameObject.name + "Å‰µæ (F)";
         managertest = GameObject.Find("GameManager");
         StartCoroutine(cnt());
     }
@@ -25,36 +30,30 @@ public class testItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        text.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
+
+        if (isCol&&Input.GetKey(KeyCode.F)&& GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
+        {
+            managertest.GetComponent<Inventorycontroller>().Additem(this.gameObject);
+            gameObject.SetActive(false);
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            text.gameObject.SetActive(true);
             Interaction.SetActive(true);
-            if (Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false )
-            {
-                //PotionInventory inven = collision.GetComponent<PotionInventory>();
-                //for (int i = 0; i < inven.slots.Count; i++)
-                //{
-                //    if (inven.slots[i].isEmpty)
-                //    {
-                //        Instantiate(slotItem, inven.slots[i].slotObj.transform, false);
-                //        inven.slots[i].isEmpty = false;
-                //        Destroy(this.gameObject);
-                //        break;
-                //}
-                //}
-                managertest.GetComponent<Inventorycontroller>().Additem(this.gameObject);
-                gameObject.SetActive(false);
-            }
+            isCol = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            text.gameObject.SetActive(false);
             Interaction.SetActive(false);
+            isCol = false;
         }
     }
 }
