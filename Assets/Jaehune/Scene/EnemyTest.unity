@@ -2441,9 +2441,6 @@ MonoBehaviour:
   isGound: 0
   isLadder: 0
   isDamage: 0
-  Burns:
-  - {fileID: 2097874645}
-  - {fileID: 941029674}
   IsGrab: 0
   isHidecollision: 0
   isHide: 0
@@ -2511,7 +2508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520082743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.23, y: -3.46, z: 0}
+  m_LocalPosition: {x: 12.98, y: -3.64, z: 0}
   m_LocalScale: {x: 0.75, y: 0.73, z: 1}
   m_Children:
   - {fileID: 2097874648}
@@ -11080,7 +11077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118887717977446428, guid: 008768afa15398647934c40cee399906, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.68
+      value: 5.62
       objectReference: {fileID: 0}
     - target: {fileID: 4118887717977446428, guid: 008768afa15398647934c40cee399906, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11682,6 +11679,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7121602689434790744, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
       propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
+      propertyPath: MoveCount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8895865840278072553, guid: b135a8ec6731e6a418ad9c8256979f71, type: 3}
@@ -13649,7 +13650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee4350c7778f4a46a50c843782e987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: 010000000100000001000000
+  stats: 640000000100000064000000
   ExpBar: {fileID: 215525901}
   Exp: 0
   MaxExp: 0
@@ -19302,7 +19303,7 @@ MonoBehaviour:
   - {fileID: 2278861209527971366, guid: 0e86715b711f0ac468686901f9a7cc2c, type: 3}
   - {fileID: 4595127360262648672, guid: fca4cff6a5d47e441bdef6916b24dad2, type: 3}
   - {fileID: 1430741451543569787, guid: 2aef11ac092902b4f9dab42d7419a088, type: 3}
-  - {fileID: 0}
+  - {fileID: 575447603855459860, guid: 1fc6b724545b5774ebcd4a09606d4bbe, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -20153,6 +20154,14 @@ PrefabInstance:
     - target: {fileID: 2941563980042087087, guid: d59fa2bdd79acce4da5087db7288b8e3, type: 3}
       propertyPath: m_Name
       value: SuperEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2941563980042087087, guid: d59fa2bdd79acce4da5087db7288b8e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8037279691343957990, guid: d59fa2bdd79acce4da5087db7288b8e3, type: 3}
+      propertyPath: SpawnMonsterCount
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59fa2bdd79acce4da5087db7288b8e3, type: 3}
