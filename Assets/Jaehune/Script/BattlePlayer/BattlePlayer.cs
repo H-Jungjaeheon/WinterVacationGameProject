@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BattlePlayer : MonoBehaviour
 {
     [SerializeField] RaycastHit2D hit; 
-    [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, BarrierImage; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, BarrierImage, SkillImage; //전투시 인식한 적 오브젝트 담는 그릇
     [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false, IsAttackOk = true, IsContinuity, IsComBo, IsEnd, IsFaild; 
     public bool IsHit = false, IsBarrier = false;
     [SerializeField] int BarrierCount = 0, MaxBarrierCount, BasicAttackCount = 0;
@@ -24,6 +24,7 @@ public class BattlePlayer : MonoBehaviour
         BasicAttackCount = 1;
         animator = GetComponent<Animator>();
         this.transform.position = PlayerSpawner.transform.position;
+        SkillImage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,7 +45,7 @@ public class BattlePlayer : MonoBehaviour
         else if(GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == true && BasicAttackCount == 1)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-6, 0.77f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-8, 0.77f, 0), 10 * Time.deltaTime);
         }
         else if(GoToReturn == true)
         {
@@ -76,6 +77,7 @@ public class BattlePlayer : MonoBehaviour
                 IsFaild = true;
             }
         }
+        SkillImage.transform.position = Enemy.transform.position;
     }
 
     void RayCasting()
@@ -598,7 +600,8 @@ public class BattlePlayer : MonoBehaviour
         GoToEnemy = true;
         yield return new WaitForSeconds(1.5f);
         BattleManager.Instance.CamP = true;
-        animator.SetBool("IsAttack", true);
+        SkillImage.SetActive(true);
+        animator.SetBool("IsSkill", true);
         GameObject DT = Instantiate(DmgText);
         GameObject DT2 = Instantiate(HealText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -616,7 +619,8 @@ public class BattlePlayer : MonoBehaviour
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamP = false;
-        animator.SetBool("IsAttack", false);
+        SkillImage.SetActive(false);
+        animator.SetBool("IsSkill", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         GoToEnemy = false;
         GoToReturn = true;

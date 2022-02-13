@@ -7,9 +7,11 @@ public class BattleChargerEnemy : BattleBasicEnemy
 {
     [SerializeField] int RandomAbility, AbilityCount, MaxAbilityCount;
     [SerializeField] Image AbilityHand;
+    [SerializeField] bool IsDead;
     // Start is called before the first frame update
-    public override void Start() //어빌리티 핸드 플레이어 자리에 활성화 + 배틀에너미의 이즈 스턴 트루, 조건으로 이즈 스턴이 트루면 플레이어가 공격 할 때 턴 넘기고 어빌리티 카운트 ++, 어빌리티 카운트가 맥스 어빌리티 카운트보다 같거나 크면 능력 비활성화
+    public override void Start() 
     {
+        IsDead = false;
         RandomAbility = 0;
         AbilityCount = 0;
         IsStun = false;
@@ -18,7 +20,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.7f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(-0.7f, 1.1f, 0);
     }
 
     // Update is called once per frame
@@ -32,18 +34,23 @@ public class BattleChargerEnemy : BattleBasicEnemy
             AbilityCount = 0;
             StartCoroutine(AbillityHandFadeOut(1f));
         }
+        else if (IsDead == true)
+        {
+            IsDead = false;
+            this.transform.position = this.transform.position + new Vector3(0f, 1f, 0);
+        }
     }
     public override void AttackGone()
     {
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2.5f, 0f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2f, 0.2f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0, 0.7f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(-0.7f, 1.1f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -52,7 +59,12 @@ public class BattleChargerEnemy : BattleBasicEnemy
     }
     public override void Hpbar()
     {
-        base.Hpbar();
+        HpBar.fillAmount = Hp / MaxHp;
+        AngerBar.fillAmount = Anger / MaxAnger;
+        HpBar.transform.position = this.transform.position + new Vector3(1f, BarUp + 0.9f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(1f, BarUp + 0.7f, 0);
+        HpBarNull.transform.position = this.transform.position + new Vector3(1f, BarUp + 0.9f, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(-0.28f, BarUp + 0.85f, 0);
     }
     public override void RayCasting()
     {
@@ -64,8 +76,13 @@ public class BattleChargerEnemy : BattleBasicEnemy
     }
     public override void Dead1()
     {
-        base.Dead1();
-        IsStun = false;
+        if (Hp <= 0)
+        {
+            BattleManager.Instance.IsEnemyDead = true;
+            animator.SetBool("IsDead", true);
+            StartCoroutine("Dead2", 0.5f);
+            IsStun = false;
+        }
     }
     public override IEnumerator Dead2(float FaidTime)
     {
@@ -84,7 +101,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position + new Vector3(-0.9f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -104,7 +121,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -141,7 +158,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsSkill", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position + new Vector3(-0.9f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -154,7 +171,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
                 if(RandomAbility == 1 && IsStun != true)
                 {
                     StartCoroutine(AbillityHandFadeIn(1f));
-                    RandomAbility = 0;
+                    RandomAbility = Random.Range(1, 5);
                     MaxAbilityCount = Random.Range(1, 4);
                     IsStun = true;
                 }
@@ -168,7 +185,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;

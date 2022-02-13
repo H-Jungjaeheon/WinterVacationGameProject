@@ -12,8 +12,7 @@ public class ChargerEnemy : BasicEnemyScript
     public LineRenderer SkillLine;
     public float SkillTime;
     public bool IsSkill = false;
-    //스킬 사거리 5.5
-    // Start is called before the first frame update
+
     public override void Start()
     {
         base.Start();
@@ -68,6 +67,7 @@ public class ChargerEnemy : BasicEnemyScript
             GrapBar.fillAmount = GameObject.Find("Player").GetComponent<Player>().GrapCount / GameObject.Find("Player").GetComponent<Player>().MaxGrapCount;
             if (SkillTime >= MaxSkillTime)
             {
+                animator.SetBool("IsSkill", true);
                 color.a = 1;
                 color2.a = 1;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = true;
@@ -76,13 +76,14 @@ public class ChargerEnemy : BasicEnemyScript
                 IsMove = false;
                 Player.transform.position = Vector3.MoveTowards(Player.transform.position, this.transform.position, 2f * Time.deltaTime);
                 Debug.Assert(SkillLine != null);
-                SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
-                SkillLine.SetPosition(1, Player.transform.position);
+                SkillLine.SetPosition(0, this.transform.position);
+                SkillLine.SetPosition(1, Player.transform.position - new Vector3(0, 0.3f, 0));
                 SkillHand.SetActive(true);
-                SkillHand.transform.position = Player.transform.position + new Vector3(0, 0.1f, 0);
+                SkillHand.transform.position = Player.transform.position - new Vector3(0, 0.2f, 0);
             }
             else
             {
+                animator.SetBool("IsSkill", false);
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = false;
                 SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
                 SkillLine.SetPosition(1, this.transform.position - new Vector3(0, 0.6f, 0));
@@ -144,11 +145,11 @@ public class ChargerEnemy : BasicEnemyScript
         MoveCount = 0;
         if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.6f, 0), Speed * 1.3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.3f, 0), Speed * 1.3f * Time.deltaTime);
         }
         else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.6f, 0), Speed * -1.3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.3f, 0), Speed * -1.3f * Time.deltaTime);
         }
         if(GrabCountStop == false && GameManager.Instance.isEunsin == false)
         {

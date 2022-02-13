@@ -146,10 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc83b01f2893664387b48a8806e010f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 40
+  MaxHp: 99
   BarUp: 1.7
   GExp: 50
-  Hp: 40
+  Hp: 99
   Anger: 0
   MaxAnger: 100
   Damage: 10
