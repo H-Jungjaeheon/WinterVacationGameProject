@@ -16866,10 +16866,10 @@ MonoBehaviour:
   MCamera: {fileID: 888946368}
   ShakeAmount: 0.6
   speed: 3
-  Left_center: {x: 0, y: 0}
-  Left_size: {x: 0, y: 0}
-  Right_center: {x: 0, y: 0}
-  Right_size: {x: 0, y: 0}
+  Left_center: {x: -221.8, y: 29.3}
+  Left_size: {x: 27.5, y: 67.3}
+  Right_center: {x: -181.8, y: 29.3}
+  Right_size: {x: 27.5, y: 67.3}
   center: {x: 0, y: -0.3}
   size: {x: 242.57, y: 10.05}
   volume: {fileID: 888946364}
@@ -23824,7 +23824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee4350c7778f4a46a50c843782e987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: e80300000a00000064000000
+  stats: 640000000a00000064000000
   ExpBar: {fileID: 727414010}
   Exp: 0
   MaxExp: 0

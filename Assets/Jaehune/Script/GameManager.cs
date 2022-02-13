@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     
     public int Stage = 1; //���� é��(��������)
-    [SerializeField] Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
+    [SerializeField] public Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
     [SerializeField] bool IsStart = false; //���� ���� ���� �Ǵ�2
     public Text BattleSkillText; //���� �� ���� or ��ų �̸� ǥ�� �ؽ�Ʈ
