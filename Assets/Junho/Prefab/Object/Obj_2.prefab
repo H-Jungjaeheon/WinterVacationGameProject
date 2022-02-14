@@ -354,6 +354,7 @@ MonoBehaviour:
   - {fileID: 1437734394044969261}
   - {fileID: 1437734393486650864}
   DoPos: {fileID: 4115226050970653772}
+  boxIdx: 0
 --- !u!1 &1437734393486650864
 GameObject:
   m_ObjectHideFlags: 0
@@ -5241,7 +5242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1437734393700485417
 Transform:
   m_ObjectHideFlags: 0

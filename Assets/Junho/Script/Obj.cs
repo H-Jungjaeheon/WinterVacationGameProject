@@ -6,7 +6,6 @@ public class Obj : MonoBehaviour
 {
     public GameObject Interaction;
     public GameObject[] Items;
-    public GameObject Money;
 
     public bool isIt;
     bool iscollison;
@@ -19,9 +18,12 @@ public class Obj : MonoBehaviour
     [SerializeField] public GameObject DoPos;
 
     public int boxIdx;
+
+    public ParticleSystem money;
     // Start is called before the first frame update
     void Start()
     {
+        money.GetComponent<ParticleSystem>().Stop();
         iscollison = false;
         isIt = true;
         particle[0].SetActive(false);
@@ -92,10 +94,14 @@ public class Obj : MonoBehaviour
                 switch (ran)
                 {
                     case 4:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
                         //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
                         break;
 
                     case 5:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                         break;                  
                     default:
