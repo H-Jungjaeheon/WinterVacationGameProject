@@ -52,7 +52,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         HandleSlider();
 
         if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
