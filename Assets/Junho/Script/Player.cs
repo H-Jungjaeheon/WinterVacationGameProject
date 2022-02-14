@@ -9,10 +9,10 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
     public float speed = 5, jumpPower;
-    [SerializeField] bool isGound, isLadder, isDamage = false;
+    [SerializeField] bool isGound, isLadder, isDamage = false,gasdam = false,gasmaskon =false;
     [SerializeField] Image img_gasmask;
     Animator anim;
-    public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false;
+    public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false, gasmasktrue = false;
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
     
@@ -21,11 +21,17 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        gasmask(3f);
+        
     }
     private void FixedUpdate()
-    {       
+    {
         SurviveDamage();
+        if(gasmasktrue == true)
+        {
+            StartCoroutine(gasmask(30f));
+            gasmaskon = true;
+            gasmasktrue = false;
+        }
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             /*
@@ -132,13 +138,22 @@ public class Player : MonoBehaviour
         else if (x > 0) transform.rotation = Quaternion.Euler(0, 180, 0);
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
     }
-    public void gasmask(float time)
+    IEnumerator gasmask(float time)
     {
-        while(time > 1.0f)
+        float time2 = 0;
+        img_gasmask.gameObject.SetActive(true);
+        while (time >= time2)
         {
-            time -= Time.deltaTime;
-            img_gasmask.fillAmount = (1.0f / time);
+            if(gasdam == true)
+            {
+                time2 += Time.deltaTime;
+                img_gasmask.fillAmount = ((time - time2) / time);
+            }
+            yield return new WaitForFixedUpdate();
         }
+        gasmaskon = false;
+        img_gasmask.gameObject.SetActive(false);
+        yield return null;
     }
     
     void Jump()
@@ -167,8 +182,9 @@ public class Player : MonoBehaviour
             case "Gas":
                 if (GameManager.Instance.isTrapBarrier == false)
                 {
-                    isDamage = true;
-
+                    gasdam = true;
+                    if(gasmaskon == false)
+                        isDamage = true;
                 }
                 break;
             case "Ladder":
@@ -203,6 +219,7 @@ public class Player : MonoBehaviour
         {
             case "Gas":
                 isDamage = false;
+                gasdam = false;
                 break;
             case "Ladder":
                 isLadder = false;
