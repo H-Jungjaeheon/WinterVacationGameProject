@@ -25,4 +25,11 @@ public class Electricityscript : MonoBehaviour
         StartCoroutine("ElectricityOnOff");
         yield return null;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            GameManager.Instance.stackDamage += 10;
+        }
+    }
 }

@@ -10,16 +10,18 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     public float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false;
+    [SerializeField] Image img_gasmask;
     Animator anim;
     public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false;
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
-
+    
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        gasmask(3f);
     }
     private void FixedUpdate()
     {       
@@ -129,6 +131,14 @@ public class Player : MonoBehaviour
         }
         else if (x > 0) transform.rotation = Quaternion.Euler(0, 180, 0);
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
+    }
+    public void gasmask(float time)
+    {
+        while(time > 1.0f)
+        {
+            time -= Time.deltaTime;
+            img_gasmask.fillAmount = (1.0f / time);
+        }
     }
     
     void Jump()

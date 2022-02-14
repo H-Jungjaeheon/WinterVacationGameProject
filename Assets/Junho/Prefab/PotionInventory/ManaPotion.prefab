@@ -115,9 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1887dd69ee4568d458b131fc96211a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interaction: {fileID: 6798983694980346691}
   itemidx: 1
   text: {fileID: 8976272777974360466}
+  shopmoney: 0
+  shop: 0
 --- !u!1001 &3526008968261257338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,11 +180,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9900cf62d34a73345bdc6ebe81f5cd27, type: 3}
---- !u!1 &6798983694980346691 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7977055662971829049, guid: 9900cf62d34a73345bdc6ebe81f5cd27, type: 3}
-  m_PrefabInstance: {fileID: 3526008968261257338}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6798983694980346717 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7977055662971829031, guid: 9900cf62d34a73345bdc6ebe81f5cd27, type: 3}

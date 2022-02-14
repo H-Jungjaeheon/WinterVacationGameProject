@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 using DG.Tweening;
 
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
     
-    public int Stage = 1; //���� é��(��������)
+    public int Stage = 1,Money; //���� é��(��������)
     [SerializeField] public Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
     [SerializeField] bool IsStart = false; //���� ���� ���� �Ǵ�2
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
     private Color PanelAlpha;
     private Image PanelImage;
 
-    [SerializeField] public Text manaText, hpText;
+    [SerializeField] public Text manaText, hpText , moneyText;
     private GameObject stop;
 
     public GameObject itemParticle;
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         HandleSlider();
-
+        moneyText.text = Money+"";
         if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
             StartCoroutine("BattleStart");
@@ -203,6 +204,7 @@ public class GameManager : MonoBehaviour
             PanelImage.color = PanelAlpha;
             PanelImage.raycastTarget = false;
             isPause = false;
+            menuPanel.transform.GetChild(1).gameObject.SetActive(false);
             Time.timeScale = 1f;
         }
         else
@@ -211,8 +213,17 @@ public class GameManager : MonoBehaviour
             PanelImage.color = PanelAlpha;
             PanelImage.raycastTarget = true;
             isPause = true;
+            menuPanel.transform.GetChild(1).gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
+    }
+    public void Exitbutton()
+    {
+         Application.Quit();
+    }
+    public void mainbutton()
+    {
+        SceneManager.LoadScene("Title");
     }
     IEnumerator ManaBarrier()
     {
@@ -295,6 +306,13 @@ public class GameManager : MonoBehaviour
                 break;
             case 10:
                 defense += 1;
+                break;
+            case 11:
+                gameObject.GetComponent<PlayerStats>().stats[0] += 1;
+                gameObject.GetComponent<PlayerStats>().stats[1] += 1;
+                break;
+            case 12:
+                GameObject.Find("Player").GetComponent<Player>().speed += 1;
                 break;
         }
         return;

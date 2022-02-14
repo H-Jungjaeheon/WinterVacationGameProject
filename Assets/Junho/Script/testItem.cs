@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class testItem : MonoBehaviour
 {
     //public GameObject slotItem;
-    public GameObject Interaction;
     private GameObject managertest;
     public int itemidx;
     public Text text;
+    public int shopmoney;
+    public bool shop;
     bool isCol;
     // Start is called before the first framse update
     void Start()
@@ -54,26 +55,40 @@ public class testItem : MonoBehaviour
 
         if (isCol&&Input.GetKey(KeyCode.F)&& GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
         {
-            managertest.GetComponent<Inventorycontroller>().Additem(this.gameObject);
-            gameObject.SetActive(false);
+            if(shop == false)
+            {
+                managertest.GetComponent<Inventorycontroller>().Additem(this.gameObject);
+                gameObject.SetActive(false);
+            }
+            else if(shopmoney <= GameManager.Instance.Money)
+            {
+                GameManager.Instance.Money -= shopmoney;
+                managertest.GetComponent<Inventorycontroller>().Additem(this.gameObject);
+                gameObject.SetActive(false);
+            }
         }
+        
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            text.gameObject.SetActive(true);
-            Interaction.SetActive(true);
-            isCol = true;
+            if (shop != true)
+            {
+                text.gameObject.SetActive(true);
+            }
+                isCol = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            text.gameObject.SetActive(false);
-            Interaction.SetActive(false);
-            isCol = false;
+            if(shop != true)
+            {
+                text.gameObject.SetActive(false);
+            }
+               isCol = false;
         }
     }
 }

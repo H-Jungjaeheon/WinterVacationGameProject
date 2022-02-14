@@ -6,15 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Jaehune/Scene/EnemyTest.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Junho/Scene/Title/Title.unity
     guid: d4c4d896d2da86e49bf0214f59f12aa0
   - enabled: 1
     path: Assets/Main/Main.unity
     guid: 71279f24b9d7d6c468006f4629451d1d
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   m_configObjects: {}
