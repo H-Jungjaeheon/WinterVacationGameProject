@@ -307,6 +307,13 @@ public class GameManager : MonoBehaviour
             case 10:
                 defense += 1;
                 break;
+            case 11:
+                gameObject.GetComponent<PlayerStats>().stats[0] += 1;
+                gameObject.GetComponent<PlayerStats>().stats[1] += 1;
+                break;
+            case 12:
+                GameObject.Find("Player").GetComponent<Player>().speed += 1;
+                break;
         }
         return;
     }
