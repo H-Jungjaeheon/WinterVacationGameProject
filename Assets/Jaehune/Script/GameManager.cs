@@ -28,9 +28,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Text manaText, hpText;
     private GameObject stop;
 
-
+    public GameObject itemParticle;
     private void Awake()
     {
+        itemParticle.GetComponent<ParticleSystem>().Stop();
         stop = GameObject.Find("stop").gameObject;
         isGameOver = false;
         BattleButtonUi.SetActive(false);
@@ -242,26 +243,38 @@ public class GameManager : MonoBehaviour
         switch (itemidx)
         {
             case 0:
+                itemParticle.GetComponent<ParticleSystem>().Play();
+
                 stackDamage -= 10;
                 Debug.Log(curHp);
                 break;
             case 1:
+                itemParticle.GetComponent<ParticleSystem>().Play();
+
                 curMana += 10;
                 break;
             case 2:
+                itemParticle.GetComponent<ParticleSystem>().Play();
+
                 Debug.Log("speed");
                 StartCoroutine(speedPotion());
                 break;
             case 3:
+                itemParticle.GetComponent<ParticleSystem>().Play();
+
                 Debug.Log("manaBarrier");
 
                 StartCoroutine(ManaBarrier());
                 break;
             case 4:
+                itemParticle.GetComponent<ParticleSystem>().Play();
+
                 Debug.Log("Eunsin");
                 StartCoroutine(Eunsincnt());
                 break;
             case 5:
+                itemParticle.GetComponent<ParticleSystem>().Play();
+
                 Debug.Log("TrapBarrier");
 
                 StartCoroutine(TrapBarrier());

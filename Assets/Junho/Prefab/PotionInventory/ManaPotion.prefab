@@ -374,6 +374,10 @@ PrefabInstance:
       propertyPath: m_Text
       value: "Potion\uD76D\uB4DD (F)"
       objectReference: {fileID: 0}
+    - target: {fileID: 5204330034058047684, guid: 041ec17254f05514c8cf97fc68a3958a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 041ec17254f05514c8cf97fc68a3958a, type: 3}
 --- !u!224 &8337449058237113021 stripped
