@@ -6,6 +6,8 @@ public class Obj : MonoBehaviour
 {
     public GameObject Interaction;
     public GameObject[] Items;
+    public GameObject Money;
+
     public bool isIt;
     bool iscollison;
 
@@ -81,84 +83,41 @@ public class Obj : MonoBehaviour
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
         Interaction.SetActive(false);
-        int ran = Random.Range(0, 13);
+        int ran = Random.Range(0, 5);
+        int itemRan = Random.Range(0,6);
+        
         switch (boxIdx)
         {
             case 0:
                 switch (ran)
                 {
-                    case 7:
-                        Instantiate(Items[0], transform.position, Items[0].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
+                    case 4:
+                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
                         break;
-                    case 8:
-                        Instantiate(Items[1], transform.position, Items[1].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
 
-                        break;
-                    case 9:
-                        Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 10:
-                        Instantiate(Items[3], transform.position, Items[3].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 11:
-                        Instantiate(Items[4], transform.position, Items[4].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 12:
-                        Instantiate(Items[5], transform.position, Items[5].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 13:
-                        Instantiate(Items[6], transform.position, Items[6].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
+                    case 5:
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+                        break;                  
                     default:
-                        if(ran < 7)
+                        if (ran < 4)
                         {
                             Debug.Log("²Î");
                             particle[1].SetActive(true);
                             Invoke("Nothing", 4.5f);
                             break;
                         }
+
                         break;
                 }
                 break;
             case 1:
                 switch (ran)
                 {
-                    case 7:
-                        Instantiate(Items[0], transform.position, Items[0].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 8:
-                        Instantiate(Items[1], transform.position, Items[1].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 9:
-                        Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 10:
-                        Instantiate(Items[3], transform.position, Items[3].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 11:
-                        Instantiate(Items[4], transform.position, Items[4].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 12:
-                        Instantiate(Items[5], transform.position, Items[5].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-                        break;
-                    case 13:
-                        Instantiate(Items[6], transform.position, Items[6].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
+                    case 5:
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                         break;
                     default:
-                        if (ran < 7)
+                        if (ran < 5)
                         {
                             Debug.Log("²Î");
                             particle[1].SetActive(true);

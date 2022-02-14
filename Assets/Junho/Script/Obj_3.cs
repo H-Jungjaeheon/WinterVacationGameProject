@@ -18,6 +18,7 @@ public class Obj_3 : MonoBehaviour
     public GameObject[] particle;
 
     [SerializeField] public GameObject DoPos;
+    public int boxIdx;
 
     // Start is called before the first frame update
     void Start()
@@ -105,46 +106,47 @@ public class Obj_3 : MonoBehaviour
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
         Interaction.SetActive(false);
-        int ran = Random.Range(0, 13);
-        if (ran < 7)
+        int ran = Random.Range(0, 5);
+        int itemRan = Random.Range(0, 6);
+        switch (boxIdx)
         {
-            Debug.Log("²Î");
-            particle[1].SetActive(true);
-            Invoke("Nothing", 4.5f);
-
-        }
-        else if (ran < 8)
-        {
-
-            Instantiate(Items[0], transform.position, Items[0].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-
-        }
-        else if (ran < 9)
-        {
-            Instantiate(Items[1], transform.position, Items[1].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-        }
-        else if (ran < 10)
-        {
-            Instantiate(Items[2], transform.position, Items[2].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-        }
-        else if (ran < 11)
-        {
-            Instantiate(Items[3], transform.position, Items[3].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-        }
-        else if (ran < 12)
-        {
-            Instantiate(Items[4], transform.position, Items[4].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-        }
-        else if (ran < 13)
-        {
-            Instantiate(Items[5], transform.position, Items[5].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-        }
-        else if (ran < 14)
-        {
-            Instantiate(Items[6], transform.position, Items[6].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+            case 0:
+                switch (ran)
+                {
+                    case 5:
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+                        break;
+                    default:
+                        if (ran < 5)
+                        {
+                            Debug.Log("²Î");
+                            particle[1].SetActive(true);
+                            Invoke("Nothing", 4.5f);
+                            break;
+                        }
+                        break;
+                }
+                break;
+            case 1:
+                switch (ran)
+                {
+                    case 5:
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+                        break;
+                    default:
+                        if (ran < 5)
+                        {
+                            Debug.Log("²Î");
+                            particle[1].SetActive(true);
+                            Invoke("Nothing", 4.5f);
+                            break;
+                        }
+                        break;
+                }
+                break;
         }
     }
-    void Nothing()
+        void Nothing()
     {
         particle[1].SetActive(false);
 
