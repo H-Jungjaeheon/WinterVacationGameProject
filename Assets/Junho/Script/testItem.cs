@@ -15,7 +15,27 @@ public class testItem : MonoBehaviour
     void Start()
     {
         text.gameObject.SetActive(false);
-        text.text = gameObject.name + "Å‰µæ (F)";
+        switch (itemidx)
+        {
+            case 0:
+                text.text = "HpÆ÷¼Ç Å‰µæ (F)";
+                break;
+            case 1:
+                text.text = "MpÆ÷¼Ç Å‰µæ (F)";
+                break;
+            case 2:
+                text.text = "SpeedÆ÷¼Ç Å‰µæ (F)";
+                break;
+            case 3:
+                text.text = "ManaBarrierÆ÷¼Ç Å‰µæ (F)";
+                break;
+            case 4:
+                text.text = "HideÆ÷¼Ç Å‰µæ (F)";
+                break;
+            case 5:
+                text.text = "TrapBarrierÆ÷¼Ç Å‰µæ (F)";
+                break;
+        }
         managertest = GameObject.Find("GameManager");
         StartCoroutine(cnt());
     }
