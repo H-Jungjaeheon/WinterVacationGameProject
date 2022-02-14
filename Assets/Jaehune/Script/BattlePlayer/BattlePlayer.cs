@@ -77,7 +77,10 @@ public class BattlePlayer : MonoBehaviour
                 IsFaild = true;
             }
         }
-        SkillImage.transform.position = Enemy.transform.position;
+        if(GameManager.Instance.IsBattleStart == true)
+        {
+            SkillImage.transform.position = Enemy.transform.position;
+        }
     }
 
     void RayCasting()

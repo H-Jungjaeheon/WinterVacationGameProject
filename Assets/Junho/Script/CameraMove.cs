@@ -7,8 +7,9 @@ public class CameraMove : MonoBehaviour
 {
     public Transform target, Battletarget;
     public Vector3 offset, initialPosition;
-    public bool isright, IsFarAway = false, IsGrab = false;
+    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
+    public GameObject Player;
     [SerializeField] UnityEngine.Camera MCamera;
     [SerializeField] float ShakeAmount;
     private float ShakeTime;
@@ -20,6 +21,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
+        BossBattleStart = false;
         volume.profile.TryGetSettings(out vognette);
         vognette.intensity.value = 0;
         IsFarAway = false;
@@ -59,8 +61,7 @@ public class CameraMove : MonoBehaviour
 
         if (GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
-            MCamera.orthographicSize = 4.6f;
-           
+            MCamera.orthographicSize = 4.6f;          
             if (GameManager.Instance.isRoom)
             {
                 if (GameObject.Find("X-Axis").transform.position.x < target.position.x) isright = true;
@@ -88,6 +89,10 @@ public class CameraMove : MonoBehaviour
 
                     transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
                 }
+            }
+            else if (BossBattleStart == true)
+            {
+                StartCoroutine(BossBattleStartCam(0.5f));
             }
             else
             {
@@ -167,15 +172,56 @@ public class CameraMove : MonoBehaviour
                 }
             }
         }
+        if(IsBossMeet == true)
+        {
+            initialPosition = Player.transform.position + offset;
+            if (ShakeTime > 0)
+            {
+                transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
+                ShakeTime -= Time.deltaTime;
+            }
+            else
+            {
+                ShakeTime = 0.0f;
+                transform.position = initialPosition;
+                IsBossMeet = false;
+            }
+        }
     }
     void BattleCameraMove()
     {
-        this.transform.position = Battletarget.position + offset + new Vector3(0, 0.4f, 0);
-        MCamera.orthographicSize = 4.5f;
+        if (BossBattleStart == false)
+        {
+            this.transform.position = Battletarget.position + offset + new Vector3(0, 0.4f, 0);
+            MCamera.orthographicSize = 4.5f;
+        }
+        else
+        {
+            this.transform.position = Battletarget.position + offset + new Vector3(0, 0.4f, 0);
+            StartCoroutine(BossBattleStartCam(0.5f));
+        }
     }
     public void VibrateForTime(float time)
     {
         ShakeTime = time;
     }
-
+    public void VibrateForTime2(float time)
+    {
+        IsBossMeet = true;
+        ShakeTime = time;
+    }
+    IEnumerator BossBattleStartCam(float time)
+    {
+        float a = MCamera.orthographicSize;
+        while (a < 10)
+        {
+            a += Time.deltaTime / time;
+            MCamera.orthographicSize = a;
+            if (a >= 10)
+            {
+                a = 10;
+            }
+            yield return null;
+        }
+    }
 }
