@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     private Color PanelAlpha;
     private Image PanelImage;
 
-    [SerializeField] public Text manaText, hpText;
+    [SerializeField] public Text manaText, hpText , moneyText;
     private GameObject stop;
 
     public GameObject itemParticle;
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         HandleSlider();
-
+        moneyText.text = Money+"";
         if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
             StartCoroutine("BattleStart");
