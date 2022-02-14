@@ -314,7 +314,7 @@ public class GameManager : MonoBehaviour
             case 12:
                 GameObject.Find("Player").GetComponent<Player>().speed += 1;
                 break;
-            case13:
+            case 13:
                 GameObject.Find("Player").GetComponent<Player>().gasmasktrue = true;
                 break;
         }
