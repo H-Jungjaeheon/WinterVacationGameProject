@@ -27,6 +27,10 @@ public class SceneChange : MonoBehaviour
     {
         Application.Quit();
     }
+    public void TitleBtn()
+    {
+        SceneManager.LoadScene("Title");
+    }
     // Update is called once per frame
     void Update()
     {
