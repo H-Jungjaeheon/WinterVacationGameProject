@@ -7,7 +7,7 @@ public class CameraMove : MonoBehaviour
 {
     public Transform target, Battletarget;
     public Vector3 offset, initialPosition;
-    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove;
+    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove, IsLastBoss;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
     public GameObject Player;
     [SerializeField] UnityEngine.Camera MCamera;
@@ -21,6 +21,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
+        IsLastBoss = false;
         BossBattleStart = false;
         IsBossCamMove = false;
         volume.profile.TryGetSettings(out vognette);
@@ -125,7 +126,7 @@ public class CameraMove : MonoBehaviour
                     transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
                     MCamera.orthographicSize = 3f;
                 }
-                else
+                else if(IsFarAway == true)
                 {
                     transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
                     MCamera.orthographicSize = 3.7f;
@@ -138,7 +139,7 @@ public class CameraMove : MonoBehaviour
                     transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
                     MCamera.orthographicSize = 5f;
                 }
-                else
+                else if(IsFarAway == true)
                 {
                     transform.position = BPlayer.transform.position + offset + new Vector3(2, 2, 0);
                     MCamera.orthographicSize = 7f;
@@ -154,7 +155,7 @@ public class CameraMove : MonoBehaviour
                     transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
                     MCamera.orthographicSize = 3f;
                 }
-                else
+                else if (IsFarAway == true)
                 {
                     transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
                     MCamera.orthographicSize = 3.7f;
@@ -167,7 +168,7 @@ public class CameraMove : MonoBehaviour
                     transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
                     MCamera.orthographicSize = 5f;
                 }
-                else
+                else if (IsFarAway == true)
                 {
                     transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
                     MCamera.orthographicSize = 7f;
@@ -248,21 +249,45 @@ public class CameraMove : MonoBehaviour
         if(IsBossCamMove == false)
         {
             float a = MCamera.orthographicSize;
-            while (a < 10)
+            if(IsLastBoss == false)
             {
-                a += Time.deltaTime / time;
-                MCamera.orthographicSize = a;
-                if (a >= 10)
+                while (a < 10)
                 {
-                    a = 10;
-                    IsBossCamMove = true;
+                    a += Time.deltaTime / time;
+                    MCamera.orthographicSize = a;
+                    if (a >= 10)
+                    {
+                        a = 10;
+                        IsBossCamMove = true;
+                    }
+                    yield return null;
                 }
-                yield return null;
+            }
+            else
+            {
+                while (a < 14)
+                {
+                    a += Time.deltaTime / time;
+                    MCamera.orthographicSize = a;
+                    if (a >= 14)
+                    {
+                        a = 14;
+                        IsBossCamMove = true;
+                    }
+                    yield return null;
+                }
             }
         }
         else
         {
-            MCamera.orthographicSize = 10;
+            if (IsLastBoss == false)
+            {
+                MCamera.orthographicSize = 10;
+            }
+            else
+            {
+                MCamera.orthographicSize = 14;
+            }
         }
     }
 }
