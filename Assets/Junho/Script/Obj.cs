@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 public class Obj : MonoBehaviour
 {
-    public GameObject Interaction;
     public GameObject[] Items;
 
     public bool isIt;
@@ -48,7 +47,6 @@ public class Obj : MonoBehaviour
             if (isIt == true)
             {
                 iscollison = true;
-                Interaction.SetActive(true);
 
             }
         }
@@ -60,7 +58,6 @@ public class Obj : MonoBehaviour
         {
             iscollison = false;
             Debug.Log("³ª°¨");
-            Interaction.gameObject.SetActive(false);
         }
     }
     void isParticle()
@@ -84,7 +81,6 @@ public class Obj : MonoBehaviour
         
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
-        Interaction.SetActive(false);
         int ran = Random.Range(0, 4);
         int itemRan = Random.Range(0,6);
         

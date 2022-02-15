@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float Exp, MaxExp, LV;
     [SerializeField] Text expText;
     public bool Stateup = false;
+    public GameObject statStartPos, statEndPos;
     private void Start()
     {
         LV = 1;
@@ -44,7 +46,7 @@ public class PlayerStats : MonoBehaviour
         {
             stats[0] += 1;
             Stateup = false;
-            GameManager.Instance.StatUp.SetActive(false);
+            GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;
             GameManager.Instance.maxHp += 10;
         }
@@ -55,7 +57,7 @@ public class PlayerStats : MonoBehaviour
         {
             stats[1] += 1;
             Stateup = false;
-            GameManager.Instance.StatUp.SetActive(false);
+            GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;
         }
     }
@@ -70,7 +72,7 @@ public class PlayerStats : MonoBehaviour
         {
             stats[2] += 1;
             Stateup = false;
-            GameManager.Instance.StatUp.SetActive(false);
+            GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;
             GameManager.Instance.maxMana += 10;
         }
@@ -81,6 +83,6 @@ public class PlayerStats : MonoBehaviour
     }
     void StatUp()
     {
-        GameManager.Instance.StatUp.SetActive(true);
+        GameManager.Instance.StatUp.transform.DOMove(statEndPos.transform.position, 1f).SetEase(Ease.OutQuad);
     }
 }
