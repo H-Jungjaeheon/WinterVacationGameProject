@@ -7905,8 +7905,12 @@ MonoBehaviour:
   isright: 0
   IsFarAway: 0
   IsGrab: 0
+  IsBossMeet: 0
+  BossBattleStart: 0
+  IsBossCamMove: 0
   BEnemy: {fileID: 2002818898}
   BPlayer: {fileID: 930010500}
+  Player: {fileID: 0}
   MCamera: {fileID: 713153308}
   ShakeAmount: 0.6
   speed: 3
@@ -15475,7 +15479,7 @@ PrefabInstance:
     - target: {fileID: 5469905893120601583, guid: 4c57ac197710d1a40bb8c2173d677e93, type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]
       value: 
-      objectReference: {fileID: 1589052322}
+      objectReference: {fileID: 0}
     - target: {fileID: 5469905893120601583, guid: 4c57ac197710d1a40bb8c2173d677e93, type: 3}
       propertyPath: SubModule.subEmitters.Array.data[0].type
       value: 3
@@ -26836,11 +26840,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1589052322 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5469905893120601576, guid: 4c57ac197710d1a40bb8c2173d677e93, type: 3}
-  m_PrefabInstance: {fileID: 1222968124}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1597499463
 GameObject:
   m_ObjectHideFlags: 0
@@ -29892,11 +29891,15 @@ MonoBehaviour:
   isGound: 0
   isLadder: 0
   isDamage: 0
+  gasdam: 0
+  gasmaskon: 0
+  img_gasmask: {fileID: 0}
   IsGrab: 0
   isHidecollision: 0
   isHide: 0
   isParalysis: 0
   GetOutElectricity: 0
+  gasmasktrue: 0
   GrapCount: 0
   MaxGrapCount: 0
   cnt: 0
