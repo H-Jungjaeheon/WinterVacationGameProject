@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider hpBar, manaBar; //�÷��̾� hp, ������ġ ��
     public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //ü��, ������ġ,�ִ� ü��, �ִ� ������ġ,���������,����
     
-    [SerializeField] GameObject Player, menuPanel; //�÷��̾�, �޴�
+    [SerializeField] GameObject Player, menuPanel,soundpanel; //�÷��̾�, �޴�
    
     private Color PanelAlpha;
     private Image PanelImage;
@@ -224,6 +224,14 @@ public class GameManager : MonoBehaviour
     public void mainbutton()
     {
         SceneManager.LoadScene("Title");
+    }
+    public void Soundbutton()
+    {
+        soundpanel.SetActive(true);
+    }
+    public void SoundPanalExit()
+    {
+        soundpanel.SetActive(false);
     }
     IEnumerator ManaBarrier()
     {
