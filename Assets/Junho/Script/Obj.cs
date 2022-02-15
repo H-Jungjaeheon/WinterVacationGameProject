@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 public class Obj : MonoBehaviour
 {
-    public GameObject Interaction;
     public GameObject[] Items;
 
     public bool isIt;
@@ -48,7 +47,6 @@ public class Obj : MonoBehaviour
             if (isIt == true)
             {
                 iscollison = true;
-                Interaction.SetActive(true);
 
             }
         }
@@ -60,7 +58,6 @@ public class Obj : MonoBehaviour
         {
             iscollison = false;
             Debug.Log("釭馬");
-            Interaction.gameObject.SetActive(false);
         }
     }
     void isParticle()
@@ -84,52 +81,71 @@ public class Obj : MonoBehaviour
         
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
-        Interaction.SetActive(false);
-        int ran = Random.Range(0, 5);
+        int ran = Random.Range(0, 4);
         int itemRan = Random.Range(0,6);
         
         switch (boxIdx)
         {
-            case 0:
+            case 0: // 鼻濠
                 switch (ran)
                 {
-                    case 4:
+                    case 0:
+                        Debug.Log("統");
+                        particle[1].SetActive(true);
+                        Invoke("Nothing", 4.5f);
+                        break;
+
+                    case 1:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                        break;
+                    case 2:
                         money.GetComponent<ParticleSystem>().Play();
                         GameManager.Instance.Money += 10;
                         //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
                         break;
 
-                    case 5:
+                    case 3:
                         money.GetComponent<ParticleSystem>().Play();
                         GameManager.Instance.Money += 10;
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;                  
-                    default:
-                        if (ran < 4)
-                        {
-                            Debug.Log("統");
-                            particle[1].SetActive(true);
-                            Invoke("Nothing", 4.5f);
-                            break;
-                        }
-
+                        break;
+                    case 4:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                         break;
                 }
                 break;
-            case 1:
+            case 1://釭鼠 鼻濠
                 switch (ran)
                 {
-                    case 5:
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+                    case 0:
+                        Debug.Log("統");
+                        particle[1].SetActive(true);
+                        Invoke("Nothing", 4.5f);
                         break;
-                    default:
-                        if (ran < 5)
-                        {
-                            Debug.Log("統");
-                            particle[1].SetActive(true);
-                            Invoke("Nothing", 4.5f);
-                            break;
-                        }
+
+                    case 1:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                        break;
+                    case 2:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                        break;
+
+                    case 3:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        break;
+                    case 4:
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                         break;
                 }
                 break;
