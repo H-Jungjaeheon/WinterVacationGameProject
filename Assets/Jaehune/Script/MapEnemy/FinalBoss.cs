@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TwiceBoss : BasicEnemyScript
+public class FinalBoss : BasicEnemyScript
 {
     [SerializeField] bool GoToPlayer, IsTurn, Go;
     // Start is called before the first frame update
     public override void Start()
     {
-        Go = false;
         IsTurn = false;
         GoToPlayer = false;
         animator = GetComponent<Animator>();
-        WarningObj.SetActive(false);
     }
     // Update is called once per frame
     public override void Update()
@@ -22,10 +20,6 @@ public class TwiceBoss : BasicEnemyScript
         if (GoToPlayer == true)
         {
             FindPlayer();
-        }
-        if (Go == true)
-        {
-            StartCoroutine(AnimationP2());
         }
     }
     public override void RayCasting()
@@ -42,7 +36,7 @@ public class TwiceBoss : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, transform.transform.position - new Vector3(0, 5, 0), 10.25f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-5, 0.7f, 0), 4f * Time.deltaTime);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -63,21 +57,11 @@ public class TwiceBoss : BasicEnemyScript
             IsTurn = true;
             yield return new WaitForSeconds(1);
             GoToPlayer = true;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(4);
             GoToPlayer = false;
-            WarningObj.SetActive(true);
-            SeeCrossroad *= -1;
-            yield return new WaitForSeconds(0.5f);
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime2(0.7f);
-            yield return new WaitForSeconds(1);
-            Go = true;
+            this.GetComponent<BoxCollider2D>().size = new Vector3(9, 3);
+            yield return new WaitForSeconds(2);
             yield return null;
         }
-    }
-    IEnumerator AnimationP2()
-    {
-        yield return new WaitForSeconds(1);
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.2f, 0), 7f * Time.deltaTime);
-        yield return null;
     }
 }
