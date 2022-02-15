@@ -10,9 +10,10 @@ public class SoundManager : MonoBehaviour
     void Awake()
     {
         for (int i = 0; i < musicSource.Length; i++)
-            musicSource[i].volume = GameObject.Find("BGMusic").GetComponent<Slider>().value;
+            musicSource[i].volume = GameObject.Find("BG Slider").GetComponent<Slider>().value;
         for (int i = 0; i < SoundSource.Length; i++)
-            SoundSource[i].volume = GameObject.Find("SEMusic").GetComponent<Slider>().value;
+            SoundSource[i].volume = GameObject.Find("SE Slider").GetComponent<Slider>().value;
+        this.gameObject.SetActive(false);
     }
     public void SetMusicVolume(float volume)
     {
