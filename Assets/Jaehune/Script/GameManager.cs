@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         BattleSkillText.text = "";
         BattleSkillBackGround.SetActive(false);
-        StatUp.SetActive(false);
+        StatUp.transform.position = GameObject.Find("GameManager").GetComponent<PlayerStats>().statStartPos.transform.position;
         maxHp = GetComponent<PlayerStats>().stats[0];
         maxMana = GetComponent<PlayerStats>().stats[2];
     }

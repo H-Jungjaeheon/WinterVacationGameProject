@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class Obj_3 : MonoBehaviour
 {
-    public GameObject Interaction;
     public GameObject[] Items;
     public bool isIt;
     bool iscollison;
@@ -73,7 +72,6 @@ public class Obj_3 : MonoBehaviour
             if (isIt == true)
             {
                 iscollison = true;
-                Interaction.SetActive(true);
                 slider.gameObject.SetActive(true);
 
             }
@@ -86,7 +84,6 @@ public class Obj_3 : MonoBehaviour
         {
             Debug.Log("³ª°¨");
             iscollison = false;
-            Interaction.gameObject.SetActive(false);
             slider.gameObject.SetActive(false);
 
         }
@@ -107,7 +104,6 @@ public class Obj_3 : MonoBehaviour
     {
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
-        Interaction.SetActive(false);
         int ran = Random.Range(0, 5);
         int itemRan = Random.Range(0, 6);
         switch (boxIdx)

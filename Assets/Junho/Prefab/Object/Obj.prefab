@@ -46,9 +46,9 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5156,7 +5156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db1a9e5582d9e743ae9a8c2763fce93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interaction: {fileID: 5469905892024068833}
   Items:
   - {fileID: 4643653045975795293, guid: 76a2b5670c348af4f96c02e64d277144, type: 3}
   - {fileID: 3526008968914863085, guid: fafc0131e9e762148aff5e6d6b2286d9, type: 3}
