@@ -3145,7 +3145,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1831683696}
         m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
         m_MethodName: HpUpgrade
         m_Mode: 1
@@ -4690,7 +4690,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1831683696}
         m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
         m_MethodName: ManaUpgrade
         m_Mode: 1
@@ -17031,7 +17031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604707334942977342, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
@@ -17954,7 +17954,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1831683696}
         m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
         m_MethodName: DmgUpgrade
         m_Mode: 1
