@@ -11,9 +11,11 @@ public class Door : MonoBehaviour
     private GameObject player;
     public Text text;
     private GameObject stop;
+    private GameObject audioSource;
     Image FadIn;
     private void Start()
     {
+        audioSource = GameObject.Find("DoorSounds").gameObject;
         FadIn = GameObject.Find("GameManager").GetComponent<GameManager>().FadIn;
         player = GameObject.Find("Player");
         text.gameObject.SetActive(false);
@@ -29,7 +31,7 @@ public class Door : MonoBehaviour
             GameManager.Instance.isRoom = true;
             Debug.Log("¾À ³Ñ¾î°¨¿ä");
             StartCoroutine(BattleStartFaidOut(0.01f));
-
+            audioSource.GetComponent<AudioSource>().Play();
 
         }
     }
