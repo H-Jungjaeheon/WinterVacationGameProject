@@ -7,7 +7,7 @@ public class CameraMove : MonoBehaviour
 {
     public Transform target, Battletarget;
     public Vector3 offset, initialPosition;
-    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove, IsLastBoss;
+    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove, IsLastBoss, IsBossDeadSkill;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
     public GameObject Player;
     [SerializeField] UnityEngine.Camera MCamera;
@@ -18,14 +18,21 @@ public class CameraMove : MonoBehaviour
     float height, width;
     public PostProcessVolume volume;
     private Vignette vognette;
+    private Grain grain;
+    private Bloom bloom;
 
     private void Start()
     {
+        IsBossDeadSkill = false;
         IsLastBoss = false;
         BossBattleStart = false;
         IsBossCamMove = false;
         volume.profile.TryGetSettings(out vognette);
+        volume.profile.TryGetSettings(out grain);
+        volume.profile.TryGetSettings(out bloom);
         vognette.intensity.value = 0;
+        grain.intensity.value = 0;
+        bloom.intensity.value = 0;
         IsFarAway = false;
         height = UnityEngine.Camera.main.orthographicSize;
         width = height * Screen.width / Screen.height;
@@ -41,19 +48,37 @@ public class CameraMove : MonoBehaviour
     }
     private void Update()
     {
-        if (IsGrab == true)
+        if (Input.GetKey(KeyCode.P))
         {
-            vognette.color.value = new Color(1, 0, 0, 1);
-            vognette.intensity.value = 0.3f; 
+            IsBossDeadSkill = true;
+        }
+        
+        if (IsBossDeadSkill == false)
+        {
+            if (IsGrab == true)
+            {
+                vognette.color.value = new Color(1, 0, 0, 1);
+                vognette.intensity.value = 0.3f;
+            }
+            else
+            {
+                vognette.color.value = new Color(0, 0, 0, 1);
+                vognette.intensity.value = 0.2f;
+            }
+            if (GameManager.Instance.IsBattleStart == true)
+            {
+                IsGrab = false;
+            }
         }
         else
         {
-            vognette.color.value = new Color(0, 0, 0, 1);
-            vognette.intensity.value = 0.2f;
-        }
-        if(GameManager.Instance.IsBattleStart == true)
-        {
-            IsGrab = false;
+            vognette.color.value = new Color(1, 0, 0, 0.8f);
+            vognette.intensity.value = 0.6f;
+            grain.intensity.value = 1;
+            grain.lumContrib.value = 0;
+            grain.size.value = 1;
+            bloom.softKnee.value = 0.6f;
+            bloom.intensity.value = 70f;
         }
     }
     void FixedUpdate()
@@ -265,13 +290,13 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
-                while (a < 14)
+                while (a < 12)
                 {
                     a += Time.deltaTime / time;
                     MCamera.orthographicSize = a;
-                    if (a >= 14)
+                    if (a >= 12)
                     {
-                        a = 14;
+                        a = 12;
                         IsBossCamMove = true;
                     }
                     yield return null;
@@ -286,7 +311,7 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
-                MCamera.orthographicSize = 14;
+                MCamera.orthographicSize = 12;
             }
         }
     }

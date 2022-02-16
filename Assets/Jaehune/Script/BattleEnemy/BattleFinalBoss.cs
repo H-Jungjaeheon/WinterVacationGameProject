@@ -21,7 +21,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.3f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.7f, 0);
         SuperAnger = 0;
         IsSuperAnger = false;
         Invoke("BossCam", 3.5f);
@@ -101,17 +101,17 @@ public class BattleFinalBoss : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3, 0.4f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3, 0.7f, 0), 10 * Time.deltaTime);
         }
         else if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(9, 0.4f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(9, 0.7f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 1.3f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 1.7f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {

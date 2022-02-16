@@ -6,17 +6,21 @@ using UnityEngine.UI;
 public class BattlePlayer : MonoBehaviour
 {
     [SerializeField] RaycastHit2D hit; 
-    [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, BarrierImage, SkillImage; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, BarrierImage, SkillImage, DefenseImage; //전투시 인식한 적 오브젝트 담는 그릇
     [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false, IsAttackOk = true, IsContinuity, IsComBo, IsEnd, IsFaild; 
-    public bool IsHit = false, IsBarrier = false;
+    public bool IsHit = false, IsBarrier = false, IsDefense, IsDefensing;
     [SerializeField] int BarrierCount = 0, MaxBarrierCount, BasicAttackCount = 0;
+    [SerializeField] Image BarrierEffect1, BarrierEffect2;
     [SerializeField] float AttackCounting = 0;
     Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        DefenseImage.SetActive(false);
         BarrierCount = 0;
+        IsDefensing = false;
+        IsDefense = false;
         AttackCounting = 0;
         IsEnd = true;
         IsFaild = false;
@@ -30,13 +34,12 @@ public class BattlePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Defensing();
         RayCasting();
         Barrier();
         Attackcounting();
-        if (Input.GetKeyDown(KeyCode.Space) && BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true)
-        {
-            Playerattack();
-        }
+        ComboAttack();
+        IsHited();
         if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == false && BasicAttackCount == 1)
         {
             animator.SetBool("IsWalk", true);
@@ -56,30 +59,97 @@ public class BattlePlayer : MonoBehaviour
         {
             animator.SetBool("IsWalk", false);
         }
+        if(GameManager.Instance.IsBattleStart == true)
+        {
+            SkillImage.transform.position = Enemy.transform.position;
+        }
+    }
+    IEnumerator BarrierEffectIconFadeIn(float FaidTime)
+    {
+        Color color = BarrierEffect1.color;
+        Color color2 = BarrierEffect2.color;
+        while (color.a < 1f)
+        {
+            color.a += Time.deltaTime / FaidTime;
+            color2.a += Time.deltaTime / FaidTime;
+            BarrierEffect1.color = color;
+            if (color.a >= 1f)
+            {
+                color.a = 1f;
+                color2.a = 1f;
+            }
+            yield return null;
+        }
+        while (color.a > 0f)
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
+            BarrierEffect1.color = color;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+                color2.a = 0f;
+            }
+            yield return null;
+        }
+    }
+    //IEnumerator BarrierEffectIconFadeOut(float FaidTime)
+    //{
+    //    Color color = BarrierEffect1.color;
+    //    while (color.a > 0f)
+    //    {
+    //        color.a -= Time.deltaTime / FaidTime;
+    //        BarrierEffect1.color = color;
+    //        if (color.a <= 0f)
+    //        {
+    //            color.a = 0f;
+    //        }
+    //        yield return null;
+    //    }
+    //}
+
+    void IsHited()
+    {
         if (IsHit == true)
         {
             StartCoroutine(PlayerHit());
         }
-        if(IsComBo == true && IsFaild == false)
+    }
+    void ComboAttack()
+    {
+        if (IsComBo == true && IsFaild == false)
         {
-            if (Input.GetKeyDown(KeyCode.F)){
+            if (Input.GetKeyDown(KeyCode.F))
+            {
                 IsContinuity = true;
             }
         }
-        else if(IsComBo == false)
+        else if (IsComBo == false)
         {
             IsContinuity = false;
         }
-        if(IsEnd == false)
+        if (IsEnd == false)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 IsFaild = true;
             }
         }
-        if(GameManager.Instance.IsBattleStart == true)
+    }
+    void Defensing()
+    {
+        DefenseImage.transform.position = this.transform.position;
+        if (IsDefense == true && IsDefensing == false)
         {
-            SkillImage.transform.position = Enemy.transform.position;
+            IsDefensing = true;
+            DefenseImage.SetActive(true);
+            GameManager.Instance.defense += (GameManager.Instance.maxHp / 50) - 1;
+        }
+        else if(IsDefense == false && IsDefensing == true)
+        {
+            IsDefensing = false;
+            DefenseImage.SetActive(false);
+            GameManager.Instance.defense -= (GameManager.Instance.maxHp / 50) - 1;
         }
     }
 
@@ -117,7 +187,7 @@ public class BattlePlayer : MonoBehaviour
         if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true && IsAttackOk == true)
         {
             IsAttackOk = false;
-            StartCoroutine("PlayerAttack", 1f);
+            StartCoroutine("PlayerDefense", 1f);
         }
     }
     public void Barrier()
@@ -130,6 +200,7 @@ public class BattlePlayer : MonoBehaviour
         }
         if (IsBarrier == true)
         {
+            StartCoroutine(BarrierEffectIconFadeIn(0.5f));
             BarrierImage.SetActive(true);
         }
         else
@@ -212,6 +283,10 @@ public class BattlePlayer : MonoBehaviour
             animator.SetBool("IsHit", true);
             yield return new WaitForSeconds(1);
             animator.SetBool("IsHit", false);
+        }
+        if(IsDefense == true)
+        {
+            IsDefense = false;
         }
         yield return null;
     }
@@ -651,9 +726,9 @@ public class BattlePlayer : MonoBehaviour
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         GameManager.Instance.BattleSkillText.text = "실험 : 상처 재생";
         BattleManager.Instance.IsPlayerTurn = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.3f);
         BattleManager.Instance.CamE = true;
-        animator.SetBool("IsAttack", true);
+        animator.SetBool("IsHeal", true);
         GameObject DT = Instantiate(HealText);
         if (GameManager.Instance.stackDamage - GameManager.Instance.maxHp / 5 <= 0)
         {
@@ -671,9 +746,9 @@ public class BattlePlayer : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamE = false;
-        animator.SetBool("IsAttack", false);
+        animator.SetBool("IsHeal", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
         IsAttackSkill = false;
         if (GameManager.Instance.IsCamMove == true)
         {
@@ -697,14 +772,44 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.IsPlayerTurn = false;
         yield return new WaitForSeconds(1.5f);
         BattleManager.Instance.CamE = true;
-        animator.SetBool("IsAttack", true);
+        animator.SetBool("IsHyperDefense", true);
         IsBarrier = true;
         BarrierCount = 0;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamE = false;
-        animator.SetBool("IsAttack", false);
+        animator.SetBool("IsHyperDefense", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         yield return new WaitForSeconds(3);
+        IsAttackSkill = false;
+        if (GameManager.Instance.IsCamMove == true)
+        {
+            BattleManager.Instance.IsEnemyTurn = true;
+        }
+        else
+        {
+            BattleManager.Instance.IsPlayerTurn = true;
+        }
+        yield return null;
+    }
+    IEnumerator PlayerDefense()
+    {
+        GameManager.Instance.BattleButtonUi.SetActive(false);
+        yield return new WaitForSeconds(0.4f);
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
+        SkillButton.SetActive(false);
+        IsAttackOk = true;
+        GameManager.Instance.BattleSkillBackGround.SetActive(true);
+        GameManager.Instance.BattleSkillText.text = "실험 : 피해 감소";
+        BattleManager.Instance.IsPlayerTurn = false;
+        yield return new WaitForSeconds(1);
+        BattleManager.Instance.CamE = true;
+        animator.SetBool("IsDefense", true);
+        IsDefense = true;
+        yield return new WaitForSeconds(1.5f);
+        BattleManager.Instance.CamE = false;
+        animator.SetBool("IsDefense", false);
+        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        yield return new WaitForSeconds(2);
         IsAttackSkill = false;
         if (GameManager.Instance.IsCamMove == true)
         {
