@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale /= 2;
         }
     }
+
     IEnumerator BattleStart()
     {
         StartCoroutine(BattleStartFaidOut(0.8f));

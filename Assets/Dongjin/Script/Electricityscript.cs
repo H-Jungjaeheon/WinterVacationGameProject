@@ -10,7 +10,7 @@ public class Electricityscript : MonoBehaviour
     private void Start()
     {
         E0 = this.transform.GetChild(0).gameObject;
-        E1 = E0.transform.GetChild(0).gameObject;
+        E1 = this.transform.GetChild(1).gameObject;
         StartCoroutine("ElectricityOnOff");
     }
     IEnumerator ElectricityOnOff()
@@ -20,8 +20,10 @@ public class Electricityscript : MonoBehaviour
         yield return new WaitForSeconds(times);
         E0.gameObject.SetActive(true);
         yield return new WaitForSeconds(times);
+        E0.gameObject.SetActive(false);
+
         E1.gameObject.SetActive(true);
-        yield return new WaitForSeconds(times);
+        yield return new WaitForSeconds(times); 
         StartCoroutine("ElectricityOnOff");
         yield return null;
     }
