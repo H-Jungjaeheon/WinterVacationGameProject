@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class trapbutton : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class trapbutton : MonoBehaviour
     {
         if (buttonon == true && Input.GetKeyDown(KeyCode.F))
         {
-            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.transform.DOLocalMoveY(transform.GetChild(1).position.y + 20, 1f).SetEase(Ease.Linear);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
