@@ -8,8 +8,8 @@ public class Doorsetting : MonoBehaviour
     public Transform door2;
     private int dooridx;
     private int Randomdooridx;
-    public List<GameObject> doorgroup = new List<GameObject>();
-    public List<GameObject> doorgroup2 = new List<GameObject>();
+    private List<GameObject> doorgroup = new List<GameObject>();
+    private List<GameObject> doorgroup2 = new List<GameObject>();
     private void Start()
     {
         Adddoor(door, doorgroup);
