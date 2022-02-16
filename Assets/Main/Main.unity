@@ -14983,6 +14983,10 @@ PrefabInstance:
       propertyPath: Loop
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7585625963411359632, guid: 2dd9efc01bb2da249897c70e61ad1112, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7585625963411359633, guid: 2dd9efc01bb2da249897c70e61ad1112, type: 3}
       propertyPath: m_Name
       value: DoorSounds
@@ -22546,7 +22550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 5a6c5a9df7d8b2742bc3ee6e675cc017, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -22641,6 +22645,8 @@ MonoBehaviour:
   IsBossMeet: 0
   BossBattleStart: 0
   IsBossCamMove: 0
+  IsLastBoss: 0
+  IsBossDeadSkill: 0
   BEnemy: {fileID: 1060606513}
   BPlayer: {fileID: 751281624}
   Player: {fileID: 0}
@@ -27905,8 +27911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e871503dd0c444bbd5f5a250887dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slots: []
-  slotPrefab: {fileID: 6906705609819891293, guid: ffe88147e02b9f34fb456eb9ff66b922, type: 3}
 --- !u!50 &1524803135
 Rigidbody2D:
   serializedVersion: 4
