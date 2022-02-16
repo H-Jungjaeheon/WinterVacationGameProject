@@ -13,7 +13,7 @@ public class CameraMove : MonoBehaviour
     [SerializeField] UnityEngine.Camera MCamera;
     [SerializeField] float ShakeAmount;
     private float ShakeTime;
-    public float speed;
+    public float speed, FinalSkillCount;
     public Vector2 Left_center, Left_size, Right_center, Right_size, center, size;
     float height, width;
     public PostProcessVolume volume;
@@ -23,6 +23,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
+        FinalSkillCount = 0;
         IsBossDeadSkill = false;
         IsLastBoss = false;
         BossBattleStart = false;
@@ -47,12 +48,7 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
     private void Update()
-    {
-        if (Input.GetKey(KeyCode.P))
-        {
-            IsBossDeadSkill = true;
-        }
-        
+    {       
         if (IsBossDeadSkill == false)
         {
             if (IsGrab == true)
@@ -70,15 +66,60 @@ public class CameraMove : MonoBehaviour
                 IsGrab = false;
             }
         }
-        else
+        else if (IsBossDeadSkill == true)
         {
-            vognette.color.value = new Color(1, 0, 0, 0.8f);
-            vognette.intensity.value = 0.6f;
+            FinalSkill();
+        }
+        if(FinalSkillCount > 100)
+        {
+            FinalSkillCount = 100;
+        }
+    }
+    void FinalSkill()
+    {
+        if(FinalSkillCount <= 20)
+        {
+            vognette.color.value = new Color(0f, 0f, 0f, 0f);
+            vognette.intensity.value = 0.2f;
             grain.intensity.value = 1;
-            grain.lumContrib.value = 0;
-            grain.size.value = 1;
-            bloom.softKnee.value = 0.6f;
-            bloom.intensity.value = 70f;
+            grain.lumContrib.value = 1;
+            grain.size.value = 3f;
+            //bloom.softKnee.value = 0.5f;
+            //bloom.intensity.value = 70f;
+        }
+        else if (FinalSkillCount <= 40 && FinalSkillCount > 20)
+        {
+            vognette.color.value = new Color(1f, 0.05f, 0.05f, 0.8f);
+            vognette.intensity.value = 0.5f;
+            grain.intensity.value = 1f;
+            grain.lumContrib.value = 1f;
+            grain.size.value = 3f;
+            //bloom.softKnee.value = 0.54f;
+            //bloom.intensity.value = 90f;
+        }
+        else if (FinalSkillCount <= 80 && FinalSkillCount > 40)
+        {
+            vognette.color.value = new Color(1f, 0.05f, 0.05f, 0.8f);
+            vognette.intensity.value = 0.8f; //0.6
+            vognette.smoothness.value = 1f; //0.6
+            vognette.roundness.value = 1; //0.6
+            grain.intensity.value = 1;
+            grain.lumContrib.value = 1;
+            grain.size.value = 3;
+            //bloom.softKnee.value = 0.58f;
+            //bloom.intensity.value = 110f;
+        }
+        else if(FinalSkillCount <= 100 && FinalSkillCount > 80)
+        {
+            vognette.color.value = new Color(1, 0.05f, 0.05f, 0.8f); //보스 게이지 거의 다 채웠을 때
+            vognette.intensity.value = 1f; //0.6
+            vognette.smoothness.value = 1f; //0.6
+            vognette.roundness.value = 1; //0.6
+            grain.intensity.value = 1;
+            grain.lumContrib.value = 1;
+            grain.size.value = 3;
+            //bloom.softKnee.value = 0.6f;
+            //bloom.intensity.value = 120f;
         }
     }
     void FixedUpdate()
