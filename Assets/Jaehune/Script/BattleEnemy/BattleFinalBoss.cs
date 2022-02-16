@@ -13,6 +13,7 @@ public class BattleFinalBoss : BattleBasicEnemy
 
     public override void Start()
     {
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossDeadSkill = true;
         Warning.SetActive(false);
         animator = GetComponent<Animator>();
         IsPoison = false;
@@ -33,6 +34,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         PoisonUse();
         SuperAngers();
         InstantDeadImage();
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().FinalSkillCount = InstantDeathCount;
     }
     void SuperAngers()
     {
@@ -129,13 +131,13 @@ public class BattleFinalBoss : BattleBasicEnemy
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         InstantDeathBar.fillAmount = InstantDeathCount / MaxInstantDeathCount;
-        HpBar.transform.position = new Vector3(0.65f, BarUp + 65.05f, 0);
-        AngerBar.transform.position = new Vector3(0.65f, BarUp + 64.35f, 0);
-        HpBarNull.transform.position = new Vector3(0.65f, BarUp + 65.05f, 0);
-        SuperAngerBar.transform.position = new Vector3(0.65f, BarUp + 65.7f, 0);
-        EnemyPicture.transform.position = new Vector3(-6.4f, BarUp + 65, 0);
-        InstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 68f, 0);
-        MaxInstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 68, 0);
+        HpBar.transform.position = new Vector3(1f, BarUp + 70.45f, 0);
+        AngerBar.transform.position = new Vector3(1f, BarUp + 69.75f, 0);
+        HpBarNull.transform.position = new Vector3(1f, BarUp + 70.45f, 0);
+        SuperAngerBar.transform.position = new Vector3(1f, BarUp + 71.1f, 0);
+        EnemyPicture.transform.position = new Vector3(-6.05f, BarUp + 70.4f, 0);
+        InstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67f, 0);
+        MaxInstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67, 0);
         InstantImage.transform.position = new Vector3(0.65f, BarUp + 66.05f, 0);
         Eye.transform.position = new Vector3(-2f, BarUp + 59f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
@@ -251,6 +253,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 GameManager.Instance.IsBattleStart = false;
                 BattleManager.Instance.IsEnemyTurn = true;
                 BattleManager.Instance.IsPlayerTurn = true;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossDeadSkill = true;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().BossBattleStart = false;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossCamMove = false;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsLastBoss = false;
