@@ -17,7 +17,8 @@ public class Obj : MonoBehaviour
     [SerializeField] public GameObject DoPos;
 
     public int boxIdx;
-
+    [SerializeField] private bool mobspawn;
+    [SerializeField] private GameObject mob;
     public ParticleSystem money;
     // Start is called before the first frame update
     void Start()
@@ -78,7 +79,10 @@ public class Obj : MonoBehaviour
             //{
             //    Items[1].transform.DOMove(DoPos.transform.position, 0.5f).SetEase(Ease.OutBack);
             //});
-        
+        if (mobspawn == true)
+        {
+            Instantiate(mob, this.transform.position, transform.rotation);
+        }
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 4);
