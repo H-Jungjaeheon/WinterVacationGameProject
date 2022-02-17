@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BattleFinalBoss : BattleBasicEnemy
 {
     [SerializeField] float SuperAngerCount, MaxSuperAngerCount, InstantDeathCount, MaxInstantDeathCount, EyeSpawnCount = 0, MaxEyeSpawnCount = 0; //각성 카운트, 즉사 패턴 카운트
-    [SerializeField] bool IsSuperAnger, IsFarAway, IsInstantDead,IsUseSkill; //각성 판별, 원거리 공격 판별, 즉사 패턴 이미지 판별
+    [SerializeField] bool IsSuperAnger, IsFarAway,IsUseSkill; //각성 판별, 원거리 공격 판별, 즉사 패턴 이미지 판별
     [SerializeField] int RandBasicAttack, RandSkill, PoisonCount, SuperAnger, MaxPoisonCount; //(기본 공격 랜덤, 스킬 공격 랜덤, 독 공격 카운터, 체력 흡수 카운터
     [SerializeField] GameObject HealText, Warning; //체력 회복 텍스트
     [SerializeField] GameObject[] InstantEye;
@@ -44,8 +44,11 @@ public class BattleFinalBoss : BattleBasicEnemy
         }
         PoisonUse();
         SuperAngers();
-        InstantDeadImage();
         StartCoroutine(FinalSkill());
+        if(IsInstantDead == true)
+        {
+            Destroy(GetComponent<BattleEye>());
+        }
     }
     IEnumerator SuperEyeColor(float FaidTime)
     {
@@ -79,14 +82,15 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             if (EyeSpawnCount >= MaxEyeSpawnCount && IsUseSkill == true)
             {
+                color.a = 0f;
                 SuperEye.color = color;
                 MaxEyeSpawnCount = Random.Range(5, 7);
                 EyeSpawnCount = 0;
-                Instantiate(InstantEye[2], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[2], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
                 randomX = Random.Range(-10f, 4f);
                 randomY = Random.Range(-4f, 10f);
                 yield return new WaitForSeconds(2);
-                Instantiate(InstantEye[2], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[2], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
             }
         }
         else if (InstantDeathCount <= 80 && InstantDeathCount > 40 && IsUseSkill == true)
@@ -98,11 +102,11 @@ public class BattleFinalBoss : BattleBasicEnemy
             {
                 MaxEyeSpawnCount = Random.Range(4, 6);
                 EyeSpawnCount = 0;
-                Instantiate(InstantEye[1], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[1], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
                 randomX = Random.Range(-10f, 4f);
                 randomY = Random.Range(-4f, 10f);
                 yield return new WaitForSeconds(2);
-                Instantiate(InstantEye[1], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[1], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
             }
         }
         else if (InstantDeathCount <= 100 && InstantDeathCount > 80 && IsUseSkill == true)
@@ -114,15 +118,15 @@ public class BattleFinalBoss : BattleBasicEnemy
             {
                 MaxEyeSpawnCount = 4;
                 EyeSpawnCount = 0;
-                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
                 randomX = Random.Range(-10f, 4f);
                 randomY = Random.Range(-4f, 10f);
                 yield return new WaitForSeconds(1);
-                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
                 randomX = Random.Range(-10f, 4f);
                 randomY = Random.Range(-4f, 10f);
                 yield return new WaitForSeconds(0.5f);
-                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas2").transform);
             }
         }
         else
@@ -130,6 +134,10 @@ public class BattleFinalBoss : BattleBasicEnemy
             color.a = 0;
             SuperEye.color = color;
             yield return null;
+        }
+        if(InstantDeathCount >= MaxInstantDeathCount)
+        {
+            InstantDeathCount = MaxInstantDeathCount;
         }
         yield return null;
     }
@@ -141,59 +149,12 @@ public class BattleFinalBoss : BattleBasicEnemy
             SuperAnger = 0;
         }
     }
-    void InstantDeadImage()
-    {
-        if(IsInstantDead == false)
-        {
-            StartCoroutine(InstantDeadImageFadeOut(0.5f));
-        }
-        else
-        {
-            StartCoroutine(InstantDeadImageFadeIn(0.5f));
-        }
-    }
     IEnumerator WarningTXT()
     {
-        Warning.SetActive(true);
-        yield return new WaitForSeconds(2);
-        Warning.SetActive(false);
+        //Warning.SetActive(true);
+        //yield return new WaitForSeconds(2);
+        //Warning.SetActive(false);
         yield return null;
-    }
-    IEnumerator InstantDeadImageFadeIn(float FaidTime)
-    {
-        Color color = InstantImage.color;
-        Color color2 = Eye.color;
-        while (color.a < 1f)
-        {
-            color.a += Time.deltaTime / FaidTime;
-            color2.a += Time.deltaTime / FaidTime;
-            InstantImage.color = color;
-            Eye.color = color2;
-            if (color.a >= 1f)
-            {
-                color.a = 1f;
-                color2.a = 1;
-            }
-            yield return null;
-        }
-    }
-    IEnumerator InstantDeadImageFadeOut(float FaidTime)
-    {
-        Color color = InstantImage.color;
-        Color color2 = Eye.color;
-        while (color.a > 0f)
-        {
-            color.a -= Time.deltaTime / FaidTime;
-            color2.a -= Time.deltaTime / FaidTime;
-            InstantImage.color = color;
-            Eye.color = color2;
-            if (color.a <= 0f)
-            {
-                color.a = 0f;
-                color2.a = 0;
-            }
-            yield return null;
-        }
     }
     public override void AttackGone()
     {
@@ -228,16 +189,16 @@ public class BattleFinalBoss : BattleBasicEnemy
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         InstantDeathBar.fillAmount = InstantDeathCount / MaxInstantDeathCount;
-        HpBar.transform.position = new Vector3(1f, BarUp + 70.45f, 0);
-        AngerBar.transform.position = new Vector3(1f, BarUp + 69.75f, 0);
-        HpBarNull.transform.position = new Vector3(1f, BarUp + 70.45f, 0);
-        SuperAngerBar.transform.position = new Vector3(1f, BarUp + 71.1f, 0);
-        EnemyPicture.transform.position = new Vector3(-6.05f, BarUp + 70.4f, 0);
+        HpBar.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
+        AngerBar.transform.position = new Vector3(1f, BarUp + 72.25f, 0);
+        HpBarNull.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
+        SuperAngerBar.transform.position = new Vector3(1f, BarUp + 73.6f, 0);
+        EnemyPicture.transform.position = new Vector3(-6.05f, BarUp + 72.9f, 0);
         InstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67f, 0);
         MaxInstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67, 0);
         InstantImage.transform.position = new Vector3(0.65f, BarUp + 66.05f, 0);
-        Eye.transform.position = new Vector3(-2f, BarUp + 59f, 0);
-        SuperEye.transform.position = new Vector3(1f, BarUp + 60f, 0);
+        Eye.transform.position = new Vector3(-8.5f, BarUp + 61f, 0);
+        SuperEye.transform.position = new Vector3(0f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
     }
     public override void RayCasting()
@@ -721,17 +682,22 @@ public class BattleFinalBoss : BattleBasicEnemy
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
         }
-        else if (InstantDeathCount >= MaxInstantDeathCount) //즉사기 (2페이즈 : 멸(滅), 3페이즈 : 종말)
+        else if (InstantDeathCount >= MaxInstantDeathCount) 
         {
             GameManager.Instance.BattleSkillText.text = "до раю позадуж";
-            InstantDeathCount = 0;
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true); //즉사 애니메이션 재생
             yield return new WaitForSeconds(1f);
             IsInstantDead = true;
-            //점점 즉사 배경 투명도 밝아지게 조절
+            for(int i = 0; i < 3; i++)
+            {
+                Destroy(InstantEye[i]);
+            }
+            StartCoroutine(InstantDeadImageFadeIn(0.5f));
+            yield return new WaitForSeconds(1f);
+            InstantDeathCount = 0;
             yield return new WaitForSeconds(2f);
             transform.position = this.transform.position + new Vector3(0f, 20f, 0); //보스 없어짐
             GameObject DT = Instantiate(DmgText);
@@ -755,6 +721,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             animator.SetBool("IsAttack", false);
             yield return new WaitForSeconds(2);
             IsInstantDead = false;
+            StartCoroutine(InstantDeadImageFadeOut(0.5f));
             yield return new WaitForSeconds(2);
             //즉사 배경 투명도 다시 점점 투명하게
             this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.3f, 0);
@@ -788,6 +755,46 @@ public class BattleFinalBoss : BattleBasicEnemy
         }
         else
         {
+            yield return null;
+        }
+    }
+    IEnumerator InstantDeadImageFadeIn(float FaidTime)
+    {
+        Color color = InstantImage.color;
+        Color color2 = Eye.color;
+        while (color.a < 1f)
+        {
+            color.a += Time.deltaTime / FaidTime;
+            InstantImage.color = color;
+            if (color.a >= 1f)
+            {
+                color.a = 1f;
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        if(color.a >= 1f)
+        {
+            color2.a = 1f;
+            Eye.color = color2;
+            yield return null;
+        }
+    }
+    IEnumerator InstantDeadImageFadeOut(float FaidTime)
+    {
+        Color color = InstantImage.color;
+        Color color2 = Eye.color;
+        while (color.a > 0f)
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
+            InstantImage.color = color;
+            Eye.color = color2;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+                color2.a = 0f;
+            }
             yield return null;
         }
     }

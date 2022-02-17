@@ -294,7 +294,7 @@ public class CameraMove : MonoBehaviour
     {
         if (BossBattleStart == false)
         {
-            this.transform.position = Battletarget.position + offset + new Vector3(0, 3f, 0);
+            this.transform.position = Battletarget.position + offset;
             MCamera.orthographicSize = 4.5f;
         }
         else

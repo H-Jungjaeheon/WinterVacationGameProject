@@ -11,7 +11,7 @@ public class BattleBasicEnemy : MonoBehaviour
     public GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
     public Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
     public bool GoToPlayer = false, Dead = false, GoToReturn = false, StopGone = false, IsHit = false, //플레이어의 위치(근접 공격시)로 갈지 판단, 사망 판단, 공격 후 제자리, 이동 멈춤, 맞았는가?
-    IsReflect = false, IsStun, IsPoison; //특수 능력 모음
+    IsReflect = false, IsStun, IsPoison, IsInstantDead; //특수 능력 모음
     public SpriteRenderer SR; //죽을 때 점점 사라지게
     public Animator animator;
 
@@ -23,7 +23,6 @@ public class BattleBasicEnemy : MonoBehaviour
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position;
-        //AttackRand = Random.Range(1, 3);
     }
     public virtual void Update()
     {
