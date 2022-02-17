@@ -7,17 +7,23 @@ public class BattleSuperEnemy : BattleBasicEnemy
     [SerializeField] int SkillAttackRand;
     [SerializeField] GameObject HealText;
     [SerializeField] bool IsSkill;
+    [SerializeField] Vector2 BarTransform, PictureTransform;
+    [SerializeField] GameObject EnergyBullet;
+    [SerializeField] SpriteRenderer SRS;
+
     // Start is called before the first frame update
     public override void Start()
     {
+        EnergyBullet.SetActive(false);
         animator = GetComponent<Animator>();
         Anger = 0;
         IsSkill = false;
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(0f, 0.8f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(0f, 2.1f, 0);
         SkillAttackRand = Random.Range(1, 4);
+        SR = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -28,23 +34,24 @@ public class BattleSuperEnemy : BattleBasicEnemy
         {
             Hp = MaxHp;
         }
+        EnergyBullet.transform.position = Player.transform.position + new Vector3(1.5f, 1.5f, 0);
     }
     public override void AttackGone()
     {
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsSkill == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2.5f, 0f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3f, 1.27f, 0), 10 * Time.deltaTime);
         }
         else if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsSkill == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(5f, 0f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(6f, 1.27f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0f, 0.8f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0f, 2.1f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -53,7 +60,12 @@ public class BattleSuperEnemy : BattleBasicEnemy
     }
     public override void Hpbar()
     {
-        base.Hpbar();
+        HpBar.fillAmount = Hp / MaxHp;
+        AngerBar.fillAmount = Anger / MaxAnger;
+        HpBar.transform.position = new Vector2(this.transform.position.x + BarTransform.x, this.transform.position.y + BarTransform.y);
+        AngerBar.transform.position = new Vector2(this.transform.position.x + BarTransform.x, this.transform.position.y + BarTransform.y - 0.26f);
+        HpBarNull.transform.position = new Vector2(this.transform.position.x + BarTransform.x, this.transform.position.y + BarTransform.y);
+        EnemyPicture.transform.position = new Vector2(this.transform.position.x + PictureTransform.x, this.transform.position.y + PictureTransform.y); 
     }
     public override void RayCasting()
     {
@@ -85,7 +97,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position + new Vector3(-1f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -105,7 +117,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(1f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -126,14 +138,21 @@ public class BattleSuperEnemy : BattleBasicEnemy
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
-            animator.SetBool("IsSkill", true);
+            animator.SetBool("IsSkill3", true);
             GameObject DT = Instantiate(HealText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
             DT.transform.position = this.transform.position;
-            DT.GetComponent<BattleDamageText>().damage = MaxHp / 4;
+            if(Hp + (MaxHp / 4) > MaxHp)
+            {
+                DT.GetComponent<BattleDamageText>().damage = MaxHp - Hp;
+            }
+            else
+            {
+                DT.GetComponent<BattleDamageText>().damage = MaxHp / 4;
+            }
             Hp += MaxHp / 4;
             yield return new WaitForSeconds(1);
-            animator.SetBool("IsSkill", false);
+            animator.SetBool("IsSkill3", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(1);
@@ -149,9 +168,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsAttack", true);
+            SRS.sortingOrder = 1;
+            animator.SetBool("IsSkill", true);
+            EnergyBullet.SetActive(true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -171,9 +191,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            SRS.sortingOrder = -1;
+            EnergyBullet.SetActive(false);
             StopGone = false;
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;
             GoToReturn = true;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -192,11 +213,11 @@ public class BattleSuperEnemy : BattleBasicEnemy
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
-            animator.SetBool("IsSkill", true);
+            animator.SetBool("IsSkill2", true);
             GameManager.Instance.curMana -= 25;
             Anger += 50;
             yield return new WaitForSeconds(1);
-            animator.SetBool("IsSkill", false);
+            animator.SetBool("IsSkill2", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(1);

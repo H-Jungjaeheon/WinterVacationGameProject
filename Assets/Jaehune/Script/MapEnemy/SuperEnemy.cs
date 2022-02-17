@@ -7,7 +7,7 @@ public class SuperEnemy : BasicEnemyScript
     [SerializeField] float SkillCount;
     [SerializeField] GameObject WarningCircleObj, SkillCircleObj;
     [SerializeField] bool Skillng, Movings;
-
+ 
     public override void Start()
     {
         base.Start();
@@ -15,10 +15,13 @@ public class SuperEnemy : BasicEnemyScript
     public override void Update()
     {
         RayCasting();
-        Moving();
         if (IsMove == false)
         {
             MoveCount = 0;
+        }
+        else if(IsMove == true)
+        {
+            Moving();
         }
         if (IsFind == true)
         {
@@ -29,7 +32,6 @@ public class SuperEnemy : BasicEnemyScript
         }
         else
         {
-            IsMove = true;
             Skillng = false;
             SkillCount = 0;
             SkillCircleObj.SetActive(false);
@@ -40,6 +42,7 @@ public class SuperEnemy : BasicEnemyScript
         {
             WarningCircleObj.SetActive(true);
             Invoke("UseSkill", 2.5f);
+            animator.SetBool("IsSkill", true);
             IsMove = false;
             Movings = false;
         }
@@ -56,6 +59,7 @@ public class SuperEnemy : BasicEnemyScript
     {
         if (Player != null && GameManager.Instance.IsBattleStart == false && GameManager.Instance.isEunsin == false)
         {
+            animator.SetBool("IsSkill", false);
             Skillng = true;
             IsMove = true;
             Movings = true;
@@ -84,18 +88,33 @@ public class SuperEnemy : BasicEnemyScript
     }
     public override void RayCasting()
     {
-        base.RayCasting();
+        Debug.DrawRay(transform.position + new Vector3(0, -1, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus);
+        foreach (var hit in rayHit)
+        {
+            if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
+            {
+                Player = hit.collider.gameObject;
+                WarningObj.SetActive(true);
+                IsFind = true;
+            }
+            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                WarningObj.SetActive(false);
+                IsFind = false;
+            }
+        }
     }
     public override void FindPlayer()
     {
         MoveCount = 0;
         if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.15f, 0), Speed * 3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 3f * Time.deltaTime);
         }
         else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.15f, 0), Speed * -3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -3f * Time.deltaTime);
         }
     }
     public override void Delete()

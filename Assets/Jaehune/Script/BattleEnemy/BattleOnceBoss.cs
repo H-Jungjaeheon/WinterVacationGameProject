@@ -18,7 +18,7 @@ public class BattleOnceBoss : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.85f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 3f, 0);
         SuperAnger = 0;
         IsSuperAnger = false;
         Invoke("BossCam", 3.5f);
@@ -43,7 +43,7 @@ public class BattleOnceBoss : BattleBasicEnemy
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 1.85f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 3f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -59,11 +59,11 @@ public class BattleOnceBoss : BattleBasicEnemy
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
-        HpBar.transform.position = new Vector3(0.65f, BarUp + 65.05f, 0);
-        AngerBar.transform.position = new Vector3(0.65f, BarUp + 64.35f, 0);
-        HpBarNull.transform.position = new Vector3(0.65f, BarUp + 65.05f, 0);
-        SuperAngerBar.transform.position = new Vector3(0.65f, BarUp + 65.7f, 0);
-        EnemyPicture.transform.position = new Vector3(-6.4f, BarUp + 65, 0);
+        HpBar.transform.position = new Vector3(0.65f, BarUp + 70.05f, 0);
+        AngerBar.transform.position = new Vector3(0.65f, BarUp + 69.35f, 0);
+        HpBarNull.transform.position = new Vector3(0.65f, BarUp + 70.05f, 0);
+        SuperAngerBar.transform.position = new Vector3(0.65f, BarUp + 70.7f, 0);
+        EnemyPicture.transform.position = new Vector3(-6.4f, BarUp + 70, 0);
     }
     public override void RayCasting()
     {

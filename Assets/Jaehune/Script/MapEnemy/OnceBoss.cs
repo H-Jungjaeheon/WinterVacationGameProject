@@ -42,7 +42,7 @@ public class OnceBoss : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1, 0), 10f * Time.deltaTime); 
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.7f, 0), 10f * Time.deltaTime);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -67,6 +67,7 @@ public class OnceBoss : BasicEnemyScript
             transform.rotation = Quaternion.Euler(0, 180, 0);
             SeeCrossroad *= -1;
             yield return new WaitForSeconds(1);
+            animator.SetBool("IsAttack", true);
             Go = true;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime2(0.7f);
             StartCoroutine(AnimationP2());
@@ -76,6 +77,8 @@ public class OnceBoss : BasicEnemyScript
     IEnumerator AnimationP2()
     {
         yield return new WaitForSeconds(1);
+        animator.SetBool("IsAttack", false);
+        animator.SetBool("IsWalk", true);
         GoToPlayer = true;
         yield return null;
     }

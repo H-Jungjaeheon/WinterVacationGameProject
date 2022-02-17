@@ -93,20 +93,6 @@ public class BattlePlayer : MonoBehaviour
             yield return null;
         }
     }
-    //IEnumerator BarrierEffectIconFadeOut(float FaidTime)
-    //{
-    //    Color color = BarrierEffect1.color;
-    //    while (color.a > 0f)
-    //    {
-    //        color.a -= Time.deltaTime / FaidTime;
-    //        BarrierEffect1.color = color;
-    //        if (color.a <= 0f)
-    //        {
-    //            color.a = 0f;
-    //        }
-    //        yield return null;
-    //    }
-    //}
 
     void IsHited()
     {

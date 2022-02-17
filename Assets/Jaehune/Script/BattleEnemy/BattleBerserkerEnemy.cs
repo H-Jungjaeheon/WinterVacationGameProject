@@ -7,7 +7,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
 {
     [SerializeField] float SuperSkillCount, MaxSuperSkillCount, SkillAttackRand, IsMad;
     [SerializeField] GameObject HealText;
-    [SerializeField] bool End = false;
+    [SerializeField] bool End = false, IsDead;
     [SerializeField] Image MadBar;
     [SerializeField] Vector2 BarPosition, PicturePosition;
     public bool IsSuperSkillng;
@@ -15,13 +15,14 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     public override void Start()
     {
         IsSuperSkillng = false;
+        IsDead = false;
         IsMad = 0;
         animator = GetComponent<Animator>();
         Anger = 0;
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(1f, 0.7f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(1.5f, 0.7f, 0);
         SkillAttackRand = Random.Range(1, 3);
     }
 
@@ -49,12 +50,12 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3f, -0.1f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(4f, -0.1f, 0), 10 * Time.deltaTime);
         }
-        else if (GoToReturn == true)
+        else if (GoToReturn == true && IsDead == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1f, 0.7f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1.5f, 0.7f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -67,8 +68,8 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         AngerBar.fillAmount = Anger / MaxAnger;
         MadBar.fillAmount = SuperSkillCount / MaxSuperSkillCount;
         HpBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y);
-        AngerBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y - 0.3f);
-        MadBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y + 0.3f);
+        AngerBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y - 0.2f);
+        MadBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y + 0.2f);
         HpBarNull.transform.position = new Vector2(this.transform.position.x + BarPosition.x , this.transform.position.y + BarPosition.y);
         EnemyPicture.transform.position = new Vector2(this.transform.position.x + PicturePosition.x, this.transform.position.y + PicturePosition.y);
     }
@@ -91,7 +92,53 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     }
     public override IEnumerator Dead2(float FaidTime)
     {
-        return base.Dead2(FaidTime);
+        yield return new WaitForSeconds(4);
+        if (Dead == false)
+        {
+            Dead = true;
+            GameObject.Find("GameManager").GetComponent<PlayerStats>().ExpUp(GExp);
+        }
+        BattleManager.Instance.IsEnemyTurn = false;
+        Color color = SR.color;
+        Color color2 = HpBar.color;
+        Color color3 = HpBarNull.color;
+        Color color4 = EnemyPicture.color;
+        Color color5 = AngerBar.color;
+        Color color6 = MadBar.color;
+        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f)
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
+            color3.a -= Time.deltaTime / FaidTime;
+            color4.a -= Time.deltaTime / FaidTime;
+            color5.a -= Time.deltaTime / FaidTime;
+            color6.a -= Time.deltaTime / FaidTime;
+            SR.color = color;
+            HpBar.color = color;
+            HpBarNull.color = color;
+            EnemyPicture.color = color;
+            AngerBar.color = color;
+            MadBar.color = color;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+                color2.a = 0f;
+                color3.a = 0f;
+                color4.a = 0f;
+                color5.a = 0f;
+                color6.a = 0f;
+            }
+            else
+            {
+                yield return null;
+                yield return new WaitForSeconds(1);
+                GameManager.Instance.IsBattleStart = false;
+                BattleManager.Instance.IsEnemyTurn = true;
+                BattleManager.Instance.IsPlayerTurn = true;
+                yield return new WaitForSeconds(1);
+                Destroy(this.gameObject);
+            }
+        }
     }
     public override IEnumerator EnemyAttack()
     {
@@ -108,7 +155,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.4f, 0f, 0);
+            transform.position = this.transform.position - new Vector3(1.5f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -138,7 +185,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.4f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(1.5f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -176,7 +223,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             Anger = 0;
             if(IsSuperSkillng == false)
             {
-                SuperSkillCount += 25;
+                SuperSkillCount += 30;
             }
             GameManager.Instance.BattleSkillText.text = "À°Âü°ñ´Ü(ë¿óÖÍéÓ¨)";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -185,7 +232,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsSkillTwice", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position - new Vector3(1.5f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT1 = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -228,11 +275,19 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(1.5f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsSkillTwice", false);
             BattleManager.Instance.CamE = false;
-            GoToReturn = true;
+            if (Hp <= 0 && IsSuperSkillng == false)
+            {
+                //IsDead = true;
+                GoToReturn = false;
+            }
+            else
+            {
+                GoToReturn = true;
+            }
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
@@ -265,7 +320,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             Anger = 0;
             if (IsSuperSkillng == false)
             {
-                SuperSkillCount += 25;
+                SuperSkillCount += 40;
             }
             GameManager.Instance.BattleSkillText.text = "³ÊÀÇ ÇÇ¸¦ ÈûÀÔ¾î";
             BattleManager.Instance.IsEnemyTurn = false;
