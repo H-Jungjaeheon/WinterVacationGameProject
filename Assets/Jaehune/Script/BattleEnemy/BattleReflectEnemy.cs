@@ -6,12 +6,14 @@ public class BattleReflectEnemy : BattleBasicEnemy
 {
     [SerializeField] int ReflectingTurn, MaxReflctingTurn;
     [SerializeField] GameObject ReflectImage;
+    [SerializeField] bool IsDeadT;
     // Start is called before the first frame update
     public override void Start()
     {
+        IsDeadT = false;
         ReflectImage.SetActive(false);
         base.Start();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.7f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(0.9f, 0.45f, 0);
     }
 
     // Update is called once per frame
@@ -37,12 +39,12 @@ public class BattleReflectEnemy : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3f, 0f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3.5f, -0.4f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0, 0.7f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0.9f, 0.45f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -51,8 +53,13 @@ public class BattleReflectEnemy : BattleBasicEnemy
     }
     public override void Hpbar()
     {
-        base.Hpbar();
-        ReflectImage.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
+        HpBar.fillAmount = Hp / MaxHp;
+        AngerBar.fillAmount = Anger / MaxAnger;
+        HpBar.transform.position = this.transform.position + new Vector3(-0.5f, BarUp + 1.3f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(-0.5f, BarUp + 1.1f, 0);
+        HpBarNull.transform.position = this.transform.position + new Vector3(-0.5f, BarUp + 1.3f, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(-2.05f, BarUp + 1.25f, 0);
+        ReflectImage.transform.position = this.transform.position + new Vector3(-0.7f, BarUp + 1.3f, 0);
     }
     public override void RayCasting()
     {
@@ -64,7 +71,14 @@ public class BattleReflectEnemy : BattleBasicEnemy
     }
     public override void Dead1()
     {
-        base.Dead1();
+        if (Hp <= 0)
+        {
+            BattleManager.Instance.IsEnemyDead = true;
+            animator.SetBool("IsDead", true);
+            this.transform.position = EnemySpawner.transform.position + new Vector3(0.4f, 1f, 0);
+            ReflectImage.SetActive(false);
+            StartCoroutine("Dead2", 0.5f);
+        }
     }
     public override IEnumerator Dead2(float FaidTime)
     {
@@ -83,7 +97,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.7f, 0);
+            transform.position = this.transform.position + new Vector3(-0.5f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -103,14 +117,14 @@ public class BattleReflectEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.7f, 0);
+            transform.position = this.transform.position + new Vector3(0.5f, -0.5f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
             GoToReturn = true;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             GoToPlayer = false;
-            Anger += 20;
+            Anger += 30;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
             yield return new WaitForSeconds(2);
@@ -129,11 +143,11 @@ public class BattleReflectEnemy : BattleBasicEnemy
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
-            animator.SetBool("IsAttack", true);
+            animator.SetBool("IsSkill", true);
             IsReflect = true;
             Player.GetComponent<BattlePlayer>().IsHit = true;
             yield return new WaitForSeconds(1);
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(3);

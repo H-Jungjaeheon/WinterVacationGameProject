@@ -48,7 +48,15 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
     private void Update()
-    {       
+    {
+        if (GameManager.Instance.Stage == 2)
+        {
+            center.y = -41.12f;
+        }
+        if (GameManager.Instance.Stage == 3)
+        {
+            center.y = -80f;
+        }
         if (IsBossDeadSkill == false)
         {
             if (IsGrab == true)
@@ -294,7 +302,7 @@ public class CameraMove : MonoBehaviour
     {
         if (BossBattleStart == false)
         {
-            this.transform.position = Battletarget.position + offset + new Vector3(0, 3f, 0);
+            this.transform.position = Battletarget.position + offset;
             MCamera.orthographicSize = 4.5f;
         }
         else
