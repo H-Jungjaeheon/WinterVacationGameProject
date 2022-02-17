@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class BattleFinalBoss : BattleBasicEnemy
 {
-    [SerializeField] float SuperAngerCount, MaxSuperAngerCount, InstantDeathCount, MaxInstantDeathCount; //각성 카운트, 즉사 패턴 카운트
-    [SerializeField] bool IsSuperAnger, IsFarAway, IsInstantDead; //각성 판별, 원거리 공격 판별, 즉사 패턴 이미지 판별
+    [SerializeField] float SuperAngerCount, MaxSuperAngerCount, InstantDeathCount, MaxInstantDeathCount, EyeSpawnCount = 0, MaxEyeSpawnCount = 0; //각성 카운트, 즉사 패턴 카운트
+    [SerializeField] bool IsSuperAnger, IsFarAway, IsInstantDead,IsUseSkill; //각성 판별, 원거리 공격 판별, 즉사 패턴 이미지 판별
     [SerializeField] int RandBasicAttack, RandSkill, PoisonCount, SuperAnger, MaxPoisonCount; //(기본 공격 랜덤, 스킬 공격 랜덤, 독 공격 카운터, 체력 흡수 카운터
     [SerializeField] GameObject HealText, Warning; //체력 회복 텍스트
-    public Image Poison, SuperAngerBar, InstantDeathBar, MaxInstantDeathBar, InstantImage, Eye; //각성 바, 즉사 패턴 바(빈 즉사 패턴 바) 즉사 패턴 이미지
+    [SerializeField] GameObject[] InstantEye;
+    public Image Poison, SuperAngerBar, InstantDeathBar, MaxInstantDeathBar, InstantImage, Eye, SuperEye; //각성 바, 즉사 패턴 바(빈 즉사 패턴 바) 즉사 패턴 이미지
 
     public override void Start()
     {
@@ -25,16 +26,112 @@ public class BattleFinalBoss : BattleBasicEnemy
         this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.7f, 0);
         SuperAnger = 0;
         IsSuperAnger = false;
+        IsUseSkill = false;
         Invoke("BossCam", 3.5f);
+        MaxEyeSpawnCount = Random.Range(5, 7);
     }
 
     public override void Update()
     {
         base.Update();
+        if (InstantDeathCount <= 20)
+        {
+            IsUseSkill = false;
+        }
+        else
+        {
+            IsUseSkill = true;
+        }
         PoisonUse();
         SuperAngers();
         InstantDeadImage();
-        GameObject.Find("Main Camera").GetComponent<CameraMove>().FinalSkillCount = InstantDeathCount;
+        StartCoroutine(FinalSkill());
+    }
+    IEnumerator SuperEyeColor(float FaidTime)
+    {
+        Debug.Log("실행");
+        Color color = SuperEye.color;
+        while (color.a < 1f)
+        {
+            color.a += Time.deltaTime / FaidTime;
+            Debug.Log("실행2");
+            SuperEye.color = color;
+            if (color.a >= 1f)
+            {
+                color.a = 1f;
+                
+            }
+            yield return Time.deltaTime;
+        }
+    }
+    
+    IEnumerator FinalSkill()
+    {
+        Color color = SuperEye.color;
+        Camera.main.GetComponent<CameraMove>().FinalSkillCount = InstantDeathCount;
+        float randomX = Random.Range(-20f, 8f);
+        float randomY = Random.Range(-6f, 14f);
+        if (IsUseSkill == true)
+        {
+            EyeSpawnCount += Time.deltaTime;
+        }
+        if (InstantDeathCount <= 40 && InstantDeathCount > 20 && IsUseSkill == true)
+        {
+            if (EyeSpawnCount >= MaxEyeSpawnCount && IsUseSkill == true)
+            {
+                SuperEye.color = color;
+                MaxEyeSpawnCount = Random.Range(5, 7);
+                EyeSpawnCount = 0;
+                Instantiate(InstantEye[2], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                randomX = Random.Range(-10f, 4f);
+                randomY = Random.Range(-4f, 10f);
+                yield return new WaitForSeconds(2);
+                Instantiate(InstantEye[2], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+            }
+        }
+        else if (InstantDeathCount <= 80 && InstantDeathCount > 40 && IsUseSkill == true)
+        {
+            color.a = 0.1f;
+            SuperEye.color = color;
+            yield return null;
+            if (EyeSpawnCount >= MaxEyeSpawnCount && IsUseSkill == true)
+            {
+                MaxEyeSpawnCount = Random.Range(4, 6);
+                EyeSpawnCount = 0;
+                Instantiate(InstantEye[1], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                randomX = Random.Range(-10f, 4f);
+                randomY = Random.Range(-4f, 10f);
+                yield return new WaitForSeconds(2);
+                Instantiate(InstantEye[1], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+            }
+        }
+        else if (InstantDeathCount <= 100 && InstantDeathCount > 80 && IsUseSkill == true)
+        {
+            color.a = 0.17f;
+            SuperEye.color = color;
+            yield return null;
+            if (EyeSpawnCount >= MaxEyeSpawnCount && IsUseSkill == true)
+            {
+                MaxEyeSpawnCount = 4;
+                EyeSpawnCount = 0;
+                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                randomX = Random.Range(-10f, 4f);
+                randomY = Random.Range(-4f, 10f);
+                yield return new WaitForSeconds(1);
+                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+                randomX = Random.Range(-10f, 4f);
+                randomY = Random.Range(-4f, 10f);
+                yield return new WaitForSeconds(0.5f);
+                Instantiate(InstantEye[0], Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(randomX, randomY, 0)), Quaternion.Euler(0, 0, 0), GameObject.Find("Canvas").transform);
+            }
+        }
+        else
+        {
+            color.a = 0;
+            SuperEye.color = color;
+            yield return null;
+        }
+        yield return null;
     }
     void SuperAngers()
     {
@@ -140,6 +237,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         MaxInstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67, 0);
         InstantImage.transform.position = new Vector3(0.65f, BarUp + 66.05f, 0);
         Eye.transform.position = new Vector3(-2f, BarUp + 59f, 0);
+        SuperEye.transform.position = new Vector3(1f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
     }
     public override void RayCasting()
@@ -253,7 +351,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 GameManager.Instance.IsBattleStart = false;
                 BattleManager.Instance.IsEnemyTurn = true;
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossDeadSkill = true;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossDeadSkill = false;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().BossBattleStart = false;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossCamMove = false;
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsLastBoss = false;

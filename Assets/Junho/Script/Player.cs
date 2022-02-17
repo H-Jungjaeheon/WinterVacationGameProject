@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float speed = 5, jumpPower;
     [SerializeField] bool isGound, isLadder, isDamage = false,gasdam = false,gasmaskon =false;
     [SerializeField] Image img_gasmask;
-    Animator anim;
+    public Animator anim;
     public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false, gasmasktrue = false;
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
@@ -60,6 +60,8 @@ public class Player : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.F) && IsGrab == false)
                 {
+                    GameManager.Instance.is2F = true;
+
                     isF = true;
                 }
                 else 
@@ -69,15 +71,14 @@ public class Player : MonoBehaviour
 
                 if (isF && IsGrab == false)
                 {
-                    GameManager.Instance.is2F = true;
-
+                    anim.SetBool("IsLadder", true);
                     rigid.gravityScale = 0;
                     rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * 50);
                 }
             }
             else
             {
-                GameManager.Instance.is2F = false;
+                anim.SetBool("IsLadder", false);
 
                 rigid.gravityScale = 3f;
             }
@@ -93,14 +94,7 @@ public class Player : MonoBehaviour
 
     }
     void Update()
-    {
-        if (GameManager.Instance.is2F)
-        {
-            anim.SetBool("IsLadder", true);
-
-        }
-        else anim.SetBool("IsLadder", false);
-
+    {      
         if (GameManager.Instance.isEunsin)
         {
             this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
@@ -208,6 +202,7 @@ public class Player : MonoBehaviour
                 isLadder = true;
                 break;
             case "Plan":
+                anim.SetBool("IsLadder", false);
                 isGound = true;
                 break;
             case "Lime":
