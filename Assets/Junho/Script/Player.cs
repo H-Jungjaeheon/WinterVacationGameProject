@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
     }
     private void FixedUpdate()
     {
@@ -52,23 +51,34 @@ public class Player : MonoBehaviour
             {
                 Move();
             }
+            
             //Jump();
             if (isLadder)
             {
+
                 bool isF;
+
                 if (Input.GetKey(KeyCode.F) && IsGrab == false)
                 {
                     isF = true;
                 }
-                else isF = false;
+                else 
+                {
+                    isF = false;                  
+                }
+
                 if (isF && IsGrab == false)
                 {
+                    GameManager.Instance.is2F = true;
+
                     rigid.gravityScale = 0;
                     rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * 50);
                 }
             }
             else
             {
+                GameManager.Instance.is2F = false;
+
                 rigid.gravityScale = 3f;
             }
             if (rigid.velocity.normalized.x == 0)
@@ -84,6 +94,13 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.Instance.is2F)
+        {
+            anim.SetBool("IsLadder", true);
+
+        }
+        else anim.SetBool("IsLadder", false);
+
         if (GameManager.Instance.isEunsin)
         {
             this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
@@ -192,7 +209,6 @@ public class Player : MonoBehaviour
                 break;
             case "Plan":
                 isGound = true;
-
                 break;
             case "Lime":
                 if (speed == 10)
