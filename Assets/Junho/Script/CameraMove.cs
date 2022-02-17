@@ -48,7 +48,15 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
     private void Update()
-    {       
+    {
+        if (GameManager.Instance.Stage == 2)
+        {
+            center.y = -41.12f;
+        }
+        if (GameManager.Instance.Stage == 3)
+        {
+            center.y = -80f;
+        }
         if (IsBossDeadSkill == false)
         {
             if (IsGrab == true)
@@ -65,12 +73,17 @@ public class CameraMove : MonoBehaviour
             {
                 IsGrab = false;
             }
+            vognette.smoothness.value = 1f; 
+            vognette.roundness.value = 1; 
+            grain.intensity.value = 0f; 
+            grain.lumContrib.value = 0f; 
+            grain.size.value = 0.3f; 
         }
         else if (IsBossDeadSkill == true)
         {
             FinalSkill();
         }
-        if(FinalSkillCount > 100)
+        if (FinalSkillCount > 100)
         {
             FinalSkillCount = 100;
         }
@@ -79,47 +92,44 @@ public class CameraMove : MonoBehaviour
     {
         if(FinalSkillCount <= 20)
         {
-            vognette.color.value = new Color(0f, 0f, 0f, 0f);
-            vognette.intensity.value = 0.2f;
-            grain.intensity.value = 1;
-            grain.lumContrib.value = 1;
-            grain.size.value = 3f;
-            //bloom.softKnee.value = 0.5f;
-            //bloom.intensity.value = 70f;
+            vognette.color.value = new Color(0f, 0f, 0f, 1f); //주변 색
+            vognette.intensity.value = 0.2f; //화면 축소 정도
+            vognette.smoothness.value = 1f; //원(낮을 수록 단면이 깔끔)
+            vognette.roundness.value = 1; //네모(낮을 수록 네모에 가까워짐)
+            grain.intensity.value = 0f; //지직거림의 수
+            grain.lumContrib.value = 0f; //낮을 수록 정교해짐
+            grain.size.value = 0.3f; //지직거림의 강도
         }
         else if (FinalSkillCount <= 40 && FinalSkillCount > 20)
         {
-            vognette.color.value = new Color(1f, 0.05f, 0.05f, 0.8f);
-            vognette.intensity.value = 0.5f;
-            grain.intensity.value = 1f;
-            grain.lumContrib.value = 1f;
-            grain.size.value = 3f;
-            //bloom.softKnee.value = 0.54f;
-            //bloom.intensity.value = 90f;
+            vognette.color.value = new Color(0.15f, 0f, 0f, 1f); //주변 색
+            vognette.intensity.value = 0.25f; //화면 축소 정도
+            vognette.smoothness.value = 1f; //원(낮을 수록 단면이 깔끔)
+            vognette.roundness.value = 1; //네모(낮을 수록 네모에 가까워짐)
+            grain.intensity.value = 0.35f; //지직거림의 수
+            grain.lumContrib.value = 0.15f; //낮을 수록 정교해짐
+            grain.size.value = 1f; //지직거림의 강도
         }
         else if (FinalSkillCount <= 80 && FinalSkillCount > 40)
         {
-            vognette.color.value = new Color(1f, 0.05f, 0.05f, 0.8f);
-            vognette.intensity.value = 0.8f; //0.6
-            vognette.smoothness.value = 1f; //0.6
-            vognette.roundness.value = 1; //0.6
-            grain.intensity.value = 1;
-            grain.lumContrib.value = 1;
-            grain.size.value = 3;
-            //bloom.softKnee.value = 0.58f;
-            //bloom.intensity.value = 110f;
+            vognette.color.value = new Color(0.35f, 0f, 0f, 1f); //주변 색
+            vognette.intensity.value = 0.35f; //화면 축소 정도
+            vognette.smoothness.value = 1f; //원(낮을 수록 단면이 깔끔)
+            vognette.roundness.value = 1; //네모(낮을 수록 네모에 가까워짐)
+            grain.intensity.value = 0.65f; //지직거림의 수
+            grain.lumContrib.value = 0.35f; //낮을 수록 정교해짐
+            grain.size.value = 1.7f; //지직거림의 강도
+
         }
         else if(FinalSkillCount <= 100 && FinalSkillCount > 80)
         {
-            vognette.color.value = new Color(1, 0.05f, 0.05f, 0.8f); //보스 게이지 거의 다 채웠을 때
-            vognette.intensity.value = 1f; //0.6
-            vognette.smoothness.value = 1f; //0.6
-            vognette.roundness.value = 1; //0.6
-            grain.intensity.value = 1;
-            grain.lumContrib.value = 1;
-            grain.size.value = 3;
-            //bloom.softKnee.value = 0.6f;
-            //bloom.intensity.value = 120f;
+            vognette.color.value = new Color(0.55f, 0f, 0f, 1f); //주변 색
+            vognette.intensity.value = 0.45f; //화면 축소 정도
+            vognette.smoothness.value = 1f; //원(낮을 수록 단면이 깔끔)
+            vognette.roundness.value = 1; //네모(낮을 수록 네모에 가까워짐)
+            grain.intensity.value = 1f; //지직거림의 수
+            grain.lumContrib.value = 0.5f; //낮을 수록 정교해짐
+            grain.size.value = 2.5f; //지직거림의 강도
         }
     }
     void FixedUpdate()
@@ -292,12 +302,12 @@ public class CameraMove : MonoBehaviour
     {
         if (BossBattleStart == false)
         {
-            this.transform.position = Battletarget.position + offset + new Vector3(0, 0.4f, 0);
+            this.transform.position = Battletarget.position + offset;
             MCamera.orthographicSize = 4.5f;
         }
         else
         {
-            this.transform.position = Battletarget.position + offset + new Vector3(0, 0.4f, 0);
+            this.transform.position = Battletarget.position + offset + new Vector3(0, 3f, 0);
             StartCoroutine(BossBattleStartCam(0.5f));
         }
     }

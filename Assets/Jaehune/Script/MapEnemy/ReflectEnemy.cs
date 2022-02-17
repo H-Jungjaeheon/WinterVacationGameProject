@@ -56,11 +56,11 @@ public class ReflectEnemy : BasicEnemyScript
         MoveCount = 0;
         if (Speed > 0 && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * 1.3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * 1.3f * Time.deltaTime);
         }
         else if(Speed < 0 && GameManager.Instance.isEunsin == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, Speed * -1.3f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * -1.3f * Time.deltaTime);
         }
         if(Dash >= MaxDashTime && IsDash == false && GameManager.Instance.isEunsin == false) // && GameManager.Instance.isEunsin == false 
         {
