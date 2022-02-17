@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 public class SceneChange : MonoBehaviour
 {
+    public Text exText;
     Text text;
     // Start is called before the first frame update
     void Start()
@@ -15,11 +16,10 @@ public class SceneChange : MonoBehaviour
     private void Awake()
     { 
         text = GetComponent<Text>();
-        GameObject.Find("ExText").GetComponent<Text>().color = new Color(text.color.r, text.color.b, text.color.g, 0);
     }
     public void StartBtn()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Main1");
     }
 
     public void SettingBtn()
@@ -45,9 +45,9 @@ public class SceneChange : MonoBehaviour
     }
     IEnumerator Ex()
     {
-        GameObject.Find("ExText").GetComponent<Text>().DOFade(1, 1);
+        exText.GetComponent<Text>().DOFade(1, 1);
         yield return new WaitForSeconds(3f);
-        GameObject.Find("ExText").GetComponent<Text>().DOFade(0, 1);
+        exText.GetComponent<Text>().DOFade(0, 1);
 
     }
 }
