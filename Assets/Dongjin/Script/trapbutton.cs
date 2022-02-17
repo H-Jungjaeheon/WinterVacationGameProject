@@ -14,8 +14,10 @@ public class trapbutton : MonoBehaviour
 
     private void Update()
     {
+
         if (buttonon == true && Input.GetKeyDown(KeyCode.F))
         {
+            
             transform.GetChild(1).gameObject.transform.DOLocalMoveY(transform.GetChild(1).position.y + 20, 1f).SetEase(Ease.Linear);
         }
     }
