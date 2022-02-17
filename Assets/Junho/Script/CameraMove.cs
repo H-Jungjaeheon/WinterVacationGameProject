@@ -48,7 +48,15 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
     private void Update()
-    {       
+    {
+        if (GameManager.Instance.Stage == 2)
+        {
+            center.y = -41.12f;
+        }
+        if (GameManager.Instance.Stage == 3)
+        {
+            center.y = -80f;
+        }
         if (IsBossDeadSkill == false)
         {
             if (IsGrab == true)
