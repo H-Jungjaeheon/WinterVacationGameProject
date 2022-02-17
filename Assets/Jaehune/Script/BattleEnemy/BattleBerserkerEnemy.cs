@@ -9,6 +9,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     [SerializeField] GameObject HealText;
     [SerializeField] bool End = false;
     [SerializeField] Image MadBar;
+    [SerializeField] Vector2 BarPosition, PicturePosition;
     public bool IsSuperSkillng;
     // Start is called before the first frame update
     public override void Start()
@@ -20,7 +21,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.9f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(1f, 0.7f, 0);
         SkillAttackRand = Random.Range(1, 3);
     }
 
@@ -48,12 +49,12 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2.5f, 0.06f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3f, -0.1f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0, 0.9f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1f, 0.7f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -65,11 +66,11 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         MadBar.fillAmount = SuperSkillCount / MaxSuperSkillCount;
-        HpBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
-        AngerBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp - 0.2f, 0);
-        MadBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.3f, 0);
-        HpBarNull.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
-        EnemyPicture.transform.position = this.transform.position + new Vector3(-1.3f, BarUp, 0);
+        HpBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y);
+        AngerBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y - 0.3f);
+        MadBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y + 0.3f);
+        HpBarNull.transform.position = new Vector2(this.transform.position.x + BarPosition.x , this.transform.position.y + BarPosition.y);
+        EnemyPicture.transform.position = new Vector2(this.transform.position.x + PicturePosition.x, this.transform.position.y + PicturePosition.y);
     }
     public override void RayCasting()
     {
@@ -107,7 +108,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
+            transform.position = this.transform.position + new Vector3(-0.4f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
@@ -137,7 +138,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
+            transform.position = this.transform.position + new Vector3(0.4f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -182,7 +183,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsSkill", true);
+            animator.SetBool("IsSkillTwice", true);
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
@@ -229,7 +230,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
-            animator.SetBool("IsSkill", false);
+            animator.SetBool("IsSkillTwice", false);
             BattleManager.Instance.CamE = false;
             GoToReturn = true;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -271,7 +272,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsSkill", true);
+            animator.SetBool("IsSkillOnce", true);
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
@@ -315,7 +316,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
-            animator.SetBool("IsSkill", false);
+            animator.SetBool("IsSkillOnce", false);
             BattleManager.Instance.CamE = false;
             GoToReturn = true;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
