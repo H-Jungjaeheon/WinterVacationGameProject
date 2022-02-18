@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     
     public int Stage = 1,Money; 
     [SerializeField] public Image FadIn, BattleStartImage; 
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, bosssurvival =false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false, is2F = false, isBossRoom = false , isDoor = false, BossRoomStart=false, BossRoom =false;
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, bosssurvival =false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false, is2F = false, isBossRoom = false , isDoor = false, BossRoomStart=false, BossRoom =false,BossSound,finalBossSound;
     [SerializeField] bool IsStart = false;
     public Text BattleSkillText;
     public Text[] PBattleSkillBackGroundText;
@@ -103,6 +103,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.2f);
         BattleButtonUi.SetActive(true);
         StartCoroutine(BattleStartFaidIn(0.8f));
+        if(BossSound == true)
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[2].Play();
+        else if(finalBossSound == true)
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[3].Play();
+        else
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[1].Play();
         yield return new WaitForSeconds(1f);
         IsBattlePlace = true;
         yield return new WaitForSeconds(2f);
@@ -129,6 +135,7 @@ public class GameManager : MonoBehaviour
         BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);
         Player.SetActive(true);
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[0].Play();
         yield return null;
     }
      

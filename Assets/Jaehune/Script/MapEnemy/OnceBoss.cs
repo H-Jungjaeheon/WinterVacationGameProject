@@ -61,6 +61,7 @@ public class OnceBoss : BasicEnemyScript
         if (IsTurn == false)
         {
             IsTurn = true;
+            GameManager.Instance.BossSound = true;
             yield return new WaitForSeconds(2);
             WarningObj.SetActive(true);
             yield return new WaitForSeconds(1);

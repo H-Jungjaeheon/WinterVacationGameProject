@@ -54,6 +54,7 @@ public class FinalBoss : BasicEnemyScript
     {
         if (IsTurn == false)
         {
+            GameManager.Instance.finalBossSound = true;
             IsTurn = true;
             yield return new WaitForSeconds(1);
             GoToPlayer = true;

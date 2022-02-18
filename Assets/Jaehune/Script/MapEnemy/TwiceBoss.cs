@@ -61,6 +61,7 @@ public class TwiceBoss : BasicEnemyScript
         if (IsTurn == false)
         {
             IsTurn = true;
+            GameManager.Instance.BossSound = true;
             yield return new WaitForSeconds(3);
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);

@@ -12,6 +12,7 @@ public class HealBlock : MonoBehaviour
         text.gameObject.SetActive(false);
         if (isCol && Input.GetKey(KeyCode.F))
         {
+            GameManager.Instance.stackDamage -= 50;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.4f, 0.4f, 1f);
         }
 
