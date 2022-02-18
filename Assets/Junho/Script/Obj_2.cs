@@ -108,7 +108,7 @@ void Start()
     {
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
-        int ran = Random.Range(0, 5);
+        int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
         if (boxIdx == 0)
         {
@@ -125,20 +125,18 @@ void Start()
                 switch (ran)
                 {
                     case 0:
-                        Debug.Log("≤Œ");
-                        particle[1].SetActive(true);
-                        Invoke("Nothing", 4.5f);
+                        money.GetComponent<ParticleSystem>().Play();
+                        GameManager.Instance.Money += 10;
+                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
                         break;
 
                     case 1:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
                         break;
                     case 2:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
                         break;
 
                     case 3:
@@ -146,11 +144,7 @@ void Start()
                         GameManager.Instance.Money += 10;
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                         break;
-                    case 4:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;
+                    
                 }
                 break;
             case 1://µÂ∑≥≈Î
@@ -174,14 +168,10 @@ void Start()
                         break;
 
                     case 3:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        break;
-                    case 4:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
                         break;
+                    
                 }
                 break;
         }
