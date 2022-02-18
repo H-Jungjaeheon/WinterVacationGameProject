@@ -13,6 +13,7 @@ public class KeyDoor : MonoBehaviour
             transform.parent.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0.1f, 0f, 1f);
             transform.parent.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
             GameManager.Instance.isGetKey = false;
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
