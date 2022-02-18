@@ -104,11 +104,11 @@ public class GameManager : MonoBehaviour
         BattleButtonUi.SetActive(true);
         StartCoroutine(BattleStartFaidIn(0.8f));
         if(BossSound == true)
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[2].Play();
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(2);
         else if(finalBossSound == true)
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[3].Play();
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
         else
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[1].Play();
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(1);
         yield return new WaitForSeconds(1f);
         IsBattlePlace = true;
         yield return new WaitForSeconds(2f);
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
         BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);
         Player.SetActive(true);
-        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSource[0].Play();
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(0);
         yield return null;
     }
      

@@ -29,4 +29,10 @@ public class SoundManager : MonoBehaviour
             SoundSource[i].volume = volume;
         }
     }
+    public void musicSound(int soundidx)
+    {
+        for (int i = 0; i < musicSource.Length; i++)
+            musicSource[i].GetComponent<AudioSource>().Stop();
+        musicSource[soundidx].GetComponent<AudioSource>().Play();
+    }
 }
