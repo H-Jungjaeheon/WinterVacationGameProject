@@ -7,6 +7,8 @@ using DG.Tweening;
 public class Obj_3 : MonoBehaviour
 {
     public GameObject[] Items;
+    public GameObject[] StatItems;
+
     public bool isIt;
     bool iscollison;
     public Slider slider;
@@ -16,12 +18,12 @@ public class Obj_3 : MonoBehaviour
     [SerializeField]
     public GameObject[] particle;
 
-    [SerializeField] public GameObject DoPos;
+    [SerializeField] GameObject DoPos;
     public int boxIdx;
 
     public ParticleSystem money;
     private GameObject audioSource;
-    
+
 
 
     // Start is called before the first frame update
@@ -46,11 +48,11 @@ public class Obj_3 : MonoBehaviour
         if (isIt && iscollison)
         {
             slider.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false )
+            if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
             {
                 cnt += 5;
             }
-           
+
         }
         else
         {
@@ -63,8 +65,8 @@ public class Obj_3 : MonoBehaviour
             Drop();
         }
         if (cnt > 0)
-        { 
-            cnt -= Time.deltaTime*10;
+        {
+            cnt -= Time.deltaTime * 10;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,77 +109,42 @@ public class Obj_3 : MonoBehaviour
     {
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
-        int ran = Random.Range(0, 5);
+        int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
+        int StatItemRan = Random.Range(0, 6);
         audioSource.GetComponent<AudioSource>().Play();
-        switch (boxIdx)
+        switch (ran)
         {
-            case 0: // »óÀÚ
-                switch (ran)
-                {
-                    case 0:
-                        Debug.Log("²Î");
-                        particle[1].SetActive(true);
-                        Invoke("Nothing", 4.5f);
-                        break;
+            case 0:
+                Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
 
-                    case 1:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
-                        break;
-                    case 2:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
-                        break;
-
-                    case 3:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;
-                    case 4:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;
-                }
                 break;
-            case 1://³ª¹« »óÀÚ
-                switch (ran)
-                {
-                    case 0:
-                        Debug.Log("²Î");
-                        particle[1].SetActive(true);
-                        Invoke("Nothing", 4.5f);
-                        break;
 
-                    case 1:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
-                        break;
-                    case 2:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
-                        break;
+            case 1:
+                money.GetComponent<ParticleSystem>().Play();
+                GameManager.Instance.Money += 10;
+                Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
 
-                    case 3:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        break;
-                    case 4:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;
-                }
+                //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                break;
+            case 2:
+                money.GetComponent<ParticleSystem>().Play();
+                GameManager.Instance.Money += 10;
+                Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
+                //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                break;
+
+            case 3:
+                money.GetComponent<ParticleSystem>().Play();
+                GameManager.Instance.Money += 10;
+                Instantiate(Items[StatItemRan], transform.position, Items[StatItemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                 break;
         }
+
+
     }
-        void Nothing()
+    void Nothing()
     {
         particle[1].SetActive(false);
 

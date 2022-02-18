@@ -29,11 +29,11 @@ public class Obj : MonoBehaviour
         isIt = true;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
-        if(boxIdx == 0)
+        if (boxIdx == 0)
         {
             audioSource = GameObject.Find("BoxSounds").gameObject;
         }
-        else if(boxIdx == 1)
+        else if (boxIdx == 1)
         {
             audioSource = GameObject.Find("WoodBox").gameObject;
         }
@@ -102,7 +102,7 @@ public class Obj : MonoBehaviour
         }
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
-        int ran = Random.Range(0, 4);
+        int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0,6);
         
         switch (boxIdx)
@@ -131,11 +131,7 @@ public class Obj : MonoBehaviour
                         money.GetComponent<ParticleSystem>().Play();
                         GameManager.Instance.Money += 10;
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;
-                    case 4:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
+
                         break;
                 }
                 break;
@@ -149,9 +145,9 @@ public class Obj : MonoBehaviour
                         break;
 
                     case 1:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
+                        Debug.Log("²Î");
+                        particle[1].SetActive(true);
+                        Invoke("Nothing", 4.5f);
                         break;
                     case 2:
                         money.GetComponent<ParticleSystem>().Play();
@@ -162,12 +158,9 @@ public class Obj : MonoBehaviour
                     case 3:
                         money.GetComponent<ParticleSystem>().Play();
                         GameManager.Instance.Money += 10;
+                        //Instantiate(Money,transform.position,Money.transform.rotation).transform.DOLocalMove
                         break;
-                    case 4:
-                        money.GetComponent<ParticleSystem>().Play();
-                        GameManager.Instance.Money += 10;
-                        Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
-                        break;
+
                 }
                 break;
         }
