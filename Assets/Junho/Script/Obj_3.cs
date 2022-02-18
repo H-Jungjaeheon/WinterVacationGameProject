@@ -20,6 +20,9 @@ public class Obj_3 : MonoBehaviour
     public int boxIdx;
 
     public ParticleSystem money;
+    private GameObject audioSource;
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,7 @@ public class Obj_3 : MonoBehaviour
         particle[0].SetActive(false);
         particle[1].SetActive(false);
         slider.gameObject.SetActive(false);
-
+        audioSource = GameObject.Find("BoxSounds").gameObject;
 
     }
 
@@ -106,6 +109,7 @@ public class Obj_3 : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 5);
         int itemRan = Random.Range(0, 6);
+        audioSource.GetComponent<AudioSource>().Play();
         switch (boxIdx)
         {
             case 0: // »óÀÚ

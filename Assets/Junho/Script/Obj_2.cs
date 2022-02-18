@@ -20,17 +20,26 @@ public class Obj_2 : MonoBehaviour
     public int boxIdx;
 
     public ParticleSystem money;
+    private GameObject audioSource;
 
-    // Start is called before the first frame update
-    void Start()
+
+// Start is called before the first frame update
+void Start()
     {
         iscollison = false;
         isIt = true;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
         slider.gameObject.SetActive(false);
-
+    if (boxIdx == 0)
+    {
+        audioSource = GameObject.Find("BoxSounds").gameObject;
     }
+    else if (boxIdx == 1)
+    {
+        audioSource = GameObject.Find("WoodBox").gameObject;
+    }
+}
 
     // Update is called once per frame
     float cnt;
@@ -101,6 +110,15 @@ public class Obj_2 : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 5);
         int itemRan = Random.Range(0, 6);
+        if (boxIdx == 0)
+        {
+            audioSource.GetComponent<AudioSource>().Play();
+        }
+        else if (boxIdx == 1)
+        {
+            audioSource.GetComponent<AudioSource>().Play();
+        }
+
         switch (boxIdx)
         {
             case 0: // »óÀÚ

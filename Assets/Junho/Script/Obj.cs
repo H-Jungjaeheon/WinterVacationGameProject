@@ -19,6 +19,7 @@ public class Obj : MonoBehaviour
     public int boxIdx;
     [SerializeField] private bool mobspawn;
     [SerializeField] private GameObject mob;
+    private GameObject audioSource;
     public ParticleSystem money;
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,14 @@ public class Obj : MonoBehaviour
         isIt = true;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
+        if(boxIdx == 0)
+        {
+            audioSource = GameObject.Find("BoxSounds").gameObject;
+        }
+        else if(boxIdx == 1)
+        {
+            audioSource = GameObject.Find("WoodBox").gameObject;
+        }
     }
 
     // Update is called once per frame
@@ -82,6 +91,14 @@ public class Obj : MonoBehaviour
         if (mobspawn == true)
         {
             Instantiate(mob, this.transform.position, transform.rotation);
+        }
+        if(boxIdx == 0)
+        {
+            audioSource.GetComponent<AudioSource>().Play();
+        }
+        else if(boxIdx == 1)
+        {
+            audioSource.GetComponent<AudioSource>().Play();
         }
         isIt = false;
         GetComponent<SpriteRenderer>().sprite = Open;
