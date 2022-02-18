@@ -62,7 +62,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -137,7 +137,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 7015724022367195125}
   - component: {fileID: 6923928397425721741}
   m_Layer: 0
-  m_Name: BattleOnceBoss
+  m_Name: BattleTwiceBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,8 +211,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4203299294672089790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.277344, y: -6.412594, z: 5.4064136}
-  m_LocalScale: {x: 1.6, y: 1.4, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7371742896331681205}
   m_RootOrder: 1
@@ -230,18 +230,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.178549, y: 0.678776}
+  m_Offset: {x: 4.635476, y: 1.6583958}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.99, y: 4.63}
-    newSize: {x: 3.39, y: 4.52}
+    oldSize: {x: 30.002546, y: 23.000002}
+    newSize: {x: 14, y: 10}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5989331, y: 5.833122}
+  m_Size: {x: 1.034533, y: 10.245655}
   m_EdgeRadius: 0
 --- !u!212 &7171083092634925270
 SpriteRenderer:
@@ -283,12 +283,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5e886d781fa35b6419dd4bc4abd9b1e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a924b8eaf66d6fc42b9686fbc1ce7283, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 3.39, y: 4.52}
+  m_DrawMode: 1
+  m_Size: {x: 14, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -349,6 +349,7 @@ MonoBehaviour:
   IsReflect: 0
   IsStun: 0
   IsPoison: 0
+  IsInstantDead: 0
   SR: {fileID: 0}
   animator: {fileID: 0}
   SkillAttackRand: 0
@@ -358,6 +359,9 @@ MonoBehaviour:
   Poison: {fileID: 4608495460826487009}
   DmgUp: {fileID: 7783155553485680692}
   IsDmgUp: 0
+  IsFarAway: 0
+  BarTransform: {x: 2.9, y: 72.81}
+  PictureTransform: {x: -4.13, y: 72.81}
 --- !u!95 &6923928397425721741
 Animator:
   serializedVersion: 3
@@ -368,7 +372,7 @@ Animator:
   m_GameObject: {fileID: 4203299294672089790}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69a405203343e424db2a85a0301a027a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -407,7 +411,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -442,7 +446,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998d513b6eeb0834bb4ad65027119e38, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 310e87fb0385c5d48a127acde9c87d5a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -482,7 +486,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -557,13 +561,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 5.4064136}
   m_LocalScale: {x: 0.0035360001, y: 0.0030940003, z: 1}
   m_Children:
-  - {fileID: 1597896974302243587}
   - {fileID: 4581164932705973718}
   - {fileID: 5247161435530192350}
   - {fileID: 1315552335493829790}
   - {fileID: 636678753468375472}
   - {fileID: 1972167893803722046}
   - {fileID: 7285043755236375275}
+  - {fileID: 1597896974302243587}
   m_Father: {fileID: 7371742896331681205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -663,12 +667,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 5.9, y: 0}
-  m_SizeDelta: {x: 400, y: 400}
+  m_SizeDelta: {x: 600, y: 660}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5311656598800108217
 CanvasRenderer:
@@ -738,7 +742,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -813,7 +817,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9069586729759938252}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

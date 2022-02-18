@@ -9,6 +9,7 @@ public class BattleOnceBoss : BattleBasicEnemy
     [SerializeField] bool IsSuperAnger;
     [SerializeField] int SuperAnger;
     [SerializeField] GameObject HealText;
+    [SerializeField] Vector2 BarTransform, PictureTransform;
     public Image SuperAngerBar;
 
     public override void Start()
@@ -18,7 +19,7 @@ public class BattleOnceBoss : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 3f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(3, 3f, 0);
         SuperAnger = 0;
         IsSuperAnger = false;
         Invoke("BossCam", 3.5f);
@@ -38,12 +39,12 @@ public class BattleOnceBoss : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3, 1f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(4, 2f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 3f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(3, 3f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -57,13 +58,13 @@ public class BattleOnceBoss : BattleBasicEnemy
     public override void Hpbar()
     {
         HpBar.fillAmount = Hp / MaxHp;
-        AngerBar.fillAmount = Anger / MaxAnger;
+        AngerBar.fillAmount = Anger / MaxAnger; 
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
-        HpBar.transform.position = new Vector3(0.65f, BarUp + 70.05f, 0);
-        AngerBar.transform.position = new Vector3(0.65f, BarUp + 69.35f, 0);
-        HpBarNull.transform.position = new Vector3(0.65f, BarUp + 70.05f, 0);
-        SuperAngerBar.transform.position = new Vector3(0.65f, BarUp + 70.7f, 0);
-        EnemyPicture.transform.position = new Vector3(-6.4f, BarUp + 70, 0);
+        HpBar.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        AngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y - 0.7f);
+        HpBarNull.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        SuperAngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y + 0.7f);
+        EnemyPicture.transform.position = new Vector2(PictureTransform.x, PictureTransform.y);
     }
     public override void RayCasting()
     {
@@ -139,11 +140,11 @@ public class BattleOnceBoss : BattleBasicEnemy
             GameManager.Instance.BattleSkillText.text = "∏‘¿Ã ºˆ»Æ";
             BattleManager.Instance.IsEnemyTurn = false;
             GoToPlayer = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(-0.8f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -194,7 +195,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                 }
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(0.8f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -212,7 +213,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             }
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
         }
@@ -226,7 +227,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsSkill", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(-0.7f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -277,7 +278,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                 }
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(0.7f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;
@@ -306,6 +307,8 @@ public class BattleOnceBoss : BattleBasicEnemy
             SuperAngerCount = 0;
             IsSuperAnger = true;
             BattleManager.Instance.CamP = true;
+            animator.SetBool("IsAttack", true);
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(1f);
             yield return new WaitForSeconds(2);
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamP = false;

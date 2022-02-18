@@ -68,6 +68,7 @@ public class TwiceBoss : BasicEnemyScript
             WarningObj.SetActive(true);
             SeeCrossroad *= -1;
             yield return new WaitForSeconds(0.5f);
+            animator.SetBool("IsSkill", true);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime2(0.7f);
             yield return new WaitForSeconds(1);
             Go = true;
@@ -76,8 +77,10 @@ public class TwiceBoss : BasicEnemyScript
     }
     IEnumerator AnimationP2()
     {
+        animator.SetBool("IsSkill", false);
         yield return new WaitForSeconds(1);
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.2f, 0), 7f * Time.deltaTime);
+        animator.SetBool("IsWalk", true);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.4f, 0), 5f * Time.deltaTime);
         yield return null;
     }
 }
