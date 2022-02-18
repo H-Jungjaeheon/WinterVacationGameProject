@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public bool IsBattleStart;
     public bool IsCamMove, AttackOk, IsBattlePlace, isPause, isRoom, LevelUp, 
     bosssurvival, isGetKey, isManaBarrier, isEunsin, isTrapBarrier, isBurns, isGameOver, is2F, 
-    isBossRoom, isDoor, BossRoomStart, BossRoom;
+    isBossRoom, isDoor, BossRoomStart, BossRoom,BossSound, finalBossSound;
 
     [Header("º¯¼ö")]
     [Space(10f)]
@@ -143,7 +143,16 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale /= 2;
         }
-        if(BossRoomStart)
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            isGetKey = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.V))
+        {
+            GameObject.Find("GameManager").GetComponent<PlayerStats>().Stateup = true;
+            GameObject.Find("GameManager").GetComponent<PlayerStats>().DmgUpgrade();
+        }
+        if (BossRoomStart)
         {
             StartCoroutine(BossRooms());
             BossRoomStart = false;
@@ -153,6 +162,12 @@ public class GameManager : MonoBehaviour
     IEnumerator BattleStart()
     {
         StartCoroutine(BattleStartFaidOut(0.8f));
+        if (BossSound == true)
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(2);
+        else if (finalBossSound == true)
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
+        else
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(1);
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
         IsCamMove = true;
@@ -185,6 +200,7 @@ public class GameManager : MonoBehaviour
         BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);
         Player.SetActive(true);
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(0);
         yield return null;
     }
      

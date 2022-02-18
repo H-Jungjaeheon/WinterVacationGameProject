@@ -5,7 +5,7 @@ using UnityEngine;
 public class EL : MonoBehaviour
 {
     private bool Dam;
-    void Update()
+    void FixdUpdate()
     {
         if(Dam)
         {

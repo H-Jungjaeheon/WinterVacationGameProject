@@ -32,21 +32,21 @@ public class Door : MonoBehaviour
             GameManager.Instance.isRoom = true;
             Debug.Log("¾À ³Ñ¾î°¨¿ä");
             audioSource.GetComponent<AudioSource>().Play();
-            if(bossdoor)
+            if (nextdoor)
+            {
+                GameManager.Instance.bosssurvival = true;
+                GameManager.Instance.isBossRoom = false;
+                GameManager.Instance.isRoom = false;
+                GameManager.Instance.Stage++;
+            }
+            if (bossdoor)
             {
                 GameManager.Instance.BossRoomStart = true;
                 GameManager.Instance.BossRoom = true;
             }
             else
                 StartCoroutine(BattleStartFaidOut(0.1f));
-            if (nextdoor)
-            {
-                GameManager.Instance.bosssurvival = true;
-                GameManager.Instance.isBossRoom = false;
-                GameManager.Instance.isRoom = false; 
-                GameManager.Instance.Stage++;
-            }
-
+           
         }
     }
     IEnumerator BattleStartFaidOut(float FaidTime)
