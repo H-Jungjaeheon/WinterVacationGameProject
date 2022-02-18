@@ -10,7 +10,8 @@ public class BattleFinalBoss : BattleBasicEnemy
     [SerializeField] int RandBasicAttack, RandSkill, PoisonCount, SuperAnger, MaxPoisonCount; //(기본 공격 랜덤, 스킬 공격 랜덤, 독 공격 카운터, 체력 흡수 카운터
     [SerializeField] GameObject HealText, Warning; //체력 회복 텍스트
     [SerializeField] GameObject[] InstantEye;
-    public Image Poison, SuperAngerBar, InstantDeathBar, MaxInstantDeathBar, InstantImage, Eye, SuperEye; //각성 바, 즉사 패턴 바(빈 즉사 패턴 바) 즉사 패턴 이미지
+    public Image Poison, SuperAngerBar, InstantDeathBar, MaxInstantDeathBar, InstantImage, Eye, SuperEye, PoisonEffect; //각성 바, 즉사 패턴 바(빈 즉사 패턴 바) 즉사 패턴 이미지
+    [SerializeField] Vector2 PoisonEffectTransform;
 
     public override void Start()
     {
@@ -23,7 +24,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.7f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(2, 3.5f, 0);
         SuperAnger = 0;
         IsSuperAnger = false;
         IsUseSkill = false;
@@ -50,6 +51,21 @@ public class BattleFinalBoss : BattleBasicEnemy
             Destroy(GetComponent<BattleEye>());
         }
     }
+    public override void AttackGone()
+    {
+        if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == false)
+        {
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3, 2f, 0), 10 * Time.deltaTime);
+        }
+        else if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == true)
+        {
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(5, 2.5f, 0), 10 * Time.deltaTime);
+        }
+        else if (GoToReturn == true)
+        {
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(2, 3.5f, 0), 10 * Time.deltaTime); //
+        }
+    }
     IEnumerator SuperEyeColor(float FaidTime)
     {
         Debug.Log("실행");
@@ -61,8 +77,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             SuperEye.color = color;
             if (color.a >= 1f)
             {
-                color.a = 1f;
-                
+                color.a = 1f;              
             }
             yield return Time.deltaTime;
         }
@@ -156,28 +171,6 @@ public class BattleFinalBoss : BattleBasicEnemy
         //Warning.SetActive(false);
         yield return null;
     }
-    public override void AttackGone()
-    {
-        if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == false)
-        {
-            animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3, 0.7f, 0), 10 * Time.deltaTime);
-        }
-        else if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == true)
-        {
-            animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(9, 0.7f, 0), 10 * Time.deltaTime);
-        }
-        else if (GoToReturn == true)
-        {
-            animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 1.7f, 0), 10 * Time.deltaTime);
-        }
-        else if (GoToReturn == false)
-        {
-            animator.SetBool("IsWalk", false);
-        }
-    }
     void BossCam()
     {
         GameObject.Find("Main Camera").GetComponent<CameraMove>().BossBattleStart = true;
@@ -200,6 +193,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         Eye.transform.position = new Vector3(-8.5f, BarUp + 61f, 0);
         SuperEye.transform.position = new Vector3(0f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
+        PoisonEffect.transform.position = new Vector2(Player.transform.position.x + PoisonEffectTransform.x, Player.transform.position.y + PoisonEffectTransform.y);
     }
     public override void RayCasting()
     {
@@ -251,6 +245,34 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             color.a -= Time.deltaTime / FaidTime;
             Poison.color = color;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+            }
+            yield return null;
+        }
+    }
+    IEnumerator PoisonEffectFadeIn(float FaidTime)
+    {
+        Color color = PoisonEffect.color;
+        while (color.a < 1f)
+        {
+            color.a += Time.deltaTime / FaidTime;
+            PoisonEffect.color = color;
+            if (color.a >= 1f)
+            {
+                color.a = 1f;
+            }
+            yield return null;
+        }
+    }
+    IEnumerator PoisonEffectFadeOut(float FaidTime)
+    {
+        Color color = PoisonEffect.color;
+        while (color.a > 0f)
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            PoisonEffect.color = color;
             if (color.a <= 0f)
             {
                 color.a = 0f;
@@ -332,7 +354,6 @@ public class BattleFinalBoss : BattleBasicEnemy
             RandBasicAttack = Random.Range(1, 2);
         }
         RandSkill = Random.Range(1, 3); //스킬 랜덤값 뽑기
-        animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         if (Anger < MaxAnger && InstantDeathCount < MaxInstantDeathCount && RandBasicAttack == 1 && SuperAngerCount < MaxSuperAngerCount)
         {
@@ -344,7 +365,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.9f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(-1f, -0.8f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -395,7 +416,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 }
             }
             yield return new WaitForSeconds(2f); //독 공격 딜레이
-            transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(1f, 0.8f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -436,12 +457,14 @@ public class BattleFinalBoss : BattleBasicEnemy
             GameManager.Instance.BattleSkillText.text = "고통의 원인";
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1f);
-            animator.SetBool("IsAttack", true);
+            StartCoroutine(PoisonEffectFadeIn(0.5f));
+            animator.SetBool("IsAttack2", true);
             BattleManager.Instance.CamP = true;
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
             IsPoison = true;
-            yield return new WaitForSeconds(2f);
-            animator.SetBool("IsAttack", false);
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(PoisonEffectFadeOut(0.5f));
+            animator.SetBool("IsAttack2", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             Anger += 30;
@@ -459,6 +482,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             }
             else
             {
+                yield return new WaitForSeconds(2);
                 GameObject DT3 = Instantiate(DmgText);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -466,7 +490,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 DT3.GetComponent<BattleDamageText>().damage = (Damage / 3);
                 GameManager.Instance.stackDamage += Damage / 3;
                 PoisonCount++;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1);
             }
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
@@ -477,7 +501,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             IsFarAway = true;
             GameManager.Instance.BattleSkillText.text = "뮌하우젠 증후군";
             BattleManager.Instance.IsEnemyTurn = false;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             BattleManager.Instance.CamP = true;
             animator.SetBool("IsSkill", true);
             GameObject DT = Instantiate(DmgText);
@@ -532,7 +556,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                 }
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -542,6 +566,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             }
             else
             {
+                yield return new WaitForSeconds(2);
                 GameObject DT3 = Instantiate(DmgText);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -549,7 +574,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 DT3.GetComponent<BattleDamageText>().damage = (Damage / 3);
                 GameManager.Instance.stackDamage += Damage / 3;
                 PoisonCount++;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1);
             }
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
@@ -561,11 +586,11 @@ public class BattleFinalBoss : BattleBasicEnemy
             GameManager.Instance.BattleSkillText.text = "이계의 검";
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
-            animator.SetBool("IsAttack", true); //애니메이션 검 소환
+            animator.SetBool("IsSkill2-1", true); //애니메이션 검 소환
             yield return new WaitForSeconds(1.5f);
-            animator.SetBool("IsAttack", false); //애니메이션 검 소환 비활성화
-            animator.SetBool("IsAttack", true); //애니메이션 검 휘두르기
-            transform.position = EnemySpawner.transform.position + new Vector3(-7, 1.3f, 0);
+            animator.SetBool("IsSkill2-1", false); //애니메이션 검 소환 비활성화
+            animator.SetBool("IsSkill2-2", true); //애니메이션 검 휘두르기
+            transform.position = EnemySpawner.transform.position + new Vector3(-7, 2.5f, 0);
             BattleManager.Instance.CamE = true;
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
@@ -617,8 +642,8 @@ public class BattleFinalBoss : BattleBasicEnemy
                 }
             }
             yield return new WaitForSeconds(2f);
-            transform.position = EnemySpawner.transform.position + new Vector3(1, 1.3f, 0);
-            animator.SetBool("IsAttack", false);
+            transform.position = EnemySpawner.transform.position + new Vector3(2, 3.5f, 0);
+            animator.SetBool("IsSkill2-2", false);
             BattleManager.Instance.CamE = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             InstantDeathCount += 30;
@@ -636,6 +661,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             }
             else
             {
+                yield return new WaitForSeconds(2);
                 GameObject DT3 = Instantiate(DmgText);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -643,7 +669,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 DT3.GetComponent<BattleDamageText>().damage = (Damage / 3);
                 GameManager.Instance.stackDamage += Damage / 3;
                 PoisonCount++;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1);
             }
             GoToReturn = false;
             IsFarAway = false;
@@ -655,12 +681,13 @@ public class BattleFinalBoss : BattleBasicEnemy
             GameManager.Instance.BattleSkillText.text = "기괴한 수혈";
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
+            animator.SetBool("IsSkill", true);
             SuperAngerCount = 0;
             InstantDeathCount += 50;
             IsSuperAnger = true;
             BattleManager.Instance.CamP = true;
             yield return new WaitForSeconds(2);
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(2);
@@ -686,9 +713,10 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             GameManager.Instance.BattleSkillText.text = "до раю позадуж";
             BattleManager.Instance.IsEnemyTurn = false;
+            yield return new WaitForSeconds(0.5f);
+            animator.SetBool("IsSkill3", true);
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            animator.SetBool("IsAttack", true); //즉사 애니메이션 재생
             yield return new WaitForSeconds(1f);
             IsInstantDead = true;
             for(int i = 0; i < 3; i++)
@@ -718,13 +746,12 @@ public class BattleFinalBoss : BattleBasicEnemy
                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(1f);
                Player.GetComponent<BattlePlayer>().IsHit = true;                
             }
-            animator.SetBool("IsAttack", false);
+            animator.SetBool("IsSkill3", false);
             yield return new WaitForSeconds(2);
             IsInstantDead = false;
             StartCoroutine(InstantDeadImageFadeOut(0.5f));
             yield return new WaitForSeconds(2);
-            //즉사 배경 투명도 다시 점점 투명하게
-            this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.3f, 0);
+            this.transform.position = EnemySpawner.transform.position + new Vector3(2, 3.5f, 0);
             BattleManager.Instance.CamE = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             if (IsPoison == false)
@@ -733,6 +760,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             }
             else
             {
+                yield return new WaitForSeconds(2);
                 GameObject DT3 = Instantiate(DmgText);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -740,7 +768,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                 DT3.GetComponent<BattleDamageText>().damage = (Damage / 3);
                 GameManager.Instance.stackDamage += Damage / 3;
                 PoisonCount++;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1);
             }
             GoToReturn = false;
             IsFarAway = false;

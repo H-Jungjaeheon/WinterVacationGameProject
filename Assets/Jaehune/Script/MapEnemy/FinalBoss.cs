@@ -24,8 +24,8 @@ public class FinalBoss : BasicEnemyScript
     }
     public override void RayCasting()
     {
-        Debug.DrawRay(transform.position - new Vector3(0, 1, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position - new Vector3(0, 1, 0), Vector3.left, SeeCrossroad * IsPlus);
+        Debug.DrawRay(transform.position - new Vector3(0, 2, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position - new Vector3(0, 2, 0), Vector3.left, SeeCrossroad * IsPlus);
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
@@ -36,7 +36,7 @@ public class FinalBoss : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-5, 0.7f, 0), 4f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-5, 2.935f, 0), 4f * Time.deltaTime);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {

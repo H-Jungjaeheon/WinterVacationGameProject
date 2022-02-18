@@ -178,6 +178,7 @@ MonoBehaviour:
   BarTransform: {x: 0, y: 2.29}
   PictureTransform: {x: -2.15, y: 2.22}
   EnergyBullet: {fileID: 8238835938239746605}
+  SRS: {fileID: 0}
 --- !u!95 &7027151089507517063
 Animator:
   serializedVersion: 3
@@ -487,7 +488,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998d513b6eeb0834bb4ad65027119e38, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c7af297c1bf64c41ad125586fd2a798, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

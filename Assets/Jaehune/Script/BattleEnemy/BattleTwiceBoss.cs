@@ -8,6 +8,8 @@ public class BattleTwiceBoss : BattleBasicEnemy
     [SerializeField] int SkillAttackRand, PoisonCount, MaxPoisonCount, DmgUpCount;
     [SerializeField] Image Poison, DmgUp;
     [SerializeField] bool IsDmgUp, IsFarAway;
+    [SerializeField] Vector2 BarTransform, PictureTransform;
+
     public override void Start()
     {
         IsPoison = false;
@@ -25,7 +27,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
-        this.transform.position = EnemySpawner.transform.position + new Vector3(1, 1.85f, 0);
+        this.transform.position = EnemySpawner.transform.position + new Vector3(0, 2.1f, 0);
         Invoke("BossCam", 3.5f);
     }
 
@@ -40,17 +42,17 @@ public class BattleTwiceBoss : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(3, 1f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(2, 0f, 0), 10 * Time.deltaTime);
         }
         else if(GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false && IsFarAway == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(9, 1f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(6, 1.25f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1, 1.85f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(0, 2.1f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == false)
         {
@@ -132,7 +134,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
     }
     void DamageUp()
     {
-        DmgUp.transform.position = this.transform.position + new Vector3(0, 4, 0);
+        DmgUp.transform.position = this.transform.position + new Vector3(1.5f, 5, 0);
         if (IsDmgUp == true)
         {
             StartCoroutine(DmgUpIconFadeIn(0.5f));
@@ -155,10 +157,10 @@ public class BattleTwiceBoss : BattleBasicEnemy
     { 
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
-        HpBar.transform.position = new Vector3(0.65f, BarUp + 65.05f, 0);
-        AngerBar.transform.position = new Vector3(0.65f, BarUp + 64.35f, 0);
-        HpBarNull.transform.position = new Vector3(0.65f, BarUp + 65.05f, 0);
-        EnemyPicture.transform.position = new Vector3(-6.4f, BarUp + 65, 0);
+        HpBar.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        AngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y - 0.7f);
+        HpBarNull.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        EnemyPicture.transform.position = new Vector2(PictureTransform.x, PictureTransform.y);
     }
     public override void RayCasting()
     {
@@ -240,7 +242,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             GameManager.Instance.BattleSkillText.text = "살아있는 대동맥";
             BattleManager.Instance.IsEnemyTurn = false;
             GoToPlayer = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
@@ -274,7 +276,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1f);
             StopGone = false;
             IsFarAway = false;
             animator.SetBool("IsAttack", false);
@@ -289,10 +291,11 @@ public class BattleTwiceBoss : BattleBasicEnemy
             }
             if (IsPoison == false)
             {
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(0.5f);
             }
             else
             {
+                yield return new WaitForSeconds(2f);
                 GameObject DT2 = Instantiate(DmgText);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -300,7 +303,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
                 DT2.GetComponent<BattleDamageText>().damage = (Damage / 3);
                 GameManager.Instance.stackDamage += Damage / 3;
                 PoisonCount++;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1f);
             }
             GoToReturn = false;
             BattleManager.Instance.IsPlayerTurn = true;
@@ -319,7 +322,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             Anger = 0;
             GameManager.Instance.BattleSkillText.text = "아름다운 노래";
             BattleManager.Instance.IsEnemyTurn = false;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             BattleManager.Instance.CamP = true;
             animator.SetBool("IsSkill", true);
             GameObject DT = Instantiate(DmgText);
@@ -355,7 +358,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;               
             }
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1f);
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamP = false;
             if (IsDmgUp == true)
@@ -369,6 +372,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             }
             else
             {
+                yield return new WaitForSeconds(2);
                 GameObject DT2 = Instantiate(DmgText);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -436,7 +440,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
-            animator.SetBool("IsSkill", true);
+            animator.SetBool("IsSkill2", true);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
             {
                 IsPoison = true;
@@ -446,7 +450,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             {
                 yield return new WaitForSeconds(1);
             }
-            animator.SetBool("IsSkill", false);
+            animator.SetBool("IsSkill2", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             if (IsDmgUp == true)

@@ -392,6 +392,8 @@ MonoBehaviour:
   IsHit: 0
   IsReflect: 0
   IsStun: 0
+  IsPoison: 0
+  IsInstantDead: 0
   SR: {fileID: 0}
   animator: {fileID: 0}
   IsBoom: 0
@@ -446,7 +448,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3148323519772573747}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -521,7 +523,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3148323519772573747}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -599,8 +601,8 @@ RectTransform:
   - {fileID: 8204246297277986656}
   - {fileID: 458717107695463538}
   - {fileID: 6940563610177558649}
-  - {fileID: 7855595548603033799}
   - {fileID: 6180118518216835423}
+  - {fileID: 7855595548603033799}
   m_Father: {fileID: 646886880526907539}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -682,6 +682,7 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
         Enemy.GetComponent<BattleBasicEnemy>().IsHit = true;
         yield return new WaitForSeconds(1);
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         BattleManager.Instance.CamP = false;
         SkillImage.SetActive(false);
         animator.SetBool("IsSkill", false);
@@ -731,6 +732,7 @@ public class BattlePlayer : MonoBehaviour
             GameManager.Instance.stackDamage -= GameManager.Instance.maxHp / 5;
         }
         yield return new WaitForSeconds(1);
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         BattleManager.Instance.CamE = false;
         animator.SetBool("IsHeal", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -765,6 +767,7 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.CamE = false;
         animator.SetBool("IsHyperDefense", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         yield return new WaitForSeconds(3);
         IsAttackSkill = false;
         if (GameManager.Instance.IsCamMove == true)
@@ -793,6 +796,7 @@ public class BattlePlayer : MonoBehaviour
         IsDefense = true;
         yield return new WaitForSeconds(1.5f);
         BattleManager.Instance.CamE = false;
+        GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         animator.SetBool("IsDefense", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(false);
         yield return new WaitForSeconds(2);

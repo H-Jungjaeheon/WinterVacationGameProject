@@ -255,7 +255,7 @@ public class CameraMove : MonoBehaviour
                 if (IsFarAway == false)
                 {
                     transform.position = BEnemy.transform.position + offset + new Vector3(-2, 2, 0);
-                    MCamera.orthographicSize = 5f;
+                    MCamera.orthographicSize = 6.5f;
                 }
                 else if (IsFarAway == true)
                 {
