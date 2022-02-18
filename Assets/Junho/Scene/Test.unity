@@ -6560,6 +6560,7 @@ MonoBehaviour:
   isPause: 0
   isRoom: 0
   LevelUp: 0
+  bosssurvival: 0
   isGetKey: 0
   isManaBarrier: 0
   isEunsin: 0
@@ -6569,6 +6570,8 @@ MonoBehaviour:
   is2F: 0
   isBossRoom: 0
   isDoor: 0
+  BossRoomStart: 0
+  BossRoom: 0
   IsStart: 0
   BattleSkillText: {fileID: 975338757}
   BattleButtonUi: {fileID: 1719129524}
@@ -6587,9 +6590,11 @@ MonoBehaviour:
   Player: {fileID: 1344772219785259545}
   menuPanel: {fileID: 1734405239}
   soundpanel: {fileID: 0}
+  MCamera: {fileID: 0}
   manaText: {fileID: 217056668}
   hpText: {fileID: 964371722}
   moneyText: {fileID: 1391935523}
+  Boss: []
   itemParticle: {fileID: 1412300285}
   speedParticle: {fileID: 437942380}
 --- !u!4 &446725384
@@ -7867,6 +7872,7 @@ MonoBehaviour:
   IsBossCamMove: 0
   IsLastBoss: 0
   IsBossDeadSkill: 0
+  IsBossMeet2: 0
   BEnemy: {fileID: 2002818898}
   BPlayer: {fileID: 930010500}
   Player: {fileID: 0}
