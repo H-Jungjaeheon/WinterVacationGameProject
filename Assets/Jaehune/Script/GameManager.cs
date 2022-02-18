@@ -12,8 +12,17 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; set; }
     
     public int Stage = 1,Money; 
-    [SerializeField] public Image FadIn, BattleStartImage; 
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, bosssurvival =false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false, is2F = false, isBossRoom = false , isDoor = false, BossRoomStart=false, BossRoom =false,BossSound,finalBossSound;
+    [SerializeField] public Image FadIn, BattleStartImage;
+
+    [Header("bool fields")]
+    [Space(10f)]
+    public bool IsBattleStart;
+    public bool IsCamMove, AttackOk, IsBattlePlace, isPause, isRoom, LevelUp, 
+    bosssurvival, isGetKey, isManaBarrier, isEunsin, isTrapBarrier, isBurns, isGameOver, is2F, 
+    isBossRoom, isDoor, BossRoomStart, BossRoom;
+
+    [Header("º¯¼ö")]
+    [Space(10f)]
     [SerializeField] bool IsStart = false;
     public Text BattleSkillText;
     public Text[] PBattleSkillBackGroundText;
@@ -31,7 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Text manaText, hpText , moneyText;
     private GameObject stop;
     [SerializeField] private int Bossidx;
-    [SerializeField] GameObject[] Boss;
+    [SerializeField] GameObject[] Boss, BattleBackGround;
     public GameObject[] PBattleSkillBackGround; //Player Skill BackGround
 
     public ParticleSystem speedParticle;
@@ -65,6 +74,53 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine("BattleStart");
             IsStart = true;
+            if(isBossRoom == false)
+            {
+                switch (Stage)
+                {
+                    case 1:
+                        BattleBackGround[0].SetActive(true);
+                        BattleBackGround[1].SetActive(false);
+                        BattleBackGround[2].SetActive(false);
+                        BattleBackGround[3].SetActive(false);
+                        BattleBackGround[4].SetActive(false);
+                        break;
+                    case 2:
+                        BattleBackGround[0].SetActive(false);
+                        BattleBackGround[1].SetActive(true);
+                        BattleBackGround[2].SetActive(false);
+                        BattleBackGround[3].SetActive(false);
+                        BattleBackGround[4].SetActive(false);
+                        break;
+                }
+            }
+            else
+            {
+                switch (Stage)
+                {
+                    case 1:
+                        BattleBackGround[0].SetActive(false);
+                        BattleBackGround[1].SetActive(false);
+                        BattleBackGround[2].SetActive(true);
+                        BattleBackGround[3].SetActive(false);
+                        BattleBackGround[4].SetActive(false);
+                        break;
+                    case 2:
+                        BattleBackGround[0].SetActive(false);
+                        BattleBackGround[1].SetActive(false);
+                        BattleBackGround[2].SetActive(false);
+                        BattleBackGround[3].SetActive(true);
+                        BattleBackGround[4].SetActive(false);
+                        break;
+                    case 3:
+                        BattleBackGround[0].SetActive(false);
+                        BattleBackGround[1].SetActive(false);
+                        BattleBackGround[2].SetActive(false);
+                        BattleBackGround[3].SetActive(false);
+                        BattleBackGround[4].SetActive(true);
+                        break;
+                }
+            }
         }
         if (IsBattleStart == false && IsStart == true && LevelUp == false)
         {
@@ -103,12 +159,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.2f);
         BattleButtonUi.SetActive(true);
         StartCoroutine(BattleStartFaidIn(0.8f));
-        if(BossSound == true)
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(2);
-        else if(finalBossSound == true)
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
-        else
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(1);
         yield return new WaitForSeconds(1f);
         IsBattlePlace = true;
         yield return new WaitForSeconds(2f);
@@ -135,7 +185,6 @@ public class GameManager : MonoBehaviour
         BattleManager.Instance.IsEnemyDead = false;
         Player.SetActive(false);
         Player.SetActive(true);
-        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(0);
         yield return null;
     }
      

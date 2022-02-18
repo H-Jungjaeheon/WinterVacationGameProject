@@ -188,7 +188,8 @@ public class BattlePlayer : MonoBehaviour
     }
     public void PlayerItem()
     {       
-        StartCoroutine("PlayerAttack", 1f);              
+        //StartCoroutine("PlayerAttack", 1f);
+        
     }
     public void PlayerDeffence()
     {
