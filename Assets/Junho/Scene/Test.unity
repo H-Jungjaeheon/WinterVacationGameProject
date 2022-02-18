@@ -7864,6 +7864,7 @@ MonoBehaviour:
   Battletarget: {fileID: 1732356000}
   offset: {x: 0, y: 3.3, z: -10}
   initialPosition: {x: 0, y: 0, z: 0}
+  cameraPosition: {x: 0, y: 0, z: 0}
   isright: 0
   IsFarAway: 0
   IsGrab: 0
@@ -7875,7 +7876,7 @@ MonoBehaviour:
   IsBossMeet2: 0
   BEnemy: {fileID: 2002818898}
   BPlayer: {fileID: 930010500}
-  Player: {fileID: 0}
+  Player: {fileID: 1344772219785259545}
   MCamera: {fileID: 713153308}
   ShakeAmount: 0.6
   speed: 3
