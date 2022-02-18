@@ -14,7 +14,7 @@ public class BossRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPlayer)
+        if (isPlayer && Input.GetKey(KeyCode.F)) 
         {
             GameManager.Instance.isBossRoom = true;
         }
