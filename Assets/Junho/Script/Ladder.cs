@@ -11,9 +11,7 @@ public class Ladder : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-              Interaction.SetActive(true);
-
-            
+              Interaction.SetActive(true);           
         }
     }
 

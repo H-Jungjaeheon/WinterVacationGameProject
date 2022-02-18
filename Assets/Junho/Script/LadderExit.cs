@@ -27,7 +27,7 @@ public class LadderExit : MonoBehaviour
         }
         else if (GameManager.Instance.is2F == false && isLadder == false)
         {
-            GameObject.Find("Player").GetComponent<Player>().anim.SetBool("IsLadder", false);
+            //GameObject.Find("Player").GetComponent<Player>().anim.SetBool("IsLadder", false);
         }
     }
     

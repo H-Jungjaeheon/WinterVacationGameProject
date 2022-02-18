@@ -27,6 +27,7 @@ public class Door : MonoBehaviour
         text.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2.5f, 0));
         if (opendoor == true && Input.GetKeyDown(KeyCode.F) &&GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
         {
+            StartCoroutine(DoorCnt());
             player.transform.position = door.transform.position;
             GameManager.Instance.isRoom = true;
             Debug.Log("¾À ³Ñ¾î°¨¿ä");
@@ -50,6 +51,12 @@ public class Door : MonoBehaviour
         }
         StartCoroutine(BattleStartFaidIn(1f));
 
+    }
+    IEnumerator DoorCnt()
+    {
+        GameManager.Instance.isDoor = true;
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.isDoor = false;
     }
     IEnumerator BattleStartFaidIn(float FaidTime)
     {

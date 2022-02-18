@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Enemy":
-                if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false)
+                if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false&& GameManager.Instance.isDoor==false)
                 {
                     IsGrab = false;
                     GameManager.Instance.IsBattleStart = true;
