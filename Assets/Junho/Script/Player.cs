@@ -204,6 +204,8 @@ public class Player : MonoBehaviour
             case "Plan":
                 anim.SetBool("IsLadder", false);
                 isGound = true;
+                GameManager.Instance.isBossRoom = false;
+
                 break;
             case "Lime":
                 if (speed == 10)
@@ -214,6 +216,9 @@ public class Player : MonoBehaviour
                 break;
             case "Corridor":
                 GameManager.Instance.isRoom = false;
+                GameManager.Instance.isBossRoom = false;
+                anim.SetBool("IsLadder", false);
+
                 break;
             case "hideObj":
                 isHidecollision = true;

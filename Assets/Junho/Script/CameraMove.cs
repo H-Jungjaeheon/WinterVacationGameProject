@@ -14,7 +14,7 @@ public class CameraMove : MonoBehaviour
     [SerializeField] float ShakeAmount;
     private float ShakeTime;
     public float speed, FinalSkillCount;
-    public Vector2 Left_center, Left_size, Right_center, Right_size, center, size;
+    public Vector2 Left_center, Left_size, Right_center, Right_size, center, size, bossRoomCenter,bossRoomSize;
     float height, width;
     public PostProcessVolume volume;
     private Vignette vognette;
@@ -46,6 +46,9 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(Right_center, Right_size);
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(center, size);
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireCube(bossRoomCenter, bossRoomSize);
+
     }
     private void Update()
     {
@@ -139,8 +142,18 @@ public class CameraMove : MonoBehaviour
 
         if (GameManager.Instance.IsBattleStart == false && GameManager.Instance.IsCamMove == false)
         {
-            MCamera.orthographicSize = 4.6f;          
-            if (GameManager.Instance.isRoom)
+            MCamera.orthographicSize = 4.6f;
+            if (GameManager.Instance.isRoom && GameManager.Instance.isBossRoom)
+            {
+                transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
+
+                float Ix = bossRoomSize.x * 0.5f - width;
+                float clampX = Mathf.Clamp(transform.position.x, -Ix + bossRoomCenter.x, Ix + bossRoomCenter.x);
+
+
+                transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
+            }
+            else if (GameManager.Instance.isRoom && GameManager.Instance.isBossRoom==false)
             {
                 if (GameObject.Find("X-Axis").transform.position.x < target.position.x) isright = true;
                 else isright = false;
@@ -155,7 +168,7 @@ public class CameraMove : MonoBehaviour
 
                     transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
                 }
-                else
+                else 
                 {
                     //MCamera.orthographicSize = 5;
 
