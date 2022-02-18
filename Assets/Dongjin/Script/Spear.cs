@@ -19,10 +19,10 @@ public class Spear : MonoBehaviour
     {
         spearon = true;
         savevector = this.transform.position;
-        transform.position += new Vector3(0, 0.1f, 0);
+        transform.position += new Vector3(0, 0.3f, 0);
         yield return new WaitForSeconds(1.5f);
         damageOn = true;
-        transform.position += new Vector3(0, 0.2f, 0);
+        transform.position += new Vector3(0, 0.3f, 0);
         yield return new WaitForSeconds(1);
         damageOn = false;
         transform.position = savevector;

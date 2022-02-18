@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Enemy":
-                if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false)
+                if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false&& GameManager.Instance.isDoor==false)
                 {
                     IsGrab = false;
                     GameManager.Instance.IsBattleStart = true;
@@ -204,6 +204,8 @@ public class Player : MonoBehaviour
             case "Plan":
                 anim.SetBool("IsLadder", false);
                 isGound = true;
+                GameManager.Instance.isBossRoom = false;
+
                 break;
             case "Lime":
                 if (speed == 10)
@@ -214,6 +216,9 @@ public class Player : MonoBehaviour
                 break;
             case "Corridor":
                 GameManager.Instance.isRoom = false;
+                GameManager.Instance.isBossRoom = false;
+                anim.SetBool("IsLadder", false);
+
                 break;
             case "hideObj":
                 isHidecollision = true;

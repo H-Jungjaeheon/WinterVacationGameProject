@@ -6,9 +6,13 @@ public class waringroom : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.tag == "Player")
+        {
         for(int i = 0;i<3;i++)
         {
             this.transform.GetChild(i).gameObject.SetActive(true);
+        }
+
         }
     }
 }
