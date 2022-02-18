@@ -233,6 +233,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10f);
         bosssurvival = false;
         BossRoom = false;
+        Bossidx++;
         yield return null;
     }
 
