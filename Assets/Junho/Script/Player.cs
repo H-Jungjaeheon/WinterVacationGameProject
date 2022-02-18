@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
             }*/
 
 
-            if (IsGrab == false && isHide == false && isParalysis == false&&GameManager.Instance.isGameOver==false)
+            if (IsGrab == false && isHide == false && isParalysis == false&&GameManager.Instance.isGameOver==false&& GameManager.Instance.BossRoom == false)
             {
                 Move();
             }

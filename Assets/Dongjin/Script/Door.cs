@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class Door : MonoBehaviour
 {
     private bool opendoor = false;
+    [SerializeField] bool bossdoor,nextdoor;
     public GameObject door;
     private GameObject player;
     public Text text;
-    private GameObject stop;
-    private GameObject audioSource;
+    private GameObject stop, audioSource;
     Image FadIn;
     private void Start()
     {
@@ -31,8 +31,18 @@ public class Door : MonoBehaviour
             player.transform.position = door.transform.position;
             GameManager.Instance.isRoom = true;
             Debug.Log("¾À ³Ñ¾î°¨¿ä");
-            StartCoroutine(BattleStartFaidOut(0.01f));
             audioSource.GetComponent<AudioSource>().Play();
+            if(bossdoor)
+            {
+                GameManager.Instance.BossRoomStart = true;
+                GameManager.Instance.BossRoom = true;
+            }
+            else
+                StartCoroutine(BattleStartFaidOut(0.1f));
+            if (nextdoor)
+            {
+                GameManager.Instance.bosssurvival = true;
+            }
 
         }
     }
@@ -50,7 +60,6 @@ public class Door : MonoBehaviour
             yield return null;
         }
         StartCoroutine(BattleStartFaidIn(1f));
-
     }
     IEnumerator DoorCnt()
     {

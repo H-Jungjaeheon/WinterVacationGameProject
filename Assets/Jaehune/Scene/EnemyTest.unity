@@ -2875,6 +2875,8 @@ MonoBehaviour:
   Right_size: {x: 0, y: 0}
   center: {x: 0, y: 0.41}
   size: {x: 242.57, y: 11.2}
+  bossRoomCenter: {x: 0, y: 0}
+  bossRoomSize: {x: 0, y: 0}
   volume: {fileID: 519420030}
 --- !u!114 &519420034
 MonoBehaviour:
@@ -17582,7 +17584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604707334942977342, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
@@ -19787,6 +19789,8 @@ MonoBehaviour:
   isBurns: 0
   isGameOver: 0
   is2F: 0
+  isBossRoom: 0
+  isDoor: 0
   IsStart: 0
   BattleSkillText: {fileID: 386258013}
   BattleButtonUi: {fileID: 951688630}
@@ -20064,7 +20068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7228987861105929822, guid: 358fd4875dcba544e8d5c999824485ba, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7228987861105929827, guid: 358fd4875dcba544e8d5c999824485ba, type: 3}
       propertyPath: m_RootOrder

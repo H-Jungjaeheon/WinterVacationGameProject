@@ -69,7 +69,7 @@ public class OnceBoss : BasicEnemyScript
             yield return new WaitForSeconds(1);
             animator.SetBool("IsAttack", true);
             Go = true;
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime2(0.7f);
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime3(0.7f);
             StartCoroutine(AnimationP2());
             yield return null;
         }

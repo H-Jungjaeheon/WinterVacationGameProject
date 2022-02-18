@@ -11,24 +11,25 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
     
-    public int Stage = 1,Money; //���� é��(��������)
-    [SerializeField] public Image FadIn, BattleStartImage; //���� ���۽� ���� ���̵���, ���� Į ���� �̹���
-    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false, is2F = false, isBossRoom = false , isDoor = false; //���� ����, ���� ī�޶� �̵�, ���� ����, ���� ��� ���� ���� �Ǵ�, �÷��̾� ���� ����
-    [SerializeField] bool IsStart = false; //���� ���� ���� �Ǵ�2
-    public Text BattleSkillText; //���� �� ���� or ��ų �̸� ǥ�� �ؽ�Ʈ
-    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp; //������ ��ư, ������ ��ư ��� ������Ʈ, ���� ���׷��̵� â
+    public int Stage = 1,Money; 
+    [SerializeField] public Image FadIn, BattleStartImage; 
+    public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, bosssurvival =false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false, is2F = false, isBossRoom = false , isDoor = false, BossRoomStart=false, BossRoom =false;
+    [SerializeField] bool IsStart = false;
+    public Text BattleSkillText;
+    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp;
     
-    [SerializeField] private Slider hpBar, manaBar; //�÷��̾� hp, ������ġ ��
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; //ü��, ������ġ,�ִ� ü��, �ִ� ������ġ,���������,����
+    [SerializeField] private Slider hpBar, manaBar; 
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; 
     
-    [SerializeField] GameObject Player, menuPanel,soundpanel; //�÷��̾�, �޴�
+    [SerializeField] GameObject Player, menuPanel,soundpanel;
    
     private Color PanelAlpha;
     private Image PanelImage;
-
+    [SerializeField] UnityEngine.Camera MCamera;
     [SerializeField] public Text manaText, hpText , moneyText;
     private GameObject stop;
-
+    private int Bossidx;
+    [SerializeField] GameObject[] Boss;
     public GameObject itemParticle;
     private void Awake()
     {
@@ -80,6 +81,11 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.X))
         {
             Time.timeScale /= 2;
+        }
+        if(BossRoomStart)
+        {
+            StartCoroutine(BossRooms());
+            BossRoomStart = false;
         }
     }
 
@@ -160,7 +166,74 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
-    
+    IEnumerator StartFaidOut(float FaidTime)
+    {
+        Color color = FadIn.color;
+        while (color.a < 1f)
+        {
+            color.a += Time.deltaTime / FaidTime;
+            FadIn.color = color;
+            if (color.a >= 1f)
+            {
+                color.a = 1f;
+            }
+            yield return null;
+        }
+        Debug.Log(1);
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(StartFaidIn(1f));
+    }
+    IEnumerator DoorCnt()
+    {
+        GameManager.Instance.isDoor = true;
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.isDoor = false;
+    }
+    IEnumerator StartFaidIn(float FaidTime)
+    {
+        Color color = FadIn.color;
+        while (color.a > 0f)
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            FadIn.color = color;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+            }
+            yield return null;
+        }
+
+    }
+    public IEnumerator BossRooms()
+    {
+        if (bosssurvival == false)
+        {
+            yield break;
+        }
+        StartCoroutine(StartFaidOut(0.1f));
+        Player.transform.position += new Vector3(-10, 0, 0);
+        MCamera.GetComponent<CameraMove>().BossRoomstartcam();
+        MCamera.transform.position += new Vector3(0, -2f, 0);
+        yield return new WaitForSeconds(2f);
+        Boss[Bossidx].SetActive(true);
+        MCamera.orthographicSize = 7f;
+        MCamera.transform.position += new Vector3(0, 2f, 0);
+        while (Boss[Bossidx].transform.position.x+7 < MCamera.transform.position.x)
+        {
+            MCamera.transform.position -= new Vector3(4f, 0, 0) * Time.deltaTime*1;
+            if(Boss[Bossidx].transform.position.x + 12 <= Player.transform.position.x)
+            {
+                Player.transform.position -= new Vector3(1.5f, 0, 0) * Time.deltaTime*1;
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(10f);
+        bosssurvival = false;
+        BossRoom = false;
+        yield return null;
+    }
+
+
     private void HandleSlider()
     {
         if (stackDamage < 0)
