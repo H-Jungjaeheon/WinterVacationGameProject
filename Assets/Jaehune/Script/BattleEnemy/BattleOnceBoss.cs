@@ -144,7 +144,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.8f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(-0.3f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -195,7 +195,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                 }
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.8f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(0.3f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -227,7 +227,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsSkill", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.7f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(-0.3f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -278,7 +278,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                 }
             }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.7f, 0f, 0);
+            transform.position = this.transform.position + new Vector3(0.3f, 0f, 0);
             StopGone = false;
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;

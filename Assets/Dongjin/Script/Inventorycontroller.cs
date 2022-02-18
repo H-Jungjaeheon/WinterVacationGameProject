@@ -20,17 +20,24 @@ public class Inventorycontroller : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)&&InventoryOn == false)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            OnInventory();
+        }
+        settingitem();
+    }
+    public void OnInventory()
+    {
+        if (InventoryOn == false)
         {
             InventoryOn = true;
-            inventorys.transform.DOMove(endPos.transform.position,1f).SetEase(Ease.OutQuad);
+            inventorys.transform.DOMove(endPos.transform.position, 1f).SetEase(Ease.OutQuad);
         }
-        else if(Input.GetKeyDown(KeyCode.E) && InventoryOn == true)
+        else if (InventoryOn == true)
         {
             InventoryOn = false;
             inventorys.transform.DOMove(startPos.transform.position, 1f).SetEase(Ease.OutQuad);
         }
-        settingitem();
     }
     public void Additem(GameObject item)
     {

@@ -63,9 +63,9 @@ public class BattleBasicEnemy : MonoBehaviour
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         HpBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
-        AngerBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp - 0.1f, 0);
+        AngerBar.transform.position = this.transform.position + new Vector3(0.35f, BarUp - 0.19f, 0);
         HpBarNull.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
-        EnemyPicture.transform.position = this.transform.position + new Vector3(-0.83f, BarUp, 0);
+        EnemyPicture.transform.position = this.transform.position + new Vector3(-1.3f, BarUp, 0);
     }
     public virtual void RayCasting() //플레이어 전투 캐릭터 인식
     {

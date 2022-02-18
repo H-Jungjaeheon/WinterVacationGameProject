@@ -2971,6 +2971,7 @@ MonoBehaviour:
   Battletarget: {fileID: 2097894812}
   offset: {x: 0, y: 3.3, z: -10}
   initialPosition: {x: 0, y: 0, z: 0}
+  cameraPosition: {x: 0, y: 0, z: 0}
   isright: 0
   IsFarAway: 0
   IsGrab: 0
@@ -21553,6 +21554,7 @@ MonoBehaviour:
   manaText: {fileID: 1034171400}
   hpText: {fileID: 496256775}
   moneyText: {fileID: 60560712}
+  Bossidx: 0
   Boss: []
   PBattleSkillBackGround:
   - {fileID: 1585782139}

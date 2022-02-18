@@ -42,7 +42,7 @@ public class OnceBoss : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.7f, 0), 10f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-4, 1.7f, 0), 10f * Time.deltaTime);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
