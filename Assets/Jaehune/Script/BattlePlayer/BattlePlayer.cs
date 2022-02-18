@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class BattlePlayer : MonoBehaviour
 {
     [SerializeField] RaycastHit2D hit; 
-    [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, BarrierImage, SkillImage, DefenseImage; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, LockText, BarrierImage, SkillImage, DefenseImage; //전투시 인식한 적 오브젝트 담는 그릇
+    [SerializeField] GameObject[] HealSkillButton, BarrierSkillButton;
     [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false, IsAttackOk = true, IsContinuity, IsComBo, IsEnd, IsFaild; 
     public bool IsHit = false, IsBarrier = false, IsDefense, IsDefensing;
     [SerializeField] int BarrierCount = 0, MaxBarrierCount, BasicAttackCount = 0;
@@ -162,6 +163,27 @@ public class BattlePlayer : MonoBehaviour
     public void Playerskill()
     {
         SkillButton.SetActive(true);
+        if (GM.GetComponent<PlayerStats>().LV >= 10)
+        {
+            BarrierSkillButton[0].SetActive(true);
+            BarrierSkillButton[1].SetActive(false);
+            HealSkillButton[0].SetActive(true);
+            HealSkillButton[1].SetActive(false);
+        }
+        else if (GM.GetComponent<PlayerStats>().LV >= 5 && GM.GetComponent<PlayerStats>().LV < 10)
+        {
+            BarrierSkillButton[0].SetActive(false);
+            BarrierSkillButton[1].SetActive(true);
+            HealSkillButton[0].SetActive(true);
+            HealSkillButton[1].SetActive(false);
+        }
+        else
+        {
+            BarrierSkillButton[0].SetActive(false);
+            BarrierSkillButton[1].SetActive(true);
+            HealSkillButton[0].SetActive(false);
+            HealSkillButton[1].SetActive(true);
+        }
         GameManager.Instance.BattleButtonUi.SetActive(false);
     }
     public void PlayerItem()
@@ -198,6 +220,22 @@ public class BattlePlayer : MonoBehaviour
     {
         SkillButton.SetActive(false);
         GameManager.Instance.BattleButtonUi.SetActive(true);
+    }
+    public void LockSkill()
+    {
+        if(IsAttackOk == true)
+        {
+            StartCoroutine(LockTextFalse());
+            LockText.SetActive(true);
+            IsAttackOk = false;
+        }
+    }
+    IEnumerator LockTextFalse()
+    {
+        yield return new WaitForSeconds(2);
+        LockText.SetActive(false);
+        IsAttackOk = true;
+        yield return null;
     }
     public void UseSkill()
     {
@@ -290,8 +328,8 @@ public class BattlePlayer : MonoBehaviour
         SkillButton.SetActive(false);
         GameManager.Instance.BattleButtonUi.SetActive(false);
         IsAttackOk = true;
-        GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "실험 : 불꽃 점화";
+        GameManager.Instance.PBattleSkillBackGround[0].SetActive(true);
+        GameManager.Instance.PBattleSkillBackGroundText[0].text = "실험 : 불꽃 점화";
         BattleManager.Instance.IsPlayerTurn = false;
         GoToEnemy = true;
         yield return new WaitForSeconds(1f);
@@ -385,14 +423,13 @@ public class BattlePlayer : MonoBehaviour
         IsComBo = true;
         yield return new WaitForSeconds(0.5f); 
         IsComBo = false;
-
+        GameManager.Instance.PBattleSkillBackGround[0].SetActive(false);
         if (IsContinuity == false || IsFaild == true || BattleManager.Instance.IsEnemyDead == true)
         {
             IsFaild = false;
             Debug.Log("마지막 실행");
             BasicAttackCount = 1;
             BattleManager.Instance.CamP = false;
-            GameManager.Instance.BattleSkillBackGround.SetActive(false);
             GoToEnemy = false;
             GoToReturn = true;
             yield return new WaitForSeconds(1);
@@ -658,11 +695,11 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
         SkillButton.SetActive(false);
         IsAttackOk = true;
-        GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "실험 : 불꽃 발사";
+        GameManager.Instance.PBattleSkillBackGround[2].SetActive(true);
+        GameManager.Instance.PBattleSkillBackGroundText[2].text = "실험 : 불꽃 발사";
         BattleManager.Instance.IsPlayerTurn = false;
         GoToEnemy = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         BattleManager.Instance.CamP = true;
         SkillImage.SetActive(true);
         animator.SetBool("IsSkill", true);
@@ -686,7 +723,7 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.CamP = false;
         SkillImage.SetActive(false);
         animator.SetBool("IsSkill", false);
-        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GameManager.Instance.PBattleSkillBackGround[2].SetActive(false);
         GoToEnemy = false;
         GoToReturn = true;
         yield return new WaitForSeconds(1);
@@ -710,8 +747,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
         SkillButton.SetActive(false);
         IsAttackOk = true;
-        GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "실험 : 상처 재생";
+        GameManager.Instance.PBattleSkillBackGround[3].SetActive(true);
+        GameManager.Instance.PBattleSkillBackGroundText[3].text = "실험 : 상처 재생";
         BattleManager.Instance.IsPlayerTurn = false;
         yield return new WaitForSeconds(1.3f);
         BattleManager.Instance.CamE = true;
@@ -735,7 +772,7 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         BattleManager.Instance.CamE = false;
         animator.SetBool("IsHeal", false);
-        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GameManager.Instance.PBattleSkillBackGround[3].SetActive(false);
         yield return new WaitForSeconds(4);
         IsAttackSkill = false;
         if (GameManager.Instance.IsCamMove == true)
@@ -755,8 +792,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
         SkillButton.SetActive(false);
         IsAttackOk = true;
-        GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "실험 : 피해 무효";
+        GameManager.Instance.PBattleSkillBackGround[4].SetActive(true);
+        GameManager.Instance.PBattleSkillBackGroundText[4].text = "실험 : 피해 무효";
         BattleManager.Instance.IsPlayerTurn = false;
         yield return new WaitForSeconds(1.5f);
         BattleManager.Instance.CamE = true;
@@ -766,7 +803,7 @@ public class BattlePlayer : MonoBehaviour
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamE = false;
         animator.SetBool("IsHyperDefense", false);
-        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GameManager.Instance.PBattleSkillBackGround[4].SetActive(false);
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         yield return new WaitForSeconds(3);
         IsAttackSkill = false;
@@ -787,8 +824,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
         SkillButton.SetActive(false);
         IsAttackOk = true;
-        GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        GameManager.Instance.BattleSkillText.text = "실험 : 피해 감소";
+        GameManager.Instance.PBattleSkillBackGround[1].SetActive(true);
+        GameManager.Instance.PBattleSkillBackGroundText[1].text = "실험 : 피해 감소";
         BattleManager.Instance.IsPlayerTurn = false;
         yield return new WaitForSeconds(1);
         BattleManager.Instance.CamE = true;
@@ -798,7 +835,7 @@ public class BattlePlayer : MonoBehaviour
         BattleManager.Instance.CamE = false;
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         animator.SetBool("IsDefense", false);
-        GameManager.Instance.BattleSkillBackGround.SetActive(false);
+        GameManager.Instance.PBattleSkillBackGround[1].SetActive(false);
         yield return new WaitForSeconds(2);
         IsAttackSkill = false;
         if (GameManager.Instance.IsCamMove == true)

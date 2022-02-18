@@ -8,7 +8,8 @@ public class PlayerStats : MonoBehaviour
 {
     public int[] stats = {1, 1, 1}; //체력 / 공격력 / 마나
     [SerializeField] private Slider ExpBar;
-    [SerializeField] float Exp, MaxExp, LV;
+    [SerializeField] float Exp, MaxExp;
+    public float LV;
     [SerializeField] Text expText;
     public bool Stateup = false;
     public GameObject statStartPos, statEndPos;

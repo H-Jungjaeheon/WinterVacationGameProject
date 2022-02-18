@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     public bool IsBattleStart = false, IsCamMove = false, AttackOk = false, IsBattlePlace = false, isPause, isRoom, LevelUp = false, bosssurvival =false, isGetKey=false, isManaBarrier = false ,isEunsin = false, isTrapBarrier=false , isBurns=false , isGameOver = false, is2F = false, isBossRoom = false , isDoor = false, BossRoomStart=false, BossRoom =false;
     [SerializeField] bool IsStart = false;
     public Text BattleSkillText;
-    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp;
+    public Text[] PBattleSkillBackGroundText;
+    public GameObject BattleButtonUi, BattleSkillBackGround, StatUp, itemParticle;
+
     
     [SerializeField] private Slider hpBar, manaBar; 
     public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; 
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
     private GameObject stop;
     private int Bossidx;
     [SerializeField] GameObject[] Boss;
-    public GameObject itemParticle;
+    public GameObject[] PBattleSkillBackGround; //Player Skill BackGround
 
     public ParticleSystem speedParticle;
     private void Awake()
