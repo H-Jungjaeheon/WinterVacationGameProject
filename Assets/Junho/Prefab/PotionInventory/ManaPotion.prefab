@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemidx: 1
   text: {fileID: 8976272777974360466}
-  shopmoney: 0
+  shopmoney: 15
   shop: 0
 --- !u!1001 &3526008968261257338
 PrefabInstance:

@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] UnityEngine.Camera MCamera;
     [SerializeField] public Text manaText, hpText , moneyText;
     private GameObject stop;
-    private int Bossidx;
+    [SerializeField] private int Bossidx;
     [SerializeField] GameObject[] Boss;
     public GameObject[] PBattleSkillBackGround; //Player Skill BackGround
 
@@ -215,26 +215,28 @@ public class GameManager : MonoBehaviour
         {
             yield break;
         }
-        StartCoroutine(StartFaidOut(0.1f));
+        StartCoroutine(StartFaidOut(0.01f));
         Player.transform.position += new Vector3(-10, 0, 0);
+        Player.transform.localEulerAngles = new Vector3(0, 0, 0);
         MCamera.GetComponent<CameraMove>().BossRoomstartcam();
         MCamera.transform.position += new Vector3(0, -2f, 0);
         yield return new WaitForSeconds(2f);
         Boss[Bossidx].SetActive(true);
         MCamera.orthographicSize = 7f;
         MCamera.transform.position += new Vector3(0, 2f, 0);
-        while (Boss[Bossidx].transform.position.x+7 < MCamera.transform.position.x)
+        while (Boss[Bossidx].transform.position.x+4 < MCamera.transform.position.x)
         {
             MCamera.transform.position -= new Vector3(4f, 0, 0) * Time.deltaTime*1;
-            if(Boss[Bossidx].transform.position.x + 12 <= Player.transform.position.x)
+            if(Boss[Bossidx].transform.position.x + 10 <= Player.transform.position.x)
             {
-                Player.transform.position -= new Vector3(1.5f, 0, 0) * Time.deltaTime*1;
+                Player.transform.position -= new Vector3(2f, 0, 0) * Time.deltaTime*1;
             }
             yield return null;
         }
         yield return new WaitForSeconds(10f);
         bosssurvival = false;
         BossRoom = false;
+        Bossidx++;
         yield return null;
     }
 

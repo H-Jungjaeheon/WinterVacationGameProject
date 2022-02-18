@@ -6,7 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 public class CameraMove : MonoBehaviour
 {
     public Transform target, Battletarget;
-    public Vector3 offset, initialPosition;
+    public Vector3 offset, initialPosition,cameraPosition;
     public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove, IsLastBoss, IsBossDeadSkill, IsBossMeet2 =false;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
     public GameObject Player;
@@ -52,6 +52,7 @@ public class CameraMove : MonoBehaviour
     }
     private void Update()
     {
+       
         if (GameManager.Instance.Stage == 2)
         {
             center.y = -41.12f;
@@ -318,12 +319,12 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
+                transform.position = cameraPosition;
                 ShakeTime2 = 0.0f;
-                transform.position = initialPosition;
                 IsBossMeet2 = false;
             }
         }
-       
+
     }
     void BattleCameraMove()
     {
@@ -349,6 +350,7 @@ public class CameraMove : MonoBehaviour
     }
     public void VibrateForTime3(float time)
     {
+        cameraPosition = transform.position;
         IsBossMeet2 = true;
         ShakeTime2 = time;
     }

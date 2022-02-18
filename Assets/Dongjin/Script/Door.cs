@@ -42,6 +42,9 @@ public class Door : MonoBehaviour
             if (nextdoor)
             {
                 GameManager.Instance.bosssurvival = true;
+                GameManager.Instance.isBossRoom = false;
+                GameManager.Instance.isRoom = false; 
+                GameManager.Instance.Stage++;
             }
 
         }
