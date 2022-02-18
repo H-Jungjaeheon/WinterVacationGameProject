@@ -14,7 +14,7 @@ public class BattleBasicEnemy : MonoBehaviour
     IsReflect = false, IsStun, IsPoison, IsInstantDead; //특수 능력 모음
     public SpriteRenderer SR; //죽을 때 점점 사라지게
     public Animator animator;
-
+    public ParticleSystem ps;
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
@@ -23,6 +23,8 @@ public class BattleBasicEnemy : MonoBehaviour
         Hp *= GameManager.Instance.Stage;
         SR = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position;
+        ps.Stop();
+
     }
     public virtual void Update()
     {
@@ -81,8 +83,10 @@ public class BattleBasicEnemy : MonoBehaviour
     {
         IsHit = false;
         animator.SetBool("IsDamage", true);
+        ps.Play();
         yield return new WaitForSeconds(1);
         animator.SetBool("IsDamage", false);
+        ps.Stop();
         yield return null;
     }
     public virtual void Dead1() //죽을 때
