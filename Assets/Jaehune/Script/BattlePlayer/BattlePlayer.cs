@@ -64,6 +64,11 @@ public class BattlePlayer : MonoBehaviour
         {
             SkillImage.transform.position = Enemy.transform.position;
         }
+        if(GameManager.Instance.curHp <= 0)
+        {
+            animator.SetBool("IsDead", true);
+            SkillButton.SetActive(false);
+        }
     }
     IEnumerator BarrierEffectIconFadeIn(float FaidTime)
     {
