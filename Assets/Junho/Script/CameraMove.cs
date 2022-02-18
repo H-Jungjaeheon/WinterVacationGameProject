@@ -52,6 +52,7 @@ public class CameraMove : MonoBehaviour
     }
     private void Update()
     {
+       
         if (GameManager.Instance.Stage == 2)
         {
             center.y = -41.12f;
@@ -318,12 +319,12 @@ public class CameraMove : MonoBehaviour
             }
             else
             {
-                MCamera.transform.position = cameraPosition;
+                transform.position = cameraPosition;
                 ShakeTime2 = 0.0f;
                 IsBossMeet2 = false;
             }
         }
-       
+
     }
     void BattleCameraMove()
     {
@@ -349,7 +350,7 @@ public class CameraMove : MonoBehaviour
     }
     public void VibrateForTime3(float time)
     {
-        cameraPosition = MCamera.transform.position;
+        cameraPosition = transform.position;
         IsBossMeet2 = true;
         ShakeTime2 = time;
     }

@@ -61,15 +61,15 @@ public class TwiceBoss : BasicEnemyScript
         if (IsTurn == false)
         {
             IsTurn = true;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
             GoToPlayer = true;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
             GoToPlayer = false;
             WarningObj.SetActive(true);
             SeeCrossroad *= -1;
             yield return new WaitForSeconds(0.5f);
             animator.SetBool("IsSkill", true);
-            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime2(0.7f);
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime3(0.7f);
             yield return new WaitForSeconds(1);
             Go = true;
             yield return null;

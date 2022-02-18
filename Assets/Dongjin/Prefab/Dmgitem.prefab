@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 8707358116758942717}
   itemidx: 7
-  shopmoney: 0
+  shopmoney: 50
   shop: 0
 --- !u!50 &7390859798989926853
 Rigidbody2D:
