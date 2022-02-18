@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private int Bossidx;
     [SerializeField] GameObject[] Boss;
     public GameObject itemParticle;
+
+    public ParticleSystem speedParticle;
     private void Awake()
     {
         itemParticle.GetComponent<ParticleSystem>().Stop();
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         StatUp.transform.position = GameObject.Find("GameManager").GetComponent<PlayerStats>().statStartPos.transform.position;
         maxHp = GetComponent<PlayerStats>().stats[0];
         maxMana = GetComponent<PlayerStats>().stats[2];
+        speedParticle.Stop();
     }
 
     // Start is called before the first frame update
@@ -321,8 +324,10 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator speedPotion()
     {
+        speedParticle.Play();
         GameObject.Find("Player").GetComponent<Player>().speed = 10;
         yield return new WaitForSeconds(5.0f);
+        speedParticle.Stop();
         GameObject.Find("Player").GetComponent<Player>().speed = 5;
     }
     public IEnumerator Eunsincnt()

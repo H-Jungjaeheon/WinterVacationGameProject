@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false, gasmasktrue = false;
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
-    
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -100,8 +99,7 @@ public class Player : MonoBehaviour
             this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
         }
         else this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
-
-
+            
         if (IsGrab == true)
         {
             Grabbing();
@@ -144,9 +142,11 @@ public class Player : MonoBehaviour
         if (x < 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
-
         }
-        else if (x > 0) transform.rotation = Quaternion.Euler(0, 180, 0);
+        else if (x > 0) 
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0); 
+        }
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
     }
     IEnumerator gasmask(float time)
