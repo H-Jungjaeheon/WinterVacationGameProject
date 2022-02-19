@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main/Main1.unity
     guid: f5e1c408aea54754184dfbc5d41b992e
+  - enabled: 1
+    path: Assets/Junho/Scene/Ending/Ending.unity
+    guid: af38c6a9770542a448bfc6d49a5164bf
   m_configObjects: {}

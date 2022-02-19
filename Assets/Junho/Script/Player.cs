@@ -93,7 +93,8 @@ public class Player : MonoBehaviour
 
     }
     void Update()
-    {      
+    {   
+        if (isElDam) ElDamage();
         if (GameManager.Instance.isEunsin)
         {
             this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
@@ -176,7 +177,7 @@ public class Player : MonoBehaviour
         else return;
     }
 
-
+    bool isElDam;
     void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.tag)
@@ -212,7 +213,7 @@ public class Player : MonoBehaviour
                 {
                     speed = 5;
                 }
-                speed *= 0.2f;
+                speed /= 2f;
                 break;
             case "Corridor":
                 GameManager.Instance.isRoom = false;
@@ -224,7 +225,7 @@ public class Player : MonoBehaviour
                 isHidecollision = true;
                 break;
             case "Electricity":
-                GameManager.Instance.stackDamage += 10;
+                isElDam = true;
                 break;
         }
 
@@ -250,10 +251,15 @@ public class Player : MonoBehaviour
                 isHidecollision = false;
                 break;
             case "Electricity":
-                GetOutElectricity = true;
-                cnt = 0;
+                isElDam=false;
                 break;
         }
+
+    }
+    void ElDamage()
+    {
+        GameManager.Instance.stackDamage += 5;
+        isElDam = false;
 
     }
     void SurviveDamage()

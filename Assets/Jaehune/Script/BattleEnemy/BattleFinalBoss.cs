@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BattleFinalBoss : BattleBasicEnemy
 {
@@ -294,20 +295,18 @@ public class BattleFinalBoss : BattleBasicEnemy
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
-        Color color6 = SuperAngerBar.color;
-        Color color7 = MaxInstantDeathBar.color;
-        Color color8 = InstantDeathBar.color;
         while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
         {
             color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
+            color3.a -= Time.deltaTime / FaidTime;
+            color4.a -= Time.deltaTime / FaidTime;
+            color5.a -= Time.deltaTime / FaidTime;
             SR.color = color;
             HpBar.color = color;
             HpBarNull.color = color;
             EnemyPicture.color = color;
             AngerBar.color = color;
-            SuperAngerBar.color = color;
-            MaxInstantDeathBar.color = color;
-            InstantDeathBar.color = color;
             if (color.a <= 0f)
             {
                 color.a = 0f;
@@ -315,32 +314,20 @@ public class BattleFinalBoss : BattleBasicEnemy
                 color3.a = 0f;
                 color4.a = 0f;
                 color5.a = 0f;
-                color6.a = 0f;
-                color7.a = 0f;
-                color8.a = 0f;
             }
             else
             {
-                color.a = 0f;
-                color2.a = 0f;
-                color3.a = 0f;
-                color4.a = 0f;
-                color5.a = 0f;
-                color6.a = 0f;
-                color7.a = 0f;
-                color8.a = 0f;
                 yield return null;
                 yield return new WaitForSeconds(1);
                 GameManager.Instance.IsBattleStart = false;
                 BattleManager.Instance.IsEnemyTurn = true;
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossDeadSkill = false;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().BossBattleStart = false;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossCamMove = false;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsLastBoss = false;
                 yield return new WaitForSeconds(1);
                 Destroy(this.gameObject);
+                //엔딩 씬 전환
+                SceneManager.LoadScene("Ending");
             }
+            
         }
     }
     public override IEnumerator EnemyAttack()

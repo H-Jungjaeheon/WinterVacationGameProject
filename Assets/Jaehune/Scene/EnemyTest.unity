@@ -18442,7 +18442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604707334942977342, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
@@ -21525,6 +21525,8 @@ MonoBehaviour:
   isDoor: 0
   BossRoomStart: 0
   BossRoom: 0
+  BossSound: 0
+  finalBossSound: 0
   IsStart: 0
   BattleSkillText: {fileID: 386258013}
   PBattleSkillBackGroundText:
@@ -21556,6 +21558,7 @@ MonoBehaviour:
   moneyText: {fileID: 60560712}
   Bossidx: 0
   Boss: []
+  BattleBackGround: []
   PBattleSkillBackGround:
   - {fileID: 1585782139}
   - {fileID: 1516226756}
@@ -27971,7 +27974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7040392929579732794, guid: 0ccb7516b936f094db4b415db2e4d5c2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8754496197535216448, guid: 0ccb7516b936f094db4b415db2e4d5c2, type: 3}
       propertyPath: WarningObj

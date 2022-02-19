@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour
 
         if (IsBattleStart == false && LevelUp == false&& isManaBarrier==false)
         {
-            curMana -= Time.deltaTime*0.25f;
+            curMana -= Time.deltaTime*0.05f;
         }
         hpBar.value = curHp / maxHp;
         hpText.text = curHp + "/" + maxHp;

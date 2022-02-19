@@ -2746,6 +2746,7 @@ MonoBehaviour:
   - {fileID: 1245044008}
   - {fileID: 938195725}
   - {fileID: 718909369}
+  SBattlePlaceText: []
 --- !u!1 &592678867 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7645085842131973660, guid: 0ccb7516b936f094db4b415db2e4d5c2, type: 3}
@@ -8915,7 +8916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604707334942977342, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97541c6f23bb9040b76b45b587b3966, type: 3}
@@ -17328,7 +17329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7040392929579732794, guid: 0ccb7516b936f094db4b415db2e4d5c2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8754496197535216448, guid: 0ccb7516b936f094db4b415db2e4d5c2, type: 3}
       propertyPath: WarningObj
@@ -18244,11 +18245,15 @@ MonoBehaviour:
   isDoor: 0
   BossRoomStart: 0
   BossRoom: 0
+  BossSound: 0
+  finalBossSound: 0
   IsStart: 0
   BattleSkillText: {fileID: 1177997244}
+  PBattleSkillBackGroundText: []
   BattleButtonUi: {fileID: 1939004350}
   BattleSkillBackGround: {fileID: 1667249973}
   StatUp: {fileID: 1860812492}
+  itemParticle: {fileID: 722415107}
   hpBar: {fileID: 1286720848}
   manaBar: {fileID: 1841954983}
   curHp: 100
@@ -18266,8 +18271,10 @@ MonoBehaviour:
   manaText: {fileID: 1322320825}
   hpText: {fileID: 1540583556}
   moneyText: {fileID: 1522554426}
+  Bossidx: 0
   Boss: []
-  itemParticle: {fileID: 722415107}
+  BattleBackGround: []
+  PBattleSkillBackGround: []
   speedParticle: {fileID: 216777914}
 --- !u!4 &1555763873
 Transform:

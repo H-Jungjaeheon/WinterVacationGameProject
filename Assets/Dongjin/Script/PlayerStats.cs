@@ -13,15 +13,17 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] Text expText;
     public bool Stateup = false;
     public GameObject statStartPos, statEndPos;
+    
     private void Start()
     {
         LV = 1;
         Exp = 0;
         MaxExp = 100;
     }
+    
     private void Update()
     {
-        HandleSlider();
+        //HandleSlider();
         StatsSetting();
         if (Exp >= MaxExp)
         {
