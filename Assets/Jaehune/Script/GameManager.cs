@@ -293,13 +293,13 @@ public class GameManager : MonoBehaviour
         MCamera.GetComponent<CameraMove>().BossRoomstartcam();
         MCamera.transform.position += new Vector3(0, -2f, 0);
         yield return new WaitForSeconds(2f);
-        Boss[Bossidx].SetActive(true);
+        Boss[Stage-1].SetActive(true);
         MCamera.orthographicSize = 7f;
         MCamera.transform.position += new Vector3(0, 2f, 0);
-        while (Boss[Bossidx].transform.position.x+4 < MCamera.transform.position.x)
+        while (Boss[Stage - 1].transform.position.x+4 < MCamera.transform.position.x)
         {
             MCamera.transform.position -= new Vector3(4f, 0, 0) * Time.deltaTime*1;
-            if(Boss[Bossidx].transform.position.x + 10 <= Player.transform.position.x)
+            if(Boss[Stage - 1].transform.position.x + 10 <= Player.transform.position.x)
             {
                 Player.transform.position -= new Vector3(2f, 0, 0) * Time.deltaTime*1;
             }
@@ -308,7 +308,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10f);
         bosssurvival = false;
         BossRoom = false;
-        Bossidx++;
         yield return null;
     }
 

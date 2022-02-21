@@ -44,6 +44,7 @@ public class FinalBoss : BasicEnemyScript
         {
             Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, Quaternion.Euler(0, 0, 0));
             Invoke("Delete", 2f);
+            GameManager.Instance.IsBattleStart = true;
         }
     }
     public override void Delete()

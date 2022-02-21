@@ -20,10 +20,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
         IsSkill = false;
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
-        SR = this.GetComponent<SpriteRenderer>();
+        SRS = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0f, 2.1f, 0);
         SkillAttackRand = Random.Range(1, 4);
-        SR = GetComponent<SpriteRenderer>();
+        //SRS = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -138,6 +138,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
+            SRS.sortingOrder = 2;
             animator.SetBool("IsSkill3", true);
             GameObject DT = Instantiate(HealText);
             DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
@@ -152,6 +153,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             }
             Hp += MaxHp / 4;
             yield return new WaitForSeconds(1);
+            SRS.sortingOrder = -1;
             animator.SetBool("IsSkill3", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -168,7 +170,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamE = true;
-            SRS.sortingOrder = 1;
+            SRS.sortingOrder = 2;
             animator.SetBool("IsSkill", true);
             EnergyBullet.SetActive(true);
             StopGone = true;
@@ -213,10 +215,12 @@ public class BattleSuperEnemy : BattleBasicEnemy
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
             BattleManager.Instance.CamP = true;
+            SRS.sortingOrder = 2;
             animator.SetBool("IsSkill2", true);
             GameManager.Instance.curMana -= 25;
             Anger += 50;
             yield return new WaitForSeconds(1);
+            SRS.sortingOrder = -1;
             animator.SetBool("IsSkill2", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);

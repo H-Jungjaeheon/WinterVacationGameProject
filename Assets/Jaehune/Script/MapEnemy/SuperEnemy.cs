@@ -84,6 +84,7 @@ public class SuperEnemy : BasicEnemyScript
     }
     public override void Trun()
     {
+        animator.SetBool("IsIdle", false);
         base.Trun();
     }
     public override void RayCasting()
