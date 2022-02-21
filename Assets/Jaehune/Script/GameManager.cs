@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System;
 using DG.Tweening;
@@ -10,16 +11,16 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
-    
-    public int Stage = 1,Money; 
+
+    public int Stage = 1, Money;
     [SerializeField] public Image FadIn, BattleStartImage;
 
     [Header("bool fields")]
     [Space(10f)]
     public bool IsBattleStart;
-    public bool IsCamMove, AttackOk, IsBattlePlace, isPause, isRoom, LevelUp, 
-    bosssurvival, isGetKey, isManaBarrier, isEunsin, isTrapBarrier, isBurns, isGameOver, is2F, 
-    isBossRoom, isDoor, BossRoomStart, BossRoom,BossSound, finalBossSound;
+    public bool IsCamMove, AttackOk, IsBattlePlace, isPause, isRoom, LevelUp,
+    bosssurvival, isGetKey, isManaBarrier, isEunsin, isTrapBarrier, isBurns, isGameOver, is2F,
+    isBossRoom, isDoor, BossRoomStart, BossRoom, BossSound, finalBossSound;
 
     [Header("º¯¼ö")]
     [Space(10f)]
@@ -28,22 +29,24 @@ public class GameManager : MonoBehaviour
     public Text[] PBattleSkillBackGroundText;
     public GameObject BattleButtonUi, BattleSkillBackGround, StatUp, itemParticle;
 
-    
-    [SerializeField] private Slider hpBar, manaBar; 
-    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption=0, defense=0; 
-    
-    [SerializeField] GameObject Player, menuPanel,soundpanel;
-   
+
+    [SerializeField] private Slider hpBar, manaBar;
+    public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption = 0, defense = 0;
+
+    [SerializeField] GameObject Player, menuPanel, soundpanel;
+
     private Color PanelAlpha;
     private Image PanelImage;
     [SerializeField] UnityEngine.Camera MCamera;
-    [SerializeField] public Text manaText, hpText , moneyText;
+    [SerializeField] public Text manaText, hpText, moneyText;
     private GameObject stop;
     [SerializeField] private int Bossidx;
     [SerializeField] GameObject[] Boss, BattleBackGround;
     public GameObject[] PBattleSkillBackGround; //Player Skill BackGround
 
     public ParticleSystem speedParticle;
+    [SerializeField] private Sprite stopimage;
+    [SerializeField] Sprite continue_image;
     private void Awake()
     {
         itemParticle.GetComponent<ParticleSystem>().Stop();
@@ -69,12 +72,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         HandleSlider();
-        moneyText.text = Money+"";
+        moneyText.text = Money + "";
         if (IsBattleStart == true && IsStart == false && BattleEndCount == 0)
         {
             StartCoroutine("BattleStart");
             IsStart = true;
-            if(isBossRoom == false)
+            if (isBossRoom == false)
             {
                 switch (Stage)
                 {
@@ -163,11 +166,11 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(BattleStartFaidOut(0.8f));
         if (BossSound == true)
-        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(2);
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(2);
         else if (finalBossSound == true)
-        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
         else
-        GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(1);
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(1);
         yield return new WaitForSeconds(0.8f);
         Player.SetActive(false);
         IsCamMove = true;
@@ -182,7 +185,7 @@ public class GameManager : MonoBehaviour
         AttackOk = true;
         yield return null;
     }
-    
+
     IEnumerator BattleEnd()
     {
         AttackOk = false;
@@ -203,7 +206,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(0);
         yield return null;
     }
-     
+
 
     IEnumerator BattleStartFaidOut(float FaidTime)
     {
@@ -293,15 +296,15 @@ public class GameManager : MonoBehaviour
         MCamera.GetComponent<CameraMove>().BossRoomstartcam();
         MCamera.transform.position += new Vector3(0, -2f, 0);
         yield return new WaitForSeconds(2f);
-        Boss[Stage-1].SetActive(true);
+        Boss[Stage - 1].SetActive(true);
         MCamera.orthographicSize = 7f;
         MCamera.transform.position += new Vector3(0, 2f, 0);
-        while (Boss[Stage - 1].transform.position.x+4 < MCamera.transform.position.x)
+        while (Boss[Stage - 1].transform.position.x + 4 < MCamera.transform.position.x)
         {
-            MCamera.transform.position -= new Vector3(4f, 0, 0) * Time.deltaTime*1;
-            if(Boss[Stage - 1].transform.position.x + 10 <= Player.transform.position.x)
+            MCamera.transform.position -= new Vector3(4f, 0, 0) * Time.deltaTime * 1;
+            if (Boss[Stage - 1].transform.position.x + 10 <= Player.transform.position.x)
             {
-                Player.transform.position -= new Vector3(2f, 0, 0) * Time.deltaTime*1;
+                Player.transform.position -= new Vector3(2f, 0, 0) * Time.deltaTime * 1;
             }
             yield return null;
         }
@@ -324,21 +327,21 @@ public class GameManager : MonoBehaviour
         }
 
         curHp = maxHp - stackDamage;
-  
 
-        if (IsBattleStart == false && LevelUp == false&& isManaBarrier==false)
+
+        if (IsBattleStart == false && LevelUp == false && isManaBarrier == false)
         {
-            curMana -= Time.deltaTime*0.05f;
+            curMana -= Time.deltaTime * 0.05f;
         }
         hpBar.value = curHp / maxHp;
         hpText.text = curHp + "/" + maxHp;
         manaBar.value = curMana / maxMana;
-        float mana = (float)(Math.Truncate(curMana)/1);
+        float mana = (float)(Math.Truncate(curMana) / 1);
         manaText.text = mana + "/" + maxMana;
-        if (curHp<=0f)
+        if (curHp <= 0f)
         {
             isGameOver = true;
-            GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();  
+            GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
         }
         else if (curMana <= 0f)
         {
@@ -355,6 +358,7 @@ public class GameManager : MonoBehaviour
             PanelAlpha.a = 0f;
             PanelImage.color = PanelAlpha;
             PanelImage.raycastTarget = false;
+            EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite = stopimage;
             isPause = false;
             menuPanel.transform.GetChild(1).gameObject.SetActive(false);
             Time.timeScale = 1f;
@@ -364,6 +368,7 @@ public class GameManager : MonoBehaviour
             PanelAlpha.a = 0.7f;
             PanelImage.color = PanelAlpha;
             PanelImage.raycastTarget = true;
+            EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite = continue_image;
             isPause = true;
             menuPanel.transform.GetChild(1).gameObject.SetActive(true);
             Time.timeScale = 0f;
@@ -371,7 +376,7 @@ public class GameManager : MonoBehaviour
     }
     public void Exitbutton()
     {
-         Application.Quit();
+        Application.Quit();
     }
     public void mainbutton()
     {

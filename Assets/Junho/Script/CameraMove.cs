@@ -7,14 +7,14 @@ public class CameraMove : MonoBehaviour
 {
     public Transform target, Battletarget;
     public Vector3 offset, initialPosition,cameraPosition;
-    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove, IsLastBoss, IsBossDeadSkill, IsBossMeet2 =false;
+    public bool isright, IsFarAway = false, IsGrab = false, IsBossMeet = false, BossBattleStart = false, IsBossCamMove, IsLastBoss, IsBossDeadSkill, IsBossMeet2 =false, IsBigRoom;
     [SerializeField] GameObject BEnemy, BPlayer; //공격 연출을 위한 오브젝트
     public GameObject Player;
     [SerializeField] UnityEngine.Camera MCamera;
     [SerializeField] float ShakeAmount;
     private float ShakeTime, ShakeTime2;
     public float speed, FinalSkillCount;
-    public Vector2 Left_center, Left_size, Right_center, Right_size, center, size, bossRoomCenter,bossRoomSize;
+    public Vector2 Left_center, Left_size, Right_center, Right_size, center, size, bossRoomCenter,bossRoomSize, bigroom_center, bigroom_size;
     float height, width;
     public PostProcessVolume volume;
     private Vignette vognette;
@@ -48,6 +48,8 @@ public class CameraMove : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
         Gizmos.color = Color.black;
         Gizmos.DrawWireCube(bossRoomCenter, bossRoomSize);
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(bigroom_center, bigroom_size);
 
     }
     private void Update()
@@ -179,7 +181,19 @@ public class CameraMove : MonoBehaviour
 
                     transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
                 }
+
             }
+            else if (IsBigRoom)
+            {
+                transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
+
+                float Ix = bigroom_size.x * 0.5f - width;
+                float clampX = Mathf.Clamp(transform.position.x, -Ix + bigroom_center.x, Ix + bigroom_center.x);
+
+
+                transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
+            }
+
             else if (BossBattleStart == true)
             {
                 StartCoroutine(BossBattleStartCam(0.5f));

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Door : MonoBehaviour
 {
     private bool opendoor = false;
-    [SerializeField] bool bossdoor,nextdoor;
+    [SerializeField] bool bossdoor,nextdoor,isbigroom;
     public GameObject door;
     private GameObject player;
     public Text text;
@@ -39,6 +39,7 @@ public class Door : MonoBehaviour
                 GameManager.Instance.isRoom = false;
                 GameManager.Instance.Stage++;
             }
+                GameObject.Find("MainCamera").GetComponent<CameraMove>().IsBigRoom = door.GetComponent<Door>().isbigroom;
             if (bossdoor)
             {
                 GameManager.Instance.BossRoomStart = true;
