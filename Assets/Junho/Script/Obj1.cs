@@ -16,7 +16,7 @@ public class Obj1 : Box
     [SerializeField] private GameObject mob;
     private GameObject audioSource;
     public ParticleSystem money;
-
+    public bool BoxDrop;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,14 +25,14 @@ public class Obj1 : Box
         isBoxOpen = false;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
-        //if (boxIdx == 0)
-        //{
-        //    audioSource = GameObject.Find("BoxSounds").gameObject;
-        //}
-        //else if (boxIdx == 1)
-        //{
-        //    audioSource = GameObject.Find("WoodBox").gameObject;
-        //}
+        if (boxIdx == 0)
+        {
+            audioSource = GameObject.Find("BoxSounds").gameObject;
+        }
+        else if (boxIdx == 1)
+        {
+            audioSource = GameObject.Find("WoodBox").gameObject;
+        }
     }
 
     // Update is called once per frame
@@ -40,9 +40,11 @@ public class Obj1 : Box
     {
         isParticle();
 
-        if (isBoxOpen == false && iscollison && Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
+        if (isBoxOpen == false && iscollison && Input.GetKeyDown(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false && GameObject.Find("Player").GetComponent<Player>().Chest[0]==gameObject)
         {
             Drop();
+            StartCoroutine(Cnt());
+
         }
     }
     public void Drop()
@@ -55,15 +57,16 @@ public class Obj1 : Box
         {
             Instantiate(mob, this.transform.position, transform.rotation);
         }
-        //if(boxIdx == 0)
-        //{
-        //    audioSource.GetComponent<AudioSource>().Play();
-        //}
-        //else if(boxIdx == 1)
-        //{
-        //    audioSource.GetComponent<AudioSource>().Play();
-        //}
+        if (boxIdx == 0)
+        {
+            audioSource.GetComponent<AudioSource>().Play();
+        }
+        else if (boxIdx == 1)
+        {
+            audioSource.GetComponent<AudioSource>().Play();
+        }
         isBoxOpen = true;
+        BoxDrop = true;
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
@@ -125,5 +128,11 @@ public class Obj1 : Box
                 }
                 break;
         }
+
+    }
+    IEnumerator Cnt()
+    {
+        yield return new WaitForSeconds(0.01f);
+        GameObject.Find("Player").GetComponent<Player>().Chest.RemoveAt(0);
     }
 }

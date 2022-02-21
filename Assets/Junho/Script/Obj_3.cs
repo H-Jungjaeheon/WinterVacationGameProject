@@ -34,6 +34,11 @@ public class Obj_3 : Box
         audioSource = GameObject.Find("BoxSounds").gameObject;
 
     }
+    IEnumerator Cnt()
+    {
+        yield return new WaitForSeconds(0.01f);
+        GameObject.Find("Player").GetComponent<Player>().Chest.RemoveAt(0);
+    }
 
     // Update is called once per frame
     float cnt;
@@ -45,7 +50,7 @@ public class Obj_3 : Box
         if (isBoxOpen == false && iscollison)
         {
             slider.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
+            if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false && GameObject.Find("Player").GetComponent<Player>().Chest[0] == gameObject)
             {
                 cnt += 5;
             }
@@ -60,6 +65,7 @@ public class Obj_3 : Box
         {
             cnt = 0;
             Drop();
+            StartCoroutine(Cnt());
         }
         if (cnt > 0)
         {

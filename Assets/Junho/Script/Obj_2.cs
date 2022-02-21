@@ -39,6 +39,11 @@ public class Obj_2 : Box
         }
     }
 
+    IEnumerator Cnt()
+    {
+        yield return new WaitForSeconds(0.01f);
+        GameObject.Find("Player").GetComponent<Player>().Chest.RemoveAt(0);
+    }
     // Update is called once per frame
     float cnt;
     void Update()
@@ -49,7 +54,7 @@ public class Obj_2 : Box
         if (isBoxOpen == false && iscollison)
         {
             slider.gameObject.SetActive(true);
-            if (Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
+            if (Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false && GameObject.Find("Player").GetComponent<Player>().Chest[0] == gameObject)
             {
                 cnt += Time.deltaTime;
             }
@@ -64,6 +69,8 @@ public class Obj_2 : Box
         {
             cnt = 0;
             Drop();
+            StartCoroutine(Cnt());
+
         }
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
