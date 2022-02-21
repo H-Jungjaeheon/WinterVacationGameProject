@@ -10474,6 +10474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71a5e09636c881428cf6753c60fea6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle:
+  - {fileID: 5831256064519211916}
+  - {fileID: 5831256063947256471}
   Items:
   - {fileID: 4643653045975795293, guid: 76a2b5670c348af4f96c02e64d277144, type: 3}
   - {fileID: 3526008968914863085, guid: fafc0131e9e762148aff5e6d6b2286d9, type: 3}
@@ -10490,12 +10493,8 @@ MonoBehaviour:
   - {fileID: 323591708781165488, guid: 23d4eb35f70bc3b46973dec2d1ea3ce9, type: 3}
   - {fileID: 6577109166711920706, guid: f43e5ea5800f4c348bc60dfb6ad31889, type: 3}
   - {fileID: 5713906751016517617, guid: 6314c2d5ce139f545a732dc38270aaef, type: 3}
-  isIt: 0
   slider: {fileID: 5831256063597326406}
   Open: {fileID: 21300000, guid: 1c50d4cbdc80ef84ba724b42b85e2f0c, type: 3}
-  particle:
-  - {fileID: 5831256064519211916}
-  - {fileID: 5831256063947256471}
   DoPos: {fileID: 246114654016422151}
   boxIdx: 0
   money: {fileID: 4505700250816961429}
