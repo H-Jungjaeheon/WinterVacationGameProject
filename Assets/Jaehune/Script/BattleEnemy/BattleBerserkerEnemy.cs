@@ -8,8 +8,9 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     [SerializeField] float SuperSkillCount, MaxSuperSkillCount, SkillAttackRand, IsMad;
     [SerializeField] GameObject HealText;
     [SerializeField] bool End = false, IsDead;
-    [SerializeField] Image MadBar;
-    [SerializeField] Vector2 BarPosition, PicturePosition;
+    [SerializeField] Image MadBar, SuperSkillImage;
+    [SerializeField] Vector2 BarPosition, PicturePosition, SuperSkillPosition;
+    [SerializeField] Text SuperSkillText;
     public bool IsSuperSkillng;
     // Start is called before the first frame update
     public override void Start()
@@ -30,36 +31,39 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     public override void Update()
     {
         base.Update();
-        if(End == true)
-        {
-            End = false;
-            IsMad = 0;
-            IsSuperSkillng = false;
-        }
-        if(Hp <= 0)
+        HpAndText();
+    }
+    void HpAndText()
+    {
+        if (Hp <= 0)
         {
             Hp = 0;
         }
-        if(Hp >= MaxHp)
+        if (Hp >= MaxHp)
         {
             Hp = MaxHp;
+        }
+        if (End == true)
+        {
+            StartCoroutine(SuperSkillImageFadeOut(1));
+            End = false;
+            IsSuperSkillng = false;
+            SuperSkillText.text = (IsMad - 3).ToString();
+        }
+        else
+        {
+            SuperSkillText.text = (3 - IsMad).ToString();
         }
     }
     public override void AttackGone()
     {
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
-            animator.SetBool("IsWalk", true);
             transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(4f, -0.1f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true && IsDead == false)
         {
-            animator.SetBool("IsWalk", true);
             transform.position = Vector3.MoveTowards(this.transform.position, EnemySpawner.transform.position + new Vector3(1.5f, 0.7f, 0), 10 * Time.deltaTime);
-        }
-        else if (GoToReturn == false)
-        {
-            animator.SetBool("IsWalk", false);
         }
     }
     public override void Hpbar()
@@ -70,6 +74,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         HpBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y);
         AngerBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y - 0.2f);
         MadBar.transform.position = new Vector2(this.transform.position.x + BarPosition.x, this.transform.position.y + BarPosition.y + 0.2f);
+        SuperSkillImage.transform.position = new Vector2(this.transform.position.x + SuperSkillPosition.x, this.transform.position.y + SuperSkillPosition.y);
         HpBarNull.transform.position = new Vector2(this.transform.position.x + BarPosition.x , this.transform.position.y + BarPosition.y);
         EnemyPicture.transform.position = new Vector2(this.transform.position.x + PicturePosition.x, this.transform.position.y + PicturePosition.y);
     }
@@ -140,13 +145,49 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             }
         }
     }
+    IEnumerator SuperSkillImageFadeIn(float FaidTime)
+    {
+        Color color = SuperSkillImage.color;
+        Color color2 = SuperSkillText.color;
+        while (color.a < 1f)
+        {
+            color.a += Time.deltaTime / FaidTime;
+            color2.a += Time.deltaTime / FaidTime;
+            SuperSkillImage.color = color;
+            SuperSkillText.color = color;
+            if (color.a >= 1f)
+            {
+                color.a = 1f;
+                color2.a = 1f;
+            }
+            yield return null;
+        }
+    }
+    IEnumerator SuperSkillImageFadeOut(float FaidTime)
+    {
+        Color color = SuperSkillImage.color;
+        Color color2 = SuperSkillText.color;
+        while (color.a > 0f)
+        {
+            color.a -= Time.deltaTime / FaidTime;
+            color2.a -= Time.deltaTime / FaidTime;
+            SuperSkillImage.color = color;
+            SuperSkillText.color = color;
+            if (color.a <= 0f)
+            {
+                color.a = 0f;
+                color2.a = 0f;
+                IsMad = 0;
+            }
+            yield return null;
+        }
+    }
     public override IEnumerator EnemyAttack()
     {
         Debug.Log("공격 실행");
         SkillAttackRand = Random.Range(1, 3);
-        animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        if (Anger < MaxAnger && SuperSkillCount < MaxSuperSkillCount) //AttackRand == 1
+        if (Anger < MaxAnger && SuperSkillCount < MaxSuperSkillCount)
         {
             GameManager.Instance.BattleSkillText.text = "살을 찢는 손날";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -281,7 +322,6 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamE = false;
             if (Hp <= 0 && IsSuperSkillng == false)
             {
-                //IsDead = true;
                 GoToReturn = false;
             }
             else
@@ -315,7 +355,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 SkillAttackRand = Random.Range(1, 3);
             }
         }
-        else if (Anger >= MaxAnger && SkillAttackRand == 2 && SuperSkillCount < MaxSuperSkillCount)//데미지 입히고 그만큼 체력 회복
+        else if (Anger >= MaxAnger && SkillAttackRand == 2 && SuperSkillCount < MaxSuperSkillCount)
         {
             Anger = 0;
             if (IsSuperSkillng == false)
@@ -409,6 +449,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             SuperSkillCount = 0;
             IsSuperSkillng = true;
             BattleManager.Instance.CamP = true;
+            StartCoroutine(SuperSkillImageFadeIn(1));
             yield return new WaitForSeconds(2);
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamP = false;
