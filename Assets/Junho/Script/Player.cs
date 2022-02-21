@@ -186,7 +186,6 @@ public class Player : MonoBehaviour
                 if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false&& GameManager.Instance.isDoor==false)
                 {
                     IsGrab = false;
-                    GameManager.Instance.IsBattleStart = true;
                     BattleManager.Instance.IsPlayerTurn = true;
                 }
                 break;

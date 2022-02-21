@@ -50,7 +50,6 @@ public class BasicEnemyScript : MonoBehaviour
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if(MoveCount >= MaxMoveCount)
         {
-            animator.SetBool("IsIdle", true);
             MoveCount = 0;
             IsMove = false;
             Invoke("Trun", 4f);
@@ -74,7 +73,6 @@ public class BasicEnemyScript : MonoBehaviour
         {
             TurnCount = 1;
         }
-        animator.SetBool("IsIdle", false);
     }
     public virtual void RayCasting()
     {
@@ -109,8 +107,9 @@ public class BasicEnemyScript : MonoBehaviour
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false && GameManager.Instance.isDoor==false)
+        if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false&& GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false && GameManager.Instance.isDoor==false)
         {
+            GameManager.Instance.IsBattleStart = true;
             Speed = 0;
             Instantiate(BattleManager.Instance.Enemy[SpawnMonsterCount], BattleManager.Instance.EnemySpawner.transform.position, Quaternion.Euler(0,0,0));
             Invoke("Delete", 2f);

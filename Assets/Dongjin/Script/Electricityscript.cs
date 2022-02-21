@@ -29,6 +29,7 @@ public class Electricityscript : MonoBehaviour
         E1.gameObject.SetActive(false);
         if (countELstart != true)
             StartCoroutine("ElectricityOnOff");
-        yield return null;
+        yield break;
+
     }
 }

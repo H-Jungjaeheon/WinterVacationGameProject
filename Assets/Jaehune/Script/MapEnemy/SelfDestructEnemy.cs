@@ -24,7 +24,6 @@ public class SelfDestructEnemy : BasicEnemyScript
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if (MoveCount >= MaxMoveCount)
         {
-            animator.SetBool("IsIdle", true);
             MoveCount = 0;
             IsMove = false;
             Invoke("Trun", 4f);
