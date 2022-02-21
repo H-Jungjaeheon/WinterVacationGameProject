@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false, gasmasktrue = false;
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
+    List<GameObject> Chest = new List<GameObject>();
+    string BoxName;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -226,6 +229,20 @@ public class Player : MonoBehaviour
             case "Electricity":
                 isElDam = true;
                 break;
+            case "Box":
+                BoxName = collision.gameObject.name;
+                //충돌한 박스의 상태가 닫혀있다면
+                switch (BoxName)
+                {
+                    case "Obj1":
+
+                        break;
+                }
+                Chest.Add(collision.gameObject);
+                
+
+                break;
+           
         }
 
     }

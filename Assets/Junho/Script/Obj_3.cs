@@ -4,19 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Obj_3 : MonoBehaviour
+public class Obj_3 : Box
 {
     public GameObject[] Items;
     public GameObject[] StatItems;
 
-    public bool isIt;
-    bool iscollison;
     public Slider slider;
 
     public Sprite Open;
 
-    [SerializeField]
-    public GameObject[] particle;
+   
 
     [SerializeField] GameObject DoPos;
     public int boxIdx;
@@ -30,7 +27,7 @@ public class Obj_3 : MonoBehaviour
     void Start()
     {
         iscollison = false;
-        isIt = true;
+        isBoxOpen = false;
         particle[0].SetActive(false);
         particle[1].SetActive(false);
         slider.gameObject.SetActive(false);
@@ -45,7 +42,7 @@ public class Obj_3 : MonoBehaviour
         slider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
         isParticle();
         slider.value = cnt / 100;
-        if (isIt && iscollison)
+        if (isBoxOpen == false && iscollison)
         {
             slider.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false)
@@ -69,45 +66,21 @@ public class Obj_3 : MonoBehaviour
             cnt -= Time.deltaTime * 10;
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("충돌");
-            if (isIt == true)
-            {
-                iscollison = true;
-                slider.gameObject.SetActive(true);
-
-            }
-        }
-
+        base.OnTriggerEnter2D(collision);
+        slider.gameObject.SetActive(true);
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("나감");
-            iscollison = false;
-            slider.gameObject.SetActive(false);
-
-        }
+        base.OnTriggerExit2D(collision);
+        slider.gameObject.SetActive(false);
     }
-    void isParticle()
-    {
-        if (isIt == true)
-        {
-            particle[0].SetActive(true);
-        }
-        else
-        {
-            particle[0].SetActive(false);
-
-        }
-    }
+   
     public void Drop()
     {
-        isIt = false;
+        isBoxOpen = true;
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
@@ -142,11 +115,6 @@ public class Obj_3 : MonoBehaviour
                 break;
         }
 
-
-    }
-    void Nothing()
-    {
-        particle[1].SetActive(false);
 
     }
 }
