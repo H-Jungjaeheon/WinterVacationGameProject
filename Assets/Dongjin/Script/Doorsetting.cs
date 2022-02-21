@@ -17,7 +17,7 @@ public class Doorsetting : MonoBehaviour
         for (int a = doorgroup2.Count-1; 0 <= a; a--)
         {
             dooridx = doorgroup.Count;
-            Randomdooridx = Random.RandomRange(0, dooridx);
+            Randomdooridx = Random.Range(0, dooridx);
             //dooridx--;
 
             doorgroup[Randomdooridx].GetComponent<Door>().door = doorgroup2[0];

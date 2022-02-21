@@ -6,11 +6,9 @@ public class BattleReflectEnemy : BattleBasicEnemy
 {
     [SerializeField] int ReflectingTurn, MaxReflctingTurn;
     [SerializeField] GameObject ReflectImage;
-    [SerializeField] bool IsDeadT;
     // Start is called before the first frame update
     public override void Start()
     {
-        IsDeadT = false;
         ReflectImage.SetActive(false);
         base.Start();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0.9f, 0.45f, 0);

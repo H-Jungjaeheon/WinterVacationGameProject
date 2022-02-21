@@ -8,9 +8,7 @@ public class Inventorycontroller : MonoBehaviour
 {
     private bool InventoryOn= false;
     public GameObject inventorys;
-    private int itemidx=0;
     private GameObject itembutton;
-    private int sibaltest = 0;
     public List<GameObject> items = new List<GameObject>();
     private GameObject buttonsave;
     [SerializeField] public GameObject startPos, endPos;
