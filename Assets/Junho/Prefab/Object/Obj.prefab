@@ -5043,7 +5043,7 @@ GameObject:
   - component: {fileID: 5469905892114376352}
   m_Layer: 0
   m_Name: Obj
-  m_TagString: Obj
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5171,6 +5171,8 @@ MonoBehaviour:
   - {fileID: 5469905893501659009}
   DoPos: {fileID: 5469905892695437352}
   boxIdx: 0
+  mobspawn: 0
+  mob: {fileID: 0}
   money: {fileID: 7650988553405913717}
 --- !u!1 &5469905892339428608
 GameObject:

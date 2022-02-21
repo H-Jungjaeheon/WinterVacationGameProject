@@ -27,6 +27,7 @@ TagManager:
   - ManaBarrierPotion
   - EunsinPotion
   - TrapBarrierPotion
+  - Box
   layers:
   - Default
   - TransparentFX
