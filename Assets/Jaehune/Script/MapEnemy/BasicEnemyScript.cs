@@ -26,6 +26,7 @@ public class BasicEnemyScript : MonoBehaviour
     public virtual void Update()
     {
         RayCasting();
+        WallRayCasting();
         if(IsMove == true)
         {
             Moving();
@@ -114,8 +115,8 @@ public class BasicEnemyScript : MonoBehaviour
     }
     public virtual void WallRayCasting()
     {
-        Debug.DrawRay(transform.position - new Vector3(0, -1, 0), Vector3.left * (WallCrossroad), Color.blue);
-        var rayHits = Physics2D.RaycastAll(transform.position - new Vector3(0, -1, 0), Vector3.left, WallCrossroad);
+        Debug.DrawRay(transform.position - new Vector3(0, 0.5f, 0), Vector3.left * (WallCrossroad), Color.blue);
+        var rayHits = Physics2D.RaycastAll(transform.position - new Vector3(0, 0.5f, 0), Vector3.left, WallCrossroad);
         foreach (var hit in rayHits)
         {
             if (hit.collider.gameObject.CompareTag("Wall"))

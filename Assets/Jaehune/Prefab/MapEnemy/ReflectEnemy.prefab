@@ -316,8 +316,12 @@ MonoBehaviour:
   MaxMoveCount: 10
   SeeCrossroad: -10.6
   IsPlus: 1
+  WallCrossroad: -6
   IsFind: 0
   IsMove: 1
+  IsTurns: 0
+  IsStop: 0
+  IsMoveTurn: 0
   Player: {fileID: 0}
   WarningObj: {fileID: 1487425483918282373}
   CrossRoadObj: {fileID: 1487425482746422822}

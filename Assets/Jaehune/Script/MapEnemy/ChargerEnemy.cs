@@ -24,6 +24,7 @@ public class ChargerEnemy : BasicEnemyScript
     public override void Update()
     {   
         RayCasting();
+        WallRayCasting();
         Moving();
         Skill();
         if (IsMove == false)
@@ -121,6 +122,10 @@ public class ChargerEnemy : BasicEnemyScript
     {
         animator.SetBool("IsIdle", false);
         base.Trun();
+    }
+    public override void WallRayCasting()
+    {
+        base.WallRayCasting();
     }
     public override void RayCasting()
     {

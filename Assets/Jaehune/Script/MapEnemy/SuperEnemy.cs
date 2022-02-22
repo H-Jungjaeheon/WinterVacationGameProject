@@ -16,6 +16,7 @@ public class SuperEnemy : BasicEnemyScript
     public override void Update()
     {
         RayCasting();
+        WallRayCasting();
         if (IsMove == false)
         {
             MoveCount = 0;
@@ -77,6 +78,10 @@ public class SuperEnemy : BasicEnemyScript
             WarningCircleObj.SetActive(false);
             SkillCircleObj.SetActive(true);
         }
+    }
+    public override void WallRayCasting()
+    {
+        base.WallRayCasting();
     }
     public override void Moving()
     {

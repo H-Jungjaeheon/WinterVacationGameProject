@@ -234,7 +234,7 @@ MonoBehaviour:
   MaxMoveCount: 5
   SeeCrossroad: -2
   IsPlus: 1
-  WallCrossroad: -1
+  WallCrossroad: -2
   IsFind: 0
   IsMove: 1
   IsTurns: 0

@@ -27,6 +27,10 @@ public class FarAwayEnemy : BasicEnemyScript
             Invoke("Trun", 4f);
         }
     }
+    public override void WallRayCasting()
+    {
+        base.WallRayCasting();
+    }
     public override void Trun()
     {
         animator.SetBool("IsIdle", false);

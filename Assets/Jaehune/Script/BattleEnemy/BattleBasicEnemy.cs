@@ -24,7 +24,6 @@ public class BattleBasicEnemy : MonoBehaviour
         SR = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position;
         ps.Stop();
-
     }
     public virtual void Update()
     {

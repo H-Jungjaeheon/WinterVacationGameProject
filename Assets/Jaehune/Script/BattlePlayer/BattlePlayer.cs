@@ -44,6 +44,11 @@ public class BattlePlayer : MonoBehaviour
         Attackcounting();
         ComboAttack();
         IsHited();
+        if (GameManager.Instance.curHp <= 0)
+        {
+            animator.SetBool("IsDead", true);
+            GameManager.Instance.BattleButtonUi.SetActive(false);
+        }
         if (GoToEnemy == true && GameManager.Instance.IsBattleStart == true && IsAttackSkill == false && BasicAttackCount == 1)
         {
             animator.SetBool("IsWalk", true);
@@ -66,11 +71,6 @@ public class BattlePlayer : MonoBehaviour
         if (GameManager.Instance.IsBattleStart == true && Enemy != null)
         {
             SkillImage.transform.position = Enemy.transform.position;
-        }
-        if (GameManager.Instance.curHp <= 0)
-        {
-            animator.SetBool("IsDead", true);
-            SkillButton.SetActive(false);
         }
         ComboTimeLimitBar.fillAmount = ComboTimeLimit / 0.5f;
     }

@@ -54,6 +54,10 @@ public class BerserkerEnemy : BasicEnemyScript
             }
         }
     }
+    public override void WallRayCasting()
+    {
+        base.WallRayCasting();
+    }
     public override void Delete()
     {
         base.Delete();

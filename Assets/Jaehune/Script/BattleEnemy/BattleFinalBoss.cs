@@ -44,6 +44,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             IsUseSkill = true;
         }
+        BarColor();
         PoisonUse();
         SuperAngers();
         StartCoroutine(FinalSkill());
@@ -180,14 +181,14 @@ public class BattleFinalBoss : BattleBasicEnemy
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         InstantDeathBar.fillAmount = InstantDeathCount / MaxInstantDeathCount;
-        HpBar.transform.position = new Vector3(2f, BarUp + 72.95f, 0);
-        AngerBar.transform.position = new Vector3(2f, BarUp + 72.25f, 0);
-        HpBarNull.transform.position = new Vector3(2f, BarUp + 72.95f, 0);
-        SuperAngerBar.transform.position = new Vector3(2f, BarUp + 73.6f, 0);
-        EnemyPicture.transform.position = new Vector3(-5.05f, BarUp + 72.9f, 0);
-        InstantDeathBar.transform.position = new Vector3(1.65f, BarUp + 67f, 0);
-        MaxInstantDeathBar.transform.position = new Vector3(1.65f, BarUp + 67, 0);
-        InstantImage.transform.position = new Vector3(1.65f, BarUp + 66.05f, 0);
+        HpBar.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
+        AngerBar.transform.position = new Vector3(1f, BarUp + 72.25f, 0);
+        HpBarNull.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
+        SuperAngerBar.transform.position = new Vector3(1f, BarUp + 73.6f, 0);
+        EnemyPicture.transform.position = new Vector3(-6.05f, BarUp + 72.9f, 0);
+        InstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 69.7f, 0);
+        MaxInstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 68f, 0);
+        InstantImage.transform.position = new Vector3(0.65f, BarUp + 66.05f, 0);
         Eye.transform.position = new Vector3(-8.5f, BarUp + 61f, 0);
         SuperEye.transform.position = new Vector3(0f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
@@ -204,6 +205,24 @@ public class BattleFinalBoss : BattleBasicEnemy
     public override void Dead1()
     {
         base.Dead1();
+    }
+    void BarColor()
+    {
+        Color color = MaxInstantDeathBar.color;
+        if (InstantDeathCount >= MaxInstantDeathCount)
+        {
+            color.r = 0;
+            color.g = 0;
+            color.b = 0;
+            MaxInstantDeathBar.color = color;
+        }
+        else
+        {
+            color.r = 1;
+            color.g = 1;
+            color.b = 1;
+            MaxInstantDeathBar.color = color;
+        }
     }
     void PoisonUse()
     {
@@ -703,10 +722,6 @@ public class BattleFinalBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             yield return new WaitForSeconds(1f);
             IsInstantDead = true;
-            for(int i = 0; i < 3; i++)
-            {
-                Destroy(InstantEye[i]);
-            }
             StartCoroutine(InstantDeadImageFadeIn(0.5f));
             yield return new WaitForSeconds(1f);
             InstantDeathCount = 0;
