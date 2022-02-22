@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BasicEnemyScript : MonoBehaviour
 {
-    public float Speed, MoveCount, MaxMoveCount, SeeCrossroad, IsPlus = 1; 
+    public float Speed, MoveCount, MaxMoveCount, SeeCrossroad, IsPlus = 1, WallCrossroad; 
     public bool IsFind, IsMove, IsTurns, IsStop, IsMoveTurn; 
     public GameObject Player, WarningObj, CrossRoadObj; 
     public RaycastHit2D hit;
@@ -70,6 +70,7 @@ public class BasicEnemyScript : MonoBehaviour
         {
             Speed *= -1;
             SeeCrossroad *= -1;
+            WallCrossroad *= -1;
             IsMove = true;
             if (TurnCount % 2 == 0)
             {
@@ -108,6 +109,18 @@ public class BasicEnemyScript : MonoBehaviour
                     IsStop = false;
                     IsMoveTurn = false;
                 }
+            }
+        }
+    }
+    public virtual void WallRayCasting()
+    {
+        Debug.DrawRay(transform.position - new Vector3(0, -1, 0), Vector3.left * (WallCrossroad), Color.blue);
+        var rayHits = Physics2D.RaycastAll(transform.position - new Vector3(0, -1, 0), Vector3.left, WallCrossroad);
+        foreach (var hit in rayHits)
+        {
+            if (hit.collider.gameObject.CompareTag("Wall"))
+            {
+                MoveCount = MaxMoveCount;
             }
         }
     }

@@ -28,6 +28,7 @@ TagManager:
   - EunsinPotion
   - TrapBarrierPotion
   - Box
+  - Wall
   layers:
   - Default
   - TransparentFX
