@@ -29,13 +29,29 @@ public class BerserkerEnemy : BasicEnemyScript
     public override void FindPlayer()
     {
         MoveCount = 0;
-        if (Speed > 0 && GameManager.Instance.isEunsin == false)
+        IsTurns = false;
+        IsMoveTurn = true;
+        if (IsMove == true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * 1.05f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * 1.05f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * -1.05f * Time.deltaTime);
+            }
         }
-        else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+        else
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * -1.05f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * 2f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * -2f * Time.deltaTime);
+            }
         }
     }
     public override void Delete()

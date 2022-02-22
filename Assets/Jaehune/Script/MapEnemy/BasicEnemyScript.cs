@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BasicEnemyScript : MonoBehaviour
 {
     public float Speed, MoveCount, MaxMoveCount, SeeCrossroad, IsPlus = 1; 
-    public bool IsFind = false, IsMove = true; 
+    public bool IsFind, IsMove, IsTurns, IsStop, IsMoveTurn; 
     public GameObject Player, WarningObj, CrossRoadObj; 
     public RaycastHit2D hit;
     public int SpawnMonsterCount, TurnCount;
@@ -15,6 +15,9 @@ public class BasicEnemyScript : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
+        IsStop = false;
+        IsMove = true;
+        IsTurns = true;
         animator = GetComponent<Animator>();
         TurnCount = 1;
     }
@@ -39,6 +42,11 @@ public class BasicEnemyScript : MonoBehaviour
         }
         else
         {
+            if (IsStop == false)
+            {
+                IsMove = true;
+            }
+            IsTurns = true;
             CrossRoadObj.SetActive(true);
             IsPlus = 1;           
         }
@@ -50,6 +58,7 @@ public class BasicEnemyScript : MonoBehaviour
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if(MoveCount >= MaxMoveCount)
         {
+            IsStop = true;
             MoveCount = 0;
             IsMove = false;
             Invoke("Trun", 4f);
@@ -57,21 +66,24 @@ public class BasicEnemyScript : MonoBehaviour
     }
     public virtual void Trun()
     {
-        Speed *= -1;
-        SeeCrossroad *= -1;
-        IsMove = true;
-        if (TurnCount % 2 == 0)
+        if (IsTurns == true)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        TurnCount++;
-        if(TurnCount >= 3)
-        {
-            TurnCount = 1;
+            Speed *= -1;
+            SeeCrossroad *= -1;
+            IsMove = true;
+            if (TurnCount % 2 == 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            TurnCount++;
+            if (TurnCount >= 3)
+            {
+                TurnCount = 1;
+            }
         }
     }
     public virtual void RayCasting()
@@ -90,19 +102,42 @@ public class BasicEnemyScript : MonoBehaviour
             {
                 WarningObj.SetActive(false);
                 IsFind = false;
+
+                if(IsMoveTurn == true)
+                {
+                    IsStop = false;
+                    IsMoveTurn = false;
+                }
             }
         }
     }
     public virtual void FindPlayer()
     {
+        animator.SetBool("IsIdle", false);
         MoveCount = 0;
-        if(Speed > 0 && GameManager.Instance.isEunsin == false)
+        IsTurns = false;
+        IsMoveTurn = true;
+        if(IsMove == true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * 1.3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * 1.3f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * -1.3f * Time.deltaTime);
+            }
         }
-        else if(Speed < 0 && GameManager.Instance.isEunsin == false)
+        else
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * -1.3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * 2f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.5f, 0), Speed * -2f * Time.deltaTime);
+            }
         }
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)

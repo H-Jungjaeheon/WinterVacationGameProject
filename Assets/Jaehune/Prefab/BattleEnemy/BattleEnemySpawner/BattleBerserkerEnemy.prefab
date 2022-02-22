@@ -413,7 +413,7 @@ MonoBehaviour:
   MadBar: {fileID: 5772062245458619404}
   SuperSkillImage: {fileID: 3820296430102650361}
   BarPosition: {x: -1.32, y: 3}
-  PicturePosition: {x: -3.04, y: 3}
+  PicturePosition: {x: -3.02, y: 3}
   SuperSkillPosition: {x: -1.44, y: 3.76}
   SuperSkillText: {fileID: 7511374913192041987}
   IsSuperSkillng: 0

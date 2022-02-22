@@ -21,6 +21,7 @@ public class CloseEnemy : BasicEnemyScript
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if (MoveCount >= MaxMoveCount)
         {
+            IsStop = true;
             animator.SetBool("IsIdle", true);
             MoveCount = 0;
             IsMove = false;

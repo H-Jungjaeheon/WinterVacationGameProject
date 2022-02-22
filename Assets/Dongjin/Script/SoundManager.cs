@@ -7,13 +7,15 @@ public class SoundManager : MonoBehaviour
 {
     public AudioSource[] musicSource;
     public AudioSource[] SoundSource;
+    [SerializeField] GameObject soundpanal;
     void Awake()
     {
+        soundpanal.SetActive(true);
         for (int i = 0; i < musicSource.Length; i++)
             musicSource[i].volume = GameObject.Find("BG Slider").GetComponent<Slider>().value;
         for (int i = 0; i < SoundSource.Length; i++)
             SoundSource[i].volume = GameObject.Find("SE Slider").GetComponent<Slider>().value;
-        GameObject.Find("SoundManagerPanel").gameObject.SetActive(false);
+        soundpanal.SetActive(false);
     }
     public void SetMusicVolume(float volume)
     {

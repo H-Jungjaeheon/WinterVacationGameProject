@@ -6,10 +6,11 @@ public class SuperEnemy : BasicEnemyScript
 {
     [SerializeField] float SkillCount;
     [SerializeField] GameObject WarningCircleObj, SkillCircleObj;
-    [SerializeField] bool Skillng, Movings;
+    [SerializeField] bool Skillng, Movings, IsSkillReady;
  
     public override void Start()
     {
+        IsSkillReady = false;
         base.Start();
     }
     public override void Update()
@@ -32,6 +33,11 @@ public class SuperEnemy : BasicEnemyScript
         }
         else
         {
+            if (IsStop == false)
+            {
+                IsMove = true;
+            }
+            IsTurns = true;
             Skillng = false;
             SkillCount = 0;
             SkillCircleObj.SetActive(false);
@@ -40,11 +46,12 @@ public class SuperEnemy : BasicEnemyScript
         }
         if (SkillCount >= 5 && Skillng == false)
         {
+            IsSkillReady = true;
+            IsMove = false;
+            Movings = false;
             WarningCircleObj.SetActive(true);
             Invoke("UseSkill", 2.5f);
             animator.SetBool("IsSkill", true);
-            IsMove = false;
-            Movings = false;
         }
         else
         {
@@ -59,9 +66,13 @@ public class SuperEnemy : BasicEnemyScript
     {
         if (Player != null && GameManager.Instance.IsBattleStart == false && GameManager.Instance.isEunsin == false)
         {
+            IsSkillReady = false;
             animator.SetBool("IsSkill", false);
             Skillng = true;
-            IsMove = true;
+            if(IsMoveTurn == false)
+            {
+                IsMove = true;
+            }
             Movings = true;
             WarningCircleObj.SetActive(false);
             SkillCircleObj.SetActive(true);
@@ -75,6 +86,7 @@ public class SuperEnemy : BasicEnemyScript
             transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
             if (MoveCount >= MaxMoveCount)
             {
+                IsStop = true;
                 animator.SetBool("IsIdle", true);
                 MoveCount = 0;
                 IsMove = false;
@@ -103,19 +115,41 @@ public class SuperEnemy : BasicEnemyScript
             {
                 WarningObj.SetActive(false);
                 IsFind = false;
+                if (IsMoveTurn == true)
+                {
+                    IsStop = false;
+                    IsMoveTurn = false;
+                }
             }
         }
     }
     public override void FindPlayer()
     {
+        animator.SetBool("IsIdle", false);
+        IsTurns = false;
         MoveCount = 0;
-        if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
+        IsMoveTurn = true;
+        if (IsMove == true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 3f * Time.deltaTime);
+            if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 3f * Time.deltaTime);
+            }
+            else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -3f * Time.deltaTime);
+            }
         }
-        else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
+        else if(IsSkillReady == false && IsMove == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 6f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -6f * Time.deltaTime);
+            }
         }
     }
     public override void Delete()

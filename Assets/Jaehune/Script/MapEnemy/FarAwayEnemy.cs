@@ -20,6 +20,7 @@ public class FarAwayEnemy : BasicEnemyScript
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if (MoveCount >= MaxMoveCount)
         {
+            IsStop = true;
             animator.SetBool("IsIdle", true);
             MoveCount = 0;
             IsMove = false;
@@ -37,14 +38,31 @@ public class FarAwayEnemy : BasicEnemyScript
     }
     public override void FindPlayer()
     {
+        animator.SetBool("IsIdle", false);
         MoveCount = 0;
-        if (Speed > 0 && GameManager.Instance.isEunsin == false)
+        IsTurns = false;
+        IsMoveTurn = true;
+        if (IsMove == true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * 1.3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * 1.3f * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * -1.3f * Time.deltaTime);
+            }
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * -1.3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * 2f * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.42f, 0), Speed * -2f * Time.deltaTime);
+            }
         }
     }
     public override void Delete()

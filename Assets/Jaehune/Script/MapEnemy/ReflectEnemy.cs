@@ -29,6 +29,7 @@ public class ReflectEnemy : BasicEnemyScript
         transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
         if (MoveCount >= MaxMoveCount)
         {
+            IsStop = true;
             animator.SetBool("IsIdle", true);
             MoveCount = 0;
             IsMove = false;
@@ -56,6 +57,11 @@ public class ReflectEnemy : BasicEnemyScript
             {
                 WarningObj.SetActive(false);
                 IsFind = false;
+                if (IsMoveTurn == true)
+                {
+                    IsStop = false;
+                    IsMoveTurn = false;
+                }
             }
         }
     }
@@ -63,15 +69,31 @@ public class ReflectEnemy : BasicEnemyScript
     {
         Dash += Time.deltaTime;
         MoveCount = 0;
-        if (Speed > 0 && GameManager.Instance.isEunsin == false)
+        IsTurns = false;
+        IsMoveTurn = true;
+        if (IsMove == true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * 1.3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * 1.3f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * -1.3f * Time.deltaTime);
+            }
         }
-        else if(Speed < 0 && GameManager.Instance.isEunsin == false)
+        else
         {
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * -1.3f * Time.deltaTime);
+            if (Speed > 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * 2f * Time.deltaTime);
+            }
+            else if (Speed < 0 && GameManager.Instance.isEunsin == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position - new Vector3(0, 0.12f, 0), Speed * -2f * Time.deltaTime);
+            }
         }
-        if(Dash >= MaxDashTime && IsDash == false && GameManager.Instance.isEunsin == false) // && GameManager.Instance.isEunsin == false 
+        if(Dash >= MaxDashTime && IsDash == false && GameManager.Instance.isEunsin == false)
         {
             if (Speed > 0)
             {

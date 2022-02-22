@@ -8,23 +8,26 @@ public class BattlePlayer : MonoBehaviour
     [SerializeField] RaycastHit2D hit;
     [SerializeField] GameObject Enemy, PlayerSpawner, EnemySpawner, DmgText, HealText, GM, SkillButton, ManaText, LockText, BarrierImage, SkillImage, DefenseImage; //전투시 인식한 적 오브젝트 담는 그릇
     [SerializeField] GameObject[] HealSkillButton, BarrierSkillButton;
-    [SerializeField] bool GoToEnemy = false, GoToReturn = false, IsAttackSkill = false, IsAttackOk = true, IsContinuity, IsComBo, IsEnd, IsFaild;
+    [SerializeField] bool GoToEnemy, GoToReturn, IsAttackSkill, IsAttackOk, IsContinuity, IsComBo, IsEnd, IsFaild;
     public bool IsHit = false, IsBarrier = false, IsDefense, IsDefensing;
-    [SerializeField] int BarrierCount = 0, MaxBarrierCount, BasicAttackCount = 0;
+    [SerializeField] int BarrierCount, MaxBarrierCount, BasicAttackCount;
     //[SerializeField] Image BarrierEffect1, BarrierEffect2;
-    [SerializeField] float AttackCounting = 0;
+    [SerializeField] float AttackCounting, ComboTimeLimit;
+    [SerializeField] Image ComboTimeLimitBar;
     Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         DefenseImage.SetActive(false);
+        ComboTimeLimit = 0;
         BarrierCount = 0;
         IsDefensing = false;
         IsDefense = false;
         AttackCounting = 0;
         IsEnd = true;
         IsFaild = false;
+        IsAttackOk = true;
         IsComBo = false;
         BasicAttackCount = 1;
         animator = GetComponent<Animator>();
@@ -69,37 +72,8 @@ public class BattlePlayer : MonoBehaviour
             animator.SetBool("IsDead", true);
             SkillButton.SetActive(false);
         }
+        ComboTimeLimitBar.fillAmount = ComboTimeLimit / 0.5f;
     }
-    //IEnumerator BarrierEffectIconFadeIn(float FaidTime)
-    //{
-    //    Color color = BarrierEffect1.color;
-    //    Color color2 = BarrierEffect2.color;
-    //    while (color.a < 1f)
-    //    {
-    //        color.a += Time.deltaTime / FaidTime;
-    //        color2.a += Time.deltaTime / FaidTime;
-    //        BarrierEffect1.color = color;
-    //        if (color.a >= 1f)
-    //        {
-    //            color.a = 1f;
-    //            color2.a = 1f;
-    //        }
-    //        yield return null;
-    //    }
-    //    while (color.a > 0f)
-    //    {
-    //        color.a -= Time.deltaTime / FaidTime;
-    //        color2.a -= Time.deltaTime / FaidTime;
-    //        BarrierEffect1.color = color;
-    //        if (color.a <= 0f)
-    //        {
-    //            color.a = 0f;
-    //            color2.a = 0f;
-    //        }
-    //        yield return null;
-    //    }
-    //}
-
     void IsHited()
     {
         if (IsHit == true)
@@ -111,20 +85,26 @@ public class BattlePlayer : MonoBehaviour
     {
         if (IsComBo == true && IsFaild == false)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) //콤보 공격 성공
             {
+                GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
                 IsContinuity = true;
+                ComboTimeLimit = 0;
             }
         }
-        else if (IsComBo == false)
+        else if (IsComBo == false) //타이밍 못맞춰서 실패
         {
             IsContinuity = false;
+            ComboTimeLimit = 0;
+            GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
         }
         if (IsEnd == false)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) //콤보 공격 실패
             {
                 IsFaild = true;
+                ComboTimeLimit = 0;
+                GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
             }
         }
     }
@@ -192,11 +172,6 @@ public class BattlePlayer : MonoBehaviour
         }
         GameManager.Instance.BattleButtonUi.SetActive(false);
     }
-    public void PlayerItem()
-    {
-        //StartCoroutine("PlayerAttack", 1f);
-
-    }
     public void PlayerDeffence()
     {
         if (BattleManager.Instance.IsPlayerTurn == true && GameManager.Instance.AttackOk == true && IsAttackOk == true)
@@ -215,7 +190,6 @@ public class BattlePlayer : MonoBehaviour
         }
         if (IsBarrier == true)
         {
-            //StartCoroutine(BarrierEffectIconFadeIn(0.5f));
             BarrierImage.SetActive(true);
         }
         else
@@ -428,9 +402,20 @@ public class BattlePlayer : MonoBehaviour
         animator.SetBool("IsAttack", false);
         AttackCounting = 0;
         IsComBo = true;
+        GameManager.Instance.PBattleSkillBackGround[0].SetActive(false);
+        if(IsFaild == false)
+        {
+            GameManager.Instance.PBattleSkillBackGround[5].SetActive(true);
+            ComboTimeLimit = 0.5f;
+        }
+        else
+        {
+            GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
+            ComboTimeLimit = 0;
+        }
         yield return new WaitForSeconds(0.5f);
         IsComBo = false;
-        GameManager.Instance.PBattleSkillBackGround[0].SetActive(false);
+        GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
         if (IsContinuity == false || IsFaild == true || BattleManager.Instance.IsEnemyDead == true)
         {
             IsFaild = false;
@@ -455,6 +440,7 @@ public class BattlePlayer : MonoBehaviour
         else if (IsContinuity == true && IsFaild == false && BattleManager.Instance.IsEnemyDead == false)
         {
             StartCoroutine(PlayerAttack2());
+            ComboTimeLimit = 0;
             yield return null;
         }
     }
@@ -549,8 +535,19 @@ public class BattlePlayer : MonoBehaviour
         animator.SetBool("IsAttack", false);
         AttackCounting = 0;
         IsComBo = true;
+        if (IsFaild == false)
+        {
+            GameManager.Instance.PBattleSkillBackGround[5].SetActive(true);
+            ComboTimeLimit = 0.5f;
+        }
+        else
+        {
+            GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
+            ComboTimeLimit = 0;
+        }
         yield return new WaitForSeconds(0.5f);
         IsComBo = false;
+        GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
         if (IsContinuity == false || IsFaild == true || BattleManager.Instance.IsEnemyDead == true)
         {
             IsFaild = false;
@@ -576,6 +573,7 @@ public class BattlePlayer : MonoBehaviour
         else if (IsContinuity == true && IsFaild == false && BattleManager.Instance.IsEnemyDead == false)
         {
             StartCoroutine(PlayerAttack3());
+            ComboTimeLimit = 0;
             yield return null;
         }
     }
@@ -689,6 +687,7 @@ public class BattlePlayer : MonoBehaviour
     }
     void Attackcounting()
     {
+        ComboTimeLimit -= Time.deltaTime;
         if (IsAttackOk == true && BasicAttackCount >= 2 && IsContinuity == false && IsComBo == true)
         {
             animator.SetBool("IsWalk", false);

@@ -167,9 +167,6 @@ public class BattleFinalBoss : BattleBasicEnemy
     }
     IEnumerator WarningTXT()
     {
-        //Warning.SetActive(true);
-        //yield return new WaitForSeconds(2);
-        //Warning.SetActive(false);
         yield return null;
     }
     void BossCam()
@@ -183,14 +180,14 @@ public class BattleFinalBoss : BattleBasicEnemy
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         InstantDeathBar.fillAmount = InstantDeathCount / MaxInstantDeathCount;
-        HpBar.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
-        AngerBar.transform.position = new Vector3(1f, BarUp + 72.25f, 0);
-        HpBarNull.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
-        SuperAngerBar.transform.position = new Vector3(1f, BarUp + 73.6f, 0);
-        EnemyPicture.transform.position = new Vector3(-6.05f, BarUp + 72.9f, 0);
-        InstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67f, 0);
-        MaxInstantDeathBar.transform.position = new Vector3(0.65f, BarUp + 67, 0);
-        InstantImage.transform.position = new Vector3(0.65f, BarUp + 66.05f, 0);
+        HpBar.transform.position = new Vector3(2f, BarUp + 72.95f, 0);
+        AngerBar.transform.position = new Vector3(2f, BarUp + 72.25f, 0);
+        HpBarNull.transform.position = new Vector3(2f, BarUp + 72.95f, 0);
+        SuperAngerBar.transform.position = new Vector3(2f, BarUp + 73.6f, 0);
+        EnemyPicture.transform.position = new Vector3(-5.05f, BarUp + 72.9f, 0);
+        InstantDeathBar.transform.position = new Vector3(1.65f, BarUp + 67f, 0);
+        MaxInstantDeathBar.transform.position = new Vector3(1.65f, BarUp + 67, 0);
+        InstantImage.transform.position = new Vector3(1.65f, BarUp + 66.05f, 0);
         Eye.transform.position = new Vector3(-8.5f, BarUp + 61f, 0);
         SuperEye.transform.position = new Vector3(0f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);

@@ -232,10 +232,11 @@ MonoBehaviour:
   Speed: 1.6
   MoveCount: 0
   MaxMoveCount: 6
-  SeeCrossroad: -3
+  SeeCrossroad: -3.7
   IsPlus: 1
   IsFind: 0
   IsMove: 1
+  IsTurns: 0
   Player: {fileID: 0}
   WarningObj: {fileID: 5255179298977507298}
   CrossRoadObj: {fileID: 5255179299600110915}
