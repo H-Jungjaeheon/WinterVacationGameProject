@@ -4,18 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Obj_2 : MonoBehaviour
+public class Obj_2 : Box
 {
     public GameObject[] Items;
-    public bool isIt;
-    bool iscollison;
+   
+   
     public Slider slider;
 
     public Sprite Open;
 
-    [SerializeField]
-    public GameObject[] particle;
-
+   
     [SerializeField] public GameObject DoPos;
     public int boxIdx;
 
@@ -23,24 +21,29 @@ public class Obj_2 : MonoBehaviour
     private GameObject audioSource;
 
 
-// Start is called before the first frame update
-void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         iscollison = false;
-        isIt = true;
+        
         particle[0].SetActive(false);
         particle[1].SetActive(false);
         slider.gameObject.SetActive(false);
-    if (boxIdx == 0)
-    {
-        audioSource = GameObject.Find("BoxSounds").gameObject;
+        if (boxIdx == 0)
+        {
+            audioSource = GameObject.Find("BoxSounds").gameObject;
+        }
+        else if (boxIdx == 1)
+        {
+            audioSource = GameObject.Find("WoodBox").gameObject;
+        }
     }
-    else if (boxIdx == 1)
-    {
-        audioSource = GameObject.Find("WoodBox").gameObject;
-    }
-}
 
+    IEnumerator Cnt()
+    {
+        yield return new WaitForSeconds(0.01f);
+        GameObject.Find("Player").GetComponent<Player>().Chest.RemoveAt(0);
+    }
     // Update is called once per frame
     float cnt;
     void Update()
@@ -48,10 +51,10 @@ void Start()
         slider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
         isParticle();
         slider.value = cnt / 4;
-        if (isIt && iscollison)
+        if (isBoxOpen == false && iscollison)
         {
             slider.gameObject.SetActive(true);
-            if (Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false )
+            if (Input.GetKey(KeyCode.F) && GameObject.Find("Player").GetComponent<Player>().IsGrab == false && GameObject.Find("Player").GetComponent<Player>().Chest[0] == gameObject)
             {
                 cnt += Time.deltaTime;
             }
@@ -62,51 +65,28 @@ void Start()
             slider.gameObject.SetActive(false);
             cnt = 0;
         }
-        if (cnt >= 4) 
-        { 
-           cnt = 0;
-           Drop();
-        }    
+        if (cnt >= 4)
+        {
+            cnt = 0;
+            Drop();
+            StartCoroutine(Cnt());
+
+        }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("충돌");
-            if (isIt == true)
-            {
-                iscollison = true;
-                slider.gameObject.SetActive(true);
-
-            }
-        }
-
+        base.OnTriggerEnter2D(collision);
+        slider.gameObject.SetActive(true);
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("나감");
-            iscollison = false;
-            slider.gameObject.SetActive(false);
-
-        }
+        base.OnTriggerExit2D(collision);
+        slider.gameObject.SetActive(false);
     }
-    void isParticle()
-    {
-        if (isIt == true)
-        {
-            particle[0].SetActive(true);
-        }
-        else
-        {
-            particle[0].SetActive(false);
-
-        }
-    }
+   
     public void Drop()
     {
-        isIt = false;
+        isBoxOpen = true;
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
@@ -144,7 +124,7 @@ void Start()
                         GameManager.Instance.Money += 10;
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
                         break;
-                    
+
                 }
                 break;
             case 1://드럼통
@@ -171,14 +151,10 @@ void Start()
                         Instantiate(Items[itemRan], transform.position, Items[itemRan].transform.rotation).transform.DOLocalMoveY(DoPos.transform.position.y, 0.5f).SetEase(Ease.OutQuad).SetLoops(2, LoopType.Yoyo);
 
                         break;
-                    
+
                 }
                 break;
         }
     }
-    void Nothing()
-    {
-        particle[1].SetActive(false);
-
-    }
+    
 }

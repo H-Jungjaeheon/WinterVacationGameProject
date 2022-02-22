@@ -42,9 +42,7 @@ public class LadderExit : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("d");
-        Physics2D.IgnoreCollision(collision.GetComponent<Collider2D>(), col, false);
-        
+        Physics2D.IgnoreCollision(collision.GetComponent<Collider2D>(), col, false);   
         if (collision.CompareTag("Player"))
         {
             Interaction.SetActive(false);

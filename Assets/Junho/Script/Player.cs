@@ -9,14 +9,18 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
     public float speed = 5, jumpPower;
-    [SerializeField] bool isGound, isLadder, isDamage = false,gasdam = false,gasmaskon =false;
+    [SerializeField] bool isGound, isLadder, isDamage,gasdam = false,gasmaskon =false;
     [SerializeField] Image img_gasmask;
+    [SerializeField] GameObject GrabWarningObj;
     public Animator anim;
-    public bool IsGrab = false, isHidecollision = false, isHide = false, isParalysis = false, GetOutElectricity = false, gasmasktrue = false;
+    public bool IsGrab, isHidecollision, isHide, isParalysis, GetOutElectricity, gasmasktrue;
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
+    public List<GameObject> Chest = new List<GameObject>();
+
     void Start()
     {
+        GrabWarningObj.SetActive(false);
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -32,42 +36,24 @@ public class Player : MonoBehaviour
         }
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
-            /*
-            if (GameManager.Instance.isBurns)
-            {*/
-                transform.GetChild(0).gameObject.SetActive(GameManager.Instance.isBurns);
-                transform.GetChild(1).gameObject.SetActive(GameManager.Instance.isBurns);
-/*
-            }
-            else
-            {
-                Burns[0].SetActive(false);
-                Burns[1].SetActive(false);
-            }*/
-
-
+            transform.GetChild(0).gameObject.SetActive(GameManager.Instance.isBurns);
+            transform.GetChild(1).gameObject.SetActive(GameManager.Instance.isBurns);
             if (IsGrab == false && isHide == false && isParalysis == false&&GameManager.Instance.isGameOver==false&& GameManager.Instance.BossRoom == false)
             {
                 Move();
             }
-            
-            //Jump();
             if (isLadder)
             {
-
                 bool isF;
-
                 if (Input.GetKey(KeyCode.F) && IsGrab == false)
                 {
                     GameManager.Instance.is2F = true;
-
                     isF = true;
                 }
                 else 
                 {
                     isF = false;                  
                 }
-
                 if (isF && IsGrab == false)
                 {
                     anim.SetBool("IsLadder", true);
@@ -93,18 +79,15 @@ public class Player : MonoBehaviour
 
     }
     void Update()
-    {   
+    {
+        Grabbing();
         if (isElDam) ElDamage();
         if (GameManager.Instance.isEunsin)
         {
             this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 0.4f);
         }
         else this.spriteRenderer.color = new Color(spriteRenderer.color.b, spriteRenderer.color.g, spriteRenderer.color.r, 1f);
-            
-        if (IsGrab == true)
-        {
-            Grabbing();
-        }
+           
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         { 
             if (isHidecollision == true && isHide == false && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
@@ -112,12 +95,10 @@ public class Player : MonoBehaviour
                 isHide = true;
                 GameManager.Instance.isEunsin = true;
                 this.spriteRenderer.enabled = false;
-                Debug.Log("¼ûÀ½");
 
             }
             else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
             {
-                Debug.Log("¾È¼ûÀ½");
                 isHide = false;
                 GameManager.Instance.isEunsin = false;
                 this.spriteRenderer.enabled = true;
@@ -127,14 +108,23 @@ public class Player : MonoBehaviour
     }
     void Grabbing()
     {
-        GrapCount -= Time.deltaTime * 18;
-        if (Input.GetKeyDown(KeyCode.F))
+        if (IsGrab == true)
         {
-            GrapCount += 8; //MaxGrapCount
+            GrabWarningObj.SetActive(true);
+            GrapCount -= Time.deltaTime * 18;
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                GrapCount += 8;
+            }
+            if (GrapCount <= 0)
+            {
+                GrapCount = 0;
+            }
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrap = true;
         }
-        if (GrapCount <= 0)
+        else
         {
-            GrapCount = 0;
+            GrabWarningObj.SetActive(false);
         }
     }   
     void Move()
@@ -226,6 +216,14 @@ public class Player : MonoBehaviour
             case "Electricity":
                 isElDam = true;
                 break;
+            case "Box":
+                if (collision.gameObject.GetComponent<Obj1>().BoxDrop == false)
+                {
+                    Chest.Add(collision.gameObject);
+
+                }
+                break;
+           
         }
 
     }
@@ -251,6 +249,9 @@ public class Player : MonoBehaviour
                 break;
             case "Electricity":
                 isElDam=false;
+                break;
+            case "Box":
+                Chest.Remove(collision.gameObject);
                 break;
         }
 

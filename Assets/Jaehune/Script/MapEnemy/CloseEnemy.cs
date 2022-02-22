@@ -17,10 +17,19 @@ public class CloseEnemy : BasicEnemyScript
     }
     public override void Moving()
     {
-        base.Moving();
+        MoveCount += Time.deltaTime;
+        transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
+        if (MoveCount >= MaxMoveCount)
+        {
+            animator.SetBool("IsIdle", true);
+            MoveCount = 0;
+            IsMove = false;
+            Invoke("Trun", 4f);
+        }
     }
     public override void Trun()
     {
+        animator.SetBool("IsIdle", false);
         base.Trun();
     }
     public override void RayCasting()

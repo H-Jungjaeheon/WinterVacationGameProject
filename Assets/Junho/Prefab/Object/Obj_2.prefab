@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 1437734393144131643}
   m_Layer: 0
   m_Name: Obj_2
-  m_TagString: Obj_2
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,6 +339,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ec1f4ede2fcdf47a2aff57e75fbb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle:
+  - {fileID: 1437734394044969261}
+  - {fileID: 1437734393486650864}
   Items:
   - {fileID: 4643653045975795293, guid: 76a2b5670c348af4f96c02e64d277144, type: 3}
   - {fileID: 3526008968914863085, guid: fafc0131e9e762148aff5e6d6b2286d9, type: 3}
@@ -347,12 +350,8 @@ MonoBehaviour:
   - {fileID: 4643653045975795293, guid: 280c262c97a706f488e771cefe638db4, type: 3}
   - {fileID: 4643653045975795293, guid: 4c480ee66849adb4ba7b868d1536de38, type: 3}
   - {fileID: 8435042252103025512, guid: 1962ad4718db5b64987d86516d734552, type: 3}
-  isIt: 0
   slider: {fileID: 1437734394310055457}
   Open: {fileID: 21300000, guid: fb2bc1c19d9abfe40a880094da018809, type: 3}
-  particle:
-  - {fileID: 1437734394044969261}
-  - {fileID: 1437734393486650864}
   DoPos: {fileID: 4115226050970653772}
   boxIdx: 0
   money: {fileID: 3069456355102008777}

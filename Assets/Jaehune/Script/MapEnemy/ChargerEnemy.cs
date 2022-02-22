@@ -70,7 +70,6 @@ public class ChargerEnemy : BasicEnemyScript
                 animator.SetBool("IsSkill", true);
                 color.a = 1;
                 color2.a = 1;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = true;
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = true;
                 IsSkill = true;
                 IsMove = false;
@@ -84,7 +83,7 @@ public class ChargerEnemy : BasicEnemyScript
             else
             {
                 animator.SetBool("IsSkill", false);
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrab = false;
+                GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrap = false;
                 SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
                 SkillLine.SetPosition(1, this.transform.position - new Vector3(0, 0.6f, 0));
                 color.a = 0;
@@ -119,6 +118,7 @@ public class ChargerEnemy : BasicEnemyScript
     }
     public override void Trun()
     {
+        animator.SetBool("IsIdle", false);
         base.Trun();
     }
     public override void RayCasting()
