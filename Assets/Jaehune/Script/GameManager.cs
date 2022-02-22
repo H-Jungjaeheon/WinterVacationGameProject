@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     public float curHp = 100, curMana = 100, maxHp = 100, maxMana = 100, BattleEndCount = 0, stackDamage = 0, damageabsorption = 0, defense = 0;
 
     [SerializeField] GameObject Player, menuPanel, soundpanel;
-
     private Color PanelAlpha;
     private Image PanelImage;
     [SerializeField] UnityEngine.Camera MCamera;
@@ -299,6 +298,7 @@ public class GameManager : MonoBehaviour
         Boss[Stage - 1].SetActive(true);
         MCamera.orthographicSize = 7f;
         MCamera.transform.position += new Vector3(0, 2f, 0);
+        Player.GetComponent<Player>().anim.SetBool("IsWalk", true);
         while (Boss[Stage - 1].transform.position.x + 4 < MCamera.transform.position.x)
         {
             MCamera.transform.position -= new Vector3(4f, 0, 0) * Time.deltaTime * 1;
@@ -308,7 +308,8 @@ public class GameManager : MonoBehaviour
             }
             yield return null;
         }
-        yield return new WaitForSeconds(10f);
+        Player.GetComponent<Player>().anim.SetBool("IsWalk", false);
+        yield return new WaitForSeconds(5f);
         bosssurvival = false;
         BossRoom = false;
         yield return null;
