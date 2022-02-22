@@ -67,11 +67,11 @@ public class Player : MonoBehaviour
 
                 rigid.gravityScale = 3f;
             }
-            if (rigid.velocity.normalized.x == 0)
+            if (rigid.velocity.normalized.x == 0&&GameManager.Instance.BossRoom == false)
             {
                 anim.SetBool("IsWalk", false);
             }
-            else
+            else if(GameManager.Instance.BossRoom == false)
             {
                 anim.SetBool("IsWalk", true);
             }

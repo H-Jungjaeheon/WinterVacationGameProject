@@ -71,6 +71,7 @@ public class TwiceBoss : BasicEnemyScript
             SeeCrossroad *= -1;
             yield return new WaitForSeconds(0.5f);
             animator.SetBool("IsSkill", true);
+            GameObject.Find("SoundManager").GetComponent<SoundManager>().SESound(5);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime3(0.7f);
             yield return new WaitForSeconds(1);
             Go = true;
