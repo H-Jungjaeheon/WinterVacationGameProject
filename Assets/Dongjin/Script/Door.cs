@@ -39,7 +39,6 @@ public class Door : MonoBehaviour
                 GameManager.Instance.isRoom = false;
                 GameManager.Instance.Stage++;
             }
-                GameObject.Find("MainCamera").GetComponent<CameraMove>().IsBigRoom = door.GetComponent<Door>().isbigroom;
             if (bossdoor)
             {
                 GameManager.Instance.BossRoomStart = true;
