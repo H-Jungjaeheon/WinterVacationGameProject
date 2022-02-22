@@ -144,11 +144,11 @@ public class SuperEnemy : BasicEnemyScript
         {
             if (Speed > 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 6f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 4f * Time.deltaTime);
             }
             else if (Speed < 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -6f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -4f * Time.deltaTime);
             }
         }
     }
