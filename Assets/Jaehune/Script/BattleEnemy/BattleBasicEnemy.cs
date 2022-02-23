@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class BattleBasicEnemy : MonoBehaviour
 {
     public float MaxHp, BarUp, GExp, Hp, Anger, MaxAnger; //최대 체력, 체력바 높이, 주는 경험치, 분노 게이지, 최대 분노 게이지
-    //public int AttackRand; //다음 공격 랜덤으로 정하기
     public int Damage; //공격력
     public GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
     public Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
@@ -40,7 +39,7 @@ public class BattleBasicEnemy : MonoBehaviour
             StartCoroutine("EnemyHit");
         }
     }
-    public virtual void AttackGone() //때리러 이동 및 복귀
+    public virtual void AttackGone()
     {
         if(GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
@@ -57,7 +56,7 @@ public class BattleBasicEnemy : MonoBehaviour
             animator.SetBool("IsWalk", false);
         }
     }
-    public virtual void Hpbar() //체력바 외 여러가지 바
+    public virtual void Hpbar() 
     {
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
@@ -66,7 +65,7 @@ public class BattleBasicEnemy : MonoBehaviour
         HpBarNull.transform.position = this.transform.position + new Vector3(0.35f, BarUp + 0.05f, 0);
         EnemyPicture.transform.position = this.transform.position + new Vector3(-1.3f, BarUp, 0);
     }
-    public virtual void RayCasting() //플레이어 전투 캐릭터 인식
+    public virtual void RayCasting() 
     {
         Debug.DrawRay(transform.position, Vector3.left * 50, Color.red);
         var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, 50);
@@ -88,7 +87,7 @@ public class BattleBasicEnemy : MonoBehaviour
         ps.Stop();
         yield return null;
     }
-    public virtual void Dead1() //죽을 때
+    public virtual void Dead1()
     {
         if (Hp <= 0)
         {
@@ -111,7 +110,7 @@ public class BattleBasicEnemy : MonoBehaviour
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
+        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             color2.a -= Time.deltaTime / FaidTime;
@@ -147,7 +146,7 @@ public class BattleBasicEnemy : MonoBehaviour
     {
         animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        if(Anger < MaxAnger) //AttackRand == 1
+        if(Anger < MaxAnger) 
         {
             GameManager.Instance.BattleSkillText.text = "강력한 두개골";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -175,6 +174,10 @@ public class BattleBasicEnemy : MonoBehaviour
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
@@ -188,10 +191,12 @@ public class BattleBasicEnemy : MonoBehaviour
             GoToReturn = false;
             yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
-            //AttackRand = Random.Range(1, 3);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
-        else if (Anger >= MaxAnger) //AttackRand == 2
+        else if (Anger >= MaxAnger) 
         {
             Anger = 0;
             GameManager.Instance.BattleSkillText.text = "날카로운 이빨";
@@ -220,6 +225,10 @@ public class BattleBasicEnemy : MonoBehaviour
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
@@ -232,8 +241,10 @@ public class BattleBasicEnemy : MonoBehaviour
             GoToReturn = false;
             yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
-            //AttackRand = Random.Range(1, 3);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         yield return null;
     }

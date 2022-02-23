@@ -12,7 +12,6 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
     [SerializeField] Vector2 BarPosition, PicturePosition, SuperSkillPosition;
     [SerializeField] Text SuperSkillText;
     public bool IsSuperSkillng;
-    // Start is called before the first frame update
     public override void Start()
     {
         IsSuperSkillng = false;
@@ -27,7 +26,6 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
         SkillAttackRand = Random.Range(1, 3);
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
@@ -225,6 +223,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(1.5f, 0f, 0);
             StopGone = false;
@@ -256,7 +258,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             else
             {
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameManager.Instance.BattleButtonUi.SetActive(true);
+                if (GameManager.Instance.curHp > 0)
+                {
+                    GameManager.Instance.BattleButtonUi.SetActive(true);
+                }
             }
         }
         else if (Anger >= MaxAnger && SkillAttackRand == 1 && SuperSkillCount < MaxSuperSkillCount)
@@ -315,6 +320,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(1.5f, 0f, 0);
             StopGone = false;
@@ -351,7 +360,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             else
             {
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameManager.Instance.BattleButtonUi.SetActive(true);
+                if (GameManager.Instance.curHp > 0)
+                {
+                    GameManager.Instance.BattleButtonUi.SetActive(true);
+                }
                 SkillAttackRand = Random.Range(1, 3);
             }
         }
@@ -408,6 +420,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, -0.5f, 0);
             StopGone = false;
@@ -437,7 +453,10 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             else
             {
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameManager.Instance.BattleButtonUi.SetActive(true);
+                if (GameManager.Instance.curHp > 0)
+                {
+                    GameManager.Instance.BattleButtonUi.SetActive(true);
+                }
                 SkillAttackRand = Random.Range(1, 3);
             }
         }

@@ -9,15 +9,19 @@ public class BattleFinalBoss : BattleBasicEnemy
     [SerializeField] float SuperAngerCount, MaxSuperAngerCount, InstantDeathCount, MaxInstantDeathCount, EyeSpawnCount = 0, MaxEyeSpawnCount = 0; //각성 카운트, 즉사 패턴 카운트
     [SerializeField] bool IsSuperAnger, IsFarAway,IsUseSkill; //각성 판별, 원거리 공격 판별, 즉사 패턴 이미지 판별
     [SerializeField] int RandBasicAttack, RandSkill, PoisonCount, SuperAnger, MaxPoisonCount; //(기본 공격 랜덤, 스킬 공격 랜덤, 독 공격 카운터, 체력 흡수 카운터
-    [SerializeField] GameObject HealText, Warning; //체력 회복 텍스트
+    [SerializeField] GameObject HealText, Warning, SkillEffect; //체력 회복 텍스트
     [SerializeField] GameObject[] InstantEye;
     public Image Poison, SuperAngerBar, InstantDeathBar, MaxInstantDeathBar, InstantImage, Eye, SuperEye, PoisonEffect; //각성 바, 즉사 패턴 바(빈 즉사 패턴 바) 즉사 패턴 이미지
-    [SerializeField] Vector2 PoisonEffectTransform;
+    public int InstantDeaths;
+    [SerializeField] Image[] Monitor;
+    [SerializeField] Vector2 PoisonEffectTransform, MonitorTransform;
 
     public override void Start()
     {
+        InstantDeaths = 0;
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossDeadSkill = true;
         Warning.SetActive(false);
+        SkillEffect.SetActive(false);
         animator = GetComponent<Animator>();
         IsPoison = false;
         IsInstantDead = false;
@@ -31,6 +35,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         IsUseSkill = false;
         Invoke("BossCam", 3.5f);
         MaxEyeSpawnCount = Random.Range(5, 7);
+
     }
 
     public override void Update()
@@ -97,6 +102,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         }
         if (InstantDeathCount <= 40 && InstantDeathCount > 20 && IsUseSkill == true)
         {
+            InstantDeaths = 1;
             if (EyeSpawnCount >= MaxEyeSpawnCount && IsUseSkill == true)
             {
                 color.a = 0f;
@@ -112,6 +118,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         }
         else if (InstantDeathCount <= 80 && InstantDeathCount > 40 && IsUseSkill == true)
         {
+            InstantDeaths = 2;
             color.a = 0.1f;
             SuperEye.color = color;
             yield return null;
@@ -128,6 +135,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         }
         else if (InstantDeathCount <= 100 && InstantDeathCount > 80 && IsUseSkill == true)
         {
+            InstantDeaths = 3;
             color.a = 0.17f;
             SuperEye.color = color;
             yield return null;
@@ -148,6 +156,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         }
         else
         {
+            InstantDeaths = 0;
             color.a = 0;
             SuperEye.color = color;
             yield return null;
@@ -193,6 +202,9 @@ public class BattleFinalBoss : BattleBasicEnemy
         SuperEye.transform.position = new Vector3(0f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
         PoisonEffect.transform.position = new Vector2(Player.transform.position.x + PoisonEffectTransform.x, Player.transform.position.y + PoisonEffectTransform.y);
+        SkillEffect.transform.position = Player.transform.position + new Vector3(1,1,0);
+        Monitor[0].transform.position = new Vector2(MonitorTransform.x, MonitorTransform.y);
+        Monitor[1].transform.position = new Vector2(-MonitorTransform.x, MonitorTransform.y);
     }
     public override void RayCasting()
     {
@@ -216,7 +228,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             color.b = 0;
             MaxInstantDeathBar.color = color;
         }
-        else
+        else if(InstantDeathCount < MaxInstantDeathCount)
         {
             color.r = 1;
             color.g = 1;
@@ -311,7 +323,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
+        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             color2.a -= Time.deltaTime / FaidTime;
@@ -348,7 +360,7 @@ public class BattleFinalBoss : BattleBasicEnemy
     }
     public override IEnumerator EnemyAttack()
     {
-        if (IsPoison == false) //두번째 기본 스킬 중복 방지
+        if (IsPoison == false) 
         {
             RandBasicAttack = Random.Range(1, 3);
         }
@@ -356,7 +368,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             RandBasicAttack = Random.Range(1, 2);
         }
-        RandSkill = Random.Range(1, 3); //스킬 랜덤값 뽑기
+        RandSkill = Random.Range(1, 3);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         if (Anger < MaxAnger && InstantDeathCount < MaxInstantDeathCount && RandBasicAttack == 1 && SuperAngerCount < MaxSuperAngerCount)
         {
@@ -418,6 +430,10 @@ public class BattleFinalBoss : BattleBasicEnemy
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                 }
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(2f); //독 공격 딜레이
             transform.position = this.transform.position + new Vector3(1f, 0.8f, 0);
             StopGone = false;
@@ -453,7 +469,10 @@ public class BattleFinalBoss : BattleBasicEnemy
             GoToReturn = false;
             IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (Anger < MaxAnger && InstantDeathCount < MaxInstantDeathCount && RandBasicAttack == 2 && SuperAngerCount < MaxSuperAngerCount)
         {
@@ -496,7 +515,10 @@ public class BattleFinalBoss : BattleBasicEnemy
                 yield return new WaitForSeconds(1);
             }
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (Anger >= MaxAnger && InstantDeathCount < MaxInstantDeathCount && RandSkill == 1 && SuperAngerCount < MaxSuperAngerCount)
         {
@@ -507,6 +529,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             yield return new WaitForSeconds(1f);
             BattleManager.Instance.CamP = true;
             animator.SetBool("IsSkill", true);
+            SkillEffect.SetActive(true);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             InstantDeathCount += 30;
@@ -559,7 +582,12 @@ public class BattleFinalBoss : BattleBasicEnemy
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                 }
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1f);
+            SkillEffect.SetActive(false);
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
@@ -580,7 +608,10 @@ public class BattleFinalBoss : BattleBasicEnemy
                 yield return new WaitForSeconds(1);
             }
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (Anger >= MaxAnger && InstantDeathCount < MaxInstantDeathCount && RandSkill == 2 && SuperAngerCount < MaxSuperAngerCount)
         {
@@ -644,6 +675,10 @@ public class BattleFinalBoss : BattleBasicEnemy
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                 }
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(2f);
             transform.position = EnemySpawner.transform.position + new Vector3(2, 3.5f, 0);
             animator.SetBool("IsSkill2-2", false);
@@ -677,7 +712,10 @@ public class BattleFinalBoss : BattleBasicEnemy
             GoToReturn = false;
             IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (SuperAngerCount >= MaxSuperAngerCount && InstantDeathCount < MaxInstantDeathCount)
         {
@@ -710,7 +748,10 @@ public class BattleFinalBoss : BattleBasicEnemy
                 yield return new WaitForSeconds(2);
             }
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (InstantDeathCount >= MaxInstantDeathCount) 
         {
@@ -745,6 +786,10 @@ public class BattleFinalBoss : BattleBasicEnemy
                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(1f);
                Player.GetComponent<BattlePlayer>().IsHit = true;                
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             animator.SetBool("IsSkill3", false);
             yield return new WaitForSeconds(2);
             IsInstantDead = false;
@@ -772,7 +817,10 @@ public class BattleFinalBoss : BattleBasicEnemy
             GoToReturn = false;
             IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if(GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         if (InstantDeathCount >= 50)
         {

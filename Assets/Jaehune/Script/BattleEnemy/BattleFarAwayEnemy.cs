@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class BattleFarAwayEnemy : BattleBasicEnemy
 {
-    // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0f, 0.9f, 0);
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
@@ -34,7 +32,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
         }
     }
     public override void Hpbar()
-    { //오른쪽으로 밀고 위로 더
+    { 
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         HpBar.transform.position = this.transform.position + new Vector3(0f, BarUp + 1.25f, 0);
@@ -63,7 +61,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
         animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = true;
-        if (Anger < MaxAnger) //AttackRand == 1
+        if (Anger < MaxAnger)
         {
             GameManager.Instance.BattleSkillText.text = "촉수 강타";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -91,6 +89,10 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(2.5f, 0, 0);
             StopGone = false;
@@ -105,10 +107,12 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             yield return new WaitForSeconds(2);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
-            //AttackRand = Random.Range(1, 3);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
-        else if (Anger >= MaxAnger) //AttackRand == 2
+        else if (Anger >= MaxAnger) 
         {
             Anger = 0;
             GameManager.Instance.BattleSkillText.text = "기형의 팔";
@@ -137,6 +141,10 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(2.5f, -0.5f, 0);
             StopGone = false;
@@ -150,8 +158,10 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             yield return new WaitForSeconds(2);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
-            //AttackRand = Random.Range(1, 3);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         yield return null;
     }

@@ -8,7 +8,6 @@ public class BattleChargerEnemy : BattleBasicEnemy
     [SerializeField] int RandomAbility, AbilityCount, MaxAbilityCount;
     [SerializeField] Image AbilityHand;
     [SerializeField] bool IsDead;
-    // Start is called before the first frame update
     public override void Start() 
     {
         IsDead = false;
@@ -23,7 +22,6 @@ public class BattleChargerEnemy : BattleBasicEnemy
         this.transform.position = EnemySpawner.transform.position + new Vector3(-0.7f, 1.1f, 0);
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
@@ -92,7 +90,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
     {
         animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        if (Anger < MaxAnger) //AttackRand == 1
+        if (Anger < MaxAnger)
         {
             GameManager.Instance.BattleSkillText.text = "³»ÀåÀ¸·Î ÀÌ·ç¾îÁø ¼Õ";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -120,6 +118,10 @@ public class BattleChargerEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
             StopGone = false;
@@ -143,13 +145,15 @@ public class BattleChargerEnemy : BattleBasicEnemy
             else
             {
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameManager.Instance.BattleButtonUi.SetActive(true);
+                if (GameManager.Instance.curHp > 0)
+                {
+                    GameManager.Instance.BattleButtonUi.SetActive(true);
+                }
             }
-            //AttackRand = Random.Range(1, 3);
         }
-        else if (Anger >= MaxAnger) //AttackRand == 2
+        else if (Anger >= MaxAnger) 
         {
-            RandomAbility = Random.Range(1, 5); //1, 4
+            RandomAbility = Random.Range(1, 5); 
             Anger = 0;
             GameManager.Instance.BattleSkillText.text = "Àû¼ö°ø±Ç(îåâ¢ÍöÏë)";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -184,6 +188,10 @@ public class BattleChargerEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.9f, 0f, 0);
             StopGone = false;
@@ -202,7 +210,10 @@ public class BattleChargerEnemy : BattleBasicEnemy
             else
             {
                 BattleManager.Instance.IsPlayerTurn = true;
-                GameManager.Instance.BattleButtonUi.SetActive(true);
+                if (GameManager.Instance.curHp > 0)
+                {
+                    GameManager.Instance.BattleButtonUi.SetActive(true);
+                }
             }
         }
         yield return null;

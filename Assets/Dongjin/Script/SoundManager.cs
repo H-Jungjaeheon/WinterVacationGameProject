@@ -39,6 +39,6 @@ public class SoundManager : MonoBehaviour
     }
     public void SESound(int soundidx)
     {
-        SoundSource[soundidx].GetComponent<AudioSource>().Play();
+        //SoundSource[soundidx].GetComponent<AudioSource>().Play();
     }
 }

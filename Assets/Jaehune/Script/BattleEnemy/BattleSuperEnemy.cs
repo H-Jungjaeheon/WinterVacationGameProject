@@ -11,7 +11,6 @@ public class BattleSuperEnemy : BattleBasicEnemy
     [SerializeField] GameObject EnergyBullet;
     [SerializeField] SpriteRenderer SRS;
 
-    // Start is called before the first frame update
     public override void Start()
     {
         EnergyBullet.SetActive(false);
@@ -23,10 +22,8 @@ public class BattleSuperEnemy : BattleBasicEnemy
         SRS = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0f, 2.1f, 0);
         SkillAttackRand = Random.Range(1, 4);
-        //SRS = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
@@ -116,6 +113,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(1f, 0f, 0);
             StopGone = false;
@@ -129,7 +130,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
             GoToReturn = false;
             yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (Anger >= MaxAnger && SkillAttackRand == 1)
         {
@@ -159,7 +163,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            GameManager.Instance.BattleButtonUi.SetActive(true);            
         }
         else if (Anger >= MaxAnger && SkillAttackRand == 2)
         {
@@ -192,6 +196,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             SRS.sortingOrder = -1;
             EnergyBullet.SetActive(false);
@@ -206,7 +214,10 @@ public class BattleSuperEnemy : BattleBasicEnemy
             IsSkill = false;
             yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (Anger >= MaxAnger && SkillAttackRand == 3)
         {
@@ -226,7 +237,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            GameManager.Instance.BattleButtonUi.SetActive(true);            
         }
         yield return null;
     }

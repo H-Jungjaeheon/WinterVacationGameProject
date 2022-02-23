@@ -322,6 +322,10 @@ public class GameManager : MonoBehaviour
         {
             stackDamage = 0;
         }
+        else if(stackDamage >= maxHp)
+        {
+            stackDamage = maxHp;
+        }
         if (curMana >= maxMana)
         {
             curMana = maxMana;

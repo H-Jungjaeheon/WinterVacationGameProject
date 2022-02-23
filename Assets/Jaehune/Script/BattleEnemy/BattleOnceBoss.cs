@@ -39,7 +39,7 @@ public class BattleOnceBoss : BattleBasicEnemy
         if (GoToPlayer == true && BattleManager.Instance.IsPlayerTurn == false && StopGone == false)
         {
             animator.SetBool("IsWalk", true);
-            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(4, 2f, 0), 10 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(this.transform.position, Player.transform.position + new Vector3(5, 2f, 0), 10 * Time.deltaTime);
         }
         else if (GoToReturn == true)
         {
@@ -93,7 +93,7 @@ public class BattleOnceBoss : BattleBasicEnemy
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
         Color color6 = SuperAngerBar.color;
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
+        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             SR.color = color;
@@ -135,7 +135,7 @@ public class BattleOnceBoss : BattleBasicEnemy
     {
         animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        if (Anger < MaxAnger && SuperAngerCount < MaxSuperAngerCount) //AttackRand == 1
+        if (Anger < MaxAnger && SuperAngerCount < MaxSuperAngerCount) 
         {
             GameManager.Instance.BattleSkillText.text = "먹이 수확";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -144,7 +144,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsAttack", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.3f, 0f, 0);
+            transform.position = this.transform.position;
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -194,8 +194,12 @@ public class BattleOnceBoss : BattleBasicEnemy
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                 }
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.3f, 0f, 0);
+            transform.position = this.transform.position;
             StopGone = false;
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamE = false;
@@ -211,11 +215,13 @@ public class BattleOnceBoss : BattleBasicEnemy
             {
                 SuperAngerCount += 10;
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.3f);
             GoToReturn = false;
-            yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (Anger >= MaxAnger && SuperAngerCount < MaxSuperAngerCount)
         {
@@ -227,7 +233,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             BattleManager.Instance.CamE = true;
             animator.SetBool("IsSkill", true);
             StopGone = true;
-            transform.position = this.transform.position + new Vector3(-0.3f, 0f, 0);
+            transform.position = this.transform.position;
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
@@ -277,8 +283,12 @@ public class BattleOnceBoss : BattleBasicEnemy
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                 }
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
-            transform.position = this.transform.position + new Vector3(0.3f, 0f, 0);
+            transform.position = this.transform.position;
             StopGone = false;
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamE = false;
@@ -293,11 +303,13 @@ public class BattleOnceBoss : BattleBasicEnemy
             {
                 SuperAngerCount += 50;
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.3f);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         else if (SuperAngerCount >= MaxSuperAngerCount)
         {
@@ -313,7 +325,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
         }

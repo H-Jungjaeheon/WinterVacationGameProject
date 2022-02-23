@@ -7,14 +7,12 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
 {
     [SerializeField] bool IsBoom = false, IsDead = false;
     [SerializeField] Image NullAngerBar;
-    // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0, 0.5f, 0);
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
@@ -89,7 +87,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
         Color color6 = NullAngerBar.color;
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
+        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             color2.a -= Time.deltaTime / FaidTime;
@@ -126,7 +124,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
     {
         animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        if (Anger < MaxAnger) //AttackRand == 1
+        if (Anger < MaxAnger) 
         {
             GameManager.Instance.BattleSkillText.text = "화학 작용 ㅡ 자폭 준비";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -171,6 +169,10 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
             StopGone = false;
@@ -178,7 +180,10 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             animator.SetBool("IsSkill", false);
             IsDead = true;
             BattleManager.Instance.CamE = false;
-            GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         yield return null;
     }

@@ -6,7 +6,6 @@ public class BattleReflectEnemy : BattleBasicEnemy
 {
     [SerializeField] int ReflectingTurn, MaxReflctingTurn;
     [SerializeField] GameObject ReflectImage;
-    // Start is called before the first frame update
     public override void Start()
     {
         ReflectImage.SetActive(false);
@@ -14,7 +13,6 @@ public class BattleReflectEnemy : BattleBasicEnemy
         this.transform.position = EnemySpawner.transform.position + new Vector3(0.9f, 0.45f, 0);
     }
 
-    // Update is called once per frame
     public override void Update()
     {
         base.Update();
@@ -86,7 +84,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
     {
         animator.SetBool("IsWalk", false);
         GameManager.Instance.BattleSkillBackGround.SetActive(true);
-        if (Anger < MaxAnger) //AttackRand == 1
+        if (Anger < MaxAnger) 
         {
             GameManager.Instance.BattleSkillText.text = "Èä°­ ºÐ¼â";
             BattleManager.Instance.IsEnemyTurn = false;
@@ -114,6 +112,10 @@ public class BattleReflectEnemy : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                 Player.GetComponent<BattlePlayer>().IsHit = true;
             }
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleSkillBackGround.SetActive(false);
+            }
             yield return new WaitForSeconds(1);
             transform.position = this.transform.position + new Vector3(0.5f, -0.5f, 0);
             StopGone = false;
@@ -131,10 +133,12 @@ public class BattleReflectEnemy : BattleBasicEnemy
                 ReflectingTurn++;
             }
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
-            //AttackRand = Random.Range(1, 3);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
-        else if (Anger >= MaxAnger) //AttackRand == 2
+        else if (Anger >= MaxAnger)
         {
             Anger = 0;
             GameManager.Instance.BattleSkillText.text = "Á¤½ÅºÐ¿­ ºû";
@@ -150,8 +154,10 @@ public class BattleReflectEnemy : BattleBasicEnemy
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             yield return new WaitForSeconds(3);
             BattleManager.Instance.IsPlayerTurn = true;
-            GameManager.Instance.BattleButtonUi.SetActive(true);
-            //AttackRand = Random.Range(1, 3);
+            if (GameManager.Instance.curHp > 0)
+            {
+                GameManager.Instance.BattleButtonUi.SetActive(true);
+            }
         }
         yield return null;
     }
