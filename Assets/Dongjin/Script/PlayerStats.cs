@@ -17,7 +17,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         LV = 1;
-        LvText.text = LV+"";
+        LvText.text = LV +"";
         Exp = 0;
         MaxExp = 100;
     }
@@ -30,7 +30,7 @@ public class PlayerStats : MonoBehaviour
         {
             GameManager.Instance.LevelUp = true;
             LV += 1;
-            //LvText.text = ""+LV;
+            LvText.text = "" + LV;
             Exp = 0;
             MaxExp += 20;
             Stateup = true;

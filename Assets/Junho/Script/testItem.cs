@@ -43,7 +43,7 @@ public class testItem : MonoBehaviour
     IEnumerator cnt()
     {
         GetComponent<CapsuleCollider2D>().enabled=false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         GetComponent<CapsuleCollider2D>().enabled = true;
         GetComponent<CapsuleCollider2D>().isTrigger = true;
         
