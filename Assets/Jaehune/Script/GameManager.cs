@@ -348,7 +348,7 @@ public class GameManager : MonoBehaviour
             isGameOver = true;
             GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
         }
-        else if (curMana <= 0f)
+        else if (curMana <= 0f && IsBattleStart == false)
         {
             isGameOver = true;
             GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
