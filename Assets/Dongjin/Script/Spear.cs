@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class Spear : MonoBehaviour
 {
     private Vector3 savevector;
     public bool spearon;
     private bool trapped;
     public bool damageOn = false;
+    [SerializeField] Sprite[] images;
     private void Update()
     {
         if(trapped == true && damageOn== true && GameManager.Instance.isTrapBarrier == false)
@@ -19,11 +21,12 @@ public class Spear : MonoBehaviour
     {
         spearon = true;
         savevector = this.transform.position;
-        transform.position += new Vector3(0, 0.3f, 0);
+        gameObject.GetComponent<SpriteRenderer>().sprite = images[1];
         yield return new WaitForSeconds(1.5f);
         damageOn = true;
-        transform.position += new Vector3(0, 0.3f, 0);
+        gameObject.GetComponent<SpriteRenderer>().sprite = images[2];
         yield return new WaitForSeconds(1);
+        gameObject.GetComponent<SpriteRenderer>().sprite = images[0];
         damageOn = false;
         transform.position = savevector;
         spearon = false;
