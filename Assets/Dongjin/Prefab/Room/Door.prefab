@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9163326720708207898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3005, y: -2.2088, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.619, y: 3.7257233, z: 1}
   m_Children:
   - {fileID: 499561762965404996}
@@ -98,6 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1145123a92dd244a69e4d99330d433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossdoor: 0
+  nextdoor: 0
+  isbigroom: 0
   door: {fileID: 0}
   text: {fileID: 704951815655093867}
 --- !u!50 &9163326720708207900
