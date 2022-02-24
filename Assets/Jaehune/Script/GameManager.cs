@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     private Color PanelAlpha;
     private Image PanelImage;
     [SerializeField] UnityEngine.Camera MCamera;
-    [SerializeField] public Text manaText, hpText, moneyText;
+    [SerializeField] public Text manaText, hpText, moneyText, manaOverText;
     private GameObject stop;
     [SerializeField] private int Bossidx;
     [SerializeField] GameObject[] Boss, BattleBackGround;
@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
     public ParticleSystem speedParticle;
     [SerializeField] private Sprite stopimage;
     [SerializeField] Sprite continue_image;
+
+    private float cnt;
     private void Awake()
     {
         itemParticle.GetComponent<ParticleSystem>().Stop();
@@ -61,11 +63,7 @@ public class GameManager : MonoBehaviour
         speedParticle.Stop();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -343,6 +341,7 @@ public class GameManager : MonoBehaviour
         manaBar.value = curMana / maxMana;
         float mana = (float)(Math.Truncate(curMana) / 1);
         manaText.text = mana + "/" + maxMana;
+        
         if (curHp <= 0f)
         {
             isGameOver = true;
@@ -350,9 +349,24 @@ public class GameManager : MonoBehaviour
         }
         else if (curMana <= 0f && IsBattleStart == false)
         {
-            isGameOver = true;
-            GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+            manaOverText.DOFade(1, 1);
+            cnt += Time.deltaTime;
+            float Cnt = (float)(Math.Truncate(cnt) / 1);
+            manaOverText.text = 5-Cnt+"초 안에 만나를 흭득하십시오";
+            
+            if (cnt>=5)
+            {
+                manaOverText.DOFade(0, 1);
+                isGameOver = true;
+                GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+            }
 
+        }
+        if (curMana > 0)
+        {
+            manaOverText.DOFade(0, 1);
+            cnt = 0;
+            Debug.Log("D");
         }
     }
     public void StopButton()

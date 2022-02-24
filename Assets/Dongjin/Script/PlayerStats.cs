@@ -13,10 +13,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] Text expText;
     public bool Stateup = false;
     public GameObject statStartPos, statEndPos;
-    
+    public Text LvText;
     private void Start()
     {
         LV = 1;
+        LvText.text = LV+"";
         Exp = 0;
         MaxExp = 100;
     }
@@ -29,6 +30,7 @@ public class PlayerStats : MonoBehaviour
         {
             GameManager.Instance.LevelUp = true;
             LV += 1;
+            //LvText.text = ""+LV;
             Exp = 0;
             MaxExp += 20;
             Stateup = true;
