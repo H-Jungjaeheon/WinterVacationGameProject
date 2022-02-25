@@ -477,14 +477,14 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(TrapBarrier());
                 break;
             case 6:
-                gameObject.GetComponent<PlayerStats>().stats[0] += 1;
-                maxHp += 10;
+                gameObject.GetComponent<PlayerStats>().stats[0] += 20;
+                maxHp += 20;
                 break;
             case 7:
-                gameObject.GetComponent<PlayerStats>().stats[1] += 1;
+                gameObject.GetComponent<PlayerStats>().stats[1] += 2;
                 break;
             case 8:
-                gameObject.GetComponent<PlayerStats>().stats[2] += 1;
+                gameObject.GetComponent<PlayerStats>().stats[2] += 10;
                 maxMana += 10;
                 break;
             case 9:
@@ -494,8 +494,8 @@ public class GameManager : MonoBehaviour
                 defense += 1;
                 break;
             case 11:
-                gameObject.GetComponent<PlayerStats>().stats[0] += 1;
-                gameObject.GetComponent<PlayerStats>().stats[1] += 1;
+                gameObject.GetComponent<PlayerStats>().stats[0] += 20;
+                gameObject.GetComponent<PlayerStats>().stats[1] += 2;
                 break;
             case 12:
                 GameObject.Find("Player").GetComponent<Player>().speed += 1;
