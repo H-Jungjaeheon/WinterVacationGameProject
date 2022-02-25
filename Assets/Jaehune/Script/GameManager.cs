@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
     public void mainbutton()
     {
         SceneManager.LoadScene("Title");
+        Time.timeScale = 1f;
     }
     public void Soundbutton()
     {

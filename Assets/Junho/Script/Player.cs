@@ -266,7 +266,7 @@ public class Player : MonoBehaviour
     {
         if (isDamage == true)
         {
-            GameManager.Instance.curMana -= Time.deltaTime * 2f;
+            GameManager.Instance.curMana -= Time.deltaTime;
         }
     }
 }
