@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class trapbutton : MonoBehaviour
 {
-    private GameObject text;
+    public Text text;
     private bool buttonon = false;
     private void Start()
     {
-        text = transform.GetChild(0).gameObject;
+        text.gameObject.SetActive(false);
+        text.text = "¹® ¿­±â(F)";
     }
 
     private void Update()
@@ -17,15 +19,15 @@ public class trapbutton : MonoBehaviour
 
         if (buttonon == true && Input.GetKeyDown(KeyCode.F))
         {
-            
             transform.GetChild(1).gameObject.transform.DOLocalMoveY(transform.GetChild(1).position.y + 20, 1f).SetEase(Ease.Linear);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            text.SetActive(true);
+            text.gameObject.SetActive(true);
             buttonon = true;
         }
     }
@@ -33,7 +35,7 @@ public class trapbutton : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            text.SetActive(false);
+            text.gameObject.SetActive(false);
             buttonon = false;
         }
     }
