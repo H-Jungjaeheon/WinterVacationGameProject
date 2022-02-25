@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour
             GameManager.Instance.LevelUp = true;
             LV += 1;
             LvText.text = "" + LV;
-            Exp = 0;
+            Exp = Exp - MaxExp;
             MaxExp += 20;
             Stateup = true;
             Invoke("StatUp", 3f);

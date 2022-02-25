@@ -65,7 +65,7 @@ public class Fire : MonoBehaviour
     IEnumerator IsBurns()
     {
         yield return new WaitForSeconds(1f);
-        GameManager.Instance.stackDamage += 1;
+        GameManager.Instance.stackDamage += 0.5f;
         if (GameManager.Instance.isBurns)
         {
             StartCoroutine(IsBurns());

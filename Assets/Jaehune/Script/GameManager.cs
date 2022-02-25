@@ -337,7 +337,8 @@ public class GameManager : MonoBehaviour
             curMana -= Time.deltaTime * 0.05f;
         }
         hpBar.value = curHp / maxHp;
-        hpText.text = curHp + "/" + maxHp;
+        float hp = (float)(Math.Truncate(curHp) / 1);
+        hpText.text = hp + "/" + maxHp;
         manaBar.value = curMana / maxMana;
         float mana = (float)(Math.Truncate(curMana) / 1);
         manaText.text = mana + "/" + maxMana;
