@@ -135,23 +135,23 @@ public class GameManager : MonoBehaviour
         {
             BattleEndCount -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Time.timeScale *= 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            Time.timeScale /= 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            isGetKey = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.V))
-        {
-            GameObject.Find("GameManager").GetComponent<PlayerStats>().Stateup = true;
-            GameObject.Find("GameManager").GetComponent<PlayerStats>().DmgUpgrade();
-        }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    Time.timeScale *= 2;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    Time.timeScale /= 2;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    isGetKey = true;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    GameObject.Find("GameManager").GetComponent<PlayerStats>().Stateup = true;
+        //    GameObject.Find("GameManager").GetComponent<PlayerStats>().DmgUpgrade();
+        //}
         if (BossRoomStart)
         {
             StartCoroutine(BossRooms());
