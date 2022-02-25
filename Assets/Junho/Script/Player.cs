@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public float GrapCount, MaxGrapCount,time,time2;
     public float cnt = 0;
     public List<GameObject> Chest = new List<GameObject>();
-    private Transform hideObj;
     
     void Start()
     {
@@ -114,11 +113,12 @@ public class Player : MonoBehaviour
             else if (isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
             {
                 isHide = false;
-                transform.position = hideObj.transform.position;
                 GameManager.Instance.isEunsin = false;
                 this.spriteRenderer.enabled = true;
             }
+
         }
+        
 
     }
     void Grabbing()
@@ -200,7 +200,7 @@ public class Player : MonoBehaviour
                 {
                     speed = 5;
                 }
-                speed /= 2f;
+                speed *= 0.2f;
                 break;
             case "Corridor":
                 GameManager.Instance.isRoom = false;
