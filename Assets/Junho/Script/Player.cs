@@ -209,7 +209,6 @@ public class Player : MonoBehaviour
 
                 break;
             case "hideObj":
-                hideObj.transform.position = collision.transform.position;
                 isHidecollision = true;
                 break;
             case "Electricity":
