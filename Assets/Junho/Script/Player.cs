@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
                 this.spriteRenderer.enabled = false;
 
             }
-            else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
+            else if (isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
             {
                 isHide = false;
                 transform.position = hideObj.transform.position;
