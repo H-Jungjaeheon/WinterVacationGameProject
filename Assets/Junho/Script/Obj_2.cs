@@ -19,6 +19,7 @@ public class Obj_2 : Box
 
     public ParticleSystem money;
     private GameObject audioSource;
+    public bool BoxDrop;
 
 
     // Start is called before the first frame update
@@ -87,9 +88,11 @@ public class Obj_2 : Box
     public void Drop()
     {
         isBoxOpen = true;
+        BoxDrop = true;
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
+
         if (boxIdx == 0)
         {
             audioSource.GetComponent<AudioSource>().Play();

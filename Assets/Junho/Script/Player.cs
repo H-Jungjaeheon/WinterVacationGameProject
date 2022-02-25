@@ -216,14 +216,26 @@ public class Player : MonoBehaviour
             case "Electricity":
                 isElDam = true;
                 break;
-            case "Box":
+            case "Obj":
                 if (collision.gameObject.GetComponent<Obj1>().BoxDrop == false)
                 {
                     Chest.Add(collision.gameObject);
 
+                } 
+                break;
+            case "Obj_2":
+                if (collision.gameObject.GetComponent<Obj_2>().BoxDrop == false)
+                {
+                    Chest.Add(collision.gameObject);
                 }
                 break;
-           
+            case "Obj_3":
+                if (collision.gameObject.GetComponent<Obj_3>().BoxDrop == false)
+                {
+                    Chest.Add(collision.gameObject);
+                }
+                break;
+
         }
 
     }
@@ -250,7 +262,13 @@ public class Player : MonoBehaviour
             case "Electricity":
                 isElDam=false;
                 break;
-            case "Box":
+            case "Obj":
+                Chest.Remove(collision.gameObject);
+                break;
+            case "Obj_2":
+                Chest.Remove(collision.gameObject);
+                break;
+            case "Obj_3":
                 Chest.Remove(collision.gameObject);
                 break;
         }

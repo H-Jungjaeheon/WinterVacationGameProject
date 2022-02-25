@@ -366,7 +366,6 @@ public class GameManager : MonoBehaviour
         {
             manaOverText.DOFade(0, 1);
             cnt = 0;
-            Debug.Log("D");
         }
     }
     public void StopButton()
