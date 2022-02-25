@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 1437734393144131643}
   m_Layer: 0
   m_Name: Obj_2
-  m_TagString: Box
+  m_TagString: Obj_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -355,6 +355,7 @@ MonoBehaviour:
   DoPos: {fileID: 4115226050970653772}
   boxIdx: 0
   money: {fileID: 3069456355102008777}
+  BoxDrop: 0
 --- !u!1 &1437734393486650864
 GameObject:
   m_ObjectHideFlags: 0

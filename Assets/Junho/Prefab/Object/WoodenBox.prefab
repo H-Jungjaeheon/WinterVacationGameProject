@@ -5155,7 +5155,7 @@ GameObject:
   - component: {fileID: 6127141214692269178}
   m_Layer: 0
   m_Name: WoodenBox
-  m_TagString: Box
+  m_TagString: Obj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

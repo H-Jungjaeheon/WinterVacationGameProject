@@ -10186,7 +10186,7 @@ GameObject:
   - component: {fileID: 6327119870243176871}
   m_Layer: 0
   m_Name: DrumBox
-  m_TagString: Box
+  m_TagString: Obj_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10316,6 +10316,7 @@ MonoBehaviour:
   DoPos: {fileID: 6327119870359812996}
   boxIdx: 1
   money: {fileID: 7459059557066104744}
+  BoxDrop: 0
 --- !u!1 &6327119870359812996
 GameObject:
   m_ObjectHideFlags: 0

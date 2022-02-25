@@ -13,7 +13,8 @@ public class Obj_3 : Box
 
     public Sprite Open;
 
-   
+    public bool BoxDrop;
+
 
     [SerializeField] GameObject DoPos;
     public int boxIdx;
@@ -87,11 +88,13 @@ public class Obj_3 : Box
     public void Drop()
     {
         isBoxOpen = true;
+        BoxDrop = true;
         GetComponent<SpriteRenderer>().sprite = Open;
         int ran = Random.Range(0, 3);
         int itemRan = Random.Range(0, 6);
         int StatItemRan = Random.Range(0, 6);
         audioSource.GetComponent<AudioSource>().Play();
+
         switch (ran)
         {
             case 0:
