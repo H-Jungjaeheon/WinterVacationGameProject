@@ -135,7 +135,7 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
             animator.SetBool("IsAttack", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
-            Anger += 25;
+            Anger += 40;
             yield return new WaitForSeconds(3);
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);

@@ -49,18 +49,18 @@ public class PlayerStats : MonoBehaviour
     {
         if(Stateup == true)
         {
-            stats[0] += 1;
+            stats[0] += 20;
             Stateup = false;
             GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;
-            GameManager.Instance.maxHp += 10;
+            GameManager.Instance.maxHp += 20;
         }
     }
     public void DmgUpgrade()
     {
         if (Stateup == true)
         {
-            stats[1] += 1;
+            stats[1] += 2;
             Stateup = false;
             GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;
@@ -75,7 +75,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (Stateup == true)
         {
-            stats[2] += 1;
+            stats[2] += 10;
             Stateup = false;
             GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;

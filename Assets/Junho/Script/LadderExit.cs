@@ -25,10 +25,6 @@ public class LadderExit : MonoBehaviour
         {
             GameObject.Find("Player").GetComponent<Player>().anim.SetBool("IsLadder", true);
         }
-        else if (GameManager.Instance.is2F == false && isLadder == false)
-        {
-            //GameObject.Find("Player").GetComponent<Player>().anim.SetBool("IsLadder", false);
-        }
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +33,6 @@ public class LadderExit : MonoBehaviour
         {
             isPlayer=true;
             Interaction.SetActive(true);
-
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -46,12 +41,8 @@ public class LadderExit : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Interaction.SetActive(false);
-
             isPlayer = false;
             isLadder = false;
         }
-
-
-
     }
 }

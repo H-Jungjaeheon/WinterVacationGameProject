@@ -36,7 +36,7 @@ public class FinalBoss : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-5, 2.935f, 0), 4f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-10, 2.935f, 0), 4f * Time.deltaTime);
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -61,7 +61,7 @@ public class FinalBoss : BasicEnemyScript
             GoToPlayer = true;
             yield return new WaitForSeconds(4);
             GoToPlayer = false;
-            this.GetComponent<BoxCollider2D>().size = new Vector3(9, 3);
+            this.GetComponent<BoxCollider2D>().size = new Vector3(50, 7);
             yield return new WaitForSeconds(2);
             yield return null;
         }
