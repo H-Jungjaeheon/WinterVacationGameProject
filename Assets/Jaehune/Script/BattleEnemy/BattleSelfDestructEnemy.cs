@@ -52,11 +52,13 @@ public class BattleSelfDestructEnemy : BattleBasicEnemy
     {
         if (IsBoom == true)
         {
+            BattleManager.Instance.IsEnemyDead = true;
             animator.SetBool("IsDead", true);
             StartCoroutine(Dead2(0.5f));
         }
         else if(Hp <= 0)
         {
+            BattleManager.Instance.IsEnemyDead = true;
             animator.SetBool("IsSkill", true);
             Invoke("NormalDead", 2f);
         }

@@ -11,7 +11,6 @@ public class BattlePlayer : MonoBehaviour
     [SerializeField] bool GoToEnemy, GoToReturn, IsAttackSkill, IsAttackOk, IsContinuity, IsComBo, IsEnd, IsFaild;
     public bool IsHit = false, IsBarrier = false, IsDefense, IsDefensing;
     [SerializeField] int BarrierCount, MaxBarrierCount, BasicAttackCount;
-    //[SerializeField] Image BarrierEffect1, BarrierEffect2;
     [SerializeField] float AttackCounting, ComboTimeLimit;
     [SerializeField] Image ComboTimeLimitBar;
     Animator animator;
@@ -427,11 +426,11 @@ public class BattlePlayer : MonoBehaviour
             yield return new WaitForSeconds(1);
             GoToReturn = false;
             yield return new WaitForSeconds(2);
-            if (GameManager.Instance.IsCamMove == true)
+            if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
             {
                 BattleManager.Instance.IsEnemyTurn = true;
             }
-            else
+            else if(GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
             {
                 BattleManager.Instance.IsPlayerTurn = true;
             }
@@ -560,11 +559,11 @@ public class BattlePlayer : MonoBehaviour
             yield return new WaitForSeconds(1);
             GoToReturn = false;
             yield return new WaitForSeconds(2);
-            if (GameManager.Instance.IsCamMove == true)
+            if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
             {
                 BattleManager.Instance.IsEnemyTurn = true;
             }
-            else
+            else if(GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
             {
                 BattleManager.Instance.IsPlayerTurn = true;
             }
@@ -675,11 +674,11 @@ public class BattlePlayer : MonoBehaviour
         yield return new WaitForSeconds(1f);
         GoToReturn = false;
         yield return new WaitForSeconds(2);
-        if (GameManager.Instance.IsCamMove == true)
+        if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }
-        else
+        else if (GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsPlayerTurn = true;
         }
@@ -736,11 +735,11 @@ public class BattlePlayer : MonoBehaviour
         GoToReturn = false;
         yield return new WaitForSeconds(2);
         IsAttackSkill = false;
-        if (GameManager.Instance.IsCamMove == true)
+        if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }
-        else
+        else if (GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsPlayerTurn = true;
         }
@@ -781,11 +780,11 @@ public class BattlePlayer : MonoBehaviour
         GameManager.Instance.PBattleSkillBackGround[3].SetActive(false);
         yield return new WaitForSeconds(4);
         IsAttackSkill = false;
-        if (GameManager.Instance.IsCamMove == true)
+        if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }
-        else
+        else if (GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsPlayerTurn = true;
         }
@@ -813,11 +812,11 @@ public class BattlePlayer : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
         yield return new WaitForSeconds(3);
         IsAttackSkill = false;
-        if (GameManager.Instance.IsCamMove == true)
+        if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }
-        else
+        else if (GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsPlayerTurn = true;
         }
@@ -844,11 +843,11 @@ public class BattlePlayer : MonoBehaviour
         GameManager.Instance.PBattleSkillBackGround[1].SetActive(false);
         yield return new WaitForSeconds(2);
         IsAttackSkill = false;
-        if (GameManager.Instance.IsCamMove == true)
+        if (GameManager.Instance.IsCamMove == true && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsEnemyTurn = true;
         }
-        else
+        else if (GameManager.Instance.IsCamMove == false && BattleManager.Instance.IsEnemyDead == false)
         {
             BattleManager.Instance.IsPlayerTurn = true;
         }

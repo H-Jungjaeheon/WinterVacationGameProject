@@ -16,10 +16,6 @@ public class HideObj : MonoBehaviour
     void Update()
     {
         HideText.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0));
-        if (GameObject.Find("Player").GetComponent<Player>().isHide==true&&Input.GetKey(KeyCode.F)&&isCol)
-        {
-            GameObject.Find("Player").transform.position = transform.position;
-        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,6 +23,13 @@ public class HideObj : MonoBehaviour
         {
             isCol = true;
             HideText.SetActive(true);
+            if (GameManager.Instance.IsBattleStart == false)
+            {
+                if (GameObject.Find("Player").GetComponent<Player>().isHide == true && Input.GetKey(KeyCode.F) && isCol)
+                {
+                    GameObject.Find("Player").transform.position = transform.position;
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
