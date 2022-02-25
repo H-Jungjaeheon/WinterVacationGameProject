@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     
     void Start()
     {
+        img_gasmask.gameObject.SetActive(false);
         GrabWarningObj.SetActive(false);
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -30,23 +31,22 @@ public class Player : MonoBehaviour
         SurviveDamage();
         if(gasmasktrue == true)
         {
-            float time = 30;
-            float time2 = 0;
+            time2 = 0;
             img_gasmask.gameObject.SetActive(true);
             gasmaskon = true;
             gasmasktrue = false;
 
         }
-        if (gasdam == true)
+        if (gasdam == true&&gasmaskon == true)
         {
             time2 += Time.deltaTime;
-            if(time >= 30)
+            if(time2 >= time)
             {
                 gasmaskon = false;
+                img_gasmask.gameObject.SetActive(false);
             }
         }
         img_gasmask.fillAmount = ((time - time2) / time);
-        img_gasmask.gameObject.SetActive(false);
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             transform.GetChild(0).gameObject.SetActive(GameManager.Instance.isBurns);
