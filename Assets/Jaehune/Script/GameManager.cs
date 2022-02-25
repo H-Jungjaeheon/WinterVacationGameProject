@@ -488,17 +488,17 @@ public class GameManager : MonoBehaviour
                 maxMana += 10;
                 break;
             case 9:
-                damageabsorption += 1;
+                damageabsorption += 3;
                 break;
             case 10:
-                defense += 1;
+                defense += 3;
                 break;
             case 11:
                 gameObject.GetComponent<PlayerStats>().stats[0] += 20;
                 gameObject.GetComponent<PlayerStats>().stats[1] += 2;
                 break;
             case 12:
-                GameObject.Find("Player").GetComponent<Player>().speed += 1;
+                GameObject.Find("Player").GetComponent<Player>().speed += 2;
                 break;
             case 13:
                 GameObject.Find("Player").GetComponent<Player>().gasmasktrue = true;
