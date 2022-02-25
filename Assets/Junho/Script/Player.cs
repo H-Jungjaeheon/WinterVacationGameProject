@@ -14,10 +14,11 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject GrabWarningObj;
     public Animator anim;
     public bool IsGrab, isHidecollision, isHide, isParalysis, GetOutElectricity, gasmasktrue;
-    public float GrapCount, MaxGrapCount;
+    public float GrapCount, MaxGrapCount,time,time2;
     public float cnt = 0;
     public List<GameObject> Chest = new List<GameObject>();
     private Transform hideObj;
+    
     void Start()
     {
         GrabWarningObj.SetActive(false);
@@ -30,10 +31,23 @@ public class Player : MonoBehaviour
         SurviveDamage();
         if(gasmasktrue == true)
         {
-            StartCoroutine(gasmask(30f));
+            float time = 30;
+            float time2 = 0;
+            img_gasmask.gameObject.SetActive(true);
             gasmaskon = true;
             gasmasktrue = false;
+
         }
+        if (gasdam == true)
+        {
+            time2 += Time.deltaTime;
+            if(time >= 30)
+            {
+                gasmaskon = false;
+            }
+        }
+        img_gasmask.fillAmount = ((time - time2) / time);
+        img_gasmask.gameObject.SetActive(false);
         if (GameManager.Instance.IsBattleStart == false) //GameManager.Instance.IsMove == true
         {
             transform.GetChild(0).gameObject.SetActive(GameManager.Instance.isBurns);
@@ -140,23 +154,6 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0); 
         }
         rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
-    }
-    IEnumerator gasmask(float time)
-    {
-        float time2 = 0;
-        img_gasmask.gameObject.SetActive(true);
-        while (time >= time2)
-        {
-            if(gasdam == true)
-            {
-                time2 += Time.deltaTime;
-                img_gasmask.fillAmount = ((time - time2) / time);
-            }
-            yield return new WaitForFixedUpdate();
-        }
-        gasmaskon = false;
-        img_gasmask.gameObject.SetActive(false);
-        yield return null;
     }
     
     void Jump()
