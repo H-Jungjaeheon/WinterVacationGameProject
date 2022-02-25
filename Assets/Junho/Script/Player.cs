@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public float GrapCount, MaxGrapCount;
     public float cnt = 0;
     public List<GameObject> Chest = new List<GameObject>();
-    private Transform hideObj;
     void Start()
     {
         GrabWarningObj.SetActive(false);
@@ -100,7 +99,6 @@ public class Player : MonoBehaviour
             else if (isHidecollision == true && isHide == true && Input.GetKeyDown(KeyCode.F) && IsGrab == false)
             {
                 isHide = false;
-                transform.position = hideObj.transform.position;
                 GameManager.Instance.isEunsin = false;
                 this.spriteRenderer.enabled = true;
             }
@@ -212,7 +210,6 @@ public class Player : MonoBehaviour
 
                 break;
             case "hideObj":
-                hideObj.transform.position = collision.transform.position;
                 isHidecollision = true;
                 break;
             case "Electricity":

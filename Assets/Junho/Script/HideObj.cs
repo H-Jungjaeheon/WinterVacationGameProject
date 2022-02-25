@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HideObj : MonoBehaviour
 {
+    bool isCol;
     public GameObject HideText;
     // Start is called before the first frame update
     private void Awake()
@@ -15,11 +16,16 @@ public class HideObj : MonoBehaviour
     void Update()
     {
         HideText.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0));
+        if (GameObject.Find("Player").GetComponent<Player>().isHide==true&&Input.GetKey(KeyCode.F)&&isCol)
+        {
+            GameObject.Find("Player").transform.position = transform.position;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            isCol = true;
             HideText.SetActive(true);
         }
     }
@@ -27,6 +33,7 @@ public class HideObj : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            isCol=false;
             HideText.SetActive(false);
         }
     }
