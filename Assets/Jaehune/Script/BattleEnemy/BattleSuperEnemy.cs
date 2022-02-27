@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleSuperEnemy : BattleBasicEnemy
 {
@@ -20,6 +21,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
         MaxHp *= GameManager.Instance.Stage;
         Hp *= GameManager.Instance.Stage;
         SRS = this.GetComponent<SpriteRenderer>();
+        SR = this.GetComponent<SpriteRenderer>();
         this.transform.position = EnemySpawner.transform.position + new Vector3(0f, 2.1f, 0);
         SkillAttackRand = Random.Range(1, 4);
     }
