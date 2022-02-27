@@ -373,7 +373,7 @@ public class CameraMove : MonoBehaviour
         transform.position = Player.transform.position;
         float Ix = bossRoomSize.x * 0.5f - width;
         float clampX = Mathf.Clamp(transform.position.x, -Ix + bossRoomCenter.x, Ix + bossRoomCenter.x);
-        transform.position = new Vector3(clampX, target.transform.position.y + offset.y, -10f);
+        transform.position = new Vector3(clampX, target.transform.position.y + offset.y-2f, -10f);
     }
     IEnumerator BossBattleStartCam(float time)
     {

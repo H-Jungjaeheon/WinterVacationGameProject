@@ -12,9 +12,9 @@ public class SoundManager : MonoBehaviour
     {
         soundpanal.SetActive(true);
         for (int i = 0; i < musicSource.Length; i++)
-            musicSource[i].volume = GameObject.Find("BG Slider").GetComponent<Slider>().value;
+            musicSource[i].volume = soundpanal.transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>().value;
         for (int i = 0; i < SoundSource.Length; i++)
-            SoundSource[i].volume = GameObject.Find("SE Slider").GetComponent<Slider>().value;
+            SoundSource[i].volume = soundpanal.transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>().value;
         soundpanal.SetActive(false);
     }
     public void SetMusicVolume(float volume)

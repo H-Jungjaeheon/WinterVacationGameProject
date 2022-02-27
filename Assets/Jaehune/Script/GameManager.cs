@@ -11,7 +11,6 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
-
     public int Stage = 1, Money;
     [SerializeField] public Image FadIn, BattleStartImage;
 
@@ -162,7 +161,7 @@ public class GameManager : MonoBehaviour
     IEnumerator BattleStart()
     {
         StartCoroutine(BattleStartFaidOut(0.8f));
-        if (BossSound == true)
+        if (BossSound)
             GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(2);
         else if (finalBossSound == true)
             GameObject.Find("SoundManager").GetComponent<SoundManager>().musicSound(3);
@@ -288,10 +287,10 @@ public class GameManager : MonoBehaviour
             yield break;
         }
         StartCoroutine(StartFaidOut(0.01f));
-        Player.transform.position += new Vector3(-10, 0, 0);
-        Player.transform.localEulerAngles = new Vector3(0, 0, 0);
+        Player.transform.position += Vector3.left * 10;
+        Player.transform.localEulerAngles = Vector3.zero;
         MCamera.GetComponent<CameraMove>().BossRoomstartcam();
-        MCamera.transform.position += new Vector3(0, -2f, 0);
+        MCamera.transform.position += Vector3.down*2;
         yield return new WaitForSeconds(2f);
         Boss[Stage - 1].SetActive(true);
         MCamera.orthographicSize = 7f;
@@ -389,6 +388,7 @@ public class GameManager : MonoBehaviour
             PanelImage.raycastTarget = true;
             EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite = continue_image;
             isPause = true;
+            soundpanel.SetActive(false);
             menuPanel.transform.GetChild(1).gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
@@ -496,6 +496,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 11:
                 gameObject.GetComponent<PlayerStats>().stats[0] += 20;
+                maxHp += 20;
                 gameObject.GetComponent<PlayerStats>().stats[1] += 2;
                 break;
             case 12:
