@@ -7,17 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     public Image fadePlan;
-    public GameObject gameOverUI;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        
-    }
     public void OnGameOver()
     {
-        StartCoroutine(Fade(Color.clear, Color.black, 1));
-        gameOverUI.SetActive(true);
+        StartCoroutine(Fade(Color.clear, Color.black, 1.5f));
+        SceneManager.LoadScene("GameOver");
     }
     IEnumerator Fade(Color from, Color to, float time)
     {
@@ -30,14 +23,5 @@ public class GameOver : MonoBehaviour
             yield return null;
         }
     }
-    public void StartNewGame()
-    {
-        GameManager.Instance.isGameOver = false;
-        SceneManager.LoadScene("Main1");
-    }
-    public void Title()
-    {
-        GameManager.Instance.isGameOver = false;
-        SceneManager.LoadScene("Title");
-    }
+    
 }

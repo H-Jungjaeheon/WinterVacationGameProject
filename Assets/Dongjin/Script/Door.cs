@@ -85,19 +85,16 @@ public class Door : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
-        {
-            text.gameObject.SetActive(true);
-            opendoor = true;
-        }
+        text.transform.parent.GetComponent<textsetactive>().on = true;
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.tag == "Player")
         {
-            text.gameObject.SetActive(false);
+            text.transform.parent.GetComponent<textsetactive>().on = false;
             opendoor = false;
         }
     }
