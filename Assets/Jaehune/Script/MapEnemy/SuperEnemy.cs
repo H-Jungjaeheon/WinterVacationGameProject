@@ -107,7 +107,7 @@ public class SuperEnemy : BasicEnemyScript
     public override void RayCasting()
     {
         Debug.DrawRay(transform.position + new Vector3(0, -1, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus);
+        var rayHit = Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player"));
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
@@ -116,7 +116,7 @@ public class SuperEnemy : BasicEnemyScript
                 WarningObj.SetActive(true);
                 IsFind = true;
             }
-            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            else
             {
                 WarningObj.SetActive(false);
                 IsFind = false;
