@@ -8,7 +8,7 @@ public class ChargerEnemy : BasicEnemyScript
     [SerializeField] float MaxSkillTime;
     [SerializeField] GameObject SkillHand;
     [SerializeField] Image GrapBar, NullBar;
-    [SerializeField] bool GrabCountStop = false;
+    [SerializeField] bool GrabCountStop = false, IsBattling;
     public LineRenderer SkillLine;
     public float SkillTime;
     public bool IsSkill = false;
@@ -57,15 +57,16 @@ public class ChargerEnemy : BasicEnemyScript
     }
     void Skill()
     {
+        Color color = GrapBar.color;
+        Color color2 = NullBar.color;
         if (Player != null && GameManager.Instance.IsBattleStart == false && GameManager.Instance.isEunsin == false)
         {
-            Color color = GrapBar.color;
-            Color color2 = NullBar.color;
             GrapBar.transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + new Vector3(-0.1f, 1.5f, 0));
             NullBar.transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + new Vector3(-0.1f, 1.5f, 0));
             GrapBar.fillAmount = GameObject.Find("Player").GetComponent<Player>().GrapCount / GameObject.Find("Player").GetComponent<Player>().MaxGrapCount;
             if (SkillTime >= MaxSkillTime)
             {
+                IsBattling = true;
                 IsMove = false;
                 IsStop = true;
                 animator.SetBool("IsSkill", true);
@@ -82,6 +83,7 @@ public class ChargerEnemy : BasicEnemyScript
             }
             else if(SkillTime < MaxSkillTime && MoveCount < MaxMoveCount)
             {
+                IsBattling = false;
                 IsMove = true;
                 animator.SetBool("IsSkill", false);
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrap = false;
@@ -94,12 +96,36 @@ public class ChargerEnemy : BasicEnemyScript
                 IsSkill = false;
                 SkillHand.SetActive(false);
             }
-
             if (GameObject.Find("Player").GetComponent<Player>().GrapCount >= GameObject.Find("Player").GetComponent<Player>().MaxGrapCount)
             {
                 SkillTime = 0;
             }
         }
+        else if (GameManager.Instance.IsBattleStart == true && IsBattling == true)
+        {
+            IsBattling = false;
+            animator.SetBool("IsSkill", false);
+            GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrap = false;
+            SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
+            SkillLine.SetPosition(1, this.transform.position - new Vector3(0, 0.6f, 0));
+            color.a = 0;
+            color2.a = 0;
+            IsSkill = false;
+            IsMoveTurn = false;
+            IsTurns = true;
+            IsFind = false;
+            IsMove = true;
+            IsStop = false;
+            SkillHand.SetActive(false);
+            SkillTime = 0;
+            MoveCount = 0;
+            Invoke("FindStop", 3f);
+        }
+    }
+    void FindStop()
+    {
+        IsFind = false;
+        WarningObj.SetActive(false);
     }
     public override void Moving()
     {

@@ -90,6 +90,11 @@ public class Player : MonoBehaviour
                 anim.SetBool("IsWalk", true);
             }
         }
+        else
+        {
+            IsGrab = false;
+            GrapCount = 0;
+        }
 
     }
     void Update()
