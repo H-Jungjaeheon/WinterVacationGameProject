@@ -15,9 +15,9 @@ public class ReflectEnemy : BasicEnemyScript
     }
 
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
         if(IsDash == true)
         {
             Dashs();
@@ -114,9 +114,9 @@ public class ReflectEnemy : BasicEnemyScript
     {
         base.Delete();
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
+        base.OnTriggerStay2D(collision);
     }
     void Dashs()
     {

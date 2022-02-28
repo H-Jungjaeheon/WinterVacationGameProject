@@ -15,7 +15,7 @@ public class OnceBoss : BasicEnemyScript
         WarningObj.SetActive(false);
     }
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
         StartCoroutine(AnimationP());
         RayCasting();
@@ -44,7 +44,7 @@ public class OnceBoss : BasicEnemyScript
     {
         transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-4, 1.7f, 0), 10f * Time.deltaTime);
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false && GameManager.Instance.isDoor == false)
         {

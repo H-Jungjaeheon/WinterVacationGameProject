@@ -151,8 +151,9 @@ MonoBehaviour:
   BarUp: 1.7
   GExp: 30
   Hp: 60
-  Anger: 0
+  Anger: 10
   MaxAnger: 100
+  HitAnger: 20
   Damage: 3
   Player: {fileID: 0}
   EnemySpawner: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}

@@ -383,7 +383,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             transform.position = this.transform.position + new Vector3(-1f, -0.8f, 0);
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -408,7 +408,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                     GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
                 }
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage <= GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -533,7 +533,7 @@ public class BattleFinalBoss : BattleBasicEnemy
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
             InstantDeathCount += 30;
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && (Damage / 2 + 3) > GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -560,7 +560,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                     GameManager.Instance.curMana -= 45;
                 }
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || (Damage / 2 + 3) <= GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -620,15 +620,15 @@ public class BattleFinalBoss : BattleBasicEnemy
             GameManager.Instance.BattleSkillText.text = "이계의 검";
             BattleManager.Instance.IsEnemyTurn = false;
             yield return new WaitForSeconds(1.5f);
-            animator.SetBool("IsSkill2-1", true); //애니메이션 검 소환
+            animator.SetBool("IsSkill2-1", true);
             yield return new WaitForSeconds(1.5f);
-            animator.SetBool("IsSkill2-1", false); //애니메이션 검 소환 비활성화
-            animator.SetBool("IsSkill2-2", true); //애니메이션 검 휘두르기
+            animator.SetBool("IsSkill2-1", false); 
+            animator.SetBool("IsSkill2-2", true); 
             transform.position = EnemySpawner.transform.position + new Vector3(-7, 2.5f, 0);
             BattleManager.Instance.CamE = true;
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage * 2 > GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -653,7 +653,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                     GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
                 }
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage * 2 <= GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -767,9 +767,9 @@ public class BattleFinalBoss : BattleBasicEnemy
             yield return new WaitForSeconds(1f);
             InstantDeathCount = 0;
             yield return new WaitForSeconds(2f);
-            transform.position = this.transform.position + new Vector3(0f, 20f, 0); //보스 없어짐
+            transform.position = this.transform.position + new Vector3(0f, 20f, 0); 
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {                               
                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                DT.transform.position = Player.transform.position;
@@ -778,7 +778,7 @@ public class BattleFinalBoss : BattleBasicEnemy
                Player.GetComponent<BattlePlayer>().IsHit = true;
                GameManager.Instance.stackDamage += 6664444;                
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || 6664444 <= GameManager.Instance.defense)
             {              
                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                DT.transform.position = Player.transform.position;

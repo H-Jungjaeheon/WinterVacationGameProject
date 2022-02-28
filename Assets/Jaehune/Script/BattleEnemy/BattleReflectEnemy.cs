@@ -95,7 +95,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.5f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -104,7 +104,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage <= GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;

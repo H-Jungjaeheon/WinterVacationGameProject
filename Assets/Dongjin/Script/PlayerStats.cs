@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int[] stats = {1, 1, 1}; //체력 / 공격력 / 마나
+    public float[] stats = {1, 1, 1}; //체력 / 공격력 / 마나
     [SerializeField] private Slider ExpBar;
     [SerializeField] float Exp, MaxExp;
     public float LV;
@@ -60,7 +60,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (Stateup == true)
         {
-            stats[1] += 2;
+            stats[1] += 1.5f;
             Stateup = false;
             GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;

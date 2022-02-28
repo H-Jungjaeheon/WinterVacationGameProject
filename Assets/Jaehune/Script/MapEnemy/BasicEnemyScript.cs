@@ -23,7 +23,7 @@ public class BasicEnemyScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         RayCasting();
         WallRayCasting();
@@ -52,7 +52,6 @@ public class BasicEnemyScript : MonoBehaviour
             IsPlus = 1;           
         }
     }
-
     public virtual void Moving()
     {
         MoveCount += Time.deltaTime;
@@ -154,7 +153,7 @@ public class BasicEnemyScript : MonoBehaviour
             }
         }
     }
-    public virtual void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false&& GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false && GameManager.Instance.isDoor==false)
         {

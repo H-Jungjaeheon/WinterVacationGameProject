@@ -10,9 +10,9 @@ public class FarAwayEnemy : BasicEnemyScript
         base.Start();
     }
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
     }
     public override void Moving()
     {
@@ -73,9 +73,9 @@ public class FarAwayEnemy : BasicEnemyScript
     {
         base.Delete();
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
+        base.OnTriggerStay2D(collision);
     }
     public override void CrossroadPlus()
     {

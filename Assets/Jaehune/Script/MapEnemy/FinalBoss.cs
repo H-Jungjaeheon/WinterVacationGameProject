@@ -13,7 +13,7 @@ public class FinalBoss : BasicEnemyScript
         animator = GetComponent<Animator>();
     }
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
         StartCoroutine(AnimationP());
         RayCasting();
@@ -38,7 +38,7 @@ public class FinalBoss : BasicEnemyScript
     {
         transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(-10, 2.935f, 0), 4f * Time.deltaTime);
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false && GameManager.Instance.isDoor == false)
         {

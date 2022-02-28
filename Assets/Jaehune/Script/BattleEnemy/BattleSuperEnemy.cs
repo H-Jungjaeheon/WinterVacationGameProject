@@ -98,7 +98,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-1f, 0f, 0);
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -107,7 +107,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage <= GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -181,7 +181,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
             EnergyBullet.SetActive(true);
             StopGone = true;
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage * 2 > GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -190,7 +190,7 @@ public class BattleSuperEnemy : BattleBasicEnemy
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 GameManager.Instance.stackDamage += (Damage * 2) - GameManager.Instance.defense;
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage * 2 <= GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;

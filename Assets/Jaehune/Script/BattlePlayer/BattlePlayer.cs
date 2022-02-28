@@ -84,14 +84,14 @@ public class BattlePlayer : MonoBehaviour
     {
         if (IsComBo == true && IsFaild == false)
         {
-            if (Input.GetKeyDown(KeyCode.F)) //콤보 공격 성공
+            if (Input.GetKeyDown(KeyCode.F)) 
             {
                 GameManager.Instance.PBattleSkillBackGround[5].SetActive(false);
                 IsContinuity = true;
                 ComboTimeLimit = 0;
             }
         }
-        else if (IsComBo == false) //타이밍 못맞춰서 실패
+        else if (IsComBo == false) 
         {
             IsContinuity = false;
             ComboTimeLimit = 0;
@@ -99,7 +99,7 @@ public class BattlePlayer : MonoBehaviour
         }
         if (IsEnd == false)
         {
-            if (Input.GetKeyDown(KeyCode.F)) //콤보 공격 실패
+            if (Input.GetKeyDown(KeyCode.F)) 
             {
                 IsFaild = true;
                 ComboTimeLimit = 0;
@@ -589,7 +589,6 @@ public class BattlePlayer : MonoBehaviour
         DT5.transform.position = Enemy.transform.position;
         DT5.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] + GM.GetComponent<PlayerStats>().stats[1] / 2;
         Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] + GM.GetComponent<PlayerStats>().stats[1] / 2;
-        GameManager.Instance.stackDamage += GameManager.Instance.damageabsorption;
         Debug.Log("세번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {

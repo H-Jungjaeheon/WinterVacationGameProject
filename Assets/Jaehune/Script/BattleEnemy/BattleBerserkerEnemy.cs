@@ -200,28 +200,28 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
-                if (IsSuperSkillng == true)
+                if (IsSuperSkillng == true && Damage + 4 > GameManager.Instance.defense)
                 {
                     DT.GetComponent<BattleDamageText>().damage = (Damage + 4) - GameManager.Instance.defense;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                     GameManager.Instance.stackDamage += (Damage + 4) - GameManager.Instance.defense;
                 }
-                else
+                else if(IsSuperSkillng == false && Damage > GameManager.Instance.defense)
                 {
                     DT.GetComponent<BattleDamageText>().damage = Damage - GameManager.Instance.defense;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                     GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
                 }
-            }
-            else
-            {
-                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                DT.transform.position = Player.transform.position;
-                DT.GetComponent<BattleDamageText>().damage = 0;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-                Player.GetComponent<BattlePlayer>().IsHit = true;
+                else
+                {
+                    DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT.transform.position = Player.transform.position;
+                    DT.GetComponent<BattleDamageText>().damage = 0;
+                    GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                    Player.GetComponent<BattlePlayer>().IsHit = true;
+                }
             }
             if (GameManager.Instance.curHp > 0)
             {
@@ -285,40 +285,40 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT1.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                if (IsSuperSkillng == true)
+                if (IsSuperSkillng == true && Damage * 4 > GameManager.Instance.defense)
                 {
                     DT.transform.position = Player.transform.position;
                     DT1.transform.position = this.transform.position;
                     DT.GetComponent<BattleDamageText>().damage = (Damage * 4) - GameManager.Instance.defense;
-                    DT1.GetComponent<BattleDamageText>().damage = 5;
+                    DT1.GetComponent<BattleDamageText>().damage = 15;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                     GameManager.Instance.stackDamage += (Damage * 4) - GameManager.Instance.defense;
-                    Hp -= 5;
+                    Hp -= 15;
                 }
-                else
+                else if(IsSuperSkillng == false && Damage * 3 > GameManager.Instance.defense)
                 {
                     DT.transform.position = Player.transform.position;
                     DT1.transform.position = this.transform.position;
                     DT.GetComponent<BattleDamageText>().damage = (Damage * 3) - GameManager.Instance.defense;
-                    DT1.GetComponent<BattleDamageText>().damage = 5;
+                    DT1.GetComponent<BattleDamageText>().damage = 15;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
                     GameManager.Instance.stackDamage += (Damage * 3) - GameManager.Instance.defense;
-                    Hp -= 5;
+                    Hp -= 15;
                 }
-            }
-            else
-            {
-                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                DT1.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                DT.transform.position = Player.transform.position;
-                DT1.transform.position = this.transform.position;
-                DT.GetComponent<BattleDamageText>().damage = 0;
-                DT1.GetComponent<BattleDamageText>().damage = 5;
-                Hp -= 5;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-                Player.GetComponent<BattlePlayer>().IsHit = true;
+                else
+                {
+                    DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT1.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT.transform.position = Player.transform.position;
+                    DT1.transform.position = this.transform.position;
+                    DT.GetComponent<BattleDamageText>().damage = 0;
+                    DT1.GetComponent<BattleDamageText>().damage = 15;
+                    Hp -= 15;
+                    GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                    Player.GetComponent<BattlePlayer>().IsHit = true;
+                }
             }
             if (GameManager.Instance.curHp > 0)
             {
@@ -390,7 +390,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                 DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
                 DT2.transform.position = this.transform.position;
-                if (IsSuperSkillng == true)
+                if (IsSuperSkillng == true && Damage * 3 > GameManager.Instance.defense)
                 {
                     DT.GetComponent<BattleDamageText>().damage = (Damage * 3) - GameManager.Instance.defense;
                     DT2.GetComponent<BattleDamageText>().damage = Damage + 6;
@@ -399,7 +399,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                     GameManager.Instance.stackDamage += (Damage * 3) - GameManager.Instance.defense;
                     Hp += Damage + 6;
                 }
-                else
+                else if(IsSuperSkillng == false && Damage * 2 > GameManager.Instance.defense)
                 {
                     DT.GetComponent<BattleDamageText>().damage = (Damage * 2) - GameManager.Instance.defense;
                     DT2.GetComponent<BattleDamageText>().damage = Damage + 3;
@@ -408,17 +408,17 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
                     GameManager.Instance.stackDamage += (Damage * 2) - GameManager.Instance.defense;
                     Hp += Damage + 3;
                 }
-            }
-            else
-            {
-                DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
-                DT.transform.position = Player.transform.position;
-                DT2.transform.position = this.transform.position;
-                DT.GetComponent<BattleDamageText>().damage = 0;
-                DT2.GetComponent<BattleDamageText>().damage = 0;
-                GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
-                Player.GetComponent<BattlePlayer>().IsHit = true;
+                else
+                {
+                    DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT.transform.position = Player.transform.position;
+                    DT2.transform.position = this.transform.position;
+                    DT.GetComponent<BattleDamageText>().damage = 0;
+                    DT2.GetComponent<BattleDamageText>().damage = 0;
+                    GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                    Player.GetComponent<BattlePlayer>().IsHit = true;
+                }
             }
             if (GameManager.Instance.curHp > 0)
             {

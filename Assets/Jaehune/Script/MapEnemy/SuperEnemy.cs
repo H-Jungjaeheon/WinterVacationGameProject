@@ -13,7 +13,7 @@ public class SuperEnemy : BasicEnemyScript
         IsSkillReady = false;
         base.Start();
     }
-    public override void Update()
+    public override void FixedUpdate()
     {
         RayCasting();
         WallRayCasting();
@@ -161,9 +161,9 @@ public class SuperEnemy : BasicEnemyScript
     {
         base.Delete();
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
+        base.OnTriggerStay2D(collision);
     }
     public override void CrossroadPlus()
     {

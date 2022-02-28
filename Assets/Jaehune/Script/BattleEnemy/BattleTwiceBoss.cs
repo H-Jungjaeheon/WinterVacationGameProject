@@ -247,9 +247,29 @@ public class BattleTwiceBoss : BattleBasicEnemy
             animator.SetBool("IsAttack", true);
             StopGone = true;
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && IsDmgUp == false)
             {
-                if (IsDmgUp == true)
+                if (Damage <= GameManager.Instance.defense)
+                {
+                    DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT.transform.position = Player.transform.position;
+                    DT.GetComponent<BattleDamageText>().damage = Damage - GameManager.Instance.defense;
+                    GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                    Player.GetComponent<BattlePlayer>().IsHit = true;
+                    GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
+                }
+                else
+                {
+                    DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
+                    DT.transform.position = Player.transform.position;
+                    DT.GetComponent<BattleDamageText>().damage = 0;
+                    GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
+                    Player.GetComponent<BattlePlayer>().IsHit = true;
+                }
+            }
+            else if(Player.GetComponent<BattlePlayer>().IsBarrier == false &&  IsDmgUp == true)
+            {
+                if (Damage + 7 <= GameManager.Instance.defense)
                 {
                     DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                     DT.transform.position = Player.transform.position;
@@ -262,13 +282,12 @@ public class BattleTwiceBoss : BattleBasicEnemy
                 {
                     DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                     DT.transform.position = Player.transform.position;
-                    DT.GetComponent<BattleDamageText>().damage = Damage - GameManager.Instance.defense;
+                    DT.GetComponent<BattleDamageText>().damage = 0;
                     GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime(0.5f);
                     Player.GetComponent<BattlePlayer>().IsHit = true;
-                    GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
                 }
             }
-            else
+            else if(Player.GetComponent<BattlePlayer>().IsBarrier == true)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -333,7 +352,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             BattleManager.Instance.CamP = true;
             animator.SetBool("IsSkill", true);
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {
                 if (IsDmgUp == true)
                 {
@@ -356,7 +375,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
                     GameManager.Instance.curMana -= 35;
                 }
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage <= GameManager.Instance.defense)
             {
                 
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;

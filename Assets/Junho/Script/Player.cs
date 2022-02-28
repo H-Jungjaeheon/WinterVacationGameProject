@@ -166,7 +166,20 @@ public class Player : MonoBehaviour
     }
 
     bool isElDam;
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Lime":
+                if (speed == 10)
+                {
+                    speed = 5;
+                }
+                speed *= 0.2f;
+                break;
+        }
+    }
+    void OnTriggerStay2D(Collider2D collision)
     {
         switch (collision.tag)
         {
@@ -194,13 +207,6 @@ public class Player : MonoBehaviour
                 isGound = true;
                 GameManager.Instance.isBossRoom = false;
 
-                break;
-            case "Lime":
-                if (speed == 10)
-                {
-                    speed = 5;
-                }
-                speed *= 0.2f;
                 break;
             case "Corridor":
                 GameManager.Instance.isRoom = false;

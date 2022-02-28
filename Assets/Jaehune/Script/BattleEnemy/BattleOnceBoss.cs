@@ -147,7 +147,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             transform.position = this.transform.position;
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -172,7 +172,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                     GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
                 }
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage <= GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -236,7 +236,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             transform.position = this.transform.position;
             GameObject DT = Instantiate(DmgText);
             GameObject DT2 = Instantiate(HealText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage * 2 > GameManager.Instance.defense)
             {
                 if (IsSuperAnger == true)
                 {
@@ -261,7 +261,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                     GameManager.Instance.stackDamage += (Damage * 2) - GameManager.Instance.defense;
                 }
             }
-            else
+            else if (Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage * 2 <= GameManager.Instance.defense)
             {
                 if(IsSuperAnger == true)
                 {

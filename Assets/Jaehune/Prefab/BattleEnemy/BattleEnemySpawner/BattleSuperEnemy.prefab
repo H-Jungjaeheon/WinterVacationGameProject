@@ -154,6 +154,7 @@ MonoBehaviour:
   Hp: 99
   Anger: 100
   MaxAnger: 100
+  HitAnger: 4
   Damage: 17
   Player: {fileID: 0}
   EnemySpawner: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}

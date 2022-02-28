@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BattleBasicEnemy : MonoBehaviour
 {
-    public float MaxHp, BarUp, GExp, Hp, Anger, MaxAnger; //최대 체력, 체력바 높이, 주는 경험치, 분노 게이지, 최대 분노 게이지
+    public float MaxHp, BarUp, GExp, Hp, Anger, MaxAnger, HitAnger; //최대 체력, 체력바 높이, 주는 경험치, 분노 게이지, 최대 분노 게이지
     public int Damage; //공격력
     public GameObject Player, EnemySpawner, DmgText; //플레이어, 전투 적 스폰 위치
     public Image HpBar, HpBarNull, EnemyPicture, AngerBar; //전투 시작 시 나타나는 체력바, 시각적 편의를 위한 빈 체력바, 초상화, 
@@ -81,6 +81,7 @@ public class BattleBasicEnemy : MonoBehaviour
     {
         IsHit = false;
         animator.SetBool("IsDamage", true);
+        Anger += HitAnger; 
         ps.Play();
         yield return new WaitForSeconds(1);
         animator.SetBool("IsDamage", false);
@@ -157,7 +158,7 @@ public class BattleBasicEnemy : MonoBehaviour
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage > GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -166,7 +167,7 @@ public class BattleBasicEnemy : MonoBehaviour
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 GameManager.Instance.stackDamage += Damage - GameManager.Instance.defense;
             }
-            else
+            else if(Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage <= GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -208,7 +209,7 @@ public class BattleBasicEnemy : MonoBehaviour
             StopGone = true;
             transform.position = this.transform.position + new Vector3(-0.9f, 0.5f, 0);
             GameObject DT = Instantiate(DmgText);
-            if (Player.GetComponent<BattlePlayer>().IsBarrier == false)
+            if (Player.GetComponent<BattlePlayer>().IsBarrier == false && Damage * 2 > GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;
@@ -217,7 +218,7 @@ public class BattleBasicEnemy : MonoBehaviour
                 Player.GetComponent<BattlePlayer>().IsHit = true;
                 GameManager.Instance.stackDamage += (Damage * 2) - GameManager.Instance.defense;
             }
-            else
+            else if(Player.GetComponent<BattlePlayer>().IsBarrier == true || Damage * 2 <= GameManager.Instance.defense)
             {
                 DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT.transform.position = Player.transform.position;

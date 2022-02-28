@@ -15,7 +15,7 @@ public class TwiceBoss : BasicEnemyScript
         WarningObj.SetActive(false);
     }
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
         StartCoroutine(AnimationP());
         RayCasting();
@@ -44,7 +44,7 @@ public class TwiceBoss : BasicEnemyScript
     {
         transform.position = Vector3.MoveTowards(transform.position, transform.transform.position - new Vector3(0, 5, 0), 10.25f * Time.deltaTime);
     }
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && GameManager.Instance.IsBattleStart == false && GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false && GameManager.Instance.isDoor == false)
         {
