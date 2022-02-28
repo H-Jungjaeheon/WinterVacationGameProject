@@ -39,6 +39,7 @@ public class ChargerEnemy : BasicEnemyScript
         }
         else
         {
+            IsTurns = true;
             CrossRoadObj.SetActive(true);
             IsPlus = 1;
         }
@@ -65,12 +66,13 @@ public class ChargerEnemy : BasicEnemyScript
             GrapBar.fillAmount = GameObject.Find("Player").GetComponent<Player>().GrapCount / GameObject.Find("Player").GetComponent<Player>().MaxGrapCount;
             if (SkillTime >= MaxSkillTime)
             {
+                IsMove = false;
+                IsStop = true;
                 animator.SetBool("IsSkill", true);
                 color.a = 1;
                 color2.a = 1;
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = true;
                 IsSkill = true;
-                IsMove = false;
                 Player.transform.position = Vector3.MoveTowards(Player.transform.position, this.transform.position, 2f * Time.deltaTime);
                 Debug.Assert(SkillLine != null);
                 SkillLine.SetPosition(0, this.transform.position);
@@ -78,8 +80,9 @@ public class ChargerEnemy : BasicEnemyScript
                 SkillHand.SetActive(true);
                 SkillHand.transform.position = Player.transform.position - new Vector3(0, 0.2f, 0);
             }
-            else
+            else if(SkillTime < MaxSkillTime && MoveCount < MaxMoveCount)
             {
+                IsMove = true;
                 animator.SetBool("IsSkill", false);
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsGrap = false;
                 SkillLine.SetPosition(0, this.transform.position - new Vector3(0, 0.6f, 0));
@@ -89,7 +92,6 @@ public class ChargerEnemy : BasicEnemyScript
                 GameObject.Find("Player").GetComponent<Player>().IsGrab = false;
                 GameObject.Find("Player").GetComponent<Player>().GrapCount = 0;
                 IsSkill = false;
-                IsMove = true;
                 SkillHand.SetActive(false);
             }
 
@@ -104,7 +106,6 @@ public class ChargerEnemy : BasicEnemyScript
         if (IsMove == true)
         {
             MoveCount += Time.deltaTime;
-            transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
             if (MoveCount >= MaxMoveCount && SkillTime < MaxSkillTime)
             {
                 IsStop = true;
@@ -113,10 +114,16 @@ public class ChargerEnemy : BasicEnemyScript
                 IsMove = false;
                 Invoke("Trun", 4f);
             }
+            else if (MoveCount < MaxMoveCount && SkillTime < MaxSkillTime)
+            {
+                IsMove = true;
+                transform.position += new Vector3(Speed * Time.deltaTime, 0, 0);
+            }
         }
     }
     public override void Trun()
     {
+        IsStop = false;
         animator.SetBool("IsIdle", false);
         base.Trun();
     }
@@ -127,7 +134,7 @@ public class ChargerEnemy : BasicEnemyScript
     public override void RayCasting()
     {
         Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad * IsPlus, Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player"));
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
@@ -136,7 +143,7 @@ public class ChargerEnemy : BasicEnemyScript
                 IsFind = true;
                 Player = hit.collider.gameObject;
             }
-            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            else
             {
                 WarningObj.SetActive(false);
                 IsFind = false;

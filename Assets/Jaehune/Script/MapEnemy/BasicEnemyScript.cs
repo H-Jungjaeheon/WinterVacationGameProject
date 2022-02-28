@@ -90,7 +90,7 @@ public class BasicEnemyScript : MonoBehaviour
     public virtual void RayCasting()
     {
         Debug.DrawRay(transform.position, Vector3.left * (SeeCrossroad * IsPlus), Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player"));
         foreach (var hit in rayHit)
         {
             if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false) 
@@ -99,7 +99,7 @@ public class BasicEnemyScript : MonoBehaviour
                 WarningObj.SetActive(true);
                 IsFind = true;
             }
-            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            else
             {
                 WarningObj.SetActive(false);
                 IsFind = false;

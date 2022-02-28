@@ -213,7 +213,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             }
             else
             {
-                SuperAngerCount += 10;
+                SuperAngerCount += 20;
             }
             yield return new WaitForSeconds(1.3f);
             GoToReturn = false;
