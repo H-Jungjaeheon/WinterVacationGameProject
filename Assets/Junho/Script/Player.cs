@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
             if(time2 >= time)
             {
                 gasmaskon = false;
+                isDamage = true;
                 img_gasmask.gameObject.SetActive(false);
             }
         }

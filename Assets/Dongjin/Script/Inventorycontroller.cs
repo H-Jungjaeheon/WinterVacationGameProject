@@ -83,7 +83,10 @@ public class Inventorycontroller : MonoBehaviour
     public void usebutton()
     {
         buttonsave = EventSystem.current.currentSelectedGameObject.gameObject;
-        buttonsave.GetComponent<ItemButtonScript>().idx--;
-        GameObject.Find("GameManager").GetComponent<GameManager>().useitem(buttonsave.GetComponent<ItemButtonScript>().itemsave);
+        if(buttonsave.GetComponent<ItemButtonScript>().idx != 0)
+        {
+            buttonsave.GetComponent<ItemButtonScript>().idx--;
+            GameObject.Find("GameManager").GetComponent<GameManager>().useitem(buttonsave.GetComponent<ItemButtonScript>().itemsave);
+        }
     }
 }
