@@ -75,7 +75,7 @@ public class testItem : MonoBehaviour
         {
             if (shop != true)
             {
-                text.gameObject.SetActive(true);
+                text.transform.parent.GetComponent<textsetactive>().on = true;
             }
                 isCol = true;
         }
@@ -86,7 +86,7 @@ public class testItem : MonoBehaviour
         {
             if(shop != true)
             {
-                text.gameObject.SetActive(false);
+                text.transform.parent.GetComponent<textsetactive>().on = false;
             }
                isCol = false;
         }

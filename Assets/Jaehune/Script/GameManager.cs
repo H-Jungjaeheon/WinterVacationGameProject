@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int Bossidx;
     [SerializeField] GameObject[] Boss, BattleBackGround;
     public GameObject[] PBattleSkillBackGround; //Player Skill BackGround
-
+    [SerializeField] GameObject GameOverPanel;
     public ParticleSystem speedParticle;
     [SerializeField] private Sprite stopimage;
     [SerializeField] Sprite continue_image;
@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
         curHp = maxHp - stackDamage;
 
 
-        if (IsBattleStart == false && LevelUp == false && isManaBarrier == false)
+        if (IsBattleStart == false && LevelUp == false && isManaBarrier == false&&curMana>=0)
         {
             curMana -= Time.deltaTime * 0.05f;
         }
@@ -358,7 +358,15 @@ public class GameManager : MonoBehaviour
             {
                 manaOverText.DOFade(0, 1);
                 isGameOver = true;
-                GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+                StartCoroutine(StartFaidOut(1));
+                if (cnt>=6)
+                {
+                    GameOverPanel.SetActive(true);
+                }
+                if (cnt>=7 )
+                {
+                    GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+                }
             }
 
         }
