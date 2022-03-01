@@ -24,7 +24,7 @@ public class HealBlock : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            text.gameObject.SetActive(true);
+            text.transform.parent.GetComponent<textsetactive>().on = true;
             isCol = true;
         }
     }
@@ -32,7 +32,7 @@ public class HealBlock : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            text.gameObject.SetActive(false);
+            text.transform.parent.GetComponent<textsetactive>().on = false;
             isCol = false;
         }
     }
