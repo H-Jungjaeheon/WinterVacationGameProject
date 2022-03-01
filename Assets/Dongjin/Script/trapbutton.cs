@@ -20,6 +20,7 @@ public class trapbutton : MonoBehaviour
         if (buttonon == true && Input.GetKeyDown(KeyCode.F))
         {
             transform.GetChild(1).gameObject.transform.DOMoveY(transform.GetChild(1).position.y + 10, 1f).SetEase(Ease.Linear);
+            StartCoroutine(Cnt());
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.3f);
         }
     }
@@ -38,5 +39,10 @@ public class trapbutton : MonoBehaviour
             text.gameObject.SetActive(false);
             buttonon = false;
         }
+    }
+    IEnumerator Cnt()
+    {
+        yield return new WaitForSeconds(0.5f);
+        transform.GetChild(1).gameObject.SetActive(false);
     }
 }
