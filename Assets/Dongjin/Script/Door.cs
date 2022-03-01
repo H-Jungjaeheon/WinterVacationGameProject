@@ -85,9 +85,13 @@ public class Door : MonoBehaviour
         }
 
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        text.transform.parent.GetComponent<textsetactive>().on = true;
+        if (collision.tag == "Player")
+        {
+            text.transform.parent.GetComponent<textsetactive>().on = true;
+            opendoor = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

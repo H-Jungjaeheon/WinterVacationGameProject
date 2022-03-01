@@ -398,7 +398,7 @@ MonoBehaviour:
   MaxHp: 222
   BarUp: 1.7
   GExp: 0
-  Hp: 333
+  Hp: 222
   Anger: 0
   MaxAnger: 100
   HitAnger: 10

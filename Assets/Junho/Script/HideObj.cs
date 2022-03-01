@@ -22,7 +22,7 @@ public class HideObj : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isCol = true;
-            HideText.SetActive(true);
+            HideText.transform.parent.GetComponent<textsetactive>().on = true;
             if (GameManager.Instance.IsBattleStart == false)
             {
                 if (GameObject.Find("Player").GetComponent<Player>().isHide == true && Input.GetKey(KeyCode.F) && isCol)
@@ -37,7 +37,7 @@ public class HideObj : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isCol=false;
-            HideText.SetActive(false);
+            HideText.transform.parent.GetComponent<textsetactive>().on = false;
         }
     }
 }

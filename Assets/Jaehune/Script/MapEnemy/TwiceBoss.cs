@@ -42,7 +42,7 @@ public class TwiceBoss : BasicEnemyScript
     }
     public override void FindPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, transform.transform.position - new Vector3(0, 5, 0), 10.25f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, transform.transform.position - new Vector3(0, 2, 0), 9.3f * Time.deltaTime);
     }
     public override void OnTriggerStay2D(Collider2D collision)
     {
@@ -63,17 +63,21 @@ public class TwiceBoss : BasicEnemyScript
         {
             IsTurn = true;
             GameManager.Instance.BossSound = true;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(.5f);
+            
             GoToPlayer = true;
             yield return new WaitForSeconds(1.5f);
+
             GoToPlayer = false;
             WarningObj.SetActive(true);
             SeeCrossroad *= -1;
             yield return new WaitForSeconds(0.5f);
+
             animator.SetBool("IsSkill", true);
             GameObject.Find("SoundManager").GetComponent<SoundManager>().SESound(5);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().VibrateForTime3(0.7f);
             yield return new WaitForSeconds(1);
+
             Go = true;
             yield return null;
         }
@@ -83,7 +87,7 @@ public class TwiceBoss : BasicEnemyScript
         animator.SetBool("IsSkill", false);
         yield return new WaitForSeconds(1);
         animator.SetBool("IsWalk", true);
-        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.4f, 0), 5f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.4f, 0), 20f * Time.deltaTime);
         yield return null;
     }
 }

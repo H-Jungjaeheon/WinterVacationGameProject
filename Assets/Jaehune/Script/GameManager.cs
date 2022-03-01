@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
     public int Stage = 1, Money;
     [SerializeField] public Image FadIn, BattleStartImage;
 
+    #region Bool Fields 
     [Header("bool fields")]
     [Space(10f)]
     public bool IsBattleStart;
     public bool IsCamMove, AttackOk, IsBattlePlace, isPause, isRoom, LevelUp,
     bosssurvival, isGetKey, isManaBarrier, isEunsin, isTrapBarrier, isBurns, isGameOver, is2F,
     isBossRoom, isDoor, BossRoomStart, BossRoom, BossSound, finalBossSound;
+    #endregion
 
     [Header("º¯¼ö")]
     [Space(10f)]
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Sprite continue_image;
 
     private float cnt;
+
     private void Awake()
     {
         itemParticle.GetComponent<ParticleSystem>().Stop();
