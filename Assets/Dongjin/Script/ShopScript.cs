@@ -40,14 +40,14 @@ public class ShopScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            text.gameObject.SetActive(true);
+            text.transform.parent.GetComponent<textsetactive>().on = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            text.gameObject.SetActive(false);
+            text.transform.parent.GetComponent<textsetactive>().on =false;
         }
     }
 
