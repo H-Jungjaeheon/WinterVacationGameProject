@@ -348,7 +348,7 @@ public class GameManager : MonoBehaviour
         if (curHp <= 0f)
         {
             isGameOver = true;
-            GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+            StartCoroutine(GameOver());
         }
         else if (curMana <= 0f && IsBattleStart == false)
         {
@@ -361,15 +361,7 @@ public class GameManager : MonoBehaviour
             {
                 manaOverText.DOFade(0, 1);
                 isGameOver = true;
-                StartCoroutine(StartFaidOut(1));
-                if (cnt>=6)
-                {
-                    GameOverPanel.SetActive(true);
-                }
-                if (cnt>=7 )
-                {
-                    GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
-                }
+                StartCoroutine(GameOver());
             }
 
         }
@@ -403,6 +395,15 @@ public class GameManager : MonoBehaviour
             menuPanel.transform.GetChild(1).gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
+    }
+    private IEnumerator GameOver()
+    {
+        StartCoroutine(StartFaidOut(1));
+        yield return new WaitForSeconds(1f);
+        GameOverPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        GameObject.Find("GameOver").GetComponent<GameOver>().OnGameOver();
+        yield return null;
     }
     public void Exitbutton()
     {
