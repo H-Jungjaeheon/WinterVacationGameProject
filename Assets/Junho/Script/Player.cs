@@ -177,11 +177,7 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Lime":
-                if (speed == 10)
-                {
-                    speed = 5;
-                }
-                speed *= 0.2f;
+                speed -= 3;
                 break;
             case "Obj":
                 if (collision.gameObject.GetComponent<Obj1>().BoxDrop == false)
@@ -263,7 +259,7 @@ public class Player : MonoBehaviour
                 isGound = false;
                 break;
             case "Lime":
-                speed = 5f;
+                speed += 3f;
                 break;
             case "hideObj":
                 isHidecollision = false;
