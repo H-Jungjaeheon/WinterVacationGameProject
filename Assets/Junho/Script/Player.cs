@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] Image img_gasmask;
     [SerializeField] GameObject GrabWarningObj;
     public Animator anim;
-    public bool IsGrab, isHidecollision, isHide, isParalysis, GetOutElectricity, gasmasktrue;
+    public bool IsGrab, isHidecollision, isHide, isParalysis, GetOutElectricity, gasmasktrue, isF;
     public float GrapCount, MaxGrapCount,time,time2;
     public float cnt = 0;
     public List<GameObject> Chest = new List<GameObject>();
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
             }
             if (isLadder)
             {
-                bool isF;
+                
                 if (Input.GetKey(KeyCode.F) && IsGrab == false)
                 {
                     GameManager.Instance.is2F = true;
@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
         switch (collision.tag)
         {
             case "Enemy":
-                if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false&& GameManager.Instance.isDoor==false)
+                if (GameManager.Instance.BattleEndCount == 0 && GameManager.Instance.isEunsin == false&& GameManager.Instance.isDoor==false&& isF==false)
                 {
                     IsGrab = false;
                     BattleManager.Instance.IsPlayerTurn = true;
@@ -259,7 +259,7 @@ public class Player : MonoBehaviour
                 isGound = false;
                 break;
             case "Lime":
-                speed += 3f;
+                speed += 3;
                 break;
             case "hideObj":
                 isHidecollision = false;
