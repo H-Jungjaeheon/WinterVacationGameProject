@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class waringroom : MonoBehaviour
 {
+    private void Update()
+    {
+         if(transform.childCount == 1)
+        {
+            Destroy(gameObject);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")

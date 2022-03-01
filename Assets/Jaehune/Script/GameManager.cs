@@ -504,7 +504,7 @@ public class GameManager : MonoBehaviour
                 damageabsorption += 1.5f;
                 break;
             case 10:
-                defense += 3;
+                defense += 2;
                 break;
             case 11:
                 gameObject.GetComponent<PlayerStats>().stats[0] += 20;
