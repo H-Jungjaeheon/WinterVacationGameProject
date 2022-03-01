@@ -711,8 +711,8 @@ public class BattlePlayer : MonoBehaviour
         GameObject DT2 = Instantiate(HealText);
         DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
         DT.transform.position = Enemy.transform.position;
-        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 5;
-        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 5;
+        DT.GetComponent<BattleDamageText>().damage = GM.GetComponent<PlayerStats>().stats[1] * 4;
+        Enemy.GetComponent<BattleBasicEnemy>().Hp -= GM.GetComponent<PlayerStats>().stats[1] * 4;
         if (GameManager.Instance.damageabsorption != 0)
         {
             DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;

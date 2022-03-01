@@ -501,7 +501,7 @@ public class GameManager : MonoBehaviour
                 maxMana += 10;
                 break;
             case 9:
-                damageabsorption += 3;
+                damageabsorption += 1.5f;
                 break;
             case 10:
                 defense += 3;

@@ -11,7 +11,6 @@ public class HealBlock : MonoBehaviour
     {
         text.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.6f, 0));
         text.text = "메디컬머신 사용 (F)";
-        text.gameObject.SetActive(false);
         if (isCol == true && Input.GetKey(KeyCode.F)&&use == false)
         {
             GameManager.Instance.stackDamage -= 50;
