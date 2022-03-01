@@ -183,8 +183,27 @@ public class Player : MonoBehaviour
                 }
                 speed *= 0.2f;
                 break;
+            case "Obj":
+                if (collision.gameObject.GetComponent<Obj1>().BoxDrop == false)
+                {
+                    Chest.Add(collision.gameObject);
+
+                }
+                break;
+            case "Obj_2":
+                if (collision.gameObject.GetComponent<Obj_2>().BoxDrop == false)
+                {
+                    Chest.Add(collision.gameObject);
+                }
+                break;
+            case "Obj_3":
+                if (collision.gameObject.GetComponent<Obj_3>().BoxDrop == false)
+                {
+                    Chest.Add(collision.gameObject);
+                }
+                break;
         }
-    }
+    } 
     void OnTriggerStay2D(Collider2D collision)
     {
         switch (collision.tag)
@@ -226,26 +245,6 @@ public class Player : MonoBehaviour
             case "Electricity":
                 isElDam = true;
                 break;
-            case "Obj":
-                if (collision.gameObject.GetComponent<Obj1>().BoxDrop == false)
-                {
-                    Chest.Add(collision.gameObject);
-
-                } 
-                break;
-            case "Obj_2":
-                if (collision.gameObject.GetComponent<Obj_2>().BoxDrop == false)
-                {
-                    Chest.Add(collision.gameObject);
-                }
-                break;
-            case "Obj_3":
-                if (collision.gameObject.GetComponent<Obj_3>().BoxDrop == false)
-                {
-                    Chest.Add(collision.gameObject);
-                }
-                break;
-
         }
 
     }
