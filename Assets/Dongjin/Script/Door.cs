@@ -88,7 +88,6 @@ public class Door : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         text.transform.parent.GetComponent<textsetactive>().on = true;
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

@@ -10,6 +10,7 @@ public class BattleOnceBoss : BattleBasicEnemy
     [SerializeField] int SuperAnger;
     [SerializeField] GameObject HealText;
     [SerializeField] Vector2 BarTransform, PictureTransform;
+    [SerializeField] Text HpText;
     public Image SuperAngerBar;
 
     public override void Start()
@@ -33,6 +34,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             IsSuperAnger = false;
             SuperAnger = 0;
         }
+        HpText.text = Hp + "/" + MaxHp;
     }
     public override void AttackGone()
     {
@@ -61,6 +63,7 @@ public class BattleOnceBoss : BattleBasicEnemy
         AngerBar.fillAmount = Anger / MaxAnger; 
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         HpBar.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         AngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y - 0.7f);
         HpBarNull.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         SuperAngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y + 0.7f);

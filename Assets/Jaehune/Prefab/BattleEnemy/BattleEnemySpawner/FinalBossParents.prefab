@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ac68a1a82c88e4496a0ca4b7d488f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 333
+  MaxHp: 222
   BarUp: 1.7
   GExp: 0
   Hp: 333
@@ -457,6 +457,7 @@ MonoBehaviour:
   - {fileID: 781541275651650811}
   PoisonEffectTransform: {x: 0, y: 0}
   MonitorTransform: {x: 14.5, y: 65}
+  HpText: {fileID: 0}
 --- !u!95 &4755964109687572948
 Animator:
   serializedVersion: 3

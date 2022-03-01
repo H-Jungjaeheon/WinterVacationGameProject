@@ -15,6 +15,7 @@ public class BattleFinalBoss : BattleBasicEnemy
     public int InstantDeaths;
     [SerializeField] Image[] Monitor;
     [SerializeField] Vector2 PoisonEffectTransform, MonitorTransform;
+    [SerializeField] Text HpText;
 
     public override void Start()
     {
@@ -57,6 +58,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             Destroy(GetComponent<BattleEye>());
         }
+        HpText.text = Hp + "/" + MaxHp;
     }
     public override void AttackGone()
     {
@@ -191,6 +193,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         InstantDeathBar.fillAmount = InstantDeathCount / MaxInstantDeathCount;
         HpBar.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
+        HpText.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
         AngerBar.transform.position = new Vector3(1f, BarUp + 72.25f, 0);
         HpBarNull.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
         SuperAngerBar.transform.position = new Vector3(1f, BarUp + 73.6f, 0);

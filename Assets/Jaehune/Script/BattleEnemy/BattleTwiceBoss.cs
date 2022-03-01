@@ -9,6 +9,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
     [SerializeField] Image Poison, DmgUp;
     [SerializeField] bool IsDmgUp, IsFarAway;
     [SerializeField] Vector2 BarTransform, PictureTransform;
+    [SerializeField] Text HpText;
 
     public override void Start()
     {
@@ -36,6 +37,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
         base.Update();
         DamageUp();
         PoisonUse();
+        HpText.text = Hp + "/" + MaxHp;
     }
     public override void AttackGone()
     {
@@ -158,6 +160,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         HpBar.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         AngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y - 0.7f);
         HpBarNull.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         EnemyPicture.transform.position = new Vector2(PictureTransform.x, PictureTransform.y);

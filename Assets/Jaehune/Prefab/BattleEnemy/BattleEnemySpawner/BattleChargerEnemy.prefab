@@ -524,7 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 50
   BarUp: 1.7
-  GExp: 33
+  GExp: 50
   Hp: 50
   Anger: 0
   MaxAnger: 100

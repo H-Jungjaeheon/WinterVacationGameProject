@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb06a3aaaffa8ff41a159ba2bbeb1b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 270
+  MaxHp: 250
   BarUp: 1.7
   GExp: 150
   Hp: 270
@@ -365,6 +365,7 @@ MonoBehaviour:
   IsFarAway: 0
   BarTransform: {x: 2.9, y: 72.81}
   PictureTransform: {x: -4.13, y: 72.81}
+  HpText: {fileID: 0}
 --- !u!95 &6923928397425721741
 Animator:
   serializedVersion: 3
