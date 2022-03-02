@@ -12,6 +12,7 @@ public class SuperEnemy : BasicEnemyScript
     {
         IsSkillReady = false;
         base.Start();
+        Player = GameObject.Find("Player").gameObject;
     }
     public override void FixedUpdate()
     {
@@ -113,27 +114,23 @@ public class SuperEnemy : BasicEnemyScript
         int playermask = 1 << LayerMask.NameToLayer("Player");
         //Destroy(Player);
         Debug.DrawRay(transform.position + new Vector3(0, -1, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, playermask);
-        foreach (var hit in rayHit)
+        if (Physics2D.Raycast(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player")) && GameManager.Instance.isEunsin == false)
         {
-            if (Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player")) != null && GameManager.Instance.isEunsin == false)
+            WarningObj.SetActive(true);
+            IsFind = true;
+        }
+        else
+        {
+            Debug.Log("인식 안함");
+            WarningObj.SetActive(false);
+            IsFind = false;
+            if (IsMoveTurn == true)
             {
-                Player = hit.collider.gameObject;
-                WarningObj.SetActive(true);
-                IsFind = true;
-            }
-            else
-            {
-                Debug.Log("인식 안함");
-                WarningObj.SetActive(false);
-                IsFind = false;
-                if (IsMoveTurn == true)
-                {
-                    IsStop = false;
-                    IsMoveTurn = false;
-                }
+                IsStop = false;
+                IsMoveTurn = false;
             }
         }
+
     }
     public override void FindPlayer()
     {
