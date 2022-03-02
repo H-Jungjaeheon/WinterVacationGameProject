@@ -12,7 +12,6 @@ public class SuperEnemy : BasicEnemyScript
     {
         IsSkillReady = false;
         base.Start();
-        Player = GameObject.Find("Player").gameObject;
     }
     public override void FixedUpdate()
     {
@@ -111,8 +110,6 @@ public class SuperEnemy : BasicEnemyScript
     }
     public override void RayCasting()
     {
-        int playermask = 1 << LayerMask.NameToLayer("Player");
-        //Destroy(Player);
         Debug.DrawRay(transform.position + new Vector3(0, -1, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
         if (Physics2D.Raycast(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player")) && GameManager.Instance.isEunsin == false)
         {
@@ -121,7 +118,6 @@ public class SuperEnemy : BasicEnemyScript
         }
         else
         {
-            Debug.Log("인식 안함");
             WarningObj.SetActive(false);
             IsFind = false;
             if (IsMoveTurn == true)
@@ -130,10 +126,10 @@ public class SuperEnemy : BasicEnemyScript
                 IsMoveTurn = false;
             }
         }
-
     }
     public override void FindPlayer()
     {
+        Vector3 PTransform = new Vector3(Player.transform.position.x, this.transform.position.y, this.transform.position.z);
         animator.SetBool("IsIdle", false);
         IsTurns = false;
         MoveCount = 0;
@@ -142,22 +138,22 @@ public class SuperEnemy : BasicEnemyScript
         {
             if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 3f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * 3f * Time.deltaTime);
             }
             else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -3f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * -3f * Time.deltaTime);
             }
         }
         else if (IsSkillReady == false && IsMove == false)
         {
             if (Speed > 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * 4f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * 4f * Time.deltaTime);
             }
             else if (Speed < 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -4f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * -4f * Time.deltaTime);
             }
         }
     }

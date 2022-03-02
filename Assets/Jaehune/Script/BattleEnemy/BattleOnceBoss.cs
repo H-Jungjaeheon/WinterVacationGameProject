@@ -15,6 +15,7 @@ public class BattleOnceBoss : BattleBasicEnemy
 
     public override void Start()
     {
+        HpText = GetComponent<Text>();
         animator = GetComponent<Animator>();
         Anger = 0;
         MaxHp *= GameManager.Instance.Stage;
@@ -59,11 +60,14 @@ public class BattleOnceBoss : BattleBasicEnemy
     }
     public override void Hpbar()
     {
+        if (Hp > 0)
+        {
+            HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        }
         HpBar.fillAmount = Hp / MaxHp;
-        AngerBar.fillAmount = Anger / MaxAnger; 
+        AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         HpBar.transform.position = new Vector2(BarTransform.x, BarTransform.y);
-        HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         AngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y - 0.7f);
         HpBarNull.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         SuperAngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y + 0.7f);
@@ -96,7 +100,8 @@ public class BattleOnceBoss : BattleBasicEnemy
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
         Color color6 = SuperAngerBar.color;
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) 
+        Destroy(HpText);
+        while (color.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             SR.color = color;
@@ -105,6 +110,7 @@ public class BattleOnceBoss : BattleBasicEnemy
             EnemyPicture.color = color;
             AngerBar.color = color;
             SuperAngerBar.color = color;
+            HpText.color = color;
             if (color.a <= 0f)
             {
                 color.a = 0f;

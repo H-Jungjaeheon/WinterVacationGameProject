@@ -28,6 +28,7 @@ public class BerserkerEnemy : BasicEnemyScript
     }
     public override void FindPlayer()
     {
+        Vector3 PTransform = new Vector3(Player.transform.position.x, this.transform.position.y, this.transform.position.z);
         MoveCount = 0;
         IsTurns = false;
         IsMoveTurn = true;
@@ -35,22 +36,22 @@ public class BerserkerEnemy : BasicEnemyScript
         {
             if (Speed > 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * 1.05f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * 1.05f * Time.deltaTime);
             }
             else if (Speed < 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * -1.05f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * -1.05f * Time.deltaTime);
             }
         }
         else
         {
             if (Speed > 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * 2f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * 2f * Time.deltaTime);
             }
             else if (Speed < 0 && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.29f, 0), Speed * -2f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * -2f * Time.deltaTime);
             }
         }
     }

@@ -15,7 +15,6 @@ public class BattlePlayer : MonoBehaviour
     [SerializeField] Image ComboTimeLimitBar;
     Animator animator;
 
-    // Start is called before the first frame update
     void Start()
     {
         DefenseImage.SetActive(false);
@@ -34,7 +33,6 @@ public class BattlePlayer : MonoBehaviour
         SkillImage.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Defensing();
@@ -126,16 +124,15 @@ public class BattlePlayer : MonoBehaviour
 
     void RayCasting()
     {
-
-            Debug.DrawRay(this.transform.position, Vector3.right * 50, Color.red);
-            var rayHit = Physics2D.RaycastAll(transform.position, Vector3.right, 50);
-            foreach (var hit in rayHit)
-            {
+        Debug.DrawRay(this.transform.position, Vector3.right * 50, Color.red);
+        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.right, 50);
+        foreach (var hit in rayHit)
+        {
             if (hit.collider.gameObject.CompareTag("Enemy"))
             {
-                    Enemy = hit.collider.gameObject;
+                Enemy = hit.collider.gameObject;
             }
-       }
+        }
     }
     public void Playerattack()
     {
@@ -326,7 +323,7 @@ public class BattlePlayer : MonoBehaviour
         Debug.Log("첫번째 공격");
         if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] == 1 && IsBarrier == false)
         {
-            if (GameManager.Instance.damageabsorption < 1)
+            if (GameManager.Instance.damageabsorption < 1 && GM.GetComponent<PlayerStats>().stats[1] >= GameManager.Instance.damageabsorption)
             {
                 DT2.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                 DT2.transform.position = this.transform.position;
@@ -335,7 +332,7 @@ public class BattlePlayer : MonoBehaviour
             }
             else
             {
-                if (GameManager.Instance.damageabsorption != 0)
+                if (GameManager.Instance.damageabsorption != 0 && GM.GetComponent<PlayerStats>().stats[1] <= GameManager.Instance.damageabsorption)
                 {
                     DT3.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                     DT3.transform.position = this.transform.position;
@@ -344,7 +341,7 @@ public class BattlePlayer : MonoBehaviour
                 }
             }
         }
-        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] >= 1 && IsBarrier == false)
+        else if (Enemy.GetComponent<BattleBasicEnemy>().IsReflect && GM.GetComponent<PlayerStats>().stats[1] > 1 && IsBarrier == false)
         {
             if (GameManager.Instance.damageabsorption < GM.GetComponent<PlayerStats>().stats[1] / 2)
             {

@@ -60,7 +60,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (Stateup == true)
         {
-            stats[1] += 1.5f;
+            stats[1] += 1f;
             Stateup = false;
             GameManager.Instance.StatUp.transform.DOMove(statStartPos.transform.position, 1f).SetEase(Ease.OutQuad);
             GameManager.Instance.LevelUp = false;

@@ -36,7 +36,6 @@ public class BattleFinalBoss : BattleBasicEnemy
         IsUseSkill = false;
         Invoke("BossCam", 3.5f);
         MaxEyeSpawnCount = Random.Range(5, 7);
-
     }
 
     public override void Update()
@@ -188,12 +187,15 @@ public class BattleFinalBoss : BattleBasicEnemy
     }
     public override void Hpbar()
     {
+        if (Hp > 0)
+        {
+            HpText.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
+        }
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;
         InstantDeathBar.fillAmount = InstantDeathCount / MaxInstantDeathCount;
         HpBar.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
-        HpText.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
         AngerBar.transform.position = new Vector3(1f, BarUp + 72.25f, 0);
         HpBarNull.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
         SuperAngerBar.transform.position = new Vector3(1f, BarUp + 73.6f, 0);
@@ -205,7 +207,7 @@ public class BattleFinalBoss : BattleBasicEnemy
         SuperEye.transform.position = new Vector3(0f, BarUp + 60f, 0);
         Warning.transform.position = Player.transform.position + new Vector3(6, 4, 0);
         PoisonEffect.transform.position = new Vector2(Player.transform.position.x + PoisonEffectTransform.x, Player.transform.position.y + PoisonEffectTransform.y);
-        SkillEffect.transform.position = Player.transform.position + new Vector3(1,1,0);
+        SkillEffect.transform.position = Player.transform.position + new Vector3(1, 1, 0);
         Monitor[0].transform.position = new Vector2(MonitorTransform.x, MonitorTransform.y);
         Monitor[1].transform.position = new Vector2(-MonitorTransform.x, MonitorTransform.y);
     }
@@ -326,7 +328,8 @@ public class BattleFinalBoss : BattleBasicEnemy
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) 
+        Destroy(HpText);
+        while (color.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             color2.a -= Time.deltaTime / FaidTime;

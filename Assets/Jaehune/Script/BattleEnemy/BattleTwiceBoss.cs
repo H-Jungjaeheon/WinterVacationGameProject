@@ -157,10 +157,13 @@ public class BattleTwiceBoss : BattleBasicEnemy
     }
     public override void Hpbar()
     { 
+        if(Hp > 0)
+        {
+            HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
+        }
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         HpBar.transform.position = new Vector2(BarTransform.x, BarTransform.y);
-        HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         AngerBar.transform.position = new Vector2(BarTransform.x, BarTransform.y - 0.7f);
         HpBarNull.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         EnemyPicture.transform.position = new Vector2(PictureTransform.x, PictureTransform.y);
@@ -191,8 +194,8 @@ public class BattleTwiceBoss : BattleBasicEnemy
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
-        
-        while (color.a > 0f && color2.a > 0f && color3.a > 0f && color4.a > 0f) //죽을 때 색 대신 그래픽 넣기 
+        Destroy(HpText);
+        while (color.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
             SR.color = color;
@@ -252,7 +255,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             GameObject DT = Instantiate(DmgText);
             if (Player.GetComponent<BattlePlayer>().IsBarrier == false && IsDmgUp == false)
             {
-                if (Damage <= GameManager.Instance.defense)
+                if (Damage > GameManager.Instance.defense)
                 {
                     DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                     DT.transform.position = Player.transform.position;
@@ -272,7 +275,7 @@ public class BattleTwiceBoss : BattleBasicEnemy
             }
             else if(Player.GetComponent<BattlePlayer>().IsBarrier == false &&  IsDmgUp == true)
             {
-                if (Damage + 7 <= GameManager.Instance.defense)
+                if (Damage + 7 > GameManager.Instance.defense)
                 {
                     DT.GetComponentInChildren<Canvas>().worldCamera = UnityEngine.Camera.main;
                     DT.transform.position = Player.transform.position;

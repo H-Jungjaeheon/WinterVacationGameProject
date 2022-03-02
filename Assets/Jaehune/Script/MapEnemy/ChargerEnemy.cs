@@ -22,17 +22,17 @@ public class ChargerEnemy : BasicEnemyScript
 
     // Update is called once per frame
     public override void FixedUpdate()
-    {   
+    {
         RayCasting();
         WallRayCasting();
         Moving();
-        Skill();
         if (IsMove == false)
         {
             MoveCount = 0;
         }
         if (IsFind == true)
         {
+            Skill();
             FindPlayer();
             CrossroadPlus();
             CrossRoadObj.SetActive(false);
@@ -81,7 +81,7 @@ public class ChargerEnemy : BasicEnemyScript
                 SkillHand.SetActive(true);
                 SkillHand.transform.position = Player.transform.position - new Vector3(0, 0.2f, 0);
             }
-            else if(SkillTime < MaxSkillTime && MoveCount < MaxMoveCount)
+            else if (SkillTime < MaxSkillTime && MoveCount < MaxMoveCount)
             {
                 IsBattling = false;
                 IsMove = true;
@@ -160,29 +160,25 @@ public class ChargerEnemy : BasicEnemyScript
     public override void RayCasting()
     {
         Debug.DrawRay(transform.position, Vector3.left * SeeCrossroad * IsPlus, Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position, Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player"));
-        foreach (var hit in rayHit)
+        if (Physics2D.Raycast(transform.position, Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player")) && GameManager.Instance.isEunsin == false)
         {
-            if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
+            WarningObj.SetActive(true);
+            IsFind = true;
+        }
+        else
+        {
+            WarningObj.SetActive(false);
+            IsFind = false;
+            if (IsMoveTurn == true)
             {
-                WarningObj.SetActive(true);
-                IsFind = true;
-                Player = hit.collider.gameObject;
-            }
-            else
-            {
-                WarningObj.SetActive(false);
-                IsFind = false;
-                if (IsMoveTurn == true)
-                {
-                    IsStop = false;
-                    IsMoveTurn = false;
-                }
+                IsStop = false;
+                IsMoveTurn = false;
             }
         }
     }
     public override void FindPlayer()
     {
+        Vector3 PTransform = new Vector3(Player.transform.position.x, this.transform.position.y, this.transform.position.z);
         animator.SetBool("IsIdle", false);
         MoveCount = 0;
         IsTurns = false;
@@ -191,25 +187,25 @@ public class ChargerEnemy : BasicEnemyScript
         {
             if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.3f, 0), Speed * 1.3f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * 1.3f * Time.deltaTime);
             }
             else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.3f, 0), Speed * -1.3f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * -1.3f * Time.deltaTime);
             }
         }
         else
         {
             if (Speed > 0 && IsMove == true && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.3f, 0), Speed * 2f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * 2f * Time.deltaTime);
             }
             else if (Speed < 0 && IsMove == true && GameManager.Instance.isEunsin == false)
             {
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 0.3f, 0), Speed * -2f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, PTransform, Speed * -2f * Time.deltaTime);
             }
         }
-        if(GrabCountStop == false && GameManager.Instance.isEunsin == false)
+        if (GrabCountStop == false && GameManager.Instance.isEunsin == false)
         {
             SkillTime += Time.deltaTime;
         }
