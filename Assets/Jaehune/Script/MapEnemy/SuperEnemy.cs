@@ -7,7 +7,7 @@ public class SuperEnemy : BasicEnemyScript
     [SerializeField] float SkillCount;
     [SerializeField] GameObject WarningCircleObj, SkillCircleObj;
     [SerializeField] bool Skillng, Movings, IsSkillReady;
- 
+
     public override void Start()
     {
         IsSkillReady = false;
@@ -21,7 +21,7 @@ public class SuperEnemy : BasicEnemyScript
         {
             MoveCount = 0;
         }
-        else if(IsMove == true)
+        else if (IsMove == true)
         {
             Moving();
         }
@@ -59,6 +59,10 @@ public class SuperEnemy : BasicEnemyScript
             Movings = true;
         }
     }
+    private void Update()
+    {
+
+    }
     void ManaSkill()
     {
         SkillCount += Time.deltaTime;
@@ -70,7 +74,7 @@ public class SuperEnemy : BasicEnemyScript
             IsSkillReady = false;
             animator.SetBool("IsSkill", false);
             Skillng = true;
-            if(IsMoveTurn == false)
+            if (IsMoveTurn == false)
             {
                 IsMove = true;
             }
@@ -106,11 +110,13 @@ public class SuperEnemy : BasicEnemyScript
     }
     public override void RayCasting()
     {
+        int playermask = 1 << LayerMask.NameToLayer("Player");
+        //Destroy(Player);
         Debug.DrawRay(transform.position + new Vector3(0, -1, 0), Vector3.left * (SeeCrossroad * IsPlus), Color.red);
-        var rayHit = Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player"));
+        var rayHit = Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, playermask);
         foreach (var hit in rayHit)
         {
-            if (hit.collider.gameObject.CompareTag("Player") && GameManager.Instance.isEunsin == false)
+            if (Physics2D.RaycastAll(transform.position + new Vector3(0, -1, 0), Vector3.left, SeeCrossroad * IsPlus, LayerMask.GetMask("Player")) != null && GameManager.Instance.isEunsin == false)
             {
                 Player = hit.collider.gameObject;
                 WarningObj.SetActive(true);
@@ -118,6 +124,7 @@ public class SuperEnemy : BasicEnemyScript
             }
             else
             {
+                Debug.Log("인식 안함");
                 WarningObj.SetActive(false);
                 IsFind = false;
                 if (IsMoveTurn == true)
@@ -145,7 +152,7 @@ public class SuperEnemy : BasicEnemyScript
                 transform.position = Vector3.MoveTowards(transform.position, Player.transform.position + new Vector3(0, 1.334f, 0), Speed * -3f * Time.deltaTime);
             }
         }
-        else if(IsSkillReady == false && IsMove == false)
+        else if (IsSkillReady == false && IsMove == false)
         {
             if (Speed > 0 && GameManager.Instance.isEunsin == false)
             {
