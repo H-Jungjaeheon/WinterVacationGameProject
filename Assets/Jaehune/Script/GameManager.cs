@@ -144,14 +144,14 @@ public class GameManager : MonoBehaviour
         {
             BattleEndCount -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Time.timeScale *= 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            Time.timeScale /= 2;
-        }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    Time.timeScale *= 2;
+        //}
+        //else if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    Time.timeScale /= 2;
+        //}
         //else if (Input.GetKeyDown(KeyCode.C))
         //{
         //    isGetKey = true;

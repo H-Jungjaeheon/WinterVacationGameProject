@@ -137,7 +137,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
             Anger += 40;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             if (IsStun == true)
             {
                 StartCoroutine(EnemyAttack());
@@ -202,7 +202,7 @@ public class BattleChargerEnemy : BattleBasicEnemy
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1.5f);
             if (IsStun == true)
             {
                 StartCoroutine(EnemyAttack());

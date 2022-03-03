@@ -190,7 +190,7 @@ public class BattleBasicEnemy : MonoBehaviour
             Anger += 40;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
             if (GameManager.Instance.curHp > 0)
             {
@@ -240,7 +240,7 @@ public class BattleBasicEnemy : MonoBehaviour
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
             if (GameManager.Instance.curHp > 0)
             {

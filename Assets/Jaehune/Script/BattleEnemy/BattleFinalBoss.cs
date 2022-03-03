@@ -191,6 +191,10 @@ public class BattleFinalBoss : BattleBasicEnemy
         {
             HpText.transform.position = new Vector3(1f, BarUp + 72.95f, 0);
         }
+        else if (Hp < 0)
+        {
+            Hp = 0;
+        }
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;

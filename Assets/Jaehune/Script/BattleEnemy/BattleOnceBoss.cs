@@ -63,6 +63,10 @@ public class BattleOnceBoss : BattleBasicEnemy
         {
             HpText.transform.position = new Vector2(BarTransform.x, BarTransform.y);
         }
+        else if(Hp < 0)
+        {
+            Hp = 0;
+        }
         HpBar.fillAmount = Hp / MaxHp;
         AngerBar.fillAmount = Anger / MaxAnger;
         SuperAngerBar.fillAmount = SuperAngerCount / MaxSuperAngerCount;

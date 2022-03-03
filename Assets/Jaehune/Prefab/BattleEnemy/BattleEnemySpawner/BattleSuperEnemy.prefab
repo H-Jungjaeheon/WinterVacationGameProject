@@ -148,14 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc83b01f2893664387b48a8806e010f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 88
+  MaxHp: 80
   BarUp: 1.7
   GExp: 77
   Hp: 99
   Anger: 100
   MaxAnger: 100
   HitAnger: 4
-  Damage: 17
+  Damage: 15
   Player: {fileID: 0}
   EnemySpawner: {fileID: 5853180101975499363, guid: 2eb00e762f3bd3f4e91902debe64d995, type: 3}
   DmgText: {fileID: 3589068186739345167, guid: 01066948735dbfe4895ff97ae2e6102e, type: 3}

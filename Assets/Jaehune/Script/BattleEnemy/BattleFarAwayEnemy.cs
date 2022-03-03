@@ -104,7 +104,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             Anger += 50;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
             if (GameManager.Instance.curHp > 0)
@@ -155,7 +155,7 @@ public class BattleFarAwayEnemy : BattleBasicEnemy
             GoToPlayer = false;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             GameObject.Find("Main Camera").GetComponent<CameraMove>().IsFarAway = false;
             BattleManager.Instance.IsPlayerTurn = true;
             if (GameManager.Instance.curHp > 0)

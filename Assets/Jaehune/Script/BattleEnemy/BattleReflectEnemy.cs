@@ -127,7 +127,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
             Anger += 30;
             yield return new WaitForSeconds(1);
             GoToReturn = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             if(IsReflect == true)
             {
                 ReflectingTurn++;
@@ -152,7 +152,7 @@ public class BattleReflectEnemy : BattleBasicEnemy
             animator.SetBool("IsSkill", false);
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
             BattleManager.Instance.IsPlayerTurn = true;
             if (GameManager.Instance.curHp > 0)
             {

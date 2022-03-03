@@ -246,7 +246,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             {
                 End = true;
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             if (IsSuperSkillng == false && Hp <= 0)
             {
                 Dead1();
@@ -349,7 +349,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             {
                 End = true;
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             if (IsSuperSkillng == false && Hp <= 0)
             {
                 Debug.Log("Á×À½ ½ÇÇà");
@@ -474,7 +474,7 @@ public class BattleBerserkerEnemy : BattleBasicEnemy
             BattleManager.Instance.CamP = false;
             GameManager.Instance.BattleSkillBackGround.SetActive(false);
             Anger += 25;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
             BattleManager.Instance.IsPlayerTurn = true;
             GameManager.Instance.BattleButtonUi.SetActive(true);
         }
