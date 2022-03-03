@@ -395,10 +395,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ac68a1a82c88e4496a0ca4b7d488f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 222
+  MaxHp: 300
   BarUp: 1.7
   GExp: 0
-  Hp: 222
+  Hp: 300
   Anger: 0
   MaxAnger: 100
   HitAnger: 10
