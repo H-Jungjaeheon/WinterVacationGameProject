@@ -285,6 +285,7 @@ MonoBehaviour:
   IsSuperAnger: 0
   SuperAnger: 0
   HealText: {fileID: 485790573650117246, guid: 1d009b7025ee8524f83e05cb5fd9e95f, type: 3}
+  Parent: {fileID: 1159049074339279675}
   BarTransform: {x: 2.9, y: 72.81}
   PictureTransform: {x: -4.13, y: 72.81}
   HpText: {fileID: 7627157980889451002}

@@ -328,7 +328,6 @@ public class BattleFinalBoss : BattleBasicEnemy
         Color color3 = HpBarNull.color;
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
-        Destroy(HpText);
         while (color.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
@@ -358,10 +357,9 @@ public class BattleFinalBoss : BattleBasicEnemy
                 BattleManager.Instance.IsPlayerTurn = true;
                 yield return new WaitForSeconds(1);
                 Destroy(this.gameObject);
-                //¿£µù ¾À ÀüÈ¯
+                Destroy(HpText);
                 SceneManager.LoadScene("Ending");
             }
-            
         }
     }
     public override IEnumerator EnemyAttack()

@@ -99,7 +99,6 @@ public class BattleOnceBoss : BattleBasicEnemy
         Color color4 = EnemyPicture.color;
         Color color5 = AngerBar.color;
         Color color6 = SuperAngerBar.color;
-        Destroy(HpText);
         while (color.a > 0f) 
         {
             color.a -= Time.deltaTime / FaidTime;
@@ -138,6 +137,7 @@ public class BattleOnceBoss : BattleBasicEnemy
                 GameObject.Find("Main Camera").GetComponent<CameraMove>().IsBossCamMove = false;
             }
         }
+        Destroy(HpText);
     }
     public override IEnumerator EnemyAttack()
     {
