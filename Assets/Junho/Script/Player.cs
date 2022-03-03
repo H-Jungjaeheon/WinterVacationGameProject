@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
                 {
                     anim.SetBool("IsLadder", true);
                     rigid.gravityScale = 0;
-                    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * speed * 50);
+                    rigid.velocity = new Vector2(rigid.velocity.x, Time.deltaTime * 5 * 50);
                 }
             }
             else
