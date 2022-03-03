@@ -94,6 +94,13 @@ public class GameManager : MonoBehaviour
                         BattleBackGround[3].SetActive(false);
                         BattleBackGround[4].SetActive(false);
                         break;
+                    case 3:
+                        BattleBackGround[0].SetActive(true);
+                        BattleBackGround[1].SetActive(false);
+                        BattleBackGround[2].SetActive(false);
+                        BattleBackGround[3].SetActive(false);
+                        BattleBackGround[4].SetActive(false);
+                        break;
                 }
             }
             else
