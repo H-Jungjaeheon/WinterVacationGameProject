@@ -27,7 +27,7 @@ public class HideObj : MonoBehaviour
             {
                 if (GameObject.Find("Player").GetComponent<Player>().isHide == true && Input.GetKey(KeyCode.F) && isCol)
                 {
-                    GameObject.Find("Player").transform.position = transform.position;
+                    collision.transform.position = transform.position;
                 }
             }
         }

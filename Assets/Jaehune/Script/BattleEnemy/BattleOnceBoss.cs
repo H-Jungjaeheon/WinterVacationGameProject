@@ -15,7 +15,6 @@ public class BattleOnceBoss : BattleBasicEnemy
 
     public override void Start()
     {
-        HpText = GetComponent<Text>();
         animator = GetComponent<Animator>();
         Anger = 0;
         MaxHp *= GameManager.Instance.Stage;
