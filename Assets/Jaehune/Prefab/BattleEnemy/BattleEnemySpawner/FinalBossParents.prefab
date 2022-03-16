@@ -424,7 +424,7 @@ MonoBehaviour:
   ps: {fileID: 1057475069421176098}
   SuperAngerCount: 0
   MaxSuperAngerCount: 100
-  InstantDeathCount: 0
+  InstantDeathCount: 100
   MaxInstantDeathCount: 100
   EyeSpawnCount: 0
   MaxEyeSpawnCount: 0
